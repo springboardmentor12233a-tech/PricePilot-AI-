@@ -80,3 +80,4 @@ pricepilot-ai/
 Backend: `cd backend && uvicorn app.main:app --reload` → http://localhost:8000
 Frontend: `cd frontend && npm run dev` → http://localhost:3000
 Full stack via Docker: `docker compose up --build`
+# PricePilot-AI-
