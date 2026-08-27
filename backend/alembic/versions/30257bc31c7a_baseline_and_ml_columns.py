@@ -1,8 +1,8 @@
-"""add lag_price qty customers product_score to price_history
+"""baseline_and_ml_columns
 
-Revision ID: 23eab9a974b4
-Revises: 45134f8a8936
-Create Date: 2026-08-26 11:30:29.814860
+Revision ID: 30257bc31c7a
+Revises: 
+Create Date: 2026-08-27 13:23:08.388520
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '23eab9a974b4'
-down_revision: Union[str, Sequence[str], None] = '45134f8a8936'
+revision: str = '30257bc31c7a'
+down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

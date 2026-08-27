@@ -1,25 +1,25 @@
 # --- Core API ---
-fastapi==0.115.0
-uvicorn[standard]==0.30.6
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.6
 
 # --- Database ---
-sqlalchemy==2.0.35
-psycopg2-binary==2.9.12
-alembic==1.13.2
+sqlalchemy>=2.0.35
+psycopg2-binary>=2.9.12
+alembic>=1.13.2
 
 # --- Auth ---
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-python-multipart==0.0.9
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.9
 
 # --- Config ---
-pydantic==2.9.2
-pydantic-settings==2.5.2
-python-dotenv==1.0.1
+pydantic>=2.9.2
+pydantic-settings>=2.5.2
+python-dotenv>=1.0.1
 
 # --- ML (added progressively in Milestone 2, listed now for reference) ---
-pandas==2.2.2
-numpy==1.26.4
-scikit-learn==1.5.1
-xgboost==2.1.1
-prophet==1.1.5
+pandas>=2.2.2
+numpy>=1.26.4
+scikit-learn>=1.5.1
+xgboost>=2.1.1
+prophet>=1.1.5
