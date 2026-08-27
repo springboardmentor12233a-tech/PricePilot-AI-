@@ -1,0 +1,24 @@
+# --- Python / Backend ---
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+backend/app/ml/saved_models/*.pkl
+
+# --- Node / Frontend ---
+node_modules/
+.next/
+*.tsbuildinfo
+
+# --- Data (large files, don't belong in git) ---
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# --- OS / Editor junk ---
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
