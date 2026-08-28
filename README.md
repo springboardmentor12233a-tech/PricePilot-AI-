@@ -289,19 +289,6 @@ data/raw/sales_data.csv
 
 The raw dataset is preserved separately and is used as the source for data preprocessing and analysis.
 
-### Dataset Statistics
-
-### Property	               Value
-
-Records	                   76,000
-Features	                   16
-Stores	                        5
-Products	                   20
-Categories	                    5
-Regions	                        4
-Unique Dates	              760
-Start Date	           2022-01-01
-End Date	           2024-01-30
 ```
  
 ```
@@ -351,42 +338,42 @@ Docker
 Docker Compose
 AWS / Azure
 
-``` 
-```
-## Project Structure
-PricePilot-AI/
+# Project Structure
+
+```text
+PricePilot-AI
 │
-├── backend/
-│   ├── data_preprocessing.py
-│   ├── db_connection.py
-│   └── main.py
+├── 📁 backend
+│   ├── 📄 data_preprocessing.py
+│   ├── 📄 db_connection.py
+│   └── 📄 main.py
 │
-├── frontend/
-│   └── ...
+├── 📁 frontend
+│   └── 📄 ...
 │
-├── data/
-│   ├── raw/
-│   │   └── sales_data.csv
+├── 📁 data
+│   ├── 📁 raw
+│   │   └── 📄 sales_data.csv
 │   │
-│   └── processed/
-│       └── clean_sales_data.csv
+│   └── 📁 processed
+│       └── 📄 clean_sales_data.csv
 │
-├── database/
-│   └── schema.sql
+├── 📁 database
+│   └── 📄 schema.sql
 │
-├── models/
-│   └── ...
+├── 📁 models
+│   └── 📄 ...
 │
-├── notebooks/
-│   └── PricePilot_AI_EDA.ipynb
+├── 📁 notebooks
+│   └── 📓 PricePilot_AI_EDA.ipynb
 │
-├── docs/
-│   ├── architecture.md
-│   ├── dataset_notes.md
-│   ├── day1_progress.md
-│   └── tech_stack.md
+├── 📁 docs
+│   ├── 📄 architecture.md
+│   ├── 📄 dataset_notes.md
+│   ├── 📄 day1_progress.md
+│   └── 📄 tech_stack.md
 │
-├── .gitignore
-├── README.md
-└── requirements.txt
+├── 📄 .gitignore
+├── 📄 README.md
+└── 📄 requirements.txt
 ```
