@@ -1,6 +1,6 @@
 from pydantic import BaseModel
+from typing import List
 from datetime import datetime
-
 
 class DemandForecastItem(BaseModel):
     horizon: str
@@ -10,10 +10,10 @@ class DemandForecastItem(BaseModel):
     model_used: str
     generated_at: datetime
 
-    model_config = {"from_attributes": True, "protected_namespaces": ()}
-
+    class Config:
+        from_attributes = True
 
 class ProductForecastResponse(BaseModel):
     product_id: int
     product_name: str
-    forecasts: list[DemandForecastItem]
+    forecasts: List[DemandForecastItem]
