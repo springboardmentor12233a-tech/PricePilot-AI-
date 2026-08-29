@@ -1,0 +1,29 @@
+fastapi
+uvicorn[standard]
+
+# Environment variables
+python-dotenv
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# Data validation
+pydantic
+pydantic-settings
+
+# HTTP requests / external APIs
+requests
+httpx
+
+# Authentication
+python-jose[cryptography]
+passlib[bcrypt]
+
+# ML / Data Science
+numpy
+pandas
+scikit-learn
+
+# Testing
+pytest
