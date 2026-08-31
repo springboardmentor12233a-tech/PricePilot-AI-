@@ -1,3 +1,5 @@
 .env
 __pycache__/
 *.pyc
+# Machine learning model files
+models/*.pkl

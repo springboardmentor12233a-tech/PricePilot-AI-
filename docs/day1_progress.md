@@ -212,3 +212,170 @@ Status:
 ## Next Step
 
 Create APIs for products, pricing, sales and inventory data.
+
+# Day 8 Progress
+
+## Completed
+
+- Created EDA script
+- Loaded the processed dataset
+- Performed basic statistical analysis
+- Checked missing values
+- Checked duplicate records
+- Analyzed categorical variables
+- Analyzed demand by category, region, weather, and seasonality
+- Analyzed price, discount, and promotion
+- Performed correlation analysis
+- Created initial EDA visualizations
+
+## Next Step
+
+- Complete detailed EDA
+- Identify important features
+- Perform feature engineering
+- Prepare data for machine learning
+
+# Day 9 Progress
+
+## Completed
+
+- Continued exploratory data analysis.
+- Analyzed price and demand.
+- Analyzed competitor pricing.
+- Created Price Difference feature.
+- Analyzed discounts and demand.
+- Analyzed promotions and demand.
+- Analyzed category and demand.
+- Analyzed region and demand.
+- Analyzed seasonality and demand.
+- Analyzed inventory and demand.
+- Performed correlation analysis.
+- Created EDA visualizations.
+- Identified candidate features for demand prediction.
+
+## Target Variable
+
+Demand
+
+## Next Step
+
+- Finalize feature engineering.
+- Prepare the dataset for machine learning.
+- Split the dataset into training and testing sets.
+
+# Day 10 Progress
+
+## Completed
+
+- Created feature engineering script.
+- Loaded the processed dataset.
+- Converted Date into datetime format.
+- Created Year feature.
+- Created Month feature.
+- Created Day feature.
+- Created DayOfWeek feature.
+- Created Price Difference feature.
+- Created Price Ratio feature.
+- Encoded categorical variables.
+- Created ML-ready dataset.
+
+## Output
+
+ML-ready dataset:
+
+data/processed/ml_ready_data.csv
+
+## Next Step
+
+Prepare the ML-ready dataset for model training and create the first demand prediction model.
+
+# Day 12 Progress
+
+## Completed
+
+- Evaluated the initial Random Forest model.
+- Investigated potential target leakage.
+- Created a second model excluding Units Sold.
+- Compared Model A and Model B.
+- Evaluated both models using MAE, RMSE, and R².
+- Analyzed feature importance.
+- Selected a model for further development.
+
+## Key Learning
+
+Model performance should be evaluated not only by numerical accuracy but also by whether the input features would realistically be available when making future demand predictions.
+
+## Next Step
+
+Develop the demand prediction functionality and integrate the trained model with the PricePilot AI backend.
+
+# Day 13 Progress
+
+## Objective
+
+Develop the initial demand prediction functionality using the trained machine learning model.
+
+## Completed
+
+- Created prediction script.
+- Loaded the trained Random Forest model.
+- Loaded the ML-ready dataset.
+- Prepared input features.
+- Generated a demand prediction.
+- Tested the prediction process successfully.
+
+## Model Used
+
+Random Forest Regressor.
+
+## Model File
+
+models/demand_model.pkl
+
+## Prediction Input
+
+The prediction script uses the processed ML-ready dataset as input.
+
+## Output
+
+The system generates a predicted demand value for the selected input record.
+
+## Next Step
+
+Integrate the demand prediction model with the PricePilot AI backend API.
+
+# Day 14 Progress
+
+## Objective
+
+Integrate the trained demand prediction model with the FastAPI backend.
+
+## Completed
+
+- Loaded the trained Random Forest model.
+- Integrated the model with FastAPI.
+- Created the `/api/predict` endpoint.
+- Loaded the ML-ready dataset.
+- Implemented input row selection.
+- Generated demand predictions through the API.
+- Tested the prediction endpoint using Swagger UI.
+
+## API Endpoint
+
+POST /api/predict
+
+## Model
+
+Random Forest Regressor
+
+## Model File
+
+models/demand_model.pkl
+
+## Testing
+
+The prediction endpoint was tested using FastAPI Swagger UI.
+
+## Next Step
+
+Develop a proper prediction input structure and integrate the prediction functionality with the frontend.
