@@ -1,0 +1,35 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: pricepilot-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: pricepilot
+      POSTGRES_USER: pricepilot
+      POSTGRES_PASSWORD: pricepilot
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pricepilot-pgadmin
+    restart: unless-stopped
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pricepilot.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+    ports:
+      - "5050:80"
+
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
