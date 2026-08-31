@@ -18,7 +18,7 @@ print("Dataset loaded successfully!")
 print("Shape:", df.shape)
 
 
-# Separate target
+# Separate features
 X = df.drop(
     columns=["Demand", "Date"],
     errors="ignore"
@@ -39,8 +39,13 @@ X["Product ID"] = (
 )
 
 
-# Convert boolean columns
+# Convert Boolean columns
 X = X.astype(int)
+
+
+# Match the features used during model training
+if hasattr(model, "feature_names_in_"):
+    X = X[model.feature_names_in_]
 
 
 # Select one sample
@@ -57,6 +62,7 @@ print(
     "Predicted Demand:",
     prediction[0]
 )
-print("\nPrediction features:")
-print(X.columns.tolist())
-print("\nNumber of features:", X.shape[1])
+
+print("\nNumber of features used:", X.shape[1])
+if hasattr(model, "feature_names_in_"):
+    X = X[model.feature_names_in_]
