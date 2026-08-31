@@ -55,13 +55,16 @@ This phase focused on sourcing, exploring, and preparing real-world datasets to 
 ---
 
 ## 📁 Project Structure
+
+```
 PricePilot-AI/
-├── notebooks/ # EDA & preprocessing notebooks (one per dataset)
+├── notebooks/            # EDA & preprocessing notebooks (one per dataset)
 ├── data/
-│ ├── raw/ # Original datasets (not tracked in Git)
-│ └── processed_data/ # Cleaned, analysis-ready datasets (not tracked in Git)
-├── docs/ # Project documentation
-├── src/ # Application source code (backend & frontend)
-├── requirements.txt # Python dependencies
+│   ├── raw/               # Original datasets (not tracked in Git)
+│   └── processed_data/    # Cleaned, analysis-ready datasets (not tracked in Git)
+├── docs/                  # Project documentation
+├── src/                   # Application source code (backend & frontend)
+├── requirements.txt        # Python dependencies
 └── README.md
+```
 
