@@ -1,0 +1,21 @@
+# PricePilot AI - Data Preparation & EDA
+# Python 3.9+
+
+# Core data processing
+pandas>=1.5.0,<2.0.0
+numpy>=1.23.0,<2.0.0
+tabulate>=0.9.0
+
+# Jupyter notebook support
+jupyter>=1.0.0
+nbformat>=5.7.0
+
+# Visualization
+matplotlib>=3.6.0
+seaborn>=0.12.0
+
+# Optional but recommended for enhanced functionality
+openpyxl>=3.9.0  # Excel file support if needed in future
+
+# Development/debugging
+ipython>=8.0.0

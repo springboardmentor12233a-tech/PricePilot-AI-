@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv/
+.venv-1/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS generated files
+Thumbs.db
+.DS_Store
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# IDE settings (optional - uncomment if needed)
+# .vscode/settings.json
+# .idea/
+
+# Note on datasets:
+# Raw datasets (DATASETS/raw/ and datasets/raw/) are preserved
+# Processed datasets are generated from the raw data and not committed
+# To preserve datasets in version control, create a .gitkeep file in raw/ and document dataset sources
