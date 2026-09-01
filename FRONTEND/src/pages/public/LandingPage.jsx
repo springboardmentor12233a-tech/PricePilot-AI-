@@ -1,11 +1,16 @@
+import React from "react";
+
 import {
   ArrowRight,
   BarChart3,
   BrainCircuit,
-  TrendingUp,
+  Check,
+  ChevronRight,
+  Menu,
   Target,
+  TrendingUp,
+  X,
   Zap,
-  CheckCircle2,
 } from "lucide-react";
 
 const features = [
@@ -13,145 +18,295 @@ const features = [
     icon: BrainCircuit,
     title: "AI Price Intelligence",
     description:
-      "Transform raw business data into intelligent pricing recommendations using machine learning.",
+      "Turn product, market, and demand data into intelligent pricing recommendations.",
   },
   {
     icon: TrendingUp,
     title: "Demand Forecasting",
     description:
-      "Predict future product demand and identify trends before they impact your business.",
+      "Forecast demand, identify trends, and understand how pricing affects future sales.",
   },
   {
     icon: Target,
     title: "Competitor Analysis",
     description:
-      "Compare market prices and understand your competitive position in real time.",
+      "Track competitive pricing and understand where your products stand in the market.",
   },
 ];
 
-function LandingPage() {
-  return (
-    <div className="landing-page">
-      {/* ================= NAVBAR ================= */}
+const metrics = [
+  {
+    label: "Recommended Price",
+    value: "₹1,899",
+    change: "+12.4%",
+    description: "optimization opportunity",
+  },
+  {
+    label: "Predicted Demand",
+    value: "1,248",
+    change: "+8.7%",
+    description: "next 30 days",
+  },
+  {
+    label: "Revenue Potential",
+    value: "₹23.7L",
+    change: "+18.2%",
+    description: "estimated opportunity",
+  },
+];
 
-      <nav className="navbar">
-        <div className="logo">
-          <div className="logo-icon">
-            <TrendingUp size={22} />
+const steps = [
+  {
+    number: "01",
+    title: "Connect your data",
+    description:
+      "Add product details, historical prices, competitor data, and sales information.",
+  },
+  {
+    number: "02",
+    title: "AI finds patterns",
+    description:
+      "Our models analyze demand, pricing behavior, market conditions, and historical trends.",
+  },
+  {
+    number: "03",
+    title: "Act with confidence",
+    description:
+      "Receive pricing recommendations and insights designed to improve revenue and margins.",
+  },
+];
+
+const benefits = [
+  "AI-powered recommendations",
+  "Demand forecasting",
+  "Competitor intelligence",
+  "Revenue optimization",
+];
+
+function LandingPage() {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <div className="landing-wrapper">
+      {/* ================= NAVBAR ================= */}
+      <header className="navbar">
+        <div className="nav-container">
+          <a href="#" className="brand" onClick={closeMenu}>
+            <div className="brand-mark">
+              <TrendingUp size={19} strokeWidth={2.5} />
+            </div>
+
+            <span>
+              PricePilot <strong>AI</strong>
+            </span>
+          </a>
+
+          <nav className={`nav-links ${menuOpen ? "mobile-open" : ""}`}>
+            <a href="#features" onClick={closeMenu}>
+              Features
+            </a>
+
+            <a href="#how-it-works" onClick={closeMenu}>
+              How it works
+            </a>
+
+            <a href="#analytics" onClick={closeMenu}>
+              Analytics
+            </a>
+
+            <div className="mobile-nav-actions">
+              <button className="login-btn">Log in</button>
+              <button className="primary-btn">
+                Get Started
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </nav>
+
+          <div className="nav-actions desktop-actions">
+            <button className="login-btn">Log in</button>
+
+            <button className="primary-btn">
+              Get Started
+              <ArrowRight size={16} />
+            </button>
           </div>
 
-          <span>
-            PricePilot <strong>AI</strong>
-          </span>
-        </div>
-
-        <div className="nav-links">
-          <a href="#features">Features</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#analytics">Analytics</a>
-        </div>
-
-        <div className="nav-actions">
-          <button className="login-btn">Log in</button>
-
-          <button className="primary-btn">
-            Get Started
-            <ArrowRight size={18} />
+          <button
+            className="menu-btn"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-      </nav>
-
-      {/* ================= HERO ================= */}
+      </header>
 
       <main>
+        {/* ================= HERO ================= */}
         <section className="hero">
-          <div className="hero-badge">
-            <Zap size={16} />
-            AI-Powered Pricing Intelligence
+          <div className="hero-background">
+            <div className="hero-grid"></div>
+            <div className="hero-glow glow-one"></div>
+            <div className="hero-glow glow-two"></div>
           </div>
 
-          <h1>
-            Price Smarter.
-            <span> Grow Faster.</span>
-          </h1>
+          <div className="hero-content">
+            <div className="hero-badge">
+              <span className="badge-dot"></span>
+              <Zap size={14} />
+              AI-powered pricing intelligence
+            </div>
 
-          <p>
-            PricePilot AI analyzes your product, market, competitor, and demand
-            data to generate intelligent pricing recommendations that help you
-            maximize revenue.
-          </p>
+            <h1>
+              Price smarter.
+              <br />
+              <span>Grow faster.</span>
+            </h1>
 
-          <div className="hero-actions">
-            <button className="primary-btn hero-btn">
-              Start Optimizing
-              <ArrowRight size={19} />
-            </button>
+            <p className="hero-description">
+              PricePilot AI transforms product, market, competitor, and
+              demand data into actionable pricing intelligence.
+            </p>
 
-            <button className="secondary-btn">
-              Explore Platform
-            </button>
-          </div>
+            <div className="hero-actions">
+              <button className="primary-btn hero-btn">
+                Start optimizing
+                <ArrowRight size={17} />
+              </button>
 
-          {/* Dashboard Preview */}
+              <a href="#features" className="secondary-btn hero-btn">
+                Explore platform
+              </a>
+            </div>
 
-          <div className="dashboard-preview">
-            <div className="preview-header">
-              <div>
-                <p className="preview-label">PRICE INTELLIGENCE</p>
-                <h3>Performance Overview</h3>
+            <div className="hero-trust">
+              <div className="trust-item">
+                <Check size={15} />
+                No credit card required
               </div>
 
-              <div className="live-status">
+              <div className="trust-item">
+                <Check size={15} />
+                AI-powered insights
+              </div>
+
+              <div className="trust-item">
+                <Check size={15} />
+                Built for modern teams
+              </div>
+            </div>
+          </div>
+
+          {/* ================= DASHBOARD PREVIEW ================= */}
+          <div className="dashboard-preview" id="analytics">
+            <div className="browser-bar">
+              <div className="browser-dots">
                 <span></span>
-                Live Analysis
+                <span></span>
+                <span></span>
+              </div>
+
+              <div className="browser-address">
+                app.pricepilot.ai/dashboard
+              </div>
+
+              <div className="browser-status">
+                <span></span>
+                Live
               </div>
             </div>
 
-            <div className="metrics-grid">
-              <div className="metric-card">
-                <span>Recommended Price</span>
-                <h2>₹1,899</h2>
-                <small>+12.4% optimized</small>
+            <div className="dashboard-content">
+              <div className="dashboard-heading">
+                <div>
+                  <span className="eyebrow">PRICE INTELLIGENCE</span>
+                  <h3>Performance overview</h3>
+                </div>
+
+                <div className="analysis-status">
+                  <span></span>
+                  Live analysis
+                </div>
               </div>
 
-              <div className="metric-card">
-                <span>Predicted Demand</span>
-                <h2>1,248</h2>
-                <small>Next 30 days</small>
+              <div className="metrics-grid">
+                {metrics.map((metric) => (
+                  <div className="metric-card" key={metric.label}>
+                    <span className="metric-label">{metric.label}</span>
+
+                    <strong className="metric-value">
+                      {metric.value}
+                    </strong>
+
+                    <div className="metric-footer">
+                      <span className="metric-change">
+                        <TrendingUp size={13} />
+                        {metric.change}
+                      </span>
+
+                      <span className="metric-description">
+                        {metric.description}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <div className="metric-card">
-                <span>Revenue Potential</span>
-                <h2>₹23.7L</h2>
-                <small>+18.2% opportunity</small>
-              </div>
-            </div>
+              <div className="chart-card">
+                <div className="chart-header">
+                  <div>
+                    <span className="chart-label">REVENUE TREND</span>
+                    <strong>Pricing performance</strong>
+                  </div>
 
-            <div className="chart-placeholder">
-              <BarChart3 size={28} />
-              <div className="chart-lines">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+                  <div className="chart-period">Last 30 days</div>
+                </div>
+
+                <div className="chart">
+                  <div className="chart-grid-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+
+                  <div className="bars">
+                    {[38, 48, 43, 62, 57, 70, 64, 82, 75, 91, 86, 100].map(
+                      (height, index) => (
+                        <div
+                          key={index}
+                          className="bar"
+                          style={{ height: `${height}%` }}
+                        />
+                      )
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* ================= FEATURES ================= */}
-
-        <section id="features" className="features-section">
+        <section id="features" className="section features-section">
           <div className="section-heading">
-            <p>POWERFUL INTELLIGENCE</p>
+            <div className="section-eyebrow">
+              <BarChart3 size={14} />
+              Powerful intelligence
+            </div>
 
             <h2>
               Everything you need to make
-              <span> smarter pricing decisions.</span>
+              <span> better pricing decisions.</span>
             </h2>
+
+            <p>
+              A unified intelligence layer for understanding your products,
+              customers, competitors, and market.
+            </p>
           </div>
 
           <div className="features-grid">
@@ -161,16 +316,16 @@ function LandingPage() {
               return (
                 <article className="feature-card" key={feature.title}>
                   <div className="feature-icon">
-                    <Icon size={28} />
+                    <Icon size={22} />
                   </div>
 
                   <h3>{feature.title}</h3>
 
                   <p>{feature.description}</p>
 
-                  <button>
+                  <button className="feature-link">
                     Learn more
-                    <ArrowRight size={17} />
+                    <ChevronRight size={15} />
                   </button>
                 </article>
               );
@@ -179,58 +334,49 @@ function LandingPage() {
         </section>
 
         {/* ================= HOW IT WORKS ================= */}
-
-        <section id="how-it-works" className="how-it-works">
+        <section id="how-it-works" className="section workflow-section">
           <div className="section-heading">
-            <p>HOW PRICEPILOT WORKS</p>
+            <div className="section-eyebrow">
+              <Zap size={14} />
+              Simple by design
+            </div>
 
             <h2>
-              From data to decision
-              <span> in three simple steps.</span>
+              From raw data to
+              <span> better decisions.</span>
             </h2>
+
+            <p>
+              PricePilot turns complex pricing data into clear,
+              understandable actions.
+            </p>
           </div>
 
-          <div className="steps">
-            <div className="step">
-              <div className="step-number">01</div>
+          <div className="steps-grid">
+            {steps.map((step) => (
+              <article className="step-card" key={step.number}>
+                <div className="step-top">
+                  <span className="step-number">{step.number}</span>
+                  <div className="step-line"></div>
+                </div>
 
-              <h3>Provide Your Data</h3>
+                <h3>{step.title}</h3>
 
-              <p>
-                Add product information, pricing data, competitor prices, and
-                historical sales data.
-              </p>
-            </div>
-
-            <div className="step">
-              <div className="step-number">02</div>
-
-              <h3>AI Analyzes Patterns</h3>
-
-              <p>
-                Our machine learning models evaluate demand, pricing patterns,
-                and market conditions.
-              </p>
-            </div>
-
-            <div className="step">
-              <div className="step-number">03</div>
-
-              <h3>Get Recommendations</h3>
-
-              <p>
-                Receive intelligent pricing recommendations and insights to
-                improve business performance.
-              </p>
-            </div>
+                <p>{step.description}</p>
+              </article>
+            ))}
           </div>
         </section>
 
         {/* ================= CTA ================= */}
-
         <section className="cta-section">
-          <div>
-            <p className="cta-label">READY TO OPTIMIZE?</p>
+          <div className="cta-background"></div>
+
+          <div className="cta-content">
+            <div className="section-eyebrow">
+              <BrainCircuit size={14} />
+              Built for smarter decisions
+            </div>
 
             <h2>
               Let AI guide your
@@ -238,50 +384,51 @@ function LandingPage() {
             </h2>
 
             <p>
-              Turn your business data into actionable pricing intelligence.
+              Turn your business data into actionable pricing intelligence
+              and make every pricing decision with greater confidence.
             </p>
 
             <button className="primary-btn hero-btn">
-              Get Started
-              <ArrowRight size={19} />
+              Get started for free
+              <ArrowRight size={17} />
             </button>
           </div>
 
-          <div className="cta-checks">
-            <div>
-              <CheckCircle2 size={20} />
-              AI-powered recommendations
-            </div>
+          <div className="cta-benefits">
+            {benefits.map((benefit) => (
+              <div className="benefit" key={benefit}>
+                <div className="benefit-icon">
+                  <Check size={14} />
+                </div>
 
-            <div>
-              <CheckCircle2 size={20} />
-              Demand forecasting
-            </div>
-
-            <div>
-              <CheckCircle2 size={20} />
-              Revenue optimization
-            </div>
+                <span>{benefit}</span>
+              </div>
+            ))}
           </div>
         </section>
       </main>
 
       {/* ================= FOOTER ================= */}
+      <footer className="footer">
+        <div className="footer-container">
+          <a href="#" className="brand">
+            <div className="brand-mark">
+              <TrendingUp size={17} strokeWidth={2.5} />
+            </div>
 
-      <footer>
-        <div className="logo">
-          <div className="logo-icon">
-            <TrendingUp size={20} />
-          </div>
+            <span>
+              PricePilot <strong>AI</strong>
+            </span>
+          </a>
 
-          <span>
-            PricePilot <strong>AI</strong>
+          <p>
+            AI-powered pricing intelligence for smarter business decisions.
+          </p>
+
+          <span className="copyright">
+            © {new Date().getFullYear()} PricePilot AI
           </span>
         </div>
-
-        <p>AI-powered pricing intelligence for smarter business decisions.</p>
-
-        <span>© 2026 PricePilot AI</span>
       </footer>
     </div>
   );
