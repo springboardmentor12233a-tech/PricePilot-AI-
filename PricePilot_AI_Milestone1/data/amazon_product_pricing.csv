@@ -1,0 +1,21 @@
+product_id,product_name,category,sub_category,actual_price_msrp,discounted_price,discount_percentage,cost_price,rating,rating_count,stock_available
+PROD_ELEC_001,Aura Pro Wireless Noise-Cancelling Headphones,Electronics,Audio,199.99,157.99,21.0,110.0,4.6,1240,450
+PROD_ELEC_002,UltraView 27-inch 4K UHD Gaming Monitor,Electronics,Monitors,349.99,330.39,5.6,210.0,4.7,890,280
+PROD_ELEC_003,Vortex Pulse Smartwatch with Heart Rate & GPS,Electronics,Wearables,149.99,132.14,11.9,75.0,4.4,2150,600
+PROD_ELEC_004,HyperCharge 65W GaN Fast Charger Multi-Port,Electronics,Accessories,39.99,35.75,10.6,14.0,4.8,4320,1200
+PROD_ELEC_005,NovaCast 4K Streaming Media Player HDR,Electronics,Home Entertainment,49.99,38.29,23.4,22.0,4.5,3100,850
+PROD_APP_001,AeroFit Men's Breathable Running Performance Jacket,Apparel,Activewear,69.99,54.66,21.9,28.0,4.3,640,520
+PROD_APP_002,Lumina Seamless High-Waist Workout Leggings,Apparel,Activewear,44.99,32.71,27.3,16.0,4.7,1820,940
+PROD_APP_003,Oxford Heritage Slim-Fit Organic Cotton Shirt,Apparel,Casual Wear,54.99,51.03,7.2,22.0,4.5,510,410
+PROD_APP_004,ThermalShield Lightweight Down Winter Puffer,Apparel,Outerwear,119.99,101.39,15.5,48.0,4.6,980,310
+PROD_HOME_001,ChefMaster 8-in-1 Digital Air Fryer & Roaster 6Qt,Home & Kitchen,Kitchen Appliances,99.99,94.29,5.7,45.0,4.7,3450,390
+PROD_HOME_002,BaristaTouch 15-Bar Espresso & Cappuccino Machine,Home & Kitchen,Coffee Machines,189.99,170.04,10.5,95.0,4.5,1120,210
+PROD_HOME_003,PureBreeze HEPA Smart Air Purifier with Sensor,Home & Kitchen,Home Appliances,129.99,107.11,17.6,55.0,4.6,1430,480
+PROD_HOME_004,ErgoRest Memory Foam Ergonomic Pillow Pair,Home & Kitchen,Bedding,49.99,47.14,5.7,18.0,4.4,890,720
+PROD_BEAU_001,Radiance Renewal Peptide & Vitamin C Facial Serum,Health & Beauty,Skincare,29.99,26.99,10.0,8.5,4.8,2890,1100
+PROD_BEAU_002,SonicShine Ultrasonic Electric Toothbrush Set,Health & Beauty,Oral Care,59.99,47.27,21.2,24.0,4.6,1640,580
+PROD_BEAU_003,VitalGlow Deep Moisturizing Hydration Complex,Health & Beauty,Skincare,34.99,28.48,18.6,11.0,4.5,1210,870
+PROD_SPRT_001,TrailBlazer Lightweight Aluminum Trekking Poles,Sports & Outdoors,Outdoor Gear,39.99,35.79,10.5,15.0,4.7,780,420
+PROD_SPRT_002,FlexCore Adjustable Dumbbell Set (5-52.5 lbs),Sports & Outdoors,Fitness,279.99,224.83,19.7,140.0,4.8,2340,160
+PROD_SPRT_003,HydroShield 32oz Insulated Stainless Steel Bottle,Sports & Outdoors,Hydration,24.99,18.69,25.2,9.0,4.9,5600,1500
+PROD_SPRT_004,AeroGlide High-Speed Folding Kick Scooter,Sports & Outdoors,Action Sports,89.99,85.31,5.2,42.0,4.4,430,290
