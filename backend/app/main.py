@@ -12,7 +12,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.api.routes import pricing, forecasting
+from app.api.routes import pricing, forecasting, competitor, revenue
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -46,6 +46,8 @@ def health_check():
 
 app.include_router(pricing.router)
 app.include_router(forecasting.router)
+app.include_router(competitor.router)
+app.include_router(revenue.router)
 
 
 # NOTE: more feature routers (auth, products, forecasting...) will be
