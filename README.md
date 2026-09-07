@@ -68,51 +68,43 @@ Build an AI-powered dynamic pricing platform that maximizes revenue, improves pr
 
 PRICEPILOT AI/
 │
-├── .venv/                          (excluded from Git)
-├── venv/                           (excluded from Git)
-│
 ├── data/
-│   ├── raw/                        (excluded from Git)
-│   └── processed_data/             (excluded from Git)
+│ ├── raw/ (excluded from Git)
+│ └── processed_data/ (excluded from Git)
 │
 ├── docs/
-│   ├── ui_wireframes.md
-│   └── pricing_workflows_objectives.md
+│ ├── ui_wireframes.md
+│ └── pricing_workflows_objectives.md
 │
 ├── notebooks/
-│   ├── eda_retail_pricing.ipynb
-│   ├── eda_dynamic_pricing.ipynb
-│   ├── eda_online_retail_ii.ipynb
-│   ├── eda_walmart_sales.ipynb
-│   ├── eda_amazon_products.ipynb
-│   └── eda_amazon_uk_products.ipynb
+│ ├── eda_retail_pricing.ipynb
+│ ├── eda_dynamic_pricing.ipynb
+│ ├── eda_online_retail_ii.ipynb
+│ ├── eda_walmart_sales.ipynb
+│ ├── eda_amazon_products.ipynb
+│ └── eda_amazon_uk_products.ipynb
 │
 ├── src/
-│   ├── backend/
-│   │   ├── venv/                  (excluded from Git)
-│   │   ├── .env                  (excluded from Git — secrets)
-│   │   │
-│   │   └── app/
-│   │       ├── main.py
-│   │       ├── database.py
-│   │       ├── create_tables.py
-│   │       ├── models/ (user.py, product.py, pricing_history.py)
-│   │       ├── routes/ (product.py, auth.py)
-│   │       ├── schemas/ (product.py, user.py)
-│   │       └── auth/ (auth_utils.py, dependencies.py)
-│   │
-│   └── frontend/
-│       ├── node_modules/          (excluded from Git)
-│       ├── .next/                  (excluded from Git)
-│       ├── public/
-│       ├── package.json, package-lock.json
-│       ├── next.config.ts, tsconfig.json, eslint.config.mjs     postcss.config.mjs
-│       │
-│       └── app/
-│           ├── page.tsx, layout.tsx, globals.css, favicon.ico
-│           ├── login/page.tsx
-│           ├── dashboard/page.tsx
-│           └── lib/api.ts
+│ ├── backend/
+│ │ └── app/
+│ │ ├── main.py
+│ │ ├── database.py
+│ │ ├── create_tables.py
+│ │ ├── models/ (user.py, product.py, pricing_history.py)
+│ │ ├── routes/ (product.py, auth.py)
+│ │ ├── schemas/ (product.py, user.py)
+│ │ └── auth/ (auth_utils.py, dependencies.py)
+│ │
+│ └── frontend/
+│ ├── public/
+│ ├── package.json, package-lock.json
+│ ├── next.config.ts, tsconfig.json
+│ │
+│ └── app/
+│ ├── page.tsx, layout.tsx, globals.css, favicon.ico
+│ ├── login/page.tsx
+│ ├── dashboard/page.tsx
+│ └── lib/api.ts
 │
 ├── .gitignore
 └── README.md
