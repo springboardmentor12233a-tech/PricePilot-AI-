@@ -12,13 +12,11 @@ Build an AI-powered dynamic pricing platform that maximizes revenue, improves pr
 
 ---
 
-## 📊 Milestone 1: Data Collection, EDA & Preprocessing ✅
+## 📊 Milestone 1: Data Collection, EDA, Backend & Frontend ✅
 
 **Status: Completed**
 
-This phase focused on sourcing, exploring, and preparing real-world datasets to power the platform's pricing and demand intelligence engine.
-
-### Datasets Used
+### 1. Data Collection, EDA & Preprocessing
 
 | # | Dataset | Source | Purpose |
 |---|---------|--------|---------|
@@ -29,39 +27,114 @@ This phase focused on sourcing, exploring, and preparing real-world datasets to 
 | 5 | Amazon Products 2023 | [Kaggle](https://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products) | Product catalog & attributes |
 | 6 | Amazon UK Products 2023 | [Kaggle](https://www.kaggle.com/datasets/asaniczka/amazon-uk-products-dataset-2023) | Competitor pricing data |
 
-### What Was Done
+- Sourced and cleaned 6 real-world datasets (~4.8 million records)
+- Full EDA: structure inspection, missing values, duplicates, statistics, validity checks
+- Individual charts + combined dashboards per dataset
+- Cleaned, analysis-ready datasets exported for ML use
 
-- ✅ **Data Collection** — Sourced and organized 6 real-world datasets covering ~4.8 million records
-- ✅ **Exploratory Data Analysis (EDA)** — For each dataset: structure inspection, missing value analysis, duplicate detection, statistical summaries, and validity checks
-- ✅ **Data Visualization** — Individual charts and combined dashboards per dataset, revealing pricing trends, category distributions, demand patterns, and regional/seasonal insights
-- ✅ **Data Preprocessing** — Missing value handling, duplicate removal, invalid record filtering, data type correction, and column standardization
-- ✅ **Data Export** — Clean, analysis-ready datasets saved for downstream use in price prediction and demand forecasting models
+### 2. Backend (FastAPI + PostgreSQL)
 
-### Key Findings
+- RESTful API built with **FastAPI**, connected to a **PostgreSQL** database
+- Database models: `users`, `products`, `pricing_history`
+- Full Product CRUD (Create, Read, Update, Delete)
+- User registration & login with hashed passwords (bcrypt)
+- JWT-based authentication
+- Role-Based Access Control (RBAC) — Pricing Manager / Executive roles required for write operations
+- Automatic pricing history logging on every price change
+- Secrets managed via `.env` (excluded from version control)
 
-- Datasets were largely clean, with targeted issues identified and resolved per dataset (e.g., missing promotion labels, cancelled transaction removal, zero-price listings)
-- Combined dataset volume after cleaning: **~4.8 million records** across pricing, sales, and product domains
-- Clear pricing, demand, and seasonal patterns identified — validating feasibility for downstream ML models
+### 3. Frontend (Next.js + Tailwind CSS)
+
+- Built with **Next.js** (App Router) and **Tailwind CSS**
+- Custom dark, terminal-inspired UI theme (emerald/violet accents, glass-effect cards)
+- **Login page** — connected to backend authentication, JWT stored client-side
+- **Dashboard page** — displays live product data fetched from PostgreSQL via the backend API, shows authenticated user identity and role
 
 ---
 
 ## 🛠️ Tools & Technologies
 
-- **Language:** Python
-- **Libraries:** Pandas, NumPy, Matplotlib, Seaborn
-- **Environment:** VS Code, Jupyter Notebooks
-- **Version Control:** Git & GitHub
+| Category | Tools |
+|---|---|
+| Data Analysis | Python, Pandas, NumPy, Matplotlib, Seaborn |
+| Backend | FastAPI, SQLAlchemy, PostgreSQL, JWT (python-jose), Passlib (bcrypt) |
+| Frontend | Next.js, React, Tailwind CSS, TypeScript |
+| Environment | VS Code, Jupyter Notebooks, Node.js |
+| Version Control | Git & GitHub |
 
 ---
 
 ## 📁 Project Structure
-PricePilot-AI/
-├── notebooks/ # EDA & preprocessing notebooks (one per dataset)
+
+PRICEPILOT AI/
+│
+├── .venv/                          (excluded from Git)
+├── venv/                           (excluded from Git)
+│
 ├── data/
-│ ├── raw/ # Original datasets (not tracked in Git)
-│ └── processed_data/ # Cleaned, analysis-ready datasets (not tracked in Git)
-├── docs/ # Project documentation
-├── src/ # Application source code (backend & frontend)
-├── requirements.txt # Python dependencies
+│   ├── raw/                        (excluded from Git)
+│   └── processed_data/             (excluded from Git)
+│
+├── docs/
+│   ├── ui_wireframes.md
+│   └── pricing_workflows_objectives.md
+│
+├── notebooks/
+│   ├── eda_retail_pricing.ipynb
+│   ├── eda_dynamic_pricing.ipynb
+│   ├── eda_online_retail_ii.ipynb
+│   ├── eda_walmart_sales.ipynb
+│   ├── eda_amazon_products.ipynb
+│   └── eda_amazon_uk_products.ipynb
+│
+├── src/
+│   ├── backend/
+│   │   ├── venv/                  (excluded from Git)
+│   │   ├── .env                  (excluded from Git — secrets)
+│   │   │
+│   │   └── app/
+│   │       ├── main.py
+│   │       ├── database.py
+│   │       ├── create_tables.py
+│   │       ├── models/ (user.py, product.py, pricing_history.py)
+│   │       ├── routes/ (product.py, auth.py)
+│   │       ├── schemas/ (product.py, user.py)
+│   │       └── auth/ (auth_utils.py, dependencies.py)
+│   │
+│   └── frontend/
+│       ├── node_modules/          (excluded from Git)
+│       ├── .next/                  (excluded from Git)
+│       ├── public/
+│       ├── package.json, package-lock.json
+│       ├── next.config.ts, tsconfig.json, eslint.config.mjs     postcss.config.mjs
+│       │
+│       └── app/
+│           ├── page.tsx, layout.tsx, globals.css, favicon.ico
+│           ├── login/page.tsx
+│           ├── dashboard/page.tsx
+│           └── lib/api.ts
+│
+├── .gitignore
 └── README.md
+
+## 📋 Additional Documentation
+
+- **[Pricing Workflows & Objectives](docs/pricing_workflows_objectives.md)** — Detailed pricing optimization workflow and project objectives
+- **[UI Wireframes & Workflow Planning](docs/ui_wireframes.md)** — Frontend design approach and page structure
+
+---
+
+## 🚧 Upcoming Work
+
+- Price Prediction & Demand Forecasting models (Milestone 2)
+- Competitor Analysis & Revenue Optimization modules (Milestone 3)
+- Testing, Deployment & Documentation (Milestone 4)
+
+---
+
+## 👤 Author
+
+**Sobhit Giri**
+Infosys Springboard — PricePilot AI Project
+
 

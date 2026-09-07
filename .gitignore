@@ -1,6 +1,13 @@
 venv/
+.venv/
 data/raw/
 data/processed_data/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+.env
+src/backend/.env
+node_modules/
+src/frontend/node_modules/
+.next/
+src/frontend/.next/

@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+:root {
+  --background: #07080a;
+  --surface: #0c0e11;
+  --surface-2: #121418;
+  --foreground: #eef0f1;
+  --muted: #8b909a;
+  --muted-2: #545961;
+  --accent: #0fd8a0;
+  --accent-bright: #35f5c1;
+  --violet: #9d7cf9;
+  --accent-dim: rgba(15, 216, 160, 0.12);
+  --violet-dim: rgba(157, 124, 249, 0.14);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+/* ---------- Brand panel ---------- */
+.brand-panel {
+  background: linear-gradient(175deg, #0a0c0f 0%, #060708 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-panel::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(15, 216, 160, 0.16), transparent 42%),
+    radial-gradient(circle at 88% 78%, rgba(157, 124, 249, 0.10), transparent 45%);
+  filter: blur(60px);
+  animation: drift 22s ease-in-out infinite alternate;
+}
+
+.brand-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 45%, black, transparent 82%);
+}
+
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-4%, 3%) scale(1.06); }
+}
+
+/* ---------- Surfaces ---------- */
+.glass-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.035) inset, 0 30px 80px rgba(0, 0, 0, 0.7);
+}
+
+.terminal-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* ---------- Text ---------- */
+.accent-text { color: var(--accent); }
+.violet-text { color: var(--violet); }
+.muted-text { color: var(--muted); }
+.muted-text-2 { color: var(--muted-2); }
+
+.gradient-heading {
+  background: linear-gradient(95deg, var(--accent) 0%, var(--accent-bright) 45%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Logo ---------- */
+.logo-mark {
+  background: linear-gradient(150deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 4px 16px rgba(15, 216, 160, 0.25);
+}
+
+/* ---------- Status strip (replaces the clashing badge) ---------- */
+.status-strip {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: blink 2.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* ---------- Buttons & inputs ---------- */
+.accent-btn {
+  background: linear-gradient(135deg, var(--accent-bright), var(--accent));
+  color: #052018;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accent-btn:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 0 4px var(--accent-dim), 0 10px 28px rgba(15, 216, 160, 0.28);
+  transform: translateY(-1px);
+}
+
+.accent-btn:active {
+  transform: translateY(0);
+}
+
+.input-field {
+  background: rgba(255, 255, 255, 0.022);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.032);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+/* ---------- Misc ---------- */
+.divider-fade {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+.row-icon {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.6;
+}
