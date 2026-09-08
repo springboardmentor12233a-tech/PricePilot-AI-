@@ -9,8 +9,9 @@ sqlalchemy
 psycopg2-binary
 
 # Data validation
-pydantic
+pydantic[email]
 pydantic-settings
+email-validator
 
 # HTTP requests / external APIs
 requests
