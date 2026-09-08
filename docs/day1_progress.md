@@ -379,3 +379,186 @@ The prediction endpoint was tested using FastAPI Swagger UI.
 ## Next Step
 
 Develop a proper prediction input structure and integrate the prediction functionality with the frontend.
+
+# Day 15 Progress – Milestone 2
+
+## Objective
+
+Begin the Dynamic Pricing Optimization module using the demand prediction model and business pricing factors.
+
+## Work Completed
+
+- Started Milestone 2 development.
+- Designed the pricing optimization logic.
+- Created the `pricing_optimizer.py` module.
+- Considered predicted demand, current price, competitor pricing and inventory level.
+- Implemented an initial price recommendation function.
+- Tested the pricing logic with multiple scenarios.
+
+## Pricing Factors
+
+The pricing recommendation considers:
+
+1. Predicted Demand
+2. Current Price
+3. Competitor Price
+4. Inventory Level
+5. Discount
+6. Promotion
+
+## Initial Pricing Logic
+
+- High demand and low inventory can increase the recommended price.
+- Low demand and high inventory can decrease the recommended price.
+- A price significantly higher than the competitor price can be adjusted.
+
+## Outcome
+
+An initial dynamic pricing recommendation module was created and tested successfully.
+
+## Next Step
+
+Integrate the pricing optimization module with the trained demand prediction model and FastAPI backend.
+
+# Day 16 Progress – Milestone 2
+
+## Objective
+
+Integrate the trained demand prediction model with the dynamic pricing optimization module.
+
+## Work Completed
+
+- Loaded the trained Random Forest demand prediction model.
+- Loaded the ML-ready dataset.
+- Prepared the input features.
+- Generated predicted demand for a sample product.
+- Integrated predicted demand with the pricing optimization logic.
+- Considered current price, competitor price and inventory level.
+- Generated a recommended price.
+
+## System Flow
+
+Data
+↓
+Demand Prediction Model
+↓
+Predicted Demand
+↓
+Pricing Optimizer
+↓
+Recommended Price
+
+## Outcome
+
+The demand prediction model and pricing optimization module were successfully connected to create an initial end-to-end dynamic pricing pipeline.
+
+## Next Step
+
+Integrate the complete demand prediction and pricing recommendation pipeline with the FastAPI backend.
+
+# Day 17 Progress – Milestone 2
+
+## Objective
+
+Integrate the dynamic pricing optimization module with the FastAPI backend.
+
+## Work Completed
+
+- Integrated the demand prediction model with FastAPI.
+- Integrated the pricing optimization module with FastAPI.
+- Created the `/api/recommend-price` endpoint.
+- Added validation for the row ID.
+- Retrieved current price, competitor price and inventory level.
+- Generated predicted demand using the trained Random Forest model.
+- Generated a recommended price using the pricing optimization logic.
+- Tested the API using FastAPI Swagger documentation.
+
+## API Endpoint
+
+### POST /api/recommend-price
+
+The endpoint returns:
+
+- Current Price
+- Competitor Price
+- Inventory Level
+- Predicted Demand
+- Recommended Price
+
+## System Flow
+
+Product Data
+↓
+Demand Prediction Model
+↓
+Predicted Demand
+↓
+Pricing Optimization
+↓
+Recommended Price
+↓
+FastAPI Response
+
+## Outcome
+
+The dynamic pricing pipeline was successfully integrated with FastAPI and tested through the Swagger interface.
+
+## Next Step
+
+Improve the pricing recommendation system and introduce a structured API input model for real-time product pricing requests.
+
+# Day 18 Progress – Milestone 2
+
+## Objective
+
+Develop a real-time pricing recommendation API using FastAPI.
+
+## Work Completed
+
+- Created the PricingRequest model using Pydantic.
+- Created the `/api/pricing` endpoint.
+- Added current price as an input.
+- Added competitor price as an input.
+- Added inventory level as an input.
+- Added predicted demand as an input.
+- Integrated the pricing optimization logic.
+- Added pricing action classification.
+- Tested the API using Swagger UI.
+
+## Input
+
+The API accepts:
+
+- Current Price
+- Competitor Price
+- Inventory Level
+- Predicted Demand
+
+## Output
+
+The API provides:
+
+- Recommended Price
+- Pricing Action
+
+## Pricing Actions
+
+- Increase Price
+- Decrease Price
+- Maintain Price
+
+## Testing
+
+Three pricing scenarios were tested:
+
+1. High demand + low inventory → Increase Price
+2. Low demand + high inventory → Decrease Price
+3. Normal demand + inventory → Maintain Price
+
+## Outcome
+
+The real-time pricing recommendation API was successfully developed and tested using FastAPI Swagger.
+
+## Next Step
+
+Connect the Random Forest demand prediction model directly to the pricing API.
