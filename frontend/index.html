@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PricePilot AI | Dynamic Pricing Intelligence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <span>₹</span>
+            </div>
+
+            <div>
+                <h2>PricePilot</h2>
+                <small>AI PRICING INTELLIGENCE</small>
+            </div>
+        </div>
+
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            <span>AI System Online</span>
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <!-- Hero -->
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <div class="eyebrow">
+                    <span>✦</span>
+                    INTELLIGENT RETAIL ANALYTICS
+                </div>
+
+                <h1>
+                    Optimize Your
+                    <span>Pricing.</span>
+                    <br>
+                    Maximize Your Revenue.
+                </h1>
+
+                <p>
+                    AI-powered demand forecasting and dynamic pricing
+                    recommendations designed to help you make smarter
+                    retail decisions.
+                </p>
+
+            </div>
+
+            <div class="hero-badge">
+                <div class="pulse-ring"></div>
+                <div class="ai-symbol">AI</div>
+            </div>
+
+        </section>
+
+
+        <!-- Control Panel -->
+        <section class="control-panel">
+
+            <div class="control-info">
+                <div class="control-icon">⚡</div>
+
+                <div>
+                    <h3>Run AI Analysis</h3>
+                    <p>Select a dataset record to generate a complete pricing analysis.</p>
+                </div>
+            </div>
+
+            <div class="controls">
+
+                <label for="rowId">DATASET ROW</label>
+
+                <input
+                    type="number"
+                    id="rowId"
+                    value="0"
+                    min="0"
+                    placeholder="Row ID"
+                >
+
+                <button id="analyzeBtn" onclick="getAnalysis()">
+                    <span id="buttonIcon">✦</span>
+                    <span id="buttonText">Analyze Now</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Loading -->
+        <div id="loading" class="loading-container">
+
+            <div class="loader"></div>
+
+            <div>
+                <strong>AI is analyzing your data...</strong>
+                <p>Forecasting demand • Optimizing price • Generating insights</p>
+            </div>
+
+        </div>
+
+
+        <!-- Error -->
+        <div id="error" class="error-message"></div>
+
+
+        <!-- KPI Cards -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">REAL-TIME ANALYTICS</span>
+                    <h2>Pricing Intelligence</h2>
+                </div>
+
+                <div class="live-indicator">
+                    <span></span>
+                    LIVE ANALYSIS
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <!-- Demand -->
+                <div class="metric-card demand-card">
+
+                    <div class="card-top">
+                        <div class="metric-icon">📈</div>
+                        <span class="card-label">FORECASTED DEMAND</span>
+                    </div>
+
+                    <div class="metric-value">
+                        <span id="demand">—</span>
+                        <small>units</small>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span class="trend-icon">↗</span>
+                        AI Forecast
+                    </div>
+
+                </div>
+
+
+                <!-- Inventory -->
+                <div class="metric-card inventory-card">
+
+                    <div class="card-top">
+                        <div class="metric-icon">📦</div>
+                        <span class="card-label">INVENTORY LEVEL</span>
+                    </div>
+
+                    <div class="metric-value">
+                        <span id="inventory">—</span>
+                        <small>units</small>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span class="trend-icon">◉</span>
+                        Current Stock
+                    </div>
+
+                </div>
+
+
+                <!-- Current Price -->
+                <div class="metric-card">
+
+                    <div class="card-top">
+                        <div class="metric-icon">💰</div>
+                        <span class="card-label">CURRENT PRICE</span>
+                    </div>
+
+                    <div class="metric-value">
+                        ₹<span id="currentPrice">—</span>
+                    </div>
+
+                    <div class="metric-footer">
+                        Market Price
+                    </div>
+
+                </div>
+
+
+                <!-- Competitor -->
+                <div class="metric-card">
+
+                    <div class="card-top">
+                        <div class="metric-icon">⚔️</div>
+                        <span class="card-label">COMPETITOR PRICE</span>
+                    </div>
+
+                    <div class="metric-value">
+                        ₹<span id="competitorPrice">—</span>
+                    </div>
+
+                    <div class="metric-footer">
+                        Market Comparison
+                    </div>
+
+                </div>
+
+
+                <!-- Recommended -->
+                <div class="metric-card recommended-card">
+
+                    <div class="card-top">
+                        <div class="metric-icon">🎯</div>
+                        <span class="card-label">RECOMMENDED PRICE</span>
+                    </div>
+
+                    <div class="metric-value highlight">
+                        ₹<span id="recommendedPrice">—</span>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span class="spark"></span>
+                        AI Optimized
+                    </div>
+
+                </div>
+
+
+                <!-- Action -->
+                <div class="metric-card action-card">
+
+                    <div class="card-top">
+                        <div class="metric-icon">⚡</div>
+                        <span class="card-label">PRICING ACTION</span>
+                    </div>
+
+                    <div id="action" class="action-badge">
+                        WAITING
+                    </div>
+
+                    <div class="metric-footer">
+                        Recommended Strategy
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Price Comparison -->
+        <section class="analysis-grid">
+
+            <div class="visual-card">
+
+                <div class="visual-header">
+                    <div>
+                        <span class="section-label">PRICE ANALYSIS</span>
+                        <h2>Market Position</h2>
+                    </div>
+
+                    <div class="chart-icon">◈</div>
+                </div>
+
+                <div class="price-comparison">
+
+                    <div class="price-item">
+                        <span>Your Price</span>
+                        <strong id="visualCurrentPrice">₹—</strong>
+                        <div class="bar">
+                            <div id="currentBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="price-item">
+                        <span>Competitor</span>
+                        <strong id="visualCompetitorPrice">₹—</strong>
+                        <div class="bar">
+                            <div id="competitorBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="price-item recommended">
+                        <span>AI Recommendation</span>
+                        <strong id="visualRecommendedPrice">₹—</strong>
+                        <div class="bar">
+                            <div id="recommendedBar"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- System Workflow -->
+            <div class="visual-card workflow-card">
+
+                <div class="visual-header">
+                    <div>
+                        <span class="section-label">AI PIPELINE</span>
+                        <h2>Decision Workflow</h2>
+                    </div>
+                </div>
+
+                <div class="workflow">
+
+                    <div class="workflow-step active">
+                        <div class="step-number">01</div>
+                        <div>
+                            <strong>Demand Forecast</strong>
+                            <span>Gradient Boosting Model</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-line"></div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">02</div>
+                        <div>
+                            <strong>Price Optimization</strong>
+                            <span>Dynamic Pricing Engine</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-line"></div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">03</div>
+                        <div>
+                            <strong>AI Business Insight</strong>
+                            <span>Groq LLM</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI Insight -->
+        <section class="ai-insight-card">
+
+            <div class="ai-header">
+
+                <div class="ai-title">
+
+                    <div class="ai-avatar">
+                        <span>✦</span>
+                    </div>
+
+                    <div>
+                        <span class="section-label">POWERED BY GROQ</span>
+                        <h2>AI Business Insight</h2>
+                    </div>
+
+                </div>
+
+                <div class="ai-status">
+                    <span></span>
+                    AI READY
+                </div>
+
+            </div>
+
+
+            <div class="insight-content">
+
+                <div class="quote-mark">“</div>
+
+                <p id="aiInsight">
+                    Run an analysis to generate an intelligent
+                    business recommendation based on demand,
+                    inventory and market pricing.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+
+            <div>
+                <strong>PricePilot AI</strong>
+                <span>Dynamic Pricing & Revenue Intelligence</span>
+            </div>
+
+            <div class="footer-right">
+                <span>Gradient Boosting</span>
+                <span>•</span>
+                <span>Groq AI</span>
+                <span>•</span>
+                <span>FastAPI</span>
+            </div>
+
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

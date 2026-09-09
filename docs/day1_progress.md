@@ -562,3 +562,577 @@ The real-time pricing recommendation API was successfully developed and tested u
 ## Next Step
 
 Connect the Random Forest demand prediction model directly to the pricing API.
+
+
+# Day 20 Progress – Model Optimization and Milestone 2
+
+## Objective
+
+To optimize the demand forecasting model using GridSearchCV and identify the best-performing machine learning model for PricePilot AI.
+
+## Dataset
+
+- Dataset: Retail Store Inventory and Demand Forecasting
+- Records: 76,000
+- Features used for training: 29
+- Target: Demand
+- Training records: 60,800
+- Testing records: 15,200
+
+## Model Optimization
+
+GridSearchCV with 3-fold cross-validation was used to tune the machine learning models.
+
+The following models were evaluated:
+
+- Random Forest Regressor
+- Gradient Boosting Regressor
+
+## Random Forest Results
+
+MAE: 12.69
+
+RMSE: 16.91
+
+R² Score: 0.8706
+
+## Gradient Boosting Results
+
+Best Parameters:
+
+- Learning Rate: 0.1
+- Max Depth: 5
+- Number of Estimators: 200
+
+MAE: 12.25
+
+RMSE: 16.05
+
+R² Score: 0.8833
+
+## Best Model
+
+Gradient Boosting Regressor was selected as the final demand forecasting model because it achieved:
+
+- Lowest MAE
+- Lowest RMSE
+- Highest R² score
+
+The final model achieved an R² score of 0.8833.
+
+## Model Output
+
+The optimized model was saved as:
+
+models/best_demand_model.pkl
+
+## Milestone 2 Backend
+
+The backend is being developed to provide:
+
+- Forecasted demand
+- Inventory level
+- Current price
+- Competitor price
+- Recommended price
+- Pricing action
+
+## External LLM
+
+Groq will be integrated as the external LLM to generate AI-based explanations and business insights from the forecasting and pricing results.
+
+## Outcome
+
+GridSearchCV successfully identified Gradient Boosting as the best-performing model for demand forecasting.
+
+## Next Steps
+
+- Replace the previous demand model with the optimized Gradient Boosting model.
+- Integrate the optimized model with the FastAPI backend.
+- Display forecasted demand and inventory.
+- Complete the pricing recommendation workflow.
+- Integrate Groq for AI-generated business insights.
+
+# Day 21 Progress – Optimized Model Integration
+
+## Objective
+
+To integrate the optimized demand forecasting model into the FastAPI backend and provide forecast and pricing information through a single API.
+
+## Work Completed
+
+- Integrated the optimized Gradient Boosting model.
+- Loaded `best_demand_model.pkl`.
+- Created the `/api/forecast-pricing` endpoint.
+- Integrated demand forecasting with the pricing optimizer.
+- Added forecasted demand to the API response.
+- Added inventory level to the API response.
+- Added current price and competitor price.
+- Added recommended price.
+- Added pricing action.
+
+## Best Model
+
+Model: Gradient Boosting Regressor
+
+Best Parameters:
+
+- Learning Rate: 0.1
+- Max Depth: 5
+- Number of Estimators: 200
+
+Performance:
+
+- MAE: 12.25
+- RMSE: 16.05
+- R² Score: 0.8833
+
+## API Testing
+
+Endpoint:
+
+POST `/api/forecast-pricing`
+
+Test Result:
+
+- Forecasted Demand: 109.8
+- Inventory Level: 195
+- Current Price: 72.72
+- Competitor Price: 85.73
+- Recommended Price: 72.72
+- Action: Maintain Price
+
+## Outcome
+
+The optimized Gradient Boosting model was successfully integrated with the FastAPI backend. The API can now provide forecasted demand, inventory information, pricing information and pricing recommendations in a single response.
+
+## Next Steps
+
+- Integrate Groq as an external LLM.
+- Generate AI-based business insights from forecast and pricing results.
+- Further improve the backend for Milestone 2.
+
+# Day 22 Progress – Groq AI Integration
+
+## Objective
+
+To integrate Groq as an external Large Language Model (LLM) to generate AI-based business insights from demand forecasting and pricing results.
+
+## Work Completed
+
+- Installed Groq and python-dotenv.
+- Configured the Groq API key using environment variables.
+- Created `backend/groq_service.py`.
+- Integrated Groq with PricePilot AI.
+- Tested Groq independently.
+- Created the `/api/ai-insight` FastAPI endpoint.
+- Connected ML forecasting results with the Groq LLM.
+
+## Groq Model
+
+Model used:
+
+`openai/gpt-oss-20b`
+
+## AI Inputs
+
+The Groq service receives:
+
+- Forecasted Demand
+- Inventory Level
+- Current Price
+- Competitor Price
+- Recommended Price
+- Pricing Action
+
+## AI Output
+
+Groq generates a concise business insight explaining:
+
+- Demand situation
+- Inventory situation
+- Price comparison
+- Reason for the recommended pricing action
+
+## Test Result
+
+Forecasted Demand: 109.8
+
+Inventory Level: 195
+
+Current Price: 72.72
+
+Competitor Price: 85.73
+
+Recommended Price: 72.72
+
+Action: Maintain Price
+
+Groq successfully generated a business insight based on these values.
+
+## Outcome
+
+Groq was successfully integrated as an external LLM for PricePilot AI. The system can now combine machine learning predictions, pricing recommendations and AI-generated business insights.
+
+## Next Steps
+
+- Complete Milestone 2 backend integration.
+- Improve API error handling.
+- Connect database information with the backend.
+- Prepare the final backend workflow.
+
+
+# Day 23 Progress – Milestone 2 Backend Integration
+
+## Objective
+
+To complete the major backend integration of PricePilot AI by connecting demand forecasting, pricing recommendation, database connectivity and Groq-based AI insights.
+
+## Work Completed
+
+- Cleaned the pricing optimizer module.
+- Integrated the optimized Gradient Boosting model.
+- Integrated demand forecasting with pricing recommendation.
+- Integrated Groq as an external LLM.
+- Added AI-generated business insights.
+- Added error handling for AI requests.
+- Created a complete analysis API endpoint.
+- Verified database connectivity.
+- Tested the backend through FastAPI Swagger.
+
+## Complete Backend Workflow
+
+The current PricePilot AI workflow is:
+
+Dataset
+→ Data Preprocessing
+→ Feature Engineering
+→ Model Training
+→ GridSearchCV
+→ Best Model Selection
+→ Demand Forecasting
+→ Pricing Recommendation
+→ Groq AI Insight
+
+## Best Model
+
+Model: Gradient Boosting Regressor
+
+Best Parameters:
+
+- Learning Rate: 0.1
+- Max Depth: 5
+- Number of Estimators: 200
+
+Performance:
+
+- MAE: 12.25
+- RMSE: 16.05
+- R² Score: 0.8833
+
+## API Endpoints
+
+### Health Check
+
+GET `/api/health`
+
+### Database Check
+
+GET `/api/database`
+
+### Forecast and Pricing
+
+POST `/api/forecast-pricing`
+
+### AI Insight
+
+POST `/api/ai-insight`
+
+### Complete Analysis
+
+POST `/api/complete-analysis`
+
+## Complete Analysis Output
+
+The complete API provides:
+
+- Forecasted demand
+- Inventory level
+- Current price
+- Competitor price
+- Recommended price
+- Pricing action
+- AI-generated business insight
+
+## Outcome
+
+The major backend components of PricePilot AI were successfully integrated. The backend can now combine machine learning demand forecasting, rule-based pricing recommendations, database connectivity and Groq-based AI business insights.
+
+## Current Limitation
+
+The current pricing recommendation uses rule-based pricing logic. The system is not yet a fully autonomous optimization engine.
+
+The model also currently uses dataset rows as input for forecasting. A production implementation would require a proper input validation and preprocessing pipeline for new real-world data.
+
+## Next Steps
+
+- Improve model input preprocessing.
+- Improve database integration.
+- Add frontend/dashboard integration.
+- Add API documentation.
+- Perform complete system testing.
+
+# Day 24 Progress – Frontend Dashboard Integration
+
+## Objective
+
+To create a simple frontend dashboard that displays the demand forecast, inventory information, pricing recommendation and Groq AI business insight generated by the PricePilot AI backend.
+
+## Work Completed
+
+- Created the frontend interface.
+- Created `index.html`.
+- Created `style.css`.
+- Created `script.js`.
+- Connected the frontend with the FastAPI backend.
+- Added CORS configuration.
+- Connected the frontend to `/api/complete-analysis`.
+- Added dataset row selection.
+- Displayed forecasted demand.
+- Displayed inventory level.
+- Displayed current price.
+- Displayed competitor price.
+- Displayed recommended price.
+- Displayed pricing action.
+- Displayed Groq AI business insight.
+
+## Frontend Components
+
+### Input
+
+The user can provide a dataset row ID for analysis.
+
+### Dashboard
+
+The dashboard displays:
+
+- Forecasted Demand
+- Inventory Level
+- Current Price
+- Competitor Price
+- Recommended Price
+- Pricing Action
+
+### AI Insight
+
+The Groq LLM generates a business explanation based on the forecasting and pricing results.
+
+## System Flow
+
+Frontend
+→ FastAPI
+→ Demand Forecasting Model
+→ Pricing Optimizer
+→ Groq AI
+→ Frontend Dashboard
+
+## Outcome
+
+The PricePilot AI frontend was successfully connected to the backend. The system can now display machine learning predictions, pricing recommendations and AI-generated business insights through a single dashboard.
+
+## Next Steps
+
+- Improve frontend design.
+- Add charts and visual analytics.
+- Improve API validation and error handling.
+- Perform complete system testing.
+- Prepare Milestone 2 documentation.
+
+
+# Day 25 Progress – Complete System Testing
+
+## Objective
+
+To test the complete PricePilot AI system after integrating the frontend, FastAPI backend, demand forecasting model, pricing optimizer and Groq AI.
+
+## System Tested
+
+Frontend
+→ FastAPI Backend
+→ Gradient Boosting Model
+→ Demand Forecast
+→ Pricing Recommendation
+→ Groq AI Insight
+→ Frontend Dashboard
+
+## Testing Performed
+
+- Tested FastAPI backend startup.
+- Tested frontend server.
+- Tested complete analysis API.
+- Tested dataset row-based analysis.
+- Tested demand forecasting.
+- Tested pricing recommendation.
+- Tested competitor price comparison.
+- Tested inventory display.
+- Tested Groq AI insight generation.
+- Tested frontend API integration.
+
+## Test Cases
+
+| Test Case | Input | Result |
+|---|---|---|
+| Dataset Row Test | 0 | Passed |
+| Dataset Row Test | 10 | Passed |
+| Dataset Row Test | 100 | Passed |
+| Dataset Row Test | 500 | Passed |
+| Dataset Row Test | 1000 | Passed |
+
+## Complete Output
+
+The system successfully displays:
+
+- Forecasted Demand
+- Inventory Level
+- Current Price
+- Competitor Price
+- Recommended Price
+- Pricing Action
+- AI-generated Business Insight
+
+## Outcome
+
+The PricePilot AI frontend and backend were successfully integrated and tested. The system can perform demand forecasting, generate pricing recommendations and provide AI-based business insights through the dashboard.
+
+## Next Step
+
+- Improve frontend and backend error handling.
+- Perform final API testing.
+- Clean project files.
+- Prepare final project documentation.
+
+
+# Day 26 Progress – Final API Testing & Project Cleanup
+
+## Objective
+
+To perform final API testing, verify backend functionality, test error handling and clean the PricePilot AI project.
+
+## APIs Tested
+
+### 1. Health Check
+Endpoint:
+GET `/api/health`
+
+Status:
+Passed
+
+### 2. Database Connection
+Endpoint:
+GET `/api/database`
+
+Status:
+Passed
+
+### 3. Forecast and Pricing
+Endpoint:
+POST `/api/forecast-pricing`
+
+Input:
+```json
+{
+  "row_id": 0
+}
+
+
+# Day 27 Progress – Final Cleanup & Documentation
+
+## Objective
+
+To perform the final cleanup, API verification and documentation of the PricePilot AI project.
+
+## Work Completed
+
+- Verified FastAPI backend startup.
+- Verified Swagger API documentation.
+- Tested demand forecasting API.
+- Tested pricing recommendation API.
+- Tested Groq AI insight generation.
+- Tested complete analysis API.
+- Verified frontend and backend integration.
+- Reviewed project structure.
+- Reviewed Git status and ignored files.
+- Updated final project documentation.
+
+## Backend Verification
+
+FastAPI Swagger:
+
+`http://127.0.0.1:8000/docs`
+
+The backend successfully returned responses with:
+
+- Forecasted Demand
+- Inventory Level
+- Current Price
+- Competitor Price
+- Recommended Price
+- Pricing Action
+- AI-generated Business Insight
+
+## Complete Analysis API
+
+Endpoint:
+
+`POST /api/complete-analysis`
+
+Test Input:
+
+```json
+{
+  "row_id": 0
+}
+
+# Day 28 Progress – Final System Testing
+
+## Objective
+
+To perform final end-to-end testing of the PricePilot AI system and verify the integration between the machine learning model, pricing recommendation engine, Groq AI service, FastAPI backend and frontend dashboard.
+
+## Testing Performed
+
+### Backend Testing
+
+- Verified FastAPI server startup.
+- Verified Swagger API documentation.
+- Tested health check API.
+- Tested database connection API.
+- Tested demand forecasting and pricing API.
+- Tested Groq AI insight API.
+- Tested complete analysis API.
+
+### Frontend Testing
+
+- Verified frontend server.
+- Verified connection between frontend and FastAPI backend.
+- Tested dataset row analysis.
+- Verified forecasted demand display.
+- Verified inventory display.
+- Verified current price display.
+- Verified competitor price display.
+- Verified recommended price display.
+- Verified pricing action display.
+- Verified Groq AI insight display.
+
+## Complete Analysis Test
+
+Endpoint:
+
+`POST /api/complete-analysis`
+
+Input:
+
+```json
+{
+  "row_id": 0
+}
