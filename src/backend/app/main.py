@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import product, auth
+from app.routes import product, auth, predictions
 
 app = FastAPI(title="PricePilot AI Backend")
 
@@ -14,6 +14,7 @@ app.add_middleware(
 
 app.include_router(product.router)
 app.include_router(auth.router)
+app.include_router(predictions.router)
 
 @app.get("/")
 def read_root():

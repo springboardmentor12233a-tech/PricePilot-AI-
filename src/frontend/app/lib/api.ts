@@ -30,11 +30,46 @@ export async function getCurrentUser(token: string) {
 
   return response.json();
 }
+
 export async function getProducts() {
   const response = await fetch(`${API_BASE_URL}/products/`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch products");
+  }
+
+  return response.json();
+}
+
+export async function getPriceRecommendation(productData: {
+  category: string;
+  brand: string;
+  region: string;
+  channel: string;
+  season: string;
+  base_price: number;
+  inventory_level: number;
+  month: number;
+  day_of_week: number;
+}) {
+  const response = await fetch(`${API_BASE_URL}/predictions/recommend-price`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(productData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to get price recommendation");
+  }
+
+  return response.json();
+}
+
+export async function getDemandForecast(days: number = 30) {
+  const response = await fetch(`${API_BASE_URL}/predictions/demand-forecast?days=${days}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to get demand forecast");
   }
 
   return response.json();

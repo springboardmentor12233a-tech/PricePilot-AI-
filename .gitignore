@@ -11,3 +11,5 @@ node_modules/
 src/frontend/node_modules/
 .next/
 src/frontend/.next/
+models/
+src/backend/app/ml_models/*.pkl
