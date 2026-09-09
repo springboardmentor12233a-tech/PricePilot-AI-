@@ -1,0 +1,70 @@
+product_id,product_name,category,subcategory,brand,cost_price,base_price,currency,launch_date,weight_kg,rating,num_reviews,is_active
+P1000,Nova Headphones Pro,Electronics,Headphones,Nova,152.94,388.6,USD,2024-07-08,5.88,4.3,471,True
+P1001,Aether Headphones Lite,Electronics,Headphones,Aether,44.49,86.8,USD,2024-03-03,2.74,3.5,135,True
+P1002,Urbana Smartwatch Pro,Electronics,Smartwatch,Urbana,13.13,33.66,USD,2024-07-07,6.68,3.6,1189,True
+P1003,Zenith Smartwatch Lite,Electronics,Smartwatch,Zenith,125.18,254.08,USD,2024-06-22,3.51,3.7,1087,True
+P1004,Pinnacle Bluetooth Speaker Pro,Electronics,Bluetooth Speaker,Pinnacle,162.95,237.26,USD,2024-04-18,7.79,3.6,2739,True
+P1005,Nova Bluetooth Speaker Lite,Electronics,Bluetooth Speaker,Nova,249.26,463.36,USD,2024-01-08,7.87,4.0,3561,True
+P1006,Crestline Power Bank Pro,Electronics,Power Bank,Crestline,244.98,393.1,USD,2024-02-29,0.61,4.9,2368,True
+P1007,Solace Power Bank Lite,Electronics,Power Bank,Solace,227.5,423.72,USD,2024-06-03,0.23,3.6,1483,True
+P1008,Solace Laptop Sleeve Pro,Electronics,Laptop Sleeve,Solace,245.95,590.24,USD,2024-02-20,1.47,3.9,1590,True
+P1009,Solace Laptop Sleeve Lite,Electronics,Laptop Sleeve,Solace,266.7,473.14,USD,2024-04-17,4.21,4.2,1505,True
+P1010,Orbis Sneakers Pro,Fashion,Sneakers,Orbis,387.99,904.08,USD,2024-05-30,7.52,4.8,4916,True
+P1011,Aether Sneakers Lite,Fashion,Sneakers,Aether,133.98,279.29,USD,2024-01-02,4.21,4.9,342,True
+P1012,Lumen T-Shirt Pro,Fashion,T-Shirt,Lumen,218.18,459.07,USD,2024-03-28,7.73,4.3,497,True
+P1013,Aether T-Shirt Lite,Fashion,T-Shirt,Aether,60.67,143.34,USD,2024-02-09,0.69,5.0,2032,True
+P1014,Vertex Jacket Pro,Fashion,Jacket,Vertex,120.93,171.35,USD,2024-01-27,1.67,4.5,4519,True
+P1015,Zenith Jacket Lite,Fashion,Jacket,Zenith,309.65,461.02,USD,2024-04-07,2.93,3.4,205,True
+P1016,Vertex Handbag Pro,Fashion,Handbag,Vertex,251.2,451.43,USD,2024-03-29,0.6,3.8,809,True
+P1017,Pinnacle Handbag Lite,Fashion,Handbag,Pinnacle,293.19,634.78,USD,2024-03-08,7.11,4.0,2695,True
+P1018,Orbis Sunglasses Pro,Fashion,Sunglasses,Orbis,305.51,633.48,USD,2024-05-17,6.19,4.1,4493,True
+P1019,Zenith Sunglasses Lite,Fashion,Sunglasses,Zenith,285.71,438.01,USD,2024-04-06,3.57,3.6,868,True
+P1020,Solace Blender Pro,Home & Kitchen,Blender,Solace,256.38,455.65,USD,2024-03-16,4.12,4.8,1683,True
+P1021,Pinnacle Blender Lite,Home & Kitchen,Blender,Pinnacle,303.44,508.13,USD,2024-04-02,0.71,3.7,3162,True
+P1022,Zenith Air Fryer Pro,Home & Kitchen,Air Fryer,Zenith,352.78,758.2,USD,2024-01-12,2.44,3.4,4896,True
+P1023,Crestline Air Fryer Lite,Home & Kitchen,Air Fryer,Crestline,322.45,523.62,USD,2024-07-16,7.15,4.2,1534,True
+P1024,Zenith Cookware Set Pro,Home & Kitchen,Cookware Set,Zenith,53.22,97.26,USD,2024-02-29,7.26,3.7,1311,True
+P1025,Zenith Cookware Set Lite,Home & Kitchen,Cookware Set,Zenith,173.71,413.71,USD,2024-04-07,6.9,3.2,4749,True
+P1026,Aether Cookware Set Max,Home & Kitchen,Cookware Set,Aether,196.51,438.4,USD,2024-04-26,2.23,3.6,3450,True
+P1027,Urbana Vacuum Cleaner Pro,Home & Kitchen,Vacuum Cleaner,Urbana,91.41,189.19,USD,2024-04-04,3.29,3.3,4664,True
+P1028,Vertex Vacuum Cleaner Lite,Home & Kitchen,Vacuum Cleaner,Vertex,102.52,229.19,USD,2024-02-23,5.73,3.5,3004,True
+P1029,Aether Vacuum Cleaner Max,Home & Kitchen,Vacuum Cleaner,Aether,19.57,41.71,USD,2024-06-28,4.07,3.3,3479,True
+P1030,Pinnacle Table Lamp Pro,Home & Kitchen,Table Lamp,Pinnacle,273.88,557.93,USD,2024-06-11,3.64,4.2,4936,True
+P1031,Urbana Table Lamp Lite,Home & Kitchen,Table Lamp,Urbana,36.94,68.1,USD,2024-05-16,2.01,4.6,2936,True
+P1032,Urbana Face Serum Pro,Beauty & Personal Care,Face Serum,Urbana,393.45,739.13,USD,2024-04-28,6.55,4.6,3277,True
+P1033,Lumen Face Serum Lite,Beauty & Personal Care,Face Serum,Lumen,131.71,213.87,USD,2024-03-10,0.42,4.3,1374,True
+P1034,Vertex Hair Dryer Pro,Beauty & Personal Care,Hair Dryer,Vertex,207.28,346.53,USD,2024-07-15,5.2,3.5,2981,True
+P1035,Nova Hair Dryer Lite,Beauty & Personal Care,Hair Dryer,Nova,162.04,327.53,USD,2024-02-28,6.72,4.4,4066,True
+P1036,Vertex Perfume Pro,Beauty & Personal Care,Perfume,Vertex,279.83,468.51,USD,2024-04-12,1.48,5.0,3648,True
+P1037,Aether Perfume Lite,Beauty & Personal Care,Perfume,Aether,108.03,280.39,USD,2024-01-17,7.73,4.2,4095,True
+P1038,Pinnacle Electric Trimmer Pro,Beauty & Personal Care,Electric Trimmer,Pinnacle,79.54,137.97,USD,2024-07-02,5.63,4.7,4504,True
+P1039,Vertex Electric Trimmer Lite,Beauty & Personal Care,Electric Trimmer,Vertex,355.4,830.16,USD,2024-02-24,5.17,3.4,1450,True
+P1040,Lumen Moisturizer Pro,Beauty & Personal Care,Moisturizer,Lumen,269.25,564.57,USD,2024-06-13,3.04,4.9,2205,True
+P1041,Orbis Moisturizer Lite,Beauty & Personal Care,Moisturizer,Orbis,7.0,11.15,USD,2024-02-06,4.43,4.4,3796,True
+P1042,Aether Moisturizer Max,Beauty & Personal Care,Moisturizer,Aether,397.81,640.92,USD,2024-02-05,0.24,4.1,4916,True
+P1043,Solace Yoga Mat Pro,Sports & Outdoors,Yoga Mat,Solace,299.86,653.56,USD,2024-05-17,6.81,4.4,3109,True
+P1044,Aether Yoga Mat Lite,Sports & Outdoors,Yoga Mat,Aether,219.3,440.92,USD,2024-07-10,5.13,3.7,1698,True
+P1045,Pinnacle Dumbbell Set Pro,Sports & Outdoors,Dumbbell Set,Pinnacle,389.34,728.73,USD,2024-04-12,7.15,4.3,230,True
+P1046,Vertex Dumbbell Set Lite,Sports & Outdoors,Dumbbell Set,Vertex,143.28,311.51,USD,2024-02-26,5.38,4.8,3072,True
+P1047,Urbana Dumbbell Set Max,Sports & Outdoors,Dumbbell Set,Urbana,290.37,504.35,USD,2024-05-10,0.29,4.4,21,True
+P1048,Zenith Running Shoes Pro,Sports & Outdoors,Running Shoes,Zenith,397.85,781.35,USD,2024-07-12,2.31,4.8,1065,True
+P1049,Nova Running Shoes Lite,Sports & Outdoors,Running Shoes,Nova,371.69,711.35,USD,2024-01-29,7.74,4.9,1144,True
+P1050,Urbana Running Shoes Max,Sports & Outdoors,Running Shoes,Urbana,121.31,225.89,USD,2024-06-09,6.82,3.8,132,True
+P1051,Lumen Water Bottle Pro,Sports & Outdoors,Water Bottle,Lumen,152.21,285.19,USD,2024-06-01,6.77,4.9,2738,True
+P1052,Zenith Water Bottle Lite,Sports & Outdoors,Water Bottle,Zenith,43.38,92.75,USD,2024-04-08,7.92,3.5,159,True
+P1053,Pinnacle Backpack Pro,Sports & Outdoors,Backpack,Pinnacle,121.64,217.38,USD,2024-04-29,6.8,3.4,4346,True
+P1054,Solace Backpack Lite,Sports & Outdoors,Backpack,Solace,147.0,257.59,USD,2024-03-05,6.49,4.7,2460,True
+P1055,Solace Backpack Max,Sports & Outdoors,Backpack,Solace,365.73,736.44,USD,2024-01-03,4.06,4.6,2373,True
+P1056,Solace Hotel Room - Standard Pro,Travel & Hospitality,Hotel Room - Standard,Solace,33.02,61.95,USD,2024-07-11,0.5,4.8,1171,True
+P1057,Aether Hotel Room - Standard Lite,Travel & Hospitality,Hotel Room - Standard,Aether,153.36,232.0,USD,2024-07-15,4.67,3.3,3741,True
+P1058,Zenith Hotel Room - Deluxe Pro,Travel & Hospitality,Hotel Room - Deluxe,Zenith,66.24,170.78,USD,2024-03-16,6.73,4.7,1720,True
+P1059,Lumen Hotel Room - Deluxe Lite,Travel & Hospitality,Hotel Room - Deluxe,Lumen,20.34,35.88,USD,2024-02-10,4.34,3.8,3129,True
+P1060,Orbis Hotel Room - Deluxe Max,Travel & Hospitality,Hotel Room - Deluxe,Orbis,112.26,287.2,USD,2024-01-01,3.71,4.7,996,True
+P1061,Solace Flight - Economy Pro,Travel & Hospitality,Flight - Economy,Solace,214.89,440.26,USD,2024-07-14,5.14,4.5,4369,True
+P1062,Urbana Flight - Economy Lite,Travel & Hospitality,Flight - Economy,Urbana,387.97,875.85,USD,2024-05-09,0.42,3.9,3680,True
+P1063,Zenith Flight - Economy Max,Travel & Hospitality,Flight - Economy,Zenith,298.9,508.44,USD,2024-06-09,1.56,3.3,1155,True
+P1064,Solace Flight - Business Pro,Travel & Hospitality,Flight - Business,Solace,279.91,529.24,USD,2024-06-04,1.47,3.5,2854,True
+P1065,Crestline Flight - Business Lite,Travel & Hospitality,Flight - Business,Crestline,99.72,150.84,USD,2024-02-09,1.54,4.9,4997,True
+P1066,Vertex Flight - Business Max,Travel & Hospitality,Flight - Business,Vertex,382.17,873.44,USD,2024-07-14,4.48,4.3,2299,True
+P1067,Solace Vacation Package Pro,Travel & Hospitality,Vacation Package,Solace,23.85,49.59,USD,2024-07-18,1.35,3.4,3361,True
+P1068,Solace Vacation Package Lite,Travel & Hospitality,Vacation Package,Solace,50.85,74.0,USD,2024-01-01,0.42,4.7,3064,True
