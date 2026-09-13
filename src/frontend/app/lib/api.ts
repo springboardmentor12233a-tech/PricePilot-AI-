@@ -74,3 +74,27 @@ export async function getDemandForecast(days: number = 30) {
 
   return response.json();
 }
+
+export async function getKPIs() {
+  const response = await fetch(`${API_BASE_URL}/predictions/kpis`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch KPIs");
+  }
+
+  return response.json();
+}
+
+export async function getAIInsights(context: string) {
+  const response = await fetch(`${API_BASE_URL}/predictions/ai-insights`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ context }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to get AI insights");
+  }
+
+  return response.json();
+}
