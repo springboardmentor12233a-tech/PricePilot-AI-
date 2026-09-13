@@ -119,50 +119,53 @@ Built and honestly validated in `notebooks/price_prediction_model.ipynb`, includ
 
 ## 📁 Project Structure
 
+```
 PRICEPILOT AI/
 │
 ├── data/
-│ ├── raw/ (excluded from Git)
-│ └── processed_data/ (excluded from Git)
+│   ├── raw/                        (excluded from Git)
+│   └── processed_data/             (excluded from Git)
 │
-├── models/ (trained ML models — excluded from Git, regenerate via notebook)
+├── models/                         (trained ML models — excluded from Git, regenerate via notebook)
 │
 ├── docs/
-│ ├── ui_wireframes.md
-│ └── pricing_workflows_objectives.md
+│   ├── ui_wireframes.md
+│   └── pricing_workflows_objectives.md
 │
 ├── notebooks/
-│ ├── eda_retail_pricing.ipynb
-│ ├── eda_dynamic_pricing.ipynb
-│ ├── eda_online_retail_ii.ipynb
-│ ├── eda_walmart_sales.ipynb
-│ ├── eda_amazon_products.ipynb
-│ ├── eda_amazon_uk_products.ipynb
-│ └── price_prediction_model.ipynb
+│   ├── eda_retail_pricing.ipynb
+│   ├── eda_dynamic_pricing.ipynb
+│   ├── eda_online_retail_ii.ipynb
+│   ├── eda_walmart_sales.ipynb
+│   ├── eda_amazon_products.ipynb
+│   ├── eda_amazon_uk_products.ipynb
+│   └── price_prediction_model.ipynb
 │
 ├── src/
-│ ├── backend/
-│ │ └── app/
-│ │ ├── main.py
-│ │ ├── database.py
-│ │ ├── create_tables.py
-│ │ ├── ml_models/ (excluded from Git — trained model files)
-│ │ ├── models/ (user.py, product.py, pricing_history.py)
-│ │ ├── routes/ (product.py, auth.py, predictions.py)
-│ │ ├── schemas/ (product.py, user.py)
-│ │ └── auth/ (auth_utils.py, dependencies.py)
-│ │
-│ └── frontend/
-│ └── app/
-│ ├── page.tsx, layout.tsx, globals.css, favicon.ico
-│ ├── login/page.tsx
-│ ├── dashboard/page.tsx
-│ ├── forecasting/page.tsx
-│ └── lib/api.ts
+│   ├── backend/
+│   │   ├── .env                     (excluded from Git — DB password, JWT secret, Groq API key)
+│   │   └── app/
+│   │       ├── main.py
+│   │       ├── database.py
+│   │       ├── create_tables.py
+│   │       ├── ml_models/            (excluded from Git — trained model files)
+│   │       ├── models/ (user.py, product.py, pricing_history.py)
+│   │       ├── routes/ (product.py, auth.py, predictions.py)
+│   │       ├── schemas/ (product.py, user.py)
+│   │       └── auth/ (auth_utils.py, dependencies.py)
+│   │
+│   └── frontend/
+│       └── app/
+│           ├── page.tsx, layout.tsx, globals.css, favicon.ico
+│           ├── login/page.tsx
+│           ├── dashboard/page.tsx
+│           ├── forecasting/page.tsx
+│           ├── kpis/page.tsx
+│           └── lib/api.ts
 │
 ├── .gitignore
 └── README.md
-
+```
 
 ## 📋 Additional Documentation
 
