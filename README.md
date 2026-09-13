@@ -84,8 +84,24 @@ Built and honestly validated in `notebooks/price_prediction_model.ipynb`, includ
 - Interactive demand forecast chart with confidence interval band and selectable horizon (7d/14d/30d/90d)
 - Trend and % change indicators
 - Price recommendation panel with a revenue-vs-discount curve and a highlighted optimal price card
-
 ---
+
+### 4. Advanced Model Selection & Business Intelligence (Additional Requirements)
+
+**Model Comparison & Tuning:**
+- Compared 5 algorithms (Linear Regression, Decision Tree, Random Forest, Gradient Boosting, XGBoost) on the corrected, leak-free demand forecasting dataset
+- Random Forest selected as best performer (R² = 0.80)
+- Tuned via **GridSearchCV** (3-fold cross-validation, 18 parameter combinations) — final tuned model: R² = 0.8031, MAE = 2.64 units
+
+**KPI Dashboard (Domain Knowledge Extraction):**
+- New `/kpis` dashboard page showing key business metrics: Total Revenue, Month-over-Month Growth, Average Order Value, Total Units Sold
+- Monthly revenue trend chart, category performance breakdown, and regional revenue distribution (via Recharts)
+- Backed by a new `GET /predictions/kpis` API endpoint
+
+**AI-Powered Insights (External LLM Integration):**
+- Integrated **Groq API** (model: `openai/gpt-oss-120b`) to generate real-time, natural-language business insights from live KPI data
+- New `POST /predictions/ai-insights` endpoint and a "Generate Insight" button on the KPI dashboard
+- API key managed securely via `.env` (excluded from version control)
 
 ## 🛠️ Tools & Technologies
 
@@ -97,6 +113,7 @@ Built and honestly validated in `notebooks/price_prediction_model.ipynb`, includ
 | Frontend | Next.js, React, Tailwind CSS, TypeScript, Recharts |
 | Environment | VS Code, Jupyter Notebooks, Node.js |
 | Version Control | Git & GitHub |
+| LLM Integration | Groq API (openai/gpt-oss-120b) |
 
 ---
 
