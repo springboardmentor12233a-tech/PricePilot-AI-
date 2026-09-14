@@ -1,0 +1,346 @@
+{
+  "best_price_model": "Ridge",
+  "best_demand_model": "LightGBM",
+  "price_models": {
+    "Baseline_MedianPrice": {
+      "val": {
+        "MAE": 27.730865478515625,
+        "RMSE": 134.4548018852432,
+        "R2": 0.8602306246757507
+      },
+      "test": {
+        "MAE": 36.006507873535156,
+        "RMSE": 169.2831796779438,
+        "R2": 0.7984375357627869
+      },
+      "train_time_s": 1.21
+    },
+    "Ridge": {
+      "val": {
+        "MAE": 1.8939379453659058,
+        "RMSE": 17.78738892682072,
+        "R2": 0.997553825378418
+      },
+      "test": {
+        "MAE": 1.843756079673767,
+        "RMSE": 10.869906931937567,
+        "R2": 0.9991689324378967
+      },
+      "train_time_s": 1.68,
+      "hyperparams": {
+        "alpha": 10.0,
+        "sample_size": 500000
+      }
+    },
+    "LightGBM": {
+      "val": {
+        "MAE": 2.435473918914795,
+        "RMSE": 64.00353994116263,
+        "R2": 0.968328595161438
+      },
+      "test": {
+        "MAE": 3.1717140674591064,
+        "RMSE": 82.4602680130331,
+        "R2": 0.9521731734275818
+      },
+      "train_time_s": 91.3,
+      "best_iteration": 221,
+      "hyperparams": {
+        "objective": "regression",
+        "boosting_type": "gbdt",
+        "num_leaves": 255,
+        "learning_rate": 0.05,
+        "feature_fraction": 0.8,
+        "bagging_fraction": 0.8,
+        "bagging_freq": 5,
+        "min_child_samples": 30,
+        "n_jobs": -1,
+        "seed": 42,
+        "verbose": -1
+      }
+    }
+  },
+  "demand_models": {
+    "Baseline_MeanDemand": {
+      "val": {
+        "MAE": 2.871398448944092,
+        "RMSE": 9.853590923584937,
+        "R2": 0.868567943572998,
+        "SMAPE": 51.86030197143555,
+        "MAPE": 59635.546875
+      },
+      "test": {
+        "MAE": 3.1477620601654053,
+        "RMSE": 25.55006072453339,
+        "R2": 0.4801977872848511,
+        "SMAPE": 54.109371185302734,
+        "MAPE": 71241.265625
+      },
+      "train_time_s": 0.77
+    },
+    "Ridge": {
+      "val": {
+        "MAE": 2.392038345336914,
+        "RMSE": 6.252434828463203,
+        "R2": 0.9470811486244202,
+        "SMAPE": 54.0330810546875,
+        "MAPE": 68413.5625
+      },
+      "test": {
+        "MAE": 2.371535062789917,
+        "RMSE": 9.932668219024471,
+        "R2": 0.9214428067207336,
+        "SMAPE": 53.587223052978516,
+        "MAPE": 83056.3515625
+      },
+      "train_time_s": 1.52,
+      "hyperparams": {
+        "alpha": 10.0,
+        "sample_size": 500000
+      }
+    },
+    "LightGBM": {
+      "val": {
+        "MAE": 2.004056453704834,
+        "RMSE": 6.830558709768744,
+        "R2": 0.9368425607681274,
+        "SMAPE": 40.31049728393555,
+        "MAPE": 21755.31640625
+      },
+      "test": {
+        "MAE": 2.040667772293091,
+        "RMSE": 16.23655167674351,
+        "R2": 0.7900857925415039,
+        "SMAPE": 39.997676849365234,
+        "MAPE": 24043.3046875
+      },
+      "train_time_s": 186.7,
+      "best_iteration": 284,
+      "hyperparams": {
+        "objective": "regression_l1",
+        "boosting_type": "gbdt",
+        "num_leaves": 255,
+        "learning_rate": 0.05,
+        "feature_fraction": 0.8,
+        "bagging_fraction": 0.8,
+        "bagging_freq": 5,
+        "min_child_samples": 30,
+        "n_jobs": -1,
+        "seed": 42,
+        "verbose": -1
+      }
+    }
+  },
+  "price_features": {
+    "numeric": [
+      "area",
+      "cos_day_of_week",
+      "cos_month",
+      "day_of_month",
+      "day_of_week",
+      "day_of_year",
+      "demand_lag_1",
+      "demand_lag_14",
+      "demand_lag_2",
+      "demand_lag_28",
+      "demand_lag_3",
+      "demand_lag_7",
+      "demand_roll_mean_28",
+      "demand_roll_mean_7",
+      "demand_roll_std_28",
+      "demand_roll_std_7",
+      "has_online_listing",
+      "is_month_end",
+      "is_month_start",
+      "is_new_item_store",
+      "is_on_promo",
+      "is_weekend",
+      "month",
+      "number_disc_day",
+      "online_price",
+      "price_lag_1",
+      "price_lag_7",
+      "price_ratio_to_online",
+      "price_roll_mean_7",
+      "promo_discount_amount",
+      "promo_discount_pct",
+      "promo_doc_count",
+      "quarter",
+      "sale_price_before_promo",
+      "sale_price_time_promo",
+      "sin_day_of_week",
+      "sin_month",
+      "store_id",
+      "week_of_year",
+      "year"
+    ],
+    "categorical": [
+      "city",
+      "class_name",
+      "dept_name",
+      "division",
+      "format",
+      "item_type",
+      "promo_type_code",
+      "subclass_name"
+    ]
+  },
+  "demand_features": {
+    "numeric": [
+      "area",
+      "cos_day_of_week",
+      "cos_month",
+      "day_of_month",
+      "day_of_week",
+      "day_of_year",
+      "demand_lag_1",
+      "demand_lag_14",
+      "demand_lag_2",
+      "demand_lag_28",
+      "demand_lag_3",
+      "demand_lag_7",
+      "demand_roll_mean_28",
+      "demand_roll_mean_7",
+      "demand_roll_std_28",
+      "demand_roll_std_7",
+      "has_online_listing",
+      "is_month_end",
+      "is_month_start",
+      "is_new_item_store",
+      "is_on_promo",
+      "is_weekend",
+      "month",
+      "number_disc_day",
+      "online_price",
+      "price_base",
+      "price_lag_1",
+      "price_lag_7",
+      "price_ratio_to_online",
+      "price_roll_mean_7",
+      "promo_discount_amount",
+      "promo_discount_pct",
+      "promo_doc_count",
+      "quarter",
+      "sale_price_before_promo",
+      "sale_price_time_promo",
+      "sin_day_of_week",
+      "sin_month",
+      "store_id",
+      "week_of_year",
+      "year"
+    ],
+    "categorical": [
+      "city",
+      "class_name",
+      "dept_name",
+      "division",
+      "format",
+      "item_type",
+      "promo_type_code",
+      "subclass_name"
+    ]
+  },
+  "price_top10": [
+    "online_price",
+    "sale_price_time_promo",
+    "sale_price_before_promo",
+    "price_roll_mean_7",
+    "price_lag_1",
+    "item_type",
+    "subclass_name",
+    "day_of_year",
+    "class_name",
+    "demand_roll_std_28"
+  ],
+  "demand_top10": [
+    "demand_roll_mean_28",
+    "demand_roll_mean_7",
+    "demand_roll_std_28",
+    "demand_lag_3",
+    "subclass_name",
+    "dept_name",
+    "class_name",
+    "demand_lag_1",
+    "demand_roll_std_7",
+    "price_base"
+  ],
+  "total_runtime_s": 410.8,
+  "corrected_price_models": {
+    "feature_count": 41,
+    "numeric_count": 33,
+    "categorical_count": 8,
+    "leaky_features_removed": [
+      "sale_price_before_promo",
+      "sale_price_time_promo",
+      "online_price",
+      "promo_discount_amount",
+      "promo_discount_pct",
+      "price_ratio_to_online",
+      "has_online_listing"
+    ],
+    "best_corrected_price_model": "LightGBM",
+    "Baseline_MedianPrice": {
+      "val": {
+        "MAE": 27.730865478515625,
+        "RMSE": 134.4548018852432,
+        "R2": 0.8602306246757507
+      },
+      "test": {
+        "MAE": 36.006507873535156,
+        "RMSE": 169.2831796779438,
+        "R2": 0.7984375357627869
+      },
+      "train_time_s": 0.8
+    },
+    "Ridge": {
+      "val": {
+        "MAE": 12.02845573425293,
+        "RMSE": 64.92894629058945,
+        "R2": 0.9674060940742493
+      },
+      "test": {
+        "MAE": 11.442497253417969,
+        "RMSE": 51.68447929882456,
+        "R2": 0.9812110662460327
+      },
+      "train_time_s": 1.06
+    },
+    "LightGBM": {
+      "val": {
+        "MAE": 11.976838111877441,
+        "RMSE": 85.69163123702629,
+        "R2": 0.9432277679443359
+      },
+      "test": {
+        "MAE": 12.255583763122559,
+        "RMSE": 96.00655596917588,
+        "R2": 0.9351688623428345
+      },
+      "train_time_s": 48.9,
+      "best_iteration": 105
+    },
+    "price_top10_corrected": [
+      "price_lag_1",
+      "price_lag_7",
+      "price_roll_mean_7",
+      "item_type",
+      "subclass_name",
+      "day_of_year",
+      "demand_roll_std_28",
+      "demand_roll_mean_28",
+      "year",
+      "dept_name"
+    ],
+    "post_retraining_audit": {
+      "price_base_absent_from_features": true,
+      "target_proxy_features_excluded": true,
+      "no_current_price_as_feature": true,
+      "price_lag_1_not_perfect_proxy": true,
+      "price_lag_7_not_perfect_proxy": true,
+      "price_roll_mean_7_not_perfect_proxy": true,
+      "cold_start_lag_not_current_target": true,
+      "lgbm_model_features_clean": true
+    },
+    "cold_start_fix": "item_level_training_median_global_fallback"
+  }
+}

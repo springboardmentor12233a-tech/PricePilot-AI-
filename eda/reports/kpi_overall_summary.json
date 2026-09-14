@@ -1,0 +1,31 @@
+{
+  "total_observations": 12773,
+  "total_historical_units_sold": 26076167.4,
+  "total_historical_revenue": 3221404404.46,
+  "overall_avg_daily_demand": 5.83,
+  "overall_median_daily_demand": 2.0,
+  "overall_avg_price": 214.66000366210938,
+  "overall_avg_recommended_price": 213.75999450683594,
+  "overall_avg_recommended_price_change_pct": 1.2699999809265137,
+  "overall_promo_rate_pct": 21.03,
+  "overall_avg_discount_pct": 3.7,
+  "total_forecast_7d_units": 477428.14,
+  "total_forecast_14d_units": 936042.94,
+  "total_forecast_30d_units": 1958852.7,
+  "increasing_trend_pct": 17.39,
+  "stable_trend_pct": 12.8,
+  "decreasing_trend_pct": 69.81,
+  "average_confidence_score": 87.22,
+  "median_confidence_score": 90.0,
+  "priority_breakdown": {
+    "PROMOTIONAL_STIMULATION_REVIEW": 7457,
+    "STOCK_REPLENISHMENT_PRIORITY": 1805,
+    "PRICING_MARKDOWN_REVIEW": 1405,
+    "HUMAN_COMMERCIAL_REVIEW": 989,
+    "STABLE_CORE_OPERATIONS": 714,
+    "PRICE_INCREASE_OPPORTUNITY": 194,
+    "STANDARD_MONITORING": 112,
+    "PRICE_REDUCTION_RECOMMENDED": 97
+  },
+  "data_grain": "(item_id, store_id) across test origin date 2024-08-04"
+}

@@ -42,7 +42,6 @@ def main() -> None:
 
     historical_dates = historical[date_column]
     future_dates = future[date_column]
-    suspicious_date_counts = discounts.assign(year=discounts[date_column].dt.year).groupby("year").size()
     period_rows = [
         {"period": f"through {reference_max.date()}", "record_count": len(historical), "percentage": round(len(historical) / len(discounts) * 100, 3)},
         {"period": f"after {reference_max.date()}", "record_count": len(future), "percentage": round(len(future) / len(discounts) * 100, 3)},

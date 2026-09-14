@@ -1,0 +1,610 @@
+[
+  {
+    "item_id": "0022b986c8f0",
+    "store_id": 1,
+    "dept_name": "СПЕЦИИ,ПРИПРАВА",
+    "class_name": "МОНОСПЕЦИИ",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a decreasing demand trajectory (7d forecast: 6.93 units, 30d forecast: 28.2 units). Recommendation is to reduce price by -2.0% from $83.9 to $82.22 (ML clearing estimate: $82.84) under commercial priority [PROMOTIONAL_STIMULATION_REVIEW].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $82.84. [KPI Fact]: Current reference price is $83.9 (historical range: $43.55-$89.9). [LLM Insight]: Recommended price of $82.22 (-2.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 6.93 units over next 7 days and 28.2 units over 30 days. [KPI Fact]: Multi-horizon consistency is FULL_CONSISTENCY with heuristic confidence score of 90.0/100 (HIGH tier). [LLM Insight]: Trajectory is decreasing; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 17.36% with average discount depth 3.4%. Promotional lift is observed at 38.7%. [LLM Insight]: Total historical revenue realized stands at $32280.89 across 532.0 units.",
+      "commercial_risks": "Margin erosion risk from markdown; verify inventory aging before aggressive clearance.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: PROMOTIONAL_STIMULATION_REVIEW",
+        "Adjust store inventory target to match decreasing 7d forecast (6.93 units)",
+        "Execute pricing adjustment: reduce price by -2.0% from $83.9 to $82.22 (ML clearing estimate: $82.84)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "0022b986c8f0",
+        "store_id": 1,
+        "dept_name": "СПЕЦИИ,ПРИПРАВА",
+        "class_name": "МОНОСПЕЦИИ",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 83.9,
+        "ml_predicted_clearing_price": 82.84,
+        "recommended_price": 82.22,
+        "price_change_pct": -2.0,
+        "price_difference": -1.68,
+        "hist_avg_price": 61.88,
+        "hist_min_price": 43.55,
+        "hist_max_price": 89.9
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 6.93,
+        "forecast_14d_total_units": 13.58,
+        "forecast_30d_total_units": 28.2,
+        "forecast_avg_daily_7d": 0.99,
+        "projected_change_pct_7d": -36.79,
+        "demand_trend": "DECREASING",
+        "horizon_consistency": "FULL_CONSISTENCY",
+        "confidence_score": 90.0,
+        "confidence_tier": "HIGH"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 532.0,
+        "hist_avg_daily_demand": 2.2,
+        "hist_median_daily_demand": 2.0,
+        "hist_max_daily_demand": 9.0,
+        "hist_std_daily_demand": 1.5,
+        "hist_total_revenue": 32280.89,
+        "hist_avg_daily_revenue": 133.39,
+        "hist_revenue_per_unit": 60.68
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 17.36,
+        "promo_days_count": 42.0,
+        "avg_discount_pct": 3.4,
+        "avg_discount_amount": 2.67,
+        "promo_demand_avg": 2.86,
+        "non_promo_demand_avg": 2.06,
+        "promo_demand_lift_pct": 38.7
+      },
+      "domain_rules_layer": {
+        "business_priority": "PROMOTIONAL_STIMULATION_REVIEW",
+        "rule_based_baseline_insight": "Demand is projected to be DECREASING (-36.8% vs baseline, HIGH confidence of 90.0/100). Recommended price is $82.22 (-2.0% lower than reference price $83.90). Historical promotional days exhibited 38.7% higher observed average demand. Action: Review promotional campaigns and marketing stimulation to reverse declining sales trajectory."
+      }
+    }
+  },
+  {
+    "item_id": "002f51c34a7a",
+    "store_id": 1,
+    "dept_name": "СОВРЕМЕННАЯ МОЛОЧНАЯ КАТЕГОРИЯ",
+    "class_name": "ДЕСЕРТЫ",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a increasing demand trajectory (7d forecast: 26.81 units, 30d forecast: 112.5 units). Recommendation is to increase price by +14.0% from $82.2 to $93.71 (ML clearing estimate: $93.96) under commercial priority [STOCK_REPLENISHMENT_PRIORITY].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $93.96. [KPI Fact]: Current reference price is $82.2 (historical range: $58.78-$97.9). [LLM Insight]: Recommended price of $93.71 (+14.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 26.81 units over next 7 days and 112.5 units over 30 days. [KPI Fact]: Multi-horizon consistency is FULL_CONSISTENCY with heuristic confidence score of 90.0/100 (HIGH tier). [LLM Insight]: Trajectory is increasing; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 19.34% with average discount depth 2.53%. Promotional lift is observed at 11.19%. [LLM Insight]: Total historical revenue realized stands at $121856.62 across 1449.0 units.",
+      "commercial_risks": "Stockout risk if inventory replenishment fails to meet increasing demand momentum.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: STOCK_REPLENISHMENT_PRIORITY",
+        "Adjust store inventory target to match increasing 7d forecast (26.81 units)",
+        "Execute pricing adjustment: increase price by +14.0% from $82.2 to $93.71 (ML clearing estimate: $93.96)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "002f51c34a7a",
+        "store_id": 1,
+        "dept_name": "СОВРЕМЕННАЯ МОЛОЧНАЯ КАТЕГОРИЯ",
+        "class_name": "ДЕСЕРТЫ",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 82.2,
+        "ml_predicted_clearing_price": 93.96,
+        "recommended_price": 93.71,
+        "price_change_pct": 14.0,
+        "price_difference": 11.51,
+        "hist_avg_price": 84.83,
+        "hist_min_price": 58.78,
+        "hist_max_price": 97.9
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 26.81,
+        "forecast_14d_total_units": 53.2,
+        "forecast_30d_total_units": 112.5,
+        "forecast_avg_daily_7d": 3.83,
+        "projected_change_pct_7d": 16.42,
+        "demand_trend": "INCREASING",
+        "horizon_consistency": "FULL_CONSISTENCY",
+        "confidence_score": 90.0,
+        "confidence_tier": "HIGH"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 1449.0,
+        "hist_avg_daily_demand": 3.18,
+        "hist_median_daily_demand": 3.0,
+        "hist_max_daily_demand": 12.0,
+        "hist_std_daily_demand": 2.1,
+        "hist_total_revenue": 121856.62,
+        "hist_avg_daily_revenue": 267.82,
+        "hist_revenue_per_unit": 84.1
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 19.34,
+        "promo_days_count": 88.0,
+        "avg_discount_pct": 2.53,
+        "avg_discount_amount": 2.44,
+        "promo_demand_avg": 3.47,
+        "non_promo_demand_avg": 3.12,
+        "promo_demand_lift_pct": 11.19
+      },
+      "domain_rules_layer": {
+        "business_priority": "STOCK_REPLENISHMENT_PRIORITY",
+        "rule_based_baseline_insight": "Demand is projected to be INCREASING (+16.4% vs baseline, HIGH confidence of 90.0/100). Recommended price is $93.71 (+14.0% higher than reference price $82.20). Historical promotional days exhibited 11.2% higher observed average demand. Action: Prioritize inventory replenishment to capture rising demand and avoid stockouts."
+      }
+    }
+  },
+  {
+    "item_id": "00773a26d0f6",
+    "store_id": 1,
+    "dept_name": "ПРОДУКЦИЯ БЫСТРОГО ПРИГОТОВЛЕНИЯ",
+    "class_name": "ЛАПША БЫСТРОГО ПРИГОТОВЛЕНИЯ",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a increasing demand trajectory (7d forecast: 21.56 units, 30d forecast: 77.7 units). Recommendation is to maintain current price at $109.75 (in full alignment with ML clearing price $109.94) under commercial priority [HUMAN_COMMERCIAL_REVIEW].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $109.94. [KPI Fact]: Current reference price is $109.75 (historical range: $8.95-$109.9). [LLM Insight]: Recommended price of $109.75 (+0.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 21.56 units over next 7 days and 77.7 units over 30 days. [KPI Fact]: Multi-horizon consistency is DIVERGENT with heuristic confidence score of 55.0/100 (MEDIUM tier). [LLM Insight]: Trajectory is increasing; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 0.0% with average discount depth 0.0%. Promotional lift is observed at 0.0%. [LLM Insight]: Total historical revenue realized stands at $26459.79 across 246.0 units.",
+      "commercial_risks": "Stockout risk if inventory replenishment fails to meet increasing demand momentum.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: HUMAN_COMMERCIAL_REVIEW",
+        "Adjust store inventory target to match increasing 7d forecast (21.56 units)",
+        "Execute pricing adjustment: maintain current price at $109.75 (in full alignment with ML clearing price $109.94)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "00773a26d0f6",
+        "store_id": 1,
+        "dept_name": "ПРОДУКЦИЯ БЫСТРОГО ПРИГОТОВЛЕНИЯ",
+        "class_name": "ЛАПША БЫСТРОГО ПРИГОТОВЛЕНИЯ",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 109.75,
+        "ml_predicted_clearing_price": 109.94,
+        "recommended_price": 109.75,
+        "price_change_pct": 0.0,
+        "price_difference": 0.0,
+        "hist_avg_price": 107.35,
+        "hist_min_price": 8.95,
+        "hist_max_price": 109.9
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 21.56,
+        "forecast_14d_total_units": 39.76,
+        "forecast_30d_total_units": 77.7,
+        "forecast_avg_daily_7d": 3.08,
+        "projected_change_pct_7d": 7.79,
+        "demand_trend": "INCREASING",
+        "horizon_consistency": "DIVERGENT",
+        "confidence_score": 55.0,
+        "confidence_tier": "MEDIUM"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 246.0,
+        "hist_avg_daily_demand": 2.59,
+        "hist_median_daily_demand": 2.0,
+        "hist_max_daily_demand": 8.0,
+        "hist_std_daily_demand": 1.58,
+        "hist_total_revenue": 26459.79,
+        "hist_avg_daily_revenue": 278.52,
+        "hist_revenue_per_unit": 107.56
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 0.0,
+        "promo_days_count": 0.0,
+        "avg_discount_pct": 0.0,
+        "avg_discount_amount": 0.0,
+        "promo_demand_avg": 2.59,
+        "non_promo_demand_avg": 2.59,
+        "promo_demand_lift_pct": 0.0
+      },
+      "domain_rules_layer": {
+        "business_priority": "HUMAN_COMMERCIAL_REVIEW",
+        "rule_based_baseline_insight": "Demand is projected to be INCREASING (+7.8% vs baseline, MEDIUM confidence of 55.0/100). Recommended price maintains baseline at $109.75. Action: Flagged for commercial manager review due to forecast divergence or low confidence."
+      }
+    }
+  },
+  {
+    "item_id": "009788312f95",
+    "store_id": 1,
+    "dept_name": "ТРАДИЦИОННЫЕ МОЛОЧНЫЕ ПРОДУКТЫ",
+    "class_name": "СЫРКИ",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a decreasing demand trajectory (7d forecast: 13.3 units, 30d forecast: 61.2 units). Recommendation is to reduce price by -4.01% from $64.9 to $62.3 (ML clearing estimate: $62.04) under commercial priority [PRICING_MARKDOWN_REVIEW].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $62.04. [KPI Fact]: Current reference price is $64.9 (historical range: $0.0-$64.9). [LLM Insight]: Recommended price of $62.3 (-4.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 13.3 units over next 7 days and 61.2 units over 30 days. [KPI Fact]: Multi-horizon consistency is FULL_CONSISTENCY with heuristic confidence score of 95.0/100 (HIGH tier). [LLM Insight]: Trajectory is decreasing; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 29.73% with average discount depth 2.84%. Promotional lift is observed at 50.29%. [LLM Insight]: Total historical revenue realized stands at $143825.77 across 2640.0 units.",
+      "commercial_risks": "Margin erosion risk from markdown; verify inventory aging before aggressive clearance.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: PRICING_MARKDOWN_REVIEW",
+        "Adjust store inventory target to match decreasing 7d forecast (13.3 units)",
+        "Execute pricing adjustment: reduce price by -4.01% from $64.9 to $62.3 (ML clearing estimate: $62.04)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "009788312f95",
+        "store_id": 1,
+        "dept_name": "ТРАДИЦИОННЫЕ МОЛОЧНЫЕ ПРОДУКТЫ",
+        "class_name": "СЫРКИ",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 64.9,
+        "ml_predicted_clearing_price": 62.04,
+        "recommended_price": 62.3,
+        "price_change_pct": -4.01,
+        "price_difference": -2.6,
+        "hist_avg_price": 56.51,
+        "hist_min_price": 0.0,
+        "hist_max_price": 64.9
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 13.3,
+        "forecast_14d_total_units": 27.44,
+        "forecast_30d_total_units": 61.2,
+        "forecast_avg_daily_7d": 1.9,
+        "projected_change_pct_7d": -36.75,
+        "demand_trend": "DECREASING",
+        "horizon_consistency": "FULL_CONSISTENCY",
+        "confidence_score": 95.0,
+        "confidence_tier": "HIGH"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 2640.0,
+        "hist_avg_daily_demand": 4.54,
+        "hist_median_daily_demand": 3.0,
+        "hist_max_daily_demand": 42.0,
+        "hist_std_daily_demand": 3.89,
+        "hist_total_revenue": 143825.77,
+        "hist_avg_daily_revenue": 247.12,
+        "hist_revenue_per_unit": 54.48
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 29.73,
+        "promo_days_count": 173.0,
+        "avg_discount_pct": 2.84,
+        "avg_discount_amount": 1.68,
+        "promo_demand_avg": 5.93,
+        "non_promo_demand_avg": 3.95,
+        "promo_demand_lift_pct": 50.29
+      },
+      "domain_rules_layer": {
+        "business_priority": "PRICING_MARKDOWN_REVIEW",
+        "rule_based_baseline_insight": "Demand is projected to be DECREASING (-36.8% vs baseline, HIGH confidence of 95.0/100). Recommended price is $62.30 (-4.0% lower than reference price $64.90). Historical promotional days exhibited 50.3% higher observed average demand. Action: Review promotional markdown or price reduction to stimulate sales velocity."
+      }
+    }
+  },
+  {
+    "item_id": "0167fc0b7d9f",
+    "store_id": 1,
+    "dept_name": "КОФЕ",
+    "class_name": "КОФЕ НАТУРАЛЬНЫЙ",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a stable demand trajectory (7d forecast: 6.86 units, 30d forecast: 28.8 units). Recommendation is to reduce price by -4.0% from $499.9 to $479.9 (ML clearing estimate: $476.22) under commercial priority [STABLE_CORE_OPERATIONS].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $476.22. [KPI Fact]: Current reference price is $499.9 (historical range: $0.0-$629.9). [LLM Insight]: Recommended price of $479.9 (-4.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 6.86 units over next 7 days and 28.8 units over 30 days. [KPI Fact]: Multi-horizon consistency is FULL_CONSISTENCY with heuristic confidence score of 84.0/100 (HIGH tier). [LLM Insight]: Trajectory is stable; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 85.54% with average discount depth 22.96%. Promotional lift is observed at 66.9%. [LLM Insight]: Total historical revenue realized stands at $116571.45 across 261.0 units.",
+      "commercial_risks": "Low commercial risk; ensure regular monitoring of competitor pricing and basket attachment.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: STABLE_CORE_OPERATIONS",
+        "Adjust store inventory target to match stable 7d forecast (6.86 units)",
+        "Execute pricing adjustment: reduce price by -4.0% from $499.9 to $479.9 (ML clearing estimate: $476.22)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "0167fc0b7d9f",
+        "store_id": 1,
+        "dept_name": "КОФЕ",
+        "class_name": "КОФЕ НАТУРАЛЬНЫЙ",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 499.9,
+        "ml_predicted_clearing_price": 476.22,
+        "recommended_price": 479.9,
+        "price_change_pct": -4.0,
+        "price_difference": -20.0,
+        "hist_avg_price": 450.83,
+        "hist_min_price": 0.0,
+        "hist_max_price": 629.9
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 6.86,
+        "forecast_14d_total_units": 13.44,
+        "forecast_30d_total_units": 28.8,
+        "forecast_avg_daily_7d": 0.98,
+        "projected_change_pct_7d": -2.27,
+        "demand_trend": "STABLE",
+        "horizon_consistency": "FULL_CONSISTENCY",
+        "confidence_score": 84.0,
+        "confidence_tier": "HIGH"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 261.0,
+        "hist_avg_daily_demand": 1.57,
+        "hist_median_daily_demand": 1.0,
+        "hist_max_daily_demand": 33.0,
+        "hist_std_daily_demand": 2.59,
+        "hist_total_revenue": 116571.45,
+        "hist_avg_daily_revenue": 702.24,
+        "hist_revenue_per_unit": 446.63
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 85.54,
+        "promo_days_count": 142.0,
+        "avg_discount_pct": 22.96,
+        "avg_discount_amount": 137.71,
+        "promo_demand_avg": 1.67,
+        "non_promo_demand_avg": 1.0,
+        "promo_demand_lift_pct": 66.9
+      },
+      "domain_rules_layer": {
+        "business_priority": "STABLE_CORE_OPERATIONS",
+        "rule_based_baseline_insight": "Demand is projected to be STABLE (-2.3% vs baseline, HIGH confidence of 84.0/100). Recommended price is $479.90 (-4.0% lower than reference price $499.90). Historical promotional days exhibited 66.9% higher observed average demand. Action: Maintain standard baseline operations and stable inventory buffers."
+      }
+    }
+  },
+  {
+    "item_id": "02ea58a3f68e",
+    "store_id": 1,
+    "dept_name": "Unknown",
+    "class_name": "Unknown",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a stable demand trajectory (7d forecast: 27.58 units, 30d forecast: 100.2 units). Recommendation is to increase price by +20.0% from $99.9 to $119.88 (ML clearing estimate: $131.53) under commercial priority [PRICE_INCREASE_OPPORTUNITY].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $131.53. [KPI Fact]: Current reference price is $99.9 (historical range: $89.93-$119.9). [LLM Insight]: Recommended price of $119.88 (+20.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 27.58 units over next 7 days and 100.2 units over 30 days. [KPI Fact]: Multi-horizon consistency is PARTIAL_CONSISTENCY with heuristic confidence score of 77.0/100 (HIGH tier). [LLM Insight]: Trajectory is stable; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 28.57% with average discount depth 4.77%. Promotional lift is observed at 17.19%. [LLM Insight]: Total historical revenue realized stands at $5142.65 across 47.0 units.",
+      "commercial_risks": "Low commercial risk; ensure regular monitoring of competitor pricing and basket attachment.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: PRICE_INCREASE_OPPORTUNITY",
+        "Adjust store inventory target to match stable 7d forecast (27.58 units)",
+        "Execute pricing adjustment: increase price by +20.0% from $99.9 to $119.88 (ML clearing estimate: $131.53)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "02ea58a3f68e",
+        "store_id": 1,
+        "dept_name": "Unknown",
+        "class_name": "Unknown",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 99.9,
+        "ml_predicted_clearing_price": 131.53,
+        "recommended_price": 119.88,
+        "price_change_pct": 20.0,
+        "price_difference": 19.98,
+        "hist_avg_price": 111.34,
+        "hist_min_price": 89.93,
+        "hist_max_price": 119.9
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 27.58,
+        "forecast_14d_total_units": 52.64,
+        "forecast_30d_total_units": 100.2,
+        "forecast_avg_daily_7d": 3.94,
+        "projected_change_pct_7d": 2.17,
+        "demand_trend": "STABLE",
+        "horizon_consistency": "PARTIAL_CONSISTENCY",
+        "confidence_score": 77.0,
+        "confidence_tier": "HIGH"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 47.0,
+        "hist_avg_daily_demand": 3.36,
+        "hist_median_daily_demand": 3.0,
+        "hist_max_daily_demand": 6.0,
+        "hist_std_daily_demand": 1.74,
+        "hist_total_revenue": 5142.65,
+        "hist_avg_daily_revenue": 367.33,
+        "hist_revenue_per_unit": 109.42
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 28.57,
+        "promo_days_count": 4.0,
+        "avg_discount_pct": 4.77,
+        "avg_discount_amount": 5.71,
+        "promo_demand_avg": 3.75,
+        "non_promo_demand_avg": 3.2,
+        "promo_demand_lift_pct": 17.19
+      },
+      "domain_rules_layer": {
+        "business_priority": "PRICE_INCREASE_OPPORTUNITY",
+        "rule_based_baseline_insight": "Demand is projected to be STABLE (+2.2% vs baseline, HIGH confidence of 77.0/100). Recommended price is $119.88 (+20.0% higher than reference price $99.90). Historical promotional days exhibited 17.2% higher observed average demand. Action: Consider price increase to capture additional revenue without hurting stable demand."
+      }
+    }
+  },
+  {
+    "item_id": "039823e72e87",
+    "store_id": 1,
+    "dept_name": "МАЙОНЕЗ,СОУСЫ НА МАЙОНЕЗНОЙ ОСНОВЕ",
+    "class_name": "МАЙОНЕЗ",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a increasing demand trajectory (7d forecast: 73.29 units, 30d forecast: 299.4 units). Recommendation is to reduce price by -4.0% from $141.93 to $136.25 (ML clearing estimate: $136.34) under commercial priority [STANDARD_MONITORING].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $136.34. [KPI Fact]: Current reference price is $141.93 (historical range: $99.9-$239.9). [LLM Insight]: Recommended price of $136.25 (-4.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 73.29 units over next 7 days and 299.4 units over 30 days. [KPI Fact]: Multi-horizon consistency is PARTIAL_CONSISTENCY with heuristic confidence score of 73.0/100 (MEDIUM tier). [LLM Insight]: Trajectory is increasing; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 55.43% with average discount depth 13.73%. Promotional lift is observed at 492.32%. [LLM Insight]: Total historical revenue realized stands at $757356.09 across 5163.0 units.",
+      "commercial_risks": "Stockout risk if inventory replenishment fails to meet increasing demand momentum.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: STANDARD_MONITORING",
+        "Adjust store inventory target to match increasing 7d forecast (73.29 units)",
+        "Execute pricing adjustment: reduce price by -4.0% from $141.93 to $136.25 (ML clearing estimate: $136.34)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "039823e72e87",
+        "store_id": 1,
+        "dept_name": "МАЙОНЕЗ,СОУСЫ НА МАЙОНЕЗНОЙ ОСНОВЕ",
+        "class_name": "МАЙОНЕЗ",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 141.93,
+        "ml_predicted_clearing_price": 136.34,
+        "recommended_price": 136.25,
+        "price_change_pct": -4.0,
+        "price_difference": -5.68,
+        "hist_avg_price": 165.6,
+        "hist_min_price": 99.9,
+        "hist_max_price": 239.9
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 73.29,
+        "forecast_14d_total_units": 143.22,
+        "forecast_30d_total_units": 299.4,
+        "forecast_avg_daily_7d": 10.47,
+        "projected_change_pct_7d": 9.36,
+        "demand_trend": "INCREASING",
+        "horizon_consistency": "PARTIAL_CONSISTENCY",
+        "confidence_score": 73.0,
+        "confidence_tier": "MEDIUM"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 5163.0,
+        "hist_avg_daily_demand": 9.35,
+        "hist_median_daily_demand": 5.0,
+        "hist_max_daily_demand": 74.0,
+        "hist_std_daily_demand": 10.72,
+        "hist_total_revenue": 757356.09,
+        "hist_avg_daily_revenue": 1372.02,
+        "hist_revenue_per_unit": 146.69
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 55.43,
+        "promo_days_count": 306.0,
+        "avg_discount_pct": 13.73,
+        "avg_discount_amount": 29.11,
+        "promo_demand_avg": 14.86,
+        "non_promo_demand_avg": 2.51,
+        "promo_demand_lift_pct": 492.32
+      },
+      "domain_rules_layer": {
+        "business_priority": "STANDARD_MONITORING",
+        "rule_based_baseline_insight": "Demand is projected to be INCREASING (+9.4% vs baseline, MEDIUM confidence of 73.0/100). Recommended price is $136.25 (-4.0% lower than reference price $141.93). Historical promotional days exhibited 492.3% higher observed average demand. Action: Maintain regular operational monitoring and baseline inventory levels."
+      }
+    }
+  },
+  {
+    "item_id": "0a73b80e4257",
+    "store_id": 1,
+    "dept_name": "ДЕТСКИЙ МИР",
+    "class_name": "ДЕТСКАЯ ОДЕЖДА",
+    "model_used": "gemini-2.5-flash",
+    "api_status": "OFFLINE_FALLBACK",
+    "generation_timestamp": "2026-09-08 20:04:55",
+    "insights": {
+      "executive_summary": "Item exhibits a stable demand trajectory (7d forecast: 7.0 units, 30d forecast: 30.0 units). Recommendation is to reduce price by -20.0% from $269.0 to $215.2 (ML clearing estimate: $195.53) under commercial priority [PRICE_REDUCTION_RECOMMENDED].",
+      "pricing_rationale": "[ML Prediction]: Random Forest price clearing model estimates optimal equilibrium at $195.53. [KPI Fact]: Current reference price is $269.0 (historical range: $269.0-$269.0). [LLM Insight]: Recommended price of $215.2 (-20.0%) aligns with ML valuation while respecting commercial boundaries.",
+      "demand_and_forecast_insights": "[ML Prediction]: LightGBM demand model forecasts 7.0 units over next 7 days and 30.0 units over 30 days. [KPI Fact]: Multi-horizon consistency is FULL_CONSISTENCY with heuristic confidence score of 90.0/100 (HIGH tier). [LLM Insight]: Trajectory is stable; supply chain planning should calibrate inventory against projected demand velocity.",
+      "promotional_and_historical_analysis": "[KPI Fact]: Historical promo exposure is 0.0% with average discount depth 0.0%. Promotional lift is observed at 0.0%. [LLM Insight]: Total historical revenue realized stands at $807.0 across 3.0 units.",
+      "commercial_risks": "Low commercial risk; ensure regular monitoring of competitor pricing and basket attachment.",
+      "actionable_recommendations": [
+        "Implement commercial priority directive: PRICE_REDUCTION_RECOMMENDED",
+        "Adjust store inventory target to match stable 7d forecast (7.0 units)",
+        "Execute pricing adjustment: reduce price by -20.0% from $269.0 to $215.2 (ML clearing estimate: $195.53)"
+      ]
+    },
+    "raw_response": null,
+    "error_message": "Live Gemini API call not executed because GEMINI_API_KEY was not available.",
+    "input_context": {
+      "metadata": {
+        "item_id": "0a73b80e4257",
+        "store_id": 1,
+        "dept_name": "ДЕТСКИЙ МИР",
+        "class_name": "ДЕТСКАЯ ОДЕЖДА",
+        "origin_date": "2024-08-04"
+      },
+      "pricing_layer": {
+        "current_reference_price": 269.0,
+        "ml_predicted_clearing_price": 195.53,
+        "recommended_price": 215.2,
+        "price_change_pct": -20.0,
+        "price_difference": -53.8,
+        "hist_avg_price": 269.0,
+        "hist_min_price": 269.0,
+        "hist_max_price": 269.0
+      },
+      "demand_forecast_layer": {
+        "forecast_7d_total_units": 7.0,
+        "forecast_14d_total_units": 14.0,
+        "forecast_30d_total_units": 30.0,
+        "forecast_avg_daily_7d": 1.0,
+        "projected_change_pct_7d": -0.0,
+        "demand_trend": "STABLE",
+        "horizon_consistency": "FULL_CONSISTENCY",
+        "confidence_score": 90.0,
+        "confidence_tier": "HIGH"
+      },
+      "historical_performance_layer": {
+        "hist_total_units_sold": 3.0,
+        "hist_avg_daily_demand": 1.0,
+        "hist_median_daily_demand": 1.0,
+        "hist_max_daily_demand": 1.0,
+        "hist_std_daily_demand": 0.0,
+        "hist_total_revenue": 807.0,
+        "hist_avg_daily_revenue": 269.0,
+        "hist_revenue_per_unit": 269.0
+      },
+      "promotion_dynamics_layer": {
+        "promo_rate_pct": 0.0,
+        "promo_days_count": 0.0,
+        "avg_discount_pct": 0.0,
+        "avg_discount_amount": 0.0,
+        "promo_demand_avg": 1.0,
+        "non_promo_demand_avg": 1.0,
+        "promo_demand_lift_pct": 0.0
+      },
+      "domain_rules_layer": {
+        "business_priority": "PRICE_REDUCTION_RECOMMENDED",
+        "rule_based_baseline_insight": "Demand is projected to be STABLE (-0.0% vs baseline, HIGH confidence of 90.0/100). Recommended price is $215.20 (-20.0% lower than reference price $269.00). Action: Adjust price downward to align with predicted market clearing equilibrium."
+      }
+    }
+  }
+]

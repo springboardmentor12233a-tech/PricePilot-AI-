@@ -1,0 +1,7027 @@
+[
+  {
+    "item_id": "103d86ad7076",
+    "store_id": 1,
+    "origin_date": "2024-08-16",
+    "dept_name": "КОРМА ДЛЯ СОБАК",
+    "class_name": "ПАУЧИ ДЛЯ СОБАК",
+    "horizon_7_daily": [
+      1.61,
+      1.59,
+      1.51,
+      1.52,
+      1.5,
+      1.59,
+      1.59
+    ],
+    "horizon_7_total": 10.91,
+    "horizon_14_daily": [
+      1.61,
+      1.59,
+      1.51,
+      1.52,
+      1.5,
+      1.59,
+      1.59,
+      1.53,
+      1.53,
+      1.53,
+      1.59,
+      1.59,
+      1.65,
+      1.65
+    ],
+    "horizon_14_total": 21.98,
+    "horizon_30_daily": [
+      1.61,
+      1.59,
+      1.51,
+      1.52,
+      1.5,
+      1.59,
+      1.59,
+      1.53,
+      1.53,
+      1.53,
+      1.59,
+      1.59,
+      1.65,
+      1.65,
+      1.56,
+      1.56,
+      1.56,
+      1.56,
+      1.56,
+      1.62,
+      1.73,
+      1.67,
+      1.67,
+      1.67,
+      1.67,
+      1.67,
+      1.78,
+      1.87,
+      1.93,
+      1.93
+    ],
+    "horizon_30_total": 48.99,
+    "recent_7d_avg": 2.71,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 1.61,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 1.59,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 1.51,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 1.52,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 1.5,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 1.59,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 1.59,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 1.53,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 1.53,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 1.53,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 1.59,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 1.59,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 1.65,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 1.65,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 1.56,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 1.56,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 1.56,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 1.56,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 1.56,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 1.62,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.73,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 1.67,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 1.67,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 1.67,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 1.67,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 1.67,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 1.78,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 1.87,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 1.93,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 1.93,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      }
+    ]
+  },
+  {
+    "item_id": "8687e05c1b7d",
+    "store_id": 1,
+    "origin_date": "2024-08-04",
+    "dept_name": "СУХАРИКИ",
+    "class_name": "РЖАНЫЕ",
+    "horizon_7_daily": [
+      4.38,
+      4.34,
+      4.82,
+      4.87,
+      6.15,
+      5.5,
+      4.52
+    ],
+    "horizon_7_total": 34.58,
+    "horizon_14_daily": [
+      4.38,
+      4.34,
+      4.82,
+      4.87,
+      6.15,
+      5.5,
+      4.52,
+      4.13,
+      4.17,
+      4.36,
+      4.3,
+      5.78,
+      5.29,
+      4.13
+    ],
+    "horizon_14_total": 66.74,
+    "horizon_30_daily": [
+      4.38,
+      4.34,
+      4.82,
+      4.87,
+      6.15,
+      5.5,
+      4.52,
+      4.13,
+      4.17,
+      4.36,
+      4.3,
+      5.78,
+      5.29,
+      4.13,
+      3.95,
+      3.76,
+      4.09,
+      4.19,
+      5.66,
+      5.27,
+      4.11,
+      3.9,
+      3.68,
+      3.99,
+      3.93,
+      5.5,
+      5.12,
+      3.92,
+      3.47,
+      3.45
+    ],
+    "horizon_30_total": 134.73,
+    "recent_7d_avg": 3.57,
+    "forecast_trend_30d": "INCREASING (+5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-05",
+        "predicted_quantity": 4.38,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-06",
+        "predicted_quantity": 4.34,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-07",
+        "predicted_quantity": 4.82,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-08",
+        "predicted_quantity": 4.87,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-09",
+        "predicted_quantity": 6.15,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-10",
+        "predicted_quantity": 5.5,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-11",
+        "predicted_quantity": 4.52,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-12",
+        "predicted_quantity": 4.13,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-13",
+        "predicted_quantity": 4.17,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-14",
+        "predicted_quantity": 4.36,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-15",
+        "predicted_quantity": 4.3,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-16",
+        "predicted_quantity": 5.78,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 5.29,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 4.13,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 3.95,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 3.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 4.09,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 4.19,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 5.66,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 5.27,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 4.11,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 3.9,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 3.68,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 3.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 3.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 5.5,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 5.12,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 3.92,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 3.47,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 3.45,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "a2065059cff7",
+    "store_id": 1,
+    "origin_date": "2024-09-25",
+    "dept_name": "БЕЛАЯ РЫБА МОРСКАЯ ОХЛАЖДЕННАЯ",
+    "class_name": "ПИКША",
+    "horizon_7_daily": [
+      0.65,
+      0.71,
+      0.74,
+      0.71,
+      0.7,
+      0.69,
+      0.69
+    ],
+    "horizon_7_total": 4.89,
+    "horizon_14_daily": [
+      0.65,
+      0.71,
+      0.74,
+      0.71,
+      0.7,
+      0.69,
+      0.69,
+      0.72,
+      0.79,
+      0.77,
+      0.73,
+      0.72,
+      0.72,
+      0.72
+    ],
+    "horizon_14_total": 10.06,
+    "horizon_30_daily": [
+      0.65,
+      0.71,
+      0.74,
+      0.71,
+      0.7,
+      0.69,
+      0.69,
+      0.72,
+      0.79,
+      0.77,
+      0.73,
+      0.72,
+      0.72,
+      0.72,
+      0.74,
+      0.79,
+      0.77,
+      0.77,
+      0.76,
+      0.75,
+      0.76,
+      0.78,
+      0.83,
+      0.8,
+      0.77,
+      0.76,
+      0.75,
+      0.76,
+      0.78,
+      0.83
+    ],
+    "horizon_30_total": 22.46,
+    "recent_7d_avg": 1.08,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 0.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 0.71,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 0.74,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 0.71,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 0.7,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 0.69,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 0.69,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 0.72,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 0.79,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 0.77,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 0.73,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 0.72,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-10-08",
+        "predicted_quantity": 0.72,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-10-09",
+        "predicted_quantity": 0.72,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-10-10",
+        "predicted_quantity": 0.74,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-10-11",
+        "predicted_quantity": 0.79,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-10-12",
+        "predicted_quantity": 0.77,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-10-13",
+        "predicted_quantity": 0.77,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-10-14",
+        "predicted_quantity": 0.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-10-15",
+        "predicted_quantity": 0.75,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-10-16",
+        "predicted_quantity": 0.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-10-17",
+        "predicted_quantity": 0.78,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-10-18",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-19",
+        "predicted_quantity": 0.8,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-20",
+        "predicted_quantity": 0.77,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-21",
+        "predicted_quantity": 0.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-22",
+        "predicted_quantity": 0.75,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-23",
+        "predicted_quantity": 0.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-24",
+        "predicted_quantity": 0.78,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-25",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "5c15a8ff1d5a",
+    "store_id": 1,
+    "origin_date": "2024-09-07",
+    "dept_name": "ЧИПСЫ",
+    "class_name": "КАРТОФЕЛЬНЫЕ",
+    "horizon_7_daily": [
+      1.76,
+      1.62,
+      1.49,
+      1.16,
+      1.06,
+      1.03,
+      1.03
+    ],
+    "horizon_7_total": 9.15,
+    "horizon_14_daily": [
+      1.76,
+      1.62,
+      1.49,
+      1.16,
+      1.06,
+      1.03,
+      1.03,
+      1.01,
+      1.01,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.98
+    ],
+    "horizon_14_total": 16.15,
+    "horizon_30_daily": [
+      1.76,
+      1.62,
+      1.49,
+      1.16,
+      1.06,
+      1.03,
+      1.03,
+      1.01,
+      1.01,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.98,
+      0.99,
+      0.97,
+      0.94,
+      0.94,
+      0.94,
+      1.01,
+      1.0,
+      0.95,
+      0.93,
+      0.96,
+      0.94,
+      0.95,
+      0.99,
+      0.97,
+      0.92,
+      0.92
+    ],
+    "horizon_30_total": 31.47,
+    "recent_7d_avg": 2.29,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 1.76,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 1.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 1.49,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 1.16,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 1.03,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 1.03,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 1.01,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 1.01,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 0.98,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 0.99,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 0.97,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 1.01,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 0.95,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 0.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 0.96,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 0.95,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 0.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 0.97,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 0.92,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 0.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "fd904ce00ab4",
+    "store_id": 4,
+    "origin_date": "2024-08-09",
+    "dept_name": "ЗЕЛЕНЬ СВЕЖАЯ",
+    "class_name": "САЛАТЫ",
+    "horizon_7_daily": [
+      1.96,
+      1.77,
+      1.67,
+      1.65,
+      1.69,
+      1.65,
+      1.78
+    ],
+    "horizon_7_total": 12.17,
+    "horizon_14_daily": [
+      1.96,
+      1.77,
+      1.67,
+      1.65,
+      1.69,
+      1.65,
+      1.78,
+      1.42,
+      1.15,
+      1.12,
+      1.12,
+      1.09,
+      1.09,
+      1.08
+    ],
+    "horizon_14_total": 20.24,
+    "horizon_30_daily": [
+      1.96,
+      1.77,
+      1.67,
+      1.65,
+      1.69,
+      1.65,
+      1.78,
+      1.42,
+      1.15,
+      1.12,
+      1.12,
+      1.09,
+      1.09,
+      1.08,
+      1.07,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "horizon_30_total": 36.31,
+    "recent_7d_avg": 2.14,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-10",
+        "predicted_quantity": 1.96,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-11",
+        "predicted_quantity": 1.77,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-12",
+        "predicted_quantity": 1.67,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-13",
+        "predicted_quantity": 1.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-14",
+        "predicted_quantity": 1.69,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-15",
+        "predicted_quantity": 1.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-16",
+        "predicted_quantity": 1.78,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 1.42,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 1.15,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 1.12,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 1.12,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 1.09,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 1.09,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 1.08,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 1.07,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "2dd700cade13",
+    "store_id": 2,
+    "origin_date": "2024-08-28",
+    "dept_name": "СЛАДОСТИ",
+    "class_name": "МАРМЕЛАД,ЗЕФИР,ПАСТИЛА,СУФЛЕ",
+    "horizon_7_daily": [
+      1.01,
+      1.0,
+      0.99,
+      0.99,
+      0.98,
+      0.98,
+      0.98
+    ],
+    "horizon_7_total": 6.93,
+    "horizon_14_daily": [
+      1.01,
+      1.0,
+      0.99,
+      0.99,
+      0.98,
+      0.98,
+      0.98,
+      0.98,
+      0.98,
+      0.97,
+      0.93,
+      0.94,
+      0.94,
+      0.93
+    ],
+    "horizon_14_total": 13.6,
+    "horizon_30_daily": [
+      1.01,
+      1.0,
+      0.99,
+      0.99,
+      0.98,
+      0.98,
+      0.98,
+      0.98,
+      0.98,
+      0.97,
+      0.93,
+      0.94,
+      0.94,
+      0.93,
+      0.94,
+      0.96,
+      0.94,
+      0.94,
+      0.94,
+      0.94,
+      0.94,
+      0.94,
+      0.96,
+      0.94,
+      0.94,
+      0.86,
+      0.86,
+      0.86,
+      0.88,
+      0.9
+    ],
+    "horizon_30_total": 28.34,
+    "recent_7d_avg": 1.14,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 1.01,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 0.99,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 0.99,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 0.97,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 0.93,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 0.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 0.96,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 0.96,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 0.9,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "c1c646f61309",
+    "store_id": 1,
+    "origin_date": "2024-08-16",
+    "dept_name": "ПИВО",
+    "class_name": "ЛИЦЕНЗИОННОЕ",
+    "horizon_7_daily": [
+      1.02,
+      1.0,
+      1.04,
+      1.06,
+      1.06,
+      1.06,
+      1.06
+    ],
+    "horizon_7_total": 7.3,
+    "horizon_14_daily": [
+      1.02,
+      1.0,
+      1.04,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.05,
+      1.05,
+      1.05
+    ],
+    "horizon_14_total": 14.69,
+    "horizon_30_daily": [
+      1.02,
+      1.0,
+      1.04,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.06,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05,
+      1.05
+    ],
+    "horizon_30_total": 31.49,
+    "recent_7d_avg": 1.71,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 1.02,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 1.04,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 1.06,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 1.06,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 1.05,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 1.05,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 1.05,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 1.05,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 1.05,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 1.05,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 1.05,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "ac52cb6c2815",
+    "store_id": 2,
+    "origin_date": "2024-08-07",
+    "dept_name": "ВОДКА,НАСТОЙКИ",
+    "class_name": "ВОДКА",
+    "horizon_7_daily": [
+      1.0,
+      0.99,
+      0.98,
+      0.94,
+      0.91,
+      0.88,
+      0.88
+    ],
+    "horizon_7_total": 6.58,
+    "horizon_14_daily": [
+      1.0,
+      0.99,
+      0.98,
+      0.94,
+      0.91,
+      0.88,
+      0.88,
+      0.89,
+      0.89,
+      0.87,
+      0.86,
+      0.83,
+      0.83,
+      0.84
+    ],
+    "horizon_14_total": 12.59,
+    "horizon_30_daily": [
+      1.0,
+      0.99,
+      0.98,
+      0.94,
+      0.91,
+      0.88,
+      0.88,
+      0.89,
+      0.89,
+      0.87,
+      0.86,
+      0.83,
+      0.83,
+      0.84,
+      0.84,
+      0.86,
+      0.84,
+      0.83,
+      0.83,
+      0.83,
+      0.84,
+      0.84,
+      0.86,
+      0.84,
+      0.83,
+      0.83,
+      0.83,
+      0.84,
+      0.84,
+      0.86
+    ],
+    "horizon_30_total": 26.03,
+    "recent_7d_avg": 1.14,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-08",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-09",
+        "predicted_quantity": 0.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-10",
+        "predicted_quantity": 0.98,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-11",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-12",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-13",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-14",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-15",
+        "predicted_quantity": 0.89,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-16",
+        "predicted_quantity": 0.89,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 0.87,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 0.86,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 0.84,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 0.83,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 0.84,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 0.83,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 0.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "d2f7fc971df6",
+    "store_id": 4,
+    "origin_date": "2024-09-18",
+    "dept_name": "БУМАЖНО-ВАТНАЯ ПРОДУКЦИЯ",
+    "class_name": "БУМАЖНАЯ ПРОДУКЦИЯ",
+    "horizon_7_daily": [
+      1.63,
+      1.73,
+      1.67,
+      1.48,
+      1.06,
+      1.01,
+      1.03
+    ],
+    "horizon_7_total": 9.61,
+    "horizon_14_daily": [
+      1.63,
+      1.73,
+      1.67,
+      1.48,
+      1.06,
+      1.01,
+      1.03,
+      1.04,
+      1.02,
+      1.01,
+      1.01,
+      1.0,
+      1.0,
+      0.98
+    ],
+    "horizon_14_total": 16.67,
+    "horizon_30_daily": [
+      1.63,
+      1.73,
+      1.67,
+      1.48,
+      1.06,
+      1.01,
+      1.03,
+      1.04,
+      1.02,
+      1.01,
+      1.01,
+      1.0,
+      1.0,
+      0.98,
+      0.98,
+      0.98,
+      0.99,
+      0.95,
+      0.93,
+      0.91,
+      0.92,
+      0.94,
+      0.99,
+      0.96,
+      0.92,
+      0.91,
+      0.91,
+      0.92,
+      0.93,
+      0.97
+    ],
+    "horizon_30_total": 31.78,
+    "recent_7d_avg": 2.43,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 1.63,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 1.73,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 1.67,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 1.48,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 1.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 1.01,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 1.03,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 1.04,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 1.02,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 1.01,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 1.01,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 0.99,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 0.95,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 0.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-10-08",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-10-09",
+        "predicted_quantity": 0.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-10-10",
+        "predicted_quantity": 0.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-10-11",
+        "predicted_quantity": 0.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-12",
+        "predicted_quantity": 0.96,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-13",
+        "predicted_quantity": 0.92,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-14",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-15",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-16",
+        "predicted_quantity": 0.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-17",
+        "predicted_quantity": 0.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-18",
+        "predicted_quantity": 0.97,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "0d6ea764935a",
+    "store_id": 4,
+    "origin_date": "2024-09-04",
+    "dept_name": "ТАБАЧНЫЕ ИЗДЕЛИЯ",
+    "class_name": "СИГАРЕТЫ",
+    "horizon_7_daily": [
+      6.53,
+      7.04,
+      6.01,
+      4.92,
+      5.88,
+      5.65,
+      5.7
+    ],
+    "horizon_7_total": 41.73,
+    "horizon_14_daily": [
+      6.53,
+      7.04,
+      6.01,
+      4.92,
+      5.88,
+      5.65,
+      5.7,
+      5.61,
+      6.11,
+      5.24,
+      4.4,
+      5.08,
+      5.14,
+      5.06
+    ],
+    "horizon_14_total": 78.37,
+    "horizon_30_daily": [
+      6.53,
+      7.04,
+      6.01,
+      4.92,
+      5.88,
+      5.65,
+      5.7,
+      5.61,
+      6.11,
+      5.24,
+      4.4,
+      5.08,
+      5.14,
+      5.06,
+      5.1,
+      5.66,
+      4.96,
+      4.17,
+      4.91,
+      4.68,
+      4.69,
+      4.7,
+      5.24,
+      4.71,
+      3.8,
+      4.62,
+      4.58,
+      4.71,
+      4.69,
+      5.28
+    ],
+    "horizon_30_total": 154.87,
+    "recent_7d_avg": 5.71,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 6.53,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 7.04,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 6.01,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 4.92,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 5.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 5.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 5.7,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 5.61,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 6.11,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 5.24,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 4.4,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 5.08,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 5.14,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 5.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 5.1,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 5.66,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 4.96,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 4.17,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 4.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 4.68,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 4.69,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 4.7,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 5.24,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 4.71,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 3.8,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 4.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 4.58,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 4.71,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 4.69,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 5.28,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "98dfab42dd8c",
+    "store_id": 4,
+    "origin_date": "2024-09-05",
+    "dept_name": "СЛАДКИЕ МУЧНЫЕ ИЗДЕЛИЯ",
+    "class_name": "ПЕЧЕНЬЕ",
+    "horizon_7_daily": [
+      1.0,
+      0.99,
+      0.97,
+      0.95,
+      0.91,
+      0.88,
+      0.88
+    ],
+    "horizon_7_total": 6.58,
+    "horizon_14_daily": [
+      1.0,
+      0.99,
+      0.97,
+      0.95,
+      0.91,
+      0.88,
+      0.88,
+      0.92,
+      0.9,
+      0.87,
+      0.86,
+      0.86,
+      0.84,
+      0.84
+    ],
+    "horizon_14_total": 12.67,
+    "horizon_30_daily": [
+      1.0,
+      0.99,
+      0.97,
+      0.95,
+      0.91,
+      0.88,
+      0.88,
+      0.92,
+      0.9,
+      0.87,
+      0.86,
+      0.86,
+      0.84,
+      0.84,
+      0.88,
+      0.88,
+      0.84,
+      0.84,
+      0.84,
+      0.84,
+      0.84,
+      0.88,
+      0.88,
+      0.84,
+      0.84,
+      0.84,
+      0.84,
+      0.84,
+      0.88,
+      0.88
+    ],
+    "horizon_30_total": 26.35,
+    "recent_7d_avg": 1.29,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 0.99,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 0.97,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 0.95,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 0.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 0.9,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 0.87,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 0.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 0.88,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 0.84,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 0.88,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 0.84,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 0.84,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 0.88,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "23e282a8189c",
+    "store_id": 3,
+    "origin_date": "2024-09-10",
+    "dept_name": "БУТЕРБРОДЫ",
+    "class_name": "БУТЕРБРОДЫ",
+    "horizon_7_daily": [
+      10.62,
+      10.55,
+      10.35,
+      6.63,
+      5.84,
+      10.08,
+      10.15
+    ],
+    "horizon_7_total": 64.22,
+    "horizon_14_daily": [
+      10.62,
+      10.55,
+      10.35,
+      6.63,
+      5.84,
+      10.08,
+      10.15,
+      9.95,
+      9.77,
+      9.15,
+      5.71,
+      5.35,
+      10.26,
+      10.62
+    ],
+    "horizon_14_total": 125.03,
+    "horizon_30_daily": [
+      10.62,
+      10.55,
+      10.35,
+      6.63,
+      5.84,
+      10.08,
+      10.15,
+      9.95,
+      9.77,
+      9.15,
+      5.71,
+      5.35,
+      10.26,
+      10.62,
+      10.25,
+      10.5,
+      9.99,
+      5.54,
+      4.88,
+      10.2,
+      10.34,
+      10.36,
+      10.46,
+      9.73,
+      5.28,
+      4.88,
+      10.09,
+      10.4,
+      10.25,
+      10.31
+    ],
+    "horizon_30_total": 268.49,
+    "recent_7d_avg": 9.86,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 10.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 10.55,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 10.35,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 6.63,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 5.84,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 10.08,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 10.15,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 9.95,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 9.77,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 9.15,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 5.71,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 5.35,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 10.26,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 10.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 10.25,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 10.5,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 9.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 5.54,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 4.88,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 10.2,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 10.34,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 10.36,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 10.46,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 9.73,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 5.28,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 4.88,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 10.09,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-08",
+        "predicted_quantity": 10.4,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-09",
+        "predicted_quantity": 10.25,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-10",
+        "predicted_quantity": 10.31,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "836bf8db7254",
+    "store_id": 2,
+    "origin_date": "2024-08-11",
+    "dept_name": "КРУПЫ И ЗЕРНОВЫЕ",
+    "class_name": "КРУПЫ В МЯГКОЙ УПАКОВКЕ",
+    "horizon_7_daily": [
+      2.03,
+      2.23,
+      2.22,
+      2.25,
+      2.05,
+      2.01,
+      2.06
+    ],
+    "horizon_7_total": 14.85,
+    "horizon_14_daily": [
+      2.03,
+      2.23,
+      2.22,
+      2.25,
+      2.05,
+      2.01,
+      2.06,
+      2.15,
+      2.14,
+      2.15,
+      2.17,
+      2.0,
+      1.99,
+      2.04
+    ],
+    "horizon_14_total": 29.49,
+    "horizon_30_daily": [
+      2.03,
+      2.23,
+      2.22,
+      2.25,
+      2.05,
+      2.01,
+      2.06,
+      2.15,
+      2.14,
+      2.15,
+      2.17,
+      2.0,
+      1.99,
+      2.04,
+      2.14,
+      2.14,
+      2.15,
+      2.17,
+      2.0,
+      1.99,
+      2.03,
+      2.14,
+      2.14,
+      2.15,
+      2.17,
+      2.0,
+      1.99,
+      2.03,
+      2.19,
+      2.2
+    ],
+    "horizon_30_total": 63.12,
+    "recent_7d_avg": 2.14,
+    "forecast_trend_30d": "STABLE (±5% baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-12",
+        "predicted_quantity": 2.03,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-13",
+        "predicted_quantity": 2.23,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-14",
+        "predicted_quantity": 2.22,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-15",
+        "predicted_quantity": 2.25,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-16",
+        "predicted_quantity": 2.05,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 2.01,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 2.06,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 2.15,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 2.14,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 2.15,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 2.17,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 2.0,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 1.99,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 2.04,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 2.14,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 2.14,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 2.15,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 2.17,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 2.0,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 1.99,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 2.03,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 2.14,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 2.14,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 2.15,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 2.17,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 2.0,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 1.99,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 2.03,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 2.19,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 2.2,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      }
+    ]
+  },
+  {
+    "item_id": "d860fff25685",
+    "store_id": 1,
+    "origin_date": "2024-09-07",
+    "dept_name": "ХЛЕБ",
+    "class_name": "ХЛЕБ БЕЛЫЙ",
+    "horizon_7_daily": [
+      20.2,
+      18.93,
+      18.83,
+      19.1,
+      19.93,
+      23.13,
+      22.19
+    ],
+    "horizon_7_total": 142.31,
+    "horizon_14_daily": [
+      20.2,
+      18.93,
+      18.83,
+      19.1,
+      19.93,
+      23.13,
+      22.19,
+      20.44,
+      19.6,
+      18.81,
+      18.95,
+      19.34,
+      22.76,
+      21.11
+    ],
+    "horizon_14_total": 283.32,
+    "horizon_30_daily": [
+      20.2,
+      18.93,
+      18.83,
+      19.1,
+      19.93,
+      23.13,
+      22.19,
+      20.44,
+      19.6,
+      18.81,
+      18.95,
+      19.34,
+      22.76,
+      21.11,
+      18.85,
+      18.7,
+      18.62,
+      19.08,
+      19.92,
+      22.99,
+      20.97,
+      18.85,
+      18.81,
+      18.56,
+      18.93,
+      18.93,
+      22.7,
+      20.93,
+      18.48,
+      18.72
+    ],
+    "horizon_30_total": 597.36,
+    "recent_7d_avg": 21.43,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 20.2,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 18.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 18.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 19.1,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 19.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 23.13,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 22.19,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 20.44,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 19.6,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 18.81,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 18.95,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 19.34,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 22.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 21.11,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 18.85,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 18.7,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 18.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 19.08,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 19.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 22.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 20.97,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 18.85,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 18.81,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 18.56,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 18.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 18.93,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 22.7,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 20.93,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 18.48,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 18.72,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "2e23779dff93",
+    "store_id": 1,
+    "origin_date": "2024-09-13",
+    "dept_name": "ГРИБЫ",
+    "class_name": "ГРИБЫ СВЕЖИЕ",
+    "horizon_7_daily": [
+      20.16,
+      15.9,
+      14.49,
+      14.41,
+      15.33,
+      19.11,
+      25.49
+    ],
+    "horizon_7_total": 124.89,
+    "horizon_14_daily": [
+      20.16,
+      15.9,
+      14.49,
+      14.41,
+      15.33,
+      19.11,
+      25.49,
+      25.11,
+      19.19,
+      17.34,
+      17.15,
+      19.81,
+      24.48,
+      31.7
+    ],
+    "horizon_14_total": 279.67,
+    "horizon_30_daily": [
+      20.16,
+      15.9,
+      14.49,
+      14.41,
+      15.33,
+      19.11,
+      25.49,
+      25.11,
+      19.19,
+      17.34,
+      17.15,
+      19.81,
+      24.48,
+      31.7,
+      28.94,
+      22.05,
+      20.28,
+      19.83,
+      22.88,
+      27.08,
+      34.93,
+      31.87,
+      22.67,
+      20.86,
+      20.62,
+      22.35,
+      26.3,
+      36.31,
+      34.62,
+      24.01
+    ],
+    "horizon_30_total": 695.27,
+    "recent_7d_avg": 16.89,
+    "forecast_trend_30d": "INCREASING (+5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 20.16,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 15.9,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 14.49,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 14.41,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 15.33,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 19.11,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 25.49,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 25.11,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 19.19,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 17.34,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 17.15,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 19.81,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 24.48,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 31.7,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 28.94,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 22.05,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 20.28,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 19.83,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 22.88,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 27.08,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 34.93,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 31.87,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 22.67,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 20.86,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-08",
+        "predicted_quantity": 20.62,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-09",
+        "predicted_quantity": 22.35,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-10",
+        "predicted_quantity": 26.3,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-11",
+        "predicted_quantity": 36.31,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-12",
+        "predicted_quantity": 34.62,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-13",
+        "predicted_quantity": 24.01,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      }
+    ]
+  },
+  {
+    "item_id": "fe30e57afa4b",
+    "store_id": 4,
+    "origin_date": "2024-09-17",
+    "dept_name": "СЛОЙКА",
+    "class_name": "СЛОЙКА",
+    "horizon_7_daily": [
+      5.62,
+      5.65,
+      6.34,
+      6.2,
+      5.8,
+      5.44,
+      5.47
+    ],
+    "horizon_7_total": 40.52,
+    "horizon_14_daily": [
+      5.62,
+      5.65,
+      6.34,
+      6.2,
+      5.8,
+      5.44,
+      5.47,
+      5.6,
+      5.64,
+      6.39,
+      6.28,
+      5.85,
+      5.5,
+      5.5
+    ],
+    "horizon_14_total": 81.28,
+    "horizon_30_daily": [
+      5.62,
+      5.65,
+      6.34,
+      6.2,
+      5.8,
+      5.44,
+      5.47,
+      5.6,
+      5.64,
+      6.39,
+      6.28,
+      5.85,
+      5.5,
+      5.5,
+      5.59,
+      5.63,
+      6.32,
+      6.21,
+      5.8,
+      5.48,
+      5.52,
+      5.63,
+      5.65,
+      6.33,
+      6.21,
+      5.83,
+      5.48,
+      5.51,
+      5.63,
+      5.73
+    ],
+    "horizon_30_total": 173.83,
+    "recent_7d_avg": 5.43,
+    "forecast_trend_30d": "INCREASING (+5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 5.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 5.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 6.34,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 6.2,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 5.8,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 5.44,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 5.47,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 5.6,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 5.64,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 6.39,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 6.28,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 5.85,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 5.5,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 5.5,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 5.59,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 5.63,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 6.32,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 6.21,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 5.8,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 5.48,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-10-08",
+        "predicted_quantity": 5.52,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-10-09",
+        "predicted_quantity": 5.63,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-10-10",
+        "predicted_quantity": 5.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-11",
+        "predicted_quantity": 6.33,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-12",
+        "predicted_quantity": 6.21,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-13",
+        "predicted_quantity": 5.83,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-14",
+        "predicted_quantity": 5.48,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-15",
+        "predicted_quantity": 5.51,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-16",
+        "predicted_quantity": 5.63,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-17",
+        "predicted_quantity": 5.73,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "5c0242f5c553",
+    "store_id": 1,
+    "origin_date": "2024-09-03",
+    "dept_name": "ВОДА",
+    "class_name": "НЕГАЗ.",
+    "horizon_7_daily": [
+      63.64,
+      65.29,
+      70.64,
+      66.26,
+      64.63,
+      61.01,
+      63.82
+    ],
+    "horizon_7_total": 455.29,
+    "horizon_14_daily": [
+      63.64,
+      65.29,
+      70.64,
+      66.26,
+      64.63,
+      61.01,
+      63.82,
+      65.08,
+      67.56,
+      72.56,
+      70.74,
+      66.07,
+      62.92,
+      65.65
+    ],
+    "horizon_14_total": 925.87,
+    "horizon_30_daily": [
+      63.64,
+      65.29,
+      70.64,
+      66.26,
+      64.63,
+      61.01,
+      63.82,
+      65.08,
+      67.56,
+      72.56,
+      70.74,
+      66.07,
+      62.92,
+      65.65,
+      67.53,
+      69.76,
+      75.77,
+      72.18,
+      68.18,
+      65.6,
+      66.73,
+      67.65,
+      69.75,
+      76.22,
+      73.4,
+      69.06,
+      64.38,
+      66.33,
+      67.62,
+      69.74
+    ],
+    "horizon_30_total": 2035.77,
+    "recent_7d_avg": 62.57,
+    "forecast_trend_30d": "INCREASING (+5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 63.64,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 65.29,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 70.64,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 66.26,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 64.63,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 61.01,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 63.82,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 65.08,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 67.56,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 72.56,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 70.74,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 66.07,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 62.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 65.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 67.53,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 69.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 75.77,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 72.18,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 68.18,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 65.6,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 66.73,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 67.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 69.75,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 76.22,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 73.4,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 69.06,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 64.38,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 66.33,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 67.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 69.74,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "4c18a14c0e33",
+    "store_id": 1,
+    "origin_date": "2024-08-07",
+    "dept_name": "ДЕТСКОЕ ПИТАНИЕ",
+    "class_name": "КАШИ",
+    "horizon_7_daily": [
+      1.8,
+      1.96,
+      1.87,
+      1.72,
+      1.7,
+      1.69,
+      1.67
+    ],
+    "horizon_7_total": 12.41,
+    "horizon_14_daily": [
+      1.8,
+      1.96,
+      1.87,
+      1.72,
+      1.7,
+      1.69,
+      1.67,
+      1.56,
+      1.57,
+      1.49,
+      1.37,
+      1.27,
+      1.28,
+      1.23
+    ],
+    "horizon_14_total": 22.18,
+    "horizon_30_daily": [
+      1.8,
+      1.96,
+      1.87,
+      1.72,
+      1.7,
+      1.69,
+      1.67,
+      1.56,
+      1.57,
+      1.49,
+      1.37,
+      1.27,
+      1.28,
+      1.23,
+      1.21,
+      1.11,
+      1.0,
+      1.0,
+      0.99,
+      1.0,
+      1.0,
+      0.99,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "horizon_30_total": 38.48,
+    "recent_7d_avg": 3.43,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-08",
+        "predicted_quantity": 1.8,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-09",
+        "predicted_quantity": 1.96,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-10",
+        "predicted_quantity": 1.87,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-11",
+        "predicted_quantity": 1.72,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-12",
+        "predicted_quantity": 1.7,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-13",
+        "predicted_quantity": 1.69,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-14",
+        "predicted_quantity": 1.67,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-15",
+        "predicted_quantity": 1.56,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-16",
+        "predicted_quantity": 1.57,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 1.49,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 1.37,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 1.27,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 1.28,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 1.23,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 1.21,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 1.11,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 0.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 0.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "3ced2d523ff2",
+    "store_id": 4,
+    "origin_date": "2024-08-26",
+    "dept_name": "КОНФЕТЫ",
+    "class_name": "КОНФЕТЫ ШОКОЛАДНЫЕ",
+    "horizon_7_daily": [
+      0.36,
+      0.36,
+      0.38,
+      0.4,
+      0.37,
+      0.36,
+      0.36
+    ],
+    "horizon_7_total": 2.59,
+    "horizon_14_daily": [
+      0.36,
+      0.36,
+      0.38,
+      0.4,
+      0.37,
+      0.36,
+      0.36,
+      0.36,
+      0.36,
+      0.38,
+      0.4,
+      0.37,
+      0.36,
+      0.36
+    ],
+    "horizon_14_total": 5.18,
+    "horizon_30_daily": [
+      0.36,
+      0.36,
+      0.38,
+      0.4,
+      0.37,
+      0.36,
+      0.36,
+      0.36,
+      0.36,
+      0.38,
+      0.4,
+      0.37,
+      0.36,
+      0.36,
+      0.36,
+      0.36,
+      0.38,
+      0.4,
+      0.37,
+      0.36,
+      0.36,
+      0.36,
+      0.36,
+      0.38,
+      0.4,
+      0.37,
+      0.36,
+      0.36,
+      0.4,
+      0.41
+    ],
+    "horizon_30_total": 11.17,
+    "recent_7d_avg": 0.5,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 0.38,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 0.4,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 0.37,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 0.36,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 0.38,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 0.4,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 0.37,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 0.36,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 0.38,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 0.4,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 0.37,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 0.36,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 0.38,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 0.4,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 0.37,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 0.36,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 0.36,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 0.4,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 0.41,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      }
+    ]
+  },
+  {
+    "item_id": "f68adcde287f",
+    "store_id": 4,
+    "origin_date": "2024-08-18",
+    "dept_name": "КОЛБАСЫ ВАРЕНЫЕ",
+    "class_name": "КОЛБАСА ВАРЕНАЯ",
+    "horizon_7_daily": [
+      1.97,
+      1.94,
+      1.87,
+      1.79,
+      2.08,
+      2.17,
+      1.76
+    ],
+    "horizon_7_total": 13.58,
+    "horizon_14_daily": [
+      1.97,
+      1.94,
+      1.87,
+      1.79,
+      2.08,
+      2.17,
+      1.76,
+      1.64,
+      1.61,
+      1.62,
+      1.65,
+      1.86,
+      1.82,
+      1.59
+    ],
+    "horizon_14_total": 25.37,
+    "horizon_30_daily": [
+      1.97,
+      1.94,
+      1.87,
+      1.79,
+      2.08,
+      2.17,
+      1.76,
+      1.64,
+      1.61,
+      1.62,
+      1.65,
+      1.86,
+      1.82,
+      1.59,
+      1.5,
+      1.49,
+      1.51,
+      1.55,
+      1.73,
+      1.69,
+      1.52,
+      1.47,
+      1.41,
+      1.51,
+      1.52,
+      1.75,
+      1.69,
+      1.03,
+      1.02,
+      1.02
+    ],
+    "horizon_30_total": 48.78,
+    "recent_7d_avg": 3.57,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 1.97,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 1.94,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 1.87,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 1.79,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 2.08,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 2.17,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 1.76,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 1.64,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 1.61,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 1.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 1.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 1.86,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 1.82,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 1.59,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 1.5,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 1.49,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 1.51,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 1.55,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.73,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 1.69,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 1.52,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 1.47,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 1.41,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 1.51,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 1.52,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 1.75,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 1.69,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 1.03,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 1.02,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 1.02,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "918ece8c06f2",
+    "store_id": 1,
+    "origin_date": "2024-09-03",
+    "dept_name": "МАСЛО И МАРГАРИН",
+    "class_name": "МАСЛО СЛИВОЧНОЕ",
+    "horizon_7_daily": [
+      1.65,
+      1.8,
+      1.99,
+      1.83,
+      1.78,
+      1.76,
+      1.57
+    ],
+    "horizon_7_total": 12.38,
+    "horizon_14_daily": [
+      1.65,
+      1.8,
+      1.99,
+      1.83,
+      1.78,
+      1.76,
+      1.57,
+      1.68,
+      1.69,
+      1.83,
+      1.8,
+      1.68,
+      1.68,
+      1.61
+    ],
+    "horizon_14_total": 24.35,
+    "horizon_30_daily": [
+      1.65,
+      1.8,
+      1.99,
+      1.83,
+      1.78,
+      1.76,
+      1.57,
+      1.68,
+      1.69,
+      1.83,
+      1.8,
+      1.68,
+      1.68,
+      1.61,
+      1.6,
+      1.58,
+      1.7,
+      1.61,
+      1.6,
+      1.57,
+      1.56,
+      1.24,
+      1.25,
+      1.21,
+      1.19,
+      1.1,
+      1.09,
+      1.04,
+      1.03,
+      1.02
+    ],
+    "horizon_30_total": 45.74,
+    "recent_7d_avg": 2.71,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 1.65,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 1.8,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 1.83,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 1.78,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 1.76,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 1.57,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 1.68,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 1.69,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 1.83,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 1.8,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 1.68,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 1.68,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 1.61,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 1.6,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 1.58,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 1.7,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 1.61,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 1.6,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 1.57,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 1.56,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 1.24,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 1.25,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 1.21,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 1.19,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 1.1,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 1.09,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 1.04,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 1.03,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 1.02,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "448b0bc8cbe9",
+    "store_id": 1,
+    "origin_date": "2024-09-25",
+    "dept_name": "ДИЕТИЧЕСКОЕ ПИТАНИЕ",
+    "class_name": "КОНФЕТЫ, ШОКОЛАД, СЛАДОСТИ",
+    "horizon_7_daily": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "horizon_7_total": 7.0,
+    "horizon_14_daily": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "horizon_14_total": 14.0,
+    "horizon_30_daily": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "horizon_30_total": 30.0,
+    "recent_7d_avg": 1.14,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-10-08",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-10-09",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-10-10",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-10-11",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-10-12",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-10-13",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-10-14",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-10-15",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-10-16",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-10-17",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-10-18",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-19",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-20",
+        "predicted_quantity": 1.0,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-21",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-22",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-23",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-24",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-25",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "ec50f809fb60",
+    "store_id": 4,
+    "origin_date": "2024-09-19",
+    "dept_name": "МАСЛО И МАРГАРИН",
+    "class_name": "МАСЛО СЛИВОЧНОЕ",
+    "horizon_7_daily": [
+      1.2,
+      1.07,
+      1.06,
+      1.0,
+      1.0,
+      0.98,
+      0.98
+    ],
+    "horizon_7_total": 7.29,
+    "horizon_14_daily": [
+      1.2,
+      1.07,
+      1.06,
+      1.0,
+      1.0,
+      0.98,
+      0.98,
+      0.99,
+      0.99,
+      0.94,
+      0.91,
+      0.9,
+      0.91,
+      0.92
+    ],
+    "horizon_14_total": 13.85,
+    "horizon_30_daily": [
+      1.2,
+      1.07,
+      1.06,
+      1.0,
+      1.0,
+      0.98,
+      0.98,
+      0.99,
+      0.99,
+      0.94,
+      0.91,
+      0.9,
+      0.91,
+      0.92,
+      0.96,
+      0.93,
+      0.9,
+      0.88,
+      0.88,
+      0.89,
+      0.91,
+      0.96,
+      0.94,
+      0.9,
+      0.89,
+      0.89,
+      0.89,
+      0.91,
+      0.95,
+      0.94
+    ],
+    "horizon_30_total": 28.47,
+    "recent_7d_avg": 2.71,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 1.2,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 1.07,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 1.06,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 1.0,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 0.98,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-27",
+        "predicted_quantity": 0.99,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-28",
+        "predicted_quantity": 0.99,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-29",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-30",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-10-01",
+        "predicted_quantity": 0.9,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-10-02",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-10-03",
+        "predicted_quantity": 0.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-10-04",
+        "predicted_quantity": 0.96,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-10-05",
+        "predicted_quantity": 0.93,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-10-06",
+        "predicted_quantity": 0.9,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-10-07",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-10-08",
+        "predicted_quantity": 0.88,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-10-09",
+        "predicted_quantity": 0.89,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-10-10",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-10-11",
+        "predicted_quantity": 0.96,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-10-12",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-10-13",
+        "predicted_quantity": 0.9,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-10-14",
+        "predicted_quantity": 0.89,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-10-15",
+        "predicted_quantity": 0.89,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-10-16",
+        "predicted_quantity": 0.89,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-10-17",
+        "predicted_quantity": 0.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-10-18",
+        "predicted_quantity": 0.95,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-10-19",
+        "predicted_quantity": 0.94,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "6efd84dfff67",
+    "store_id": 1,
+    "origin_date": "2024-08-27",
+    "dept_name": "КЕТЧУПЫ,СОУСЫ НА ТОМАТНОЙ ОСНОВЕ",
+    "class_name": "КЕТЧУПЫ",
+    "horizon_7_daily": [
+      3.62,
+      3.53,
+      4.12,
+      3.95,
+      3.11,
+      2.82,
+      2.87
+    ],
+    "horizon_7_total": 24.02,
+    "horizon_14_daily": [
+      3.62,
+      3.53,
+      4.12,
+      3.95,
+      3.11,
+      2.82,
+      2.87,
+      3.04,
+      2.81,
+      3.55,
+      3.36,
+      2.5,
+      2.39,
+      2.38
+    ],
+    "horizon_14_total": 44.05,
+    "horizon_30_daily": [
+      3.62,
+      3.53,
+      4.12,
+      3.95,
+      3.11,
+      2.82,
+      2.87,
+      3.04,
+      2.81,
+      3.55,
+      3.36,
+      2.5,
+      2.39,
+      2.38,
+      2.45,
+      2.41,
+      2.91,
+      2.58,
+      2.08,
+      2.06,
+      2.1,
+      2.1,
+      2.08,
+      2.38,
+      2.25,
+      1.99,
+      1.91,
+      1.9,
+      1.92,
+      1.92
+    ],
+    "horizon_30_total": 79.09,
+    "recent_7d_avg": 3.71,
+    "forecast_trend_30d": "DECREASING (-5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 3.62,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 3.53,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 4.12,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 3.95,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 3.11,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 2.82,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 2.87,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 3.04,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 2.81,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 3.55,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 3.36,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 2.5,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 2.39,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 2.38,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 2.45,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 2.41,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 2.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 2.58,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 2.08,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-16",
+        "predicted_quantity": 2.06,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-17",
+        "predicted_quantity": 2.1,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-18",
+        "predicted_quantity": 2.1,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-19",
+        "predicted_quantity": 2.08,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-20",
+        "predicted_quantity": 2.38,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-21",
+        "predicted_quantity": 2.25,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-22",
+        "predicted_quantity": 1.99,
+        "is_weekend": 1,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-23",
+        "predicted_quantity": 1.91,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-24",
+        "predicted_quantity": 1.9,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-25",
+        "predicted_quantity": 1.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-26",
+        "predicted_quantity": 1.92,
+        "is_weekend": 0,
+        "is_on_promo": 0
+      }
+    ]
+  },
+  {
+    "item_id": "aa52de8d7028",
+    "store_id": 2,
+    "origin_date": "2024-08-16",
+    "dept_name": "НЕСЛАДКИЕ МУЧНЫЕ ИЗДЕЛИЯ",
+    "class_name": "КРЕКЕРЫ",
+    "horizon_7_daily": [
+      1.44,
+      1.67,
+      1.79,
+      1.84,
+      1.85,
+      1.87,
+      1.68
+    ],
+    "horizon_7_total": 12.14,
+    "horizon_14_daily": [
+      1.44,
+      1.67,
+      1.79,
+      1.84,
+      1.85,
+      1.87,
+      1.68,
+      1.69,
+      1.73,
+      1.85,
+      1.9,
+      1.84,
+      1.9,
+      1.9
+    ],
+    "horizon_14_total": 24.95,
+    "horizon_30_daily": [
+      1.44,
+      1.67,
+      1.79,
+      1.84,
+      1.85,
+      1.87,
+      1.68,
+      1.69,
+      1.73,
+      1.85,
+      1.9,
+      1.84,
+      1.9,
+      1.9,
+      1.71,
+      1.74,
+      1.84,
+      1.84,
+      1.85,
+      1.91,
+      1.9,
+      1.58,
+      1.71,
+      1.8,
+      1.82,
+      1.83,
+      1.85,
+      1.95,
+      1.75,
+      1.74
+    ],
+    "horizon_30_total": 53.77,
+    "recent_7d_avg": 1.57,
+    "forecast_trend_30d": "INCREASING (+5% vs baseline)",
+    "daily_forecasts": [
+      {
+        "day_ahead": 1,
+        "forecast_date": "2024-08-17",
+        "predicted_quantity": 1.44,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 2,
+        "forecast_date": "2024-08-18",
+        "predicted_quantity": 1.67,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 3,
+        "forecast_date": "2024-08-19",
+        "predicted_quantity": 1.79,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 4,
+        "forecast_date": "2024-08-20",
+        "predicted_quantity": 1.84,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 5,
+        "forecast_date": "2024-08-21",
+        "predicted_quantity": 1.85,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 6,
+        "forecast_date": "2024-08-22",
+        "predicted_quantity": 1.87,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 7,
+        "forecast_date": "2024-08-23",
+        "predicted_quantity": 1.68,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 8,
+        "forecast_date": "2024-08-24",
+        "predicted_quantity": 1.69,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 9,
+        "forecast_date": "2024-08-25",
+        "predicted_quantity": 1.73,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 10,
+        "forecast_date": "2024-08-26",
+        "predicted_quantity": 1.85,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 11,
+        "forecast_date": "2024-08-27",
+        "predicted_quantity": 1.9,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 12,
+        "forecast_date": "2024-08-28",
+        "predicted_quantity": 1.84,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 13,
+        "forecast_date": "2024-08-29",
+        "predicted_quantity": 1.9,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 14,
+        "forecast_date": "2024-08-30",
+        "predicted_quantity": 1.9,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 15,
+        "forecast_date": "2024-08-31",
+        "predicted_quantity": 1.71,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 16,
+        "forecast_date": "2024-09-01",
+        "predicted_quantity": 1.74,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 17,
+        "forecast_date": "2024-09-02",
+        "predicted_quantity": 1.84,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 18,
+        "forecast_date": "2024-09-03",
+        "predicted_quantity": 1.84,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 19,
+        "forecast_date": "2024-09-04",
+        "predicted_quantity": 1.85,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 20,
+        "forecast_date": "2024-09-05",
+        "predicted_quantity": 1.91,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 21,
+        "forecast_date": "2024-09-06",
+        "predicted_quantity": 1.9,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 22,
+        "forecast_date": "2024-09-07",
+        "predicted_quantity": 1.58,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 23,
+        "forecast_date": "2024-09-08",
+        "predicted_quantity": 1.71,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 24,
+        "forecast_date": "2024-09-09",
+        "predicted_quantity": 1.8,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 25,
+        "forecast_date": "2024-09-10",
+        "predicted_quantity": 1.82,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 26,
+        "forecast_date": "2024-09-11",
+        "predicted_quantity": 1.83,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 27,
+        "forecast_date": "2024-09-12",
+        "predicted_quantity": 1.85,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 28,
+        "forecast_date": "2024-09-13",
+        "predicted_quantity": 1.95,
+        "is_weekend": 0,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 29,
+        "forecast_date": "2024-09-14",
+        "predicted_quantity": 1.75,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      },
+      {
+        "day_ahead": 30,
+        "forecast_date": "2024-09-15",
+        "predicted_quantity": 1.74,
+        "is_weekend": 1,
+        "is_on_promo": 1
+      }
+    ]
+  }
+]

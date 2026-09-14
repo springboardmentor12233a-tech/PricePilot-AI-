@@ -1,0 +1,4277 @@
+[
+  {
+    "item_id": "4d4d6c48b390",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ЭНЕРГЕТИКИ",
+    "class_name": "ЭНЕРГЕТИКИ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 69.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 70.95,
+    "recommended_price": 71.3,
+    "price_change_pct": 2.0,
+    "alignment_score": 0.995,
+    "candidate_range": [
+      55.92,
+      83.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 70.95 under regular non-promo status. Candidate 71.30 was selected because it minimizes discrepancy (gap = 0.35) from the Random Forest predicted price, recommending to increase by 2.0% relative to reference price 69.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 55.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 15.026,
+        "alignment_score": 0.7882,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 57.32,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 13.626,
+        "alignment_score": 0.8079,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 58.72,
+        "percentage_from_ref": -15.99,
+        "discrepancy_from_model": 12.226,
+        "alignment_score": 0.8277,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 60.11,
+        "percentage_from_ref": -14.01,
+        "discrepancy_from_model": 10.836,
+        "alignment_score": 0.8473,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 61.51,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 9.436,
+        "alignment_score": 0.867,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 62.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 8.036,
+        "alignment_score": 0.8867,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 64.31,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 6.636,
+        "alignment_score": 0.9065,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 65.71,
+        "percentage_from_ref": -5.99,
+        "discrepancy_from_model": 5.236,
+        "alignment_score": 0.9262,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 67.1,
+        "percentage_from_ref": -4.01,
+        "discrepancy_from_model": 3.846,
+        "alignment_score": 0.9458,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 68.5,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 2.446,
+        "alignment_score": 0.9655,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 69.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 1.046,
+        "alignment_score": 0.9853,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 71.3,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 0.354,
+        "alignment_score": 0.995,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 72.7,
+        "percentage_from_ref": 4.01,
+        "discrepancy_from_model": 1.754,
+        "alignment_score": 0.9753,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 74.09,
+        "percentage_from_ref": 5.99,
+        "discrepancy_from_model": 3.144,
+        "alignment_score": 0.9557,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 75.49,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 4.544,
+        "alignment_score": 0.936,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 76.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 5.944,
+        "alignment_score": 0.9162,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 78.29,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 7.344,
+        "alignment_score": 0.8965,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 79.69,
+        "percentage_from_ref": 14.01,
+        "discrepancy_from_model": 8.744,
+        "alignment_score": 0.8768,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 81.08,
+        "percentage_from_ref": 15.99,
+        "discrepancy_from_model": 10.134,
+        "alignment_score": 0.8572,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 82.48,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 11.534,
+        "alignment_score": 0.8374,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 83.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 12.934,
+        "alignment_score": 0.8177,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "8591292b870b",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "СНЕКИ",
+    "class_name": "КУКУРУЗНЫЕ ПАЛОЧКИ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 139.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 138.77,
+    "recommended_price": 139.9,
+    "price_change_pct": 0.0,
+    "alignment_score": 0.9918,
+    "candidate_range": [
+      111.92,
+      167.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 138.77 under regular non-promo status. Candidate 139.90 was selected because it minimizes discrepancy (gap = 1.13) from the Random Forest predicted price, recommending to maintain baseline relative to reference price 139.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 111.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 26.8467,
+        "alignment_score": 0.8065,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 114.72,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 24.0467,
+        "alignment_score": 0.8267,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 117.52,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 21.2467,
+        "alignment_score": 0.8469,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 120.31,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 18.4567,
+        "alignment_score": 0.867,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 123.11,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 15.6567,
+        "alignment_score": 0.8872,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 125.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 12.8567,
+        "alignment_score": 0.9074,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 128.71,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 10.0567,
+        "alignment_score": 0.9275,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 131.51,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 7.2567,
+        "alignment_score": 0.9477,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 134.3,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 4.4667,
+        "alignment_score": 0.9678,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 137.1,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 1.6667,
+        "alignment_score": 0.988,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 139.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 1.1333,
+        "alignment_score": 0.9918,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 142.7,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 3.9333,
+        "alignment_score": 0.9717,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 145.5,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 6.7333,
+        "alignment_score": 0.9515,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 148.29,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 9.5233,
+        "alignment_score": 0.9314,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 151.09,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 12.3233,
+        "alignment_score": 0.9112,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 153.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 15.1233,
+        "alignment_score": 0.891,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 156.69,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 17.9233,
+        "alignment_score": 0.8708,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 159.49,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 20.7233,
+        "alignment_score": 0.8507,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 162.28,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 23.5133,
+        "alignment_score": 0.8306,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 165.08,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 26.3133,
+        "alignment_score": 0.8104,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 167.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 29.1133,
+        "alignment_score": 0.7902,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "88f1ec35c293",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "КОЛБАСЫ КОПЧЕНЫЕ.СЫРОВЯЛЕНЫЕ",
+    "class_name": "КОЛБАСА СЫРОВЯЛЕНАЯ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 579.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 504.09,
+    "recommended_price": 498.71,
+    "price_change_pct": -14.0,
+    "alignment_score": 0.9893,
+    "candidate_range": [
+      463.92,
+      695.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 504.09 under regular non-promo status. Candidate 498.71 was selected because it minimizes discrepancy (gap = 5.38) from the Random Forest predicted price, recommending to decrease by 14.0% relative to reference price 579.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 463.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 40.1739,
+        "alignment_score": 0.9203,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 475.52,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 28.5739,
+        "alignment_score": 0.9433,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 487.12,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 16.9739,
+        "alignment_score": 0.9663,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 498.71,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 5.3839,
+        "alignment_score": 0.9893,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 510.31,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 6.2161,
+        "alignment_score": 0.9877,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 521.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 17.8161,
+        "alignment_score": 0.9647,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 533.51,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 29.4161,
+        "alignment_score": 0.9416,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 545.11,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 41.0161,
+        "alignment_score": 0.9186,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 556.7,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 52.6061,
+        "alignment_score": 0.8956,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 568.3,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 64.2061,
+        "alignment_score": 0.8726,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 579.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 75.8061,
+        "alignment_score": 0.8496,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 591.5,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 87.4061,
+        "alignment_score": 0.8266,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 603.1,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 99.0061,
+        "alignment_score": 0.8036,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 614.69,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 110.5961,
+        "alignment_score": 0.7806,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 626.29,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 122.1961,
+        "alignment_score": 0.7576,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 637.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 133.7961,
+        "alignment_score": 0.7346,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 649.49,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 145.3961,
+        "alignment_score": 0.7116,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 661.09,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 156.9961,
+        "alignment_score": 0.6886,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 672.68,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 168.5861,
+        "alignment_score": 0.6656,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 684.28,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 180.1861,
+        "alignment_score": 0.6426,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 695.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 191.7861,
+        "alignment_score": 0.6195,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "3640edd47240",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ЛИМОНАДЫ",
+    "class_name": "КОЛОСОДЕРЖАЩИЕ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 158.93,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 160.14,
+    "recommended_price": 158.93,
+    "price_change_pct": 0.0,
+    "alignment_score": 0.9925,
+    "candidate_range": [
+      127.14,
+      190.72
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 160.14 under regular non-promo status. Candidate 158.93 was selected because it minimizes discrepancy (gap = 1.21) from the Random Forest predicted price, recommending to maintain baseline relative to reference price 158.93.",
+    "candidates_summary": [
+      {
+        "candidate_price": 127.14,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 32.9955,
+        "alignment_score": 0.794,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 130.32,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 29.8155,
+        "alignment_score": 0.8138,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 133.5,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 26.6355,
+        "alignment_score": 0.8337,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 136.68,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 23.4555,
+        "alignment_score": 0.8535,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 139.86,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 20.2755,
+        "alignment_score": 0.8734,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 143.04,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 17.0955,
+        "alignment_score": 0.8932,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 146.22,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 13.9155,
+        "alignment_score": 0.9131,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 149.39,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 10.7455,
+        "alignment_score": 0.9329,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 152.57,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 7.5655,
+        "alignment_score": 0.9528,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 155.75,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 4.3855,
+        "alignment_score": 0.9726,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 158.93,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 1.2055,
+        "alignment_score": 0.9925,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 162.11,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 1.9745,
+        "alignment_score": 0.9877,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 165.29,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 5.1545,
+        "alignment_score": 0.9678,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 168.47,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 8.3345,
+        "alignment_score": 0.948,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 171.64,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 11.5045,
+        "alignment_score": 0.9282,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 174.82,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 14.6845,
+        "alignment_score": 0.9083,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 178.0,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 17.8645,
+        "alignment_score": 0.8884,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 181.18,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 21.0445,
+        "alignment_score": 0.8686,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 184.36,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 24.2245,
+        "alignment_score": 0.8487,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 187.54,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 27.4045,
+        "alignment_score": 0.8289,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 190.72,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 30.5845,
+        "alignment_score": 0.809,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "23b18d1f7da9",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "КАФЕ",
+    "class_name": "КАФЕ",
+    "is_on_promo": 1,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 34.06,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 31.18,
+    "recommended_price": 31.34,
+    "price_change_pct": -7.99,
+    "alignment_score": 0.9949,
+    "candidate_range": [
+      27.25,
+      40.87
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 31.18 under on active promotion. Candidate 31.34 was selected because it minimizes discrepancy (gap = 0.16) from the Random Forest predicted price, recommending to decrease by 8.0% relative to reference price 34.06.",
+    "candidates_summary": [
+      {
+        "candidate_price": 27.25,
+        "percentage_from_ref": -19.99,
+        "discrepancy_from_model": 3.9318,
+        "alignment_score": 0.8739,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 27.93,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 3.2518,
+        "alignment_score": 0.8957,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 28.61,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 2.5718,
+        "alignment_score": 0.9175,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 29.29,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 1.8918,
+        "alignment_score": 0.9393,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 29.97,
+        "percentage_from_ref": -12.01,
+        "discrepancy_from_model": 1.2118,
+        "alignment_score": 0.9611,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 30.65,
+        "percentage_from_ref": -10.01,
+        "discrepancy_from_model": 0.5318,
+        "alignment_score": 0.9829,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 31.34,
+        "percentage_from_ref": -7.99,
+        "discrepancy_from_model": 0.1582,
+        "alignment_score": 0.9949,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 32.02,
+        "percentage_from_ref": -5.99,
+        "discrepancy_from_model": 0.8382,
+        "alignment_score": 0.9731,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 32.7,
+        "percentage_from_ref": -3.99,
+        "discrepancy_from_model": 1.5182,
+        "alignment_score": 0.9513,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 33.38,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 2.1982,
+        "alignment_score": 0.9295,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 34.06,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 2.8782,
+        "alignment_score": 0.9077,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 34.74,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 3.5582,
+        "alignment_score": 0.8859,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 35.42,
+        "percentage_from_ref": 3.99,
+        "discrepancy_from_model": 4.2382,
+        "alignment_score": 0.8641,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 36.1,
+        "percentage_from_ref": 5.99,
+        "discrepancy_from_model": 4.9182,
+        "alignment_score": 0.8423,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 36.78,
+        "percentage_from_ref": 7.99,
+        "discrepancy_from_model": 5.5982,
+        "alignment_score": 0.8205,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 37.47,
+        "percentage_from_ref": 10.01,
+        "discrepancy_from_model": 6.2882,
+        "alignment_score": 0.7983,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 38.15,
+        "percentage_from_ref": 12.01,
+        "discrepancy_from_model": 6.9682,
+        "alignment_score": 0.7765,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 38.83,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 7.6482,
+        "alignment_score": 0.7547,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 39.51,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 8.3282,
+        "alignment_score": 0.7329,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 40.19,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 9.0082,
+        "alignment_score": 0.7111,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 40.87,
+        "percentage_from_ref": 19.99,
+        "discrepancy_from_model": 9.6882,
+        "alignment_score": 0.6893,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "05b5e131821d",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "СОКИ",
+    "class_name": "ДЛЯ ДЕТЕЙ И ВЗРОСЛЫХ",
+    "is_on_promo": 1,
+    "promo_type_code": "5.0",
+    "reference_price": 53.46,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 52.48,
+    "recommended_price": 52.39,
+    "price_change_pct": -2.0,
+    "alignment_score": 0.9983,
+    "candidate_range": [
+      42.77,
+      64.15
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 52.48 under on active promotion. Candidate 52.39 was selected because it minimizes discrepancy (gap = 0.09) from the Random Forest predicted price, recommending to decrease by 2.0% relative to reference price 53.46.",
+    "candidates_summary": [
+      {
+        "candidate_price": 42.77,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 9.7083,
+        "alignment_score": 0.815,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 43.84,
+        "percentage_from_ref": -17.99,
+        "discrepancy_from_model": 8.6383,
+        "alignment_score": 0.8354,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 44.91,
+        "percentage_from_ref": -15.99,
+        "discrepancy_from_model": 7.5683,
+        "alignment_score": 0.8558,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 45.98,
+        "percentage_from_ref": -13.99,
+        "discrepancy_from_model": 6.4983,
+        "alignment_score": 0.8762,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 47.04,
+        "percentage_from_ref": -12.01,
+        "discrepancy_from_model": 5.4383,
+        "alignment_score": 0.8964,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 48.11,
+        "percentage_from_ref": -10.01,
+        "discrepancy_from_model": 4.3683,
+        "alignment_score": 0.9168,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 49.18,
+        "percentage_from_ref": -8.01,
+        "discrepancy_from_model": 3.2983,
+        "alignment_score": 0.9371,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 50.25,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 2.2283,
+        "alignment_score": 0.9575,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 51.32,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 1.1583,
+        "alignment_score": 0.9779,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 52.39,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 0.0883,
+        "alignment_score": 0.9983,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 53.46,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 0.9817,
+        "alignment_score": 0.9813,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 54.53,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 2.0517,
+        "alignment_score": 0.9609,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 55.6,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 3.1217,
+        "alignment_score": 0.9405,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 56.67,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 4.1917,
+        "alignment_score": 0.9201,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 57.74,
+        "percentage_from_ref": 8.01,
+        "discrepancy_from_model": 5.2617,
+        "alignment_score": 0.8997,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 58.81,
+        "percentage_from_ref": 10.01,
+        "discrepancy_from_model": 6.3317,
+        "alignment_score": 0.8793,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 59.88,
+        "percentage_from_ref": 12.01,
+        "discrepancy_from_model": 7.4017,
+        "alignment_score": 0.859,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 60.94,
+        "percentage_from_ref": 13.99,
+        "discrepancy_from_model": 8.4617,
+        "alignment_score": 0.8388,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 62.01,
+        "percentage_from_ref": 15.99,
+        "discrepancy_from_model": 9.5317,
+        "alignment_score": 0.8184,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 63.08,
+        "percentage_from_ref": 17.99,
+        "discrepancy_from_model": 10.6017,
+        "alignment_score": 0.798,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 64.15,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 11.6717,
+        "alignment_score": 0.7776,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "1de18c13710d",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "СДОБА",
+    "class_name": "СДОБА",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 29.43,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 30.29,
+    "recommended_price": 30.02,
+    "price_change_pct": 2.0,
+    "alignment_score": 0.991,
+    "candidate_range": [
+      23.54,
+      35.32
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 30.29 under regular non-promo status. Candidate 30.02 was selected because it minimizes discrepancy (gap = 0.27) from the Random Forest predicted price, recommending to increase by 2.0% relative to reference price 29.43.",
+    "candidates_summary": [
+      {
+        "candidate_price": 23.54,
+        "percentage_from_ref": -20.01,
+        "discrepancy_from_model": 6.753,
+        "alignment_score": 0.7771,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 24.13,
+        "percentage_from_ref": -18.01,
+        "discrepancy_from_model": 6.163,
+        "alignment_score": 0.7966,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 24.72,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 5.573,
+        "alignment_score": 0.816,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 25.31,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 4.983,
+        "alignment_score": 0.8355,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 25.9,
+        "percentage_from_ref": -11.99,
+        "discrepancy_from_model": 4.393,
+        "alignment_score": 0.855,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 26.49,
+        "percentage_from_ref": -9.99,
+        "discrepancy_from_model": 3.803,
+        "alignment_score": 0.8745,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 27.08,
+        "percentage_from_ref": -7.99,
+        "discrepancy_from_model": 3.213,
+        "alignment_score": 0.8939,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 27.66,
+        "percentage_from_ref": -6.01,
+        "discrepancy_from_model": 2.633,
+        "alignment_score": 0.9131,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 28.25,
+        "percentage_from_ref": -4.01,
+        "discrepancy_from_model": 2.043,
+        "alignment_score": 0.9326,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 28.84,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 1.453,
+        "alignment_score": 0.952,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 29.43,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 0.863,
+        "alignment_score": 0.9715,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 30.02,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 0.273,
+        "alignment_score": 0.991,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 30.61,
+        "percentage_from_ref": 4.01,
+        "discrepancy_from_model": 0.317,
+        "alignment_score": 0.9895,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 31.2,
+        "percentage_from_ref": 6.01,
+        "discrepancy_from_model": 0.907,
+        "alignment_score": 0.9701,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 31.78,
+        "percentage_from_ref": 7.99,
+        "discrepancy_from_model": 1.487,
+        "alignment_score": 0.9509,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 32.37,
+        "percentage_from_ref": 9.99,
+        "discrepancy_from_model": 2.077,
+        "alignment_score": 0.9314,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 32.96,
+        "percentage_from_ref": 11.99,
+        "discrepancy_from_model": 2.667,
+        "alignment_score": 0.912,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 33.55,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 3.257,
+        "alignment_score": 0.8925,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 34.14,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 3.847,
+        "alignment_score": 0.873,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 34.73,
+        "percentage_from_ref": 18.01,
+        "discrepancy_from_model": 4.437,
+        "alignment_score": 0.8535,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 35.32,
+        "percentage_from_ref": 20.01,
+        "discrepancy_from_model": 5.027,
+        "alignment_score": 0.8341,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "802654599bc5",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ТАБАЧНЫЕ ИЗДЕЛИЯ",
+    "class_name": "СТИКИ ТАБАЧНЫЕ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 190.0,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 191.43,
+    "recommended_price": 190.0,
+    "price_change_pct": 0.0,
+    "alignment_score": 0.9925,
+    "candidate_range": [
+      152.0,
+      228.0
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 191.43 under regular non-promo status. Candidate 190.00 was selected because it minimizes discrepancy (gap = 1.43) from the Random Forest predicted price, recommending to maintain baseline relative to reference price 190.00.",
+    "candidates_summary": [
+      {
+        "candidate_price": 152.0,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 39.4269,
+        "alignment_score": 0.794,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 155.8,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 35.6269,
+        "alignment_score": 0.8139,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 159.6,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 31.8269,
+        "alignment_score": 0.8337,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 163.4,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 28.0269,
+        "alignment_score": 0.8536,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 167.2,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 24.2269,
+        "alignment_score": 0.8734,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 171.0,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 20.4269,
+        "alignment_score": 0.8933,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 174.8,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 16.6269,
+        "alignment_score": 0.9131,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 178.6,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 12.8269,
+        "alignment_score": 0.933,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 182.4,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 9.0269,
+        "alignment_score": 0.9528,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 186.2,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 5.2269,
+        "alignment_score": 0.9727,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 190.0,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 1.4269,
+        "alignment_score": 0.9925,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 193.8,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 2.3731,
+        "alignment_score": 0.9876,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 197.6,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 6.1731,
+        "alignment_score": 0.9678,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 201.4,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 9.9731,
+        "alignment_score": 0.9479,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 205.2,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 13.7731,
+        "alignment_score": 0.9281,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 209.0,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 17.5731,
+        "alignment_score": 0.9082,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 212.8,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 21.3731,
+        "alignment_score": 0.8883,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 216.6,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 25.1731,
+        "alignment_score": 0.8685,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 220.4,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 28.9731,
+        "alignment_score": 0.8486,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 224.2,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 32.7731,
+        "alignment_score": 0.8288,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 228.0,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 36.5731,
+        "alignment_score": 0.8089,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "7d9d441790ac",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ЧАЙ",
+    "class_name": "ЧЁРНЫЙ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 316.0,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 311.71,
+    "recommended_price": 309.68,
+    "price_change_pct": -2.0,
+    "alignment_score": 0.9935,
+    "candidate_range": [
+      252.8,
+      379.2
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 311.71 under regular non-promo status. Candidate 309.68 was selected because it minimizes discrepancy (gap = 2.03) from the Random Forest predicted price, recommending to decrease by 2.0% relative to reference price 316.00.",
+    "candidates_summary": [
+      {
+        "candidate_price": 252.8,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 58.9131,
+        "alignment_score": 0.811,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 259.12,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 52.5931,
+        "alignment_score": 0.8313,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 265.44,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 46.2731,
+        "alignment_score": 0.8516,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 271.76,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 39.9531,
+        "alignment_score": 0.8718,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 278.08,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 33.6331,
+        "alignment_score": 0.8921,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 284.4,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 27.3131,
+        "alignment_score": 0.9124,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 290.72,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 20.9931,
+        "alignment_score": 0.9327,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 297.04,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 14.6731,
+        "alignment_score": 0.9529,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 303.36,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 8.3531,
+        "alignment_score": 0.9732,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 309.68,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 2.0331,
+        "alignment_score": 0.9935,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 316.0,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 4.2869,
+        "alignment_score": 0.9862,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 322.32,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 10.6069,
+        "alignment_score": 0.966,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 328.64,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 16.9269,
+        "alignment_score": 0.9457,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 334.96,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 23.2469,
+        "alignment_score": 0.9254,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 341.28,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 29.5669,
+        "alignment_score": 0.9051,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 347.6,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 35.8869,
+        "alignment_score": 0.8849,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 353.92,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 42.2069,
+        "alignment_score": 0.8646,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 360.24,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 48.5269,
+        "alignment_score": 0.8443,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 366.56,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 54.8469,
+        "alignment_score": 0.824,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 372.88,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 61.1669,
+        "alignment_score": 0.8038,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 379.2,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 67.4869,
+        "alignment_score": 0.7835,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "52887f8b1a99",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ПИВО",
+    "class_name": "ОТЕЧЕСТВЕННОЕ",
+    "is_on_promo": 1,
+    "promo_type_code": "6.0",
+    "reference_price": 169.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 168.15,
+    "recommended_price": 166.5,
+    "price_change_pct": -2.0,
+    "alignment_score": 0.9902,
+    "candidate_range": [
+      135.92,
+      203.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 168.15 under on active promotion. Candidate 166.50 was selected because it minimizes discrepancy (gap = 1.65) from the Random Forest predicted price, recommending to decrease by 2.0% relative to reference price 169.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 135.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 32.2277,
+        "alignment_score": 0.8083,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 139.32,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 28.8277,
+        "alignment_score": 0.8286,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 142.72,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 25.4277,
+        "alignment_score": 0.8488,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 146.11,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 22.0377,
+        "alignment_score": 0.8689,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 149.51,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 18.6377,
+        "alignment_score": 0.8892,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 152.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 15.2377,
+        "alignment_score": 0.9094,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 156.31,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 11.8377,
+        "alignment_score": 0.9296,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 159.71,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 8.4377,
+        "alignment_score": 0.9498,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 163.1,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 5.0477,
+        "alignment_score": 0.97,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 166.5,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 1.6477,
+        "alignment_score": 0.9902,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 169.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 1.7523,
+        "alignment_score": 0.9896,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 173.3,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 5.1523,
+        "alignment_score": 0.9694,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 176.7,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 8.5523,
+        "alignment_score": 0.9491,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 180.09,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 11.9423,
+        "alignment_score": 0.929,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 183.49,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 15.3423,
+        "alignment_score": 0.9088,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 186.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 18.7423,
+        "alignment_score": 0.8885,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 190.29,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 22.1423,
+        "alignment_score": 0.8683,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 193.69,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 25.5423,
+        "alignment_score": 0.8481,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 197.08,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 28.9323,
+        "alignment_score": 0.8279,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 200.48,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 32.3323,
+        "alignment_score": 0.8077,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 203.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 35.7323,
+        "alignment_score": 0.7875,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "7ff6528677e4",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "КОНФЕТЫ",
+    "class_name": "КОНФЕТЫ ДЕТСКИЕ С ИГРУШКАМИ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 129.0,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 128.64,
+    "recommended_price": 129.0,
+    "price_change_pct": 0.0,
+    "alignment_score": 0.9972,
+    "candidate_range": [
+      103.2,
+      154.8
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 128.64 under regular non-promo status. Candidate 129.00 was selected because it minimizes discrepancy (gap = 0.36) from the Random Forest predicted price, recommending to maintain baseline relative to reference price 129.00.",
+    "candidates_summary": [
+      {
+        "candidate_price": 103.2,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 25.4375,
+        "alignment_score": 0.8023,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 105.78,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 22.8575,
+        "alignment_score": 0.8223,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 108.36,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 20.2775,
+        "alignment_score": 0.8424,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 110.94,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 17.6975,
+        "alignment_score": 0.8624,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 113.52,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 15.1175,
+        "alignment_score": 0.8825,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 116.1,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 12.5375,
+        "alignment_score": 0.9025,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 118.68,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 9.9575,
+        "alignment_score": 0.9226,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 121.26,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 7.3775,
+        "alignment_score": 0.9426,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 123.84,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 4.7975,
+        "alignment_score": 0.9627,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 126.42,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 2.2175,
+        "alignment_score": 0.9828,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 129.0,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 0.3625,
+        "alignment_score": 0.9972,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 131.58,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 2.9425,
+        "alignment_score": 0.9771,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 134.16,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 5.5225,
+        "alignment_score": 0.9571,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 136.74,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 8.1025,
+        "alignment_score": 0.937,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 139.32,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 10.6825,
+        "alignment_score": 0.917,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 141.9,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 13.2625,
+        "alignment_score": 0.8969,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 144.48,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 15.8425,
+        "alignment_score": 0.8768,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 147.06,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 18.4225,
+        "alignment_score": 0.8568,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 149.64,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 21.0025,
+        "alignment_score": 0.8367,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 152.22,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 23.5825,
+        "alignment_score": 0.8167,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 154.8,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 26.1625,
+        "alignment_score": 0.7966,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "0c5fade5eeb6",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "КОНСЕРВЫ ОВОЩНЫЕ",
+    "class_name": "МАСЛИНЫ,ОЛИВКИ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 1499.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 1458.05,
+    "recommended_price": 1469.9,
+    "price_change_pct": -2.0,
+    "alignment_score": 0.9919,
+    "candidate_range": [
+      1199.92,
+      1799.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 1458.05 under regular non-promo status. Candidate 1469.90 was selected because it minimizes discrepancy (gap = 11.85) from the Random Forest predicted price, recommending to decrease by 2.0% relative to reference price 1499.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 1199.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 258.1308,
+        "alignment_score": 0.823,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1229.92,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 228.1308,
+        "alignment_score": 0.8435,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1259.92,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 198.1308,
+        "alignment_score": 0.8641,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1289.91,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 168.1408,
+        "alignment_score": 0.8847,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1319.91,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 138.1408,
+        "alignment_score": 0.9053,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1349.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 108.1408,
+        "alignment_score": 0.9258,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1379.91,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 78.1408,
+        "alignment_score": 0.9464,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1409.91,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 48.1408,
+        "alignment_score": 0.967,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1439.9,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 18.1508,
+        "alignment_score": 0.9876,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1469.9,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 11.8492,
+        "alignment_score": 0.9919,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 1499.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 41.8492,
+        "alignment_score": 0.9713,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1529.9,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 71.8492,
+        "alignment_score": 0.9507,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1559.9,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 101.8492,
+        "alignment_score": 0.9301,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1589.89,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 131.8392,
+        "alignment_score": 0.9096,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1619.89,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 161.8392,
+        "alignment_score": 0.889,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1649.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 191.8392,
+        "alignment_score": 0.8684,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1679.89,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 221.8392,
+        "alignment_score": 0.8479,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1709.89,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 251.8392,
+        "alignment_score": 0.8273,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1739.88,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 281.8292,
+        "alignment_score": 0.8067,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1769.88,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 311.8292,
+        "alignment_score": 0.7861,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 1799.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 341.8292,
+        "alignment_score": 0.7656,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "2e73d7e69822",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ЧИПСЫ",
+    "class_name": "КАРТОФЕЛЬНЫЕ",
+    "is_on_promo": 1,
+    "promo_type_code": "5.0",
+    "reference_price": 79.55,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 102.97,
+    "recommended_price": 95.46,
+    "price_change_pct": 20.0,
+    "alignment_score": 0.9271,
+    "candidate_range": [
+      63.64,
+      95.46
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 102.97 under on active promotion. Candidate 95.46 was selected because it minimizes discrepancy (gap = 7.51) from the Random Forest predicted price, recommending to increase by 20.0% relative to reference price 79.55.",
+    "candidates_summary": [
+      {
+        "candidate_price": 63.64,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 39.3283,
+        "alignment_score": 0.6181,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 65.23,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 37.7383,
+        "alignment_score": 0.6335,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 66.82,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 36.1483,
+        "alignment_score": 0.6489,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 68.41,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 34.5583,
+        "alignment_score": 0.6644,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 70.0,
+        "percentage_from_ref": -12.01,
+        "discrepancy_from_model": 32.9683,
+        "alignment_score": 0.6798,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 71.6,
+        "percentage_from_ref": -9.99,
+        "discrepancy_from_model": 31.3683,
+        "alignment_score": 0.6954,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 73.19,
+        "percentage_from_ref": -7.99,
+        "discrepancy_from_model": 29.7783,
+        "alignment_score": 0.7108,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 74.78,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 28.1883,
+        "alignment_score": 0.7262,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 76.37,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 26.5983,
+        "alignment_score": 0.7417,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 77.96,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 25.0083,
+        "alignment_score": 0.7571,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 79.55,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 23.4183,
+        "alignment_score": 0.7726,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 81.14,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 21.8283,
+        "alignment_score": 0.788,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 82.73,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 20.2383,
+        "alignment_score": 0.8035,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 84.32,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 18.6483,
+        "alignment_score": 0.8189,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 85.91,
+        "percentage_from_ref": 7.99,
+        "discrepancy_from_model": 17.0583,
+        "alignment_score": 0.8343,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 87.51,
+        "percentage_from_ref": 10.01,
+        "discrepancy_from_model": 15.4583,
+        "alignment_score": 0.8499,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 89.1,
+        "percentage_from_ref": 12.01,
+        "discrepancy_from_model": 13.8683,
+        "alignment_score": 0.8653,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 90.69,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 12.2783,
+        "alignment_score": 0.8808,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 92.28,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 10.6883,
+        "alignment_score": 0.8962,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 93.87,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 9.0983,
+        "alignment_score": 0.9116,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 95.46,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 7.5083,
+        "alignment_score": 0.9271,
+        "is_recommended": true
+      }
+    ]
+  },
+  {
+    "item_id": "286cadb11139",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "МАСЛО ПОДСОЛНЕЧНОЕ",
+    "class_name": "НЕРАФИНИРОВАННОЕ",
+    "is_on_promo": 1,
+    "promo_type_code": "5.0",
+    "reference_price": 89.59,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 90.25,
+    "recommended_price": 89.59,
+    "price_change_pct": 0.0,
+    "alignment_score": 0.9927,
+    "candidate_range": [
+      71.67,
+      107.51
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 90.25 under on active promotion. Candidate 89.59 was selected because it minimizes discrepancy (gap = 0.66) from the Random Forest predicted price, recommending to maintain baseline relative to reference price 89.59.",
+    "candidates_summary": [
+      {
+        "candidate_price": 71.67,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 18.5829,
+        "alignment_score": 0.7941,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 73.46,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 16.7929,
+        "alignment_score": 0.8139,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 75.26,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 14.9929,
+        "alignment_score": 0.8339,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 77.05,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 13.2029,
+        "alignment_score": 0.8537,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 78.84,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 11.4129,
+        "alignment_score": 0.8735,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 80.63,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 9.6229,
+        "alignment_score": 0.8934,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 82.42,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 7.8329,
+        "alignment_score": 0.9132,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 84.21,
+        "percentage_from_ref": -6.01,
+        "discrepancy_from_model": 6.0429,
+        "alignment_score": 0.933,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 86.01,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 4.2429,
+        "alignment_score": 0.953,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 87.8,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 2.4529,
+        "alignment_score": 0.9728,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 89.59,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 0.6629,
+        "alignment_score": 0.9927,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 91.38,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 1.1271,
+        "alignment_score": 0.9875,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 93.17,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 2.9171,
+        "alignment_score": 0.9677,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 94.97,
+        "percentage_from_ref": 6.01,
+        "discrepancy_from_model": 4.7171,
+        "alignment_score": 0.9477,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 96.76,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 6.5071,
+        "alignment_score": 0.9279,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 98.55,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 8.2971,
+        "alignment_score": 0.9081,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 100.34,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 10.0871,
+        "alignment_score": 0.8882,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 102.13,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 11.8771,
+        "alignment_score": 0.8684,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 103.92,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 13.6671,
+        "alignment_score": 0.8486,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 105.72,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 15.4671,
+        "alignment_score": 0.8286,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 107.51,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 17.2571,
+        "alignment_score": 0.8088,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "9cd49af0f151",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ТОРТЫ",
+    "class_name": "ВОЗДУШНЫЕ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 569.0,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 561.41,
+    "recommended_price": 557.62,
+    "price_change_pct": -2.0,
+    "alignment_score": 0.9933,
+    "candidate_range": [
+      455.2,
+      682.8
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 561.41 under regular non-promo status. Candidate 557.62 was selected because it minimizes discrepancy (gap = 3.79) from the Random Forest predicted price, recommending to decrease by 2.0% relative to reference price 569.00.",
+    "candidates_summary": [
+      {
+        "candidate_price": 455.2,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 106.2065,
+        "alignment_score": 0.8108,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 466.58,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 94.8265,
+        "alignment_score": 0.8311,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 477.96,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 83.4465,
+        "alignment_score": 0.8514,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 489.34,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 72.0665,
+        "alignment_score": 0.8716,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 500.72,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 60.6865,
+        "alignment_score": 0.8919,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 512.1,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 49.3065,
+        "alignment_score": 0.9122,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 523.48,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 37.9265,
+        "alignment_score": 0.9324,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 534.86,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 26.5465,
+        "alignment_score": 0.9527,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 546.24,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 15.1665,
+        "alignment_score": 0.973,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 557.62,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 3.7865,
+        "alignment_score": 0.9933,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 569.0,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 7.5935,
+        "alignment_score": 0.9865,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 580.38,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 18.9735,
+        "alignment_score": 0.9662,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 591.76,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 30.3535,
+        "alignment_score": 0.9459,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 603.14,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 41.7335,
+        "alignment_score": 0.9257,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 614.52,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 53.1135,
+        "alignment_score": 0.9054,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 625.9,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 64.4935,
+        "alignment_score": 0.8851,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 637.28,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 75.8735,
+        "alignment_score": 0.8649,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 648.66,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 87.2535,
+        "alignment_score": 0.8446,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 660.04,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 98.6335,
+        "alignment_score": 0.8243,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 671.42,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 110.0135,
+        "alignment_score": 0.804,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 682.8,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 121.3935,
+        "alignment_score": 0.7838,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "bc83daae4cde",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ЛИМОНАДЫ",
+    "class_name": "КОЛОСОДЕРЖАЩИЕ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 129.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 126.64,
+    "recommended_price": 127.3,
+    "price_change_pct": -2.0,
+    "alignment_score": 0.9948,
+    "candidate_range": [
+      103.92,
+      155.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 126.64 under regular non-promo status. Candidate 127.30 was selected because it minimizes discrepancy (gap = 0.66) from the Random Forest predicted price, recommending to decrease by 2.0% relative to reference price 129.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 103.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 22.7227,
+        "alignment_score": 0.8206,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 106.52,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 20.1227,
+        "alignment_score": 0.8411,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 109.12,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 17.5227,
+        "alignment_score": 0.8616,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 111.71,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 14.9327,
+        "alignment_score": 0.8821,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 114.31,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 12.3327,
+        "alignment_score": 0.9026,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 116.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 9.7327,
+        "alignment_score": 0.9231,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 119.51,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 7.1327,
+        "alignment_score": 0.9437,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 122.11,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 4.5327,
+        "alignment_score": 0.9642,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 124.7,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 1.9427,
+        "alignment_score": 0.9847,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 127.3,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 0.6573,
+        "alignment_score": 0.9948,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 129.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 3.2573,
+        "alignment_score": 0.9743,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 132.5,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 5.8573,
+        "alignment_score": 0.9537,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 135.1,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 8.4573,
+        "alignment_score": 0.9332,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 137.69,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 11.0473,
+        "alignment_score": 0.9128,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 140.29,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 13.6473,
+        "alignment_score": 0.8922,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 142.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 16.2473,
+        "alignment_score": 0.8717,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 145.49,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 18.8473,
+        "alignment_score": 0.8512,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 148.09,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 21.4473,
+        "alignment_score": 0.8306,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 150.68,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 24.0373,
+        "alignment_score": 0.8102,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 153.28,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 26.6373,
+        "alignment_score": 0.7897,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 155.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 29.2373,
+        "alignment_score": 0.7691,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "37609b43aa0c",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "МОРОЖЕНОЕ И ЗАМОРОЖЕННЫЕ ДЕСЕРТЫ",
+    "class_name": "МЕЛКОШТУЧНОЕ",
+    "is_on_promo": 1,
+    "promo_type_code": "1.0",
+    "reference_price": 14.83,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 26.39,
+    "recommended_price": 17.8,
+    "price_change_pct": 20.03,
+    "alignment_score": 0.6746,
+    "candidate_range": [
+      11.86,
+      17.8
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 26.39 under on active promotion. Candidate 17.80 was selected because it minimizes discrepancy (gap = 8.59) from the Random Forest predicted price, recommending to increase by 20.0% relative to reference price 14.83.",
+    "candidates_summary": [
+      {
+        "candidate_price": 11.86,
+        "percentage_from_ref": -20.03,
+        "discrepancy_from_model": 14.5265,
+        "alignment_score": 0.4495,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 12.16,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 14.2265,
+        "alignment_score": 0.4608,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 12.46,
+        "percentage_from_ref": -15.98,
+        "discrepancy_from_model": 13.9265,
+        "alignment_score": 0.4722,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 12.75,
+        "percentage_from_ref": -14.03,
+        "discrepancy_from_model": 13.6365,
+        "alignment_score": 0.4832,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 13.05,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 13.3365,
+        "alignment_score": 0.4946,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 13.35,
+        "percentage_from_ref": -9.98,
+        "discrepancy_from_model": 13.0365,
+        "alignment_score": 0.5059,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 13.64,
+        "percentage_from_ref": -8.02,
+        "discrepancy_from_model": 12.7465,
+        "alignment_score": 0.5169,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 13.94,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 12.4465,
+        "alignment_score": 0.5283,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 14.24,
+        "percentage_from_ref": -3.98,
+        "discrepancy_from_model": 12.1465,
+        "alignment_score": 0.5397,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 14.53,
+        "percentage_from_ref": -2.02,
+        "discrepancy_from_model": 11.8565,
+        "alignment_score": 0.5507,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 14.83,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 11.5565,
+        "alignment_score": 0.562,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 15.13,
+        "percentage_from_ref": 2.02,
+        "discrepancy_from_model": 11.2565,
+        "alignment_score": 0.5734,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 15.42,
+        "percentage_from_ref": 3.98,
+        "discrepancy_from_model": 10.9665,
+        "alignment_score": 0.5844,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 15.72,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 10.6665,
+        "alignment_score": 0.5958,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 16.02,
+        "percentage_from_ref": 8.02,
+        "discrepancy_from_model": 10.3665,
+        "alignment_score": 0.6071,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 16.31,
+        "percentage_from_ref": 9.98,
+        "discrepancy_from_model": 10.0765,
+        "alignment_score": 0.6181,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 16.61,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 9.7765,
+        "alignment_score": 0.6295,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 16.91,
+        "percentage_from_ref": 14.03,
+        "discrepancy_from_model": 9.4765,
+        "alignment_score": 0.6409,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 17.2,
+        "percentage_from_ref": 15.98,
+        "discrepancy_from_model": 9.1865,
+        "alignment_score": 0.6518,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 17.5,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 8.8865,
+        "alignment_score": 0.6632,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 17.8,
+        "percentage_from_ref": 20.03,
+        "discrepancy_from_model": 8.5865,
+        "alignment_score": 0.6746,
+        "is_recommended": true
+      }
+    ]
+  },
+  {
+    "item_id": "b0d24502fb66",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ВСПОМОГАТЕЛЬНАЯ ГРУППА",
+    "class_name": "ПЛАТНЫЕ ПАКЕТЫ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 7.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 8.65,
+    "recommended_price": 8.69,
+    "price_change_pct": 10.0,
+    "alignment_score": 0.9955,
+    "candidate_range": [
+      6.32,
+      9.48
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 8.65 under regular non-promo status. Candidate 8.69 was selected because it minimizes discrepancy (gap = 0.04) from the Random Forest predicted price, recommending to increase by 10.0% relative to reference price 7.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 6.32,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 2.3307,
+        "alignment_score": 0.7306,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 6.48,
+        "percentage_from_ref": -17.97,
+        "discrepancy_from_model": 2.1707,
+        "alignment_score": 0.7491,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 6.64,
+        "percentage_from_ref": -15.95,
+        "discrepancy_from_model": 2.0107,
+        "alignment_score": 0.7676,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 6.79,
+        "percentage_from_ref": -14.05,
+        "discrepancy_from_model": 1.8607,
+        "alignment_score": 0.7849,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 6.95,
+        "percentage_from_ref": -12.03,
+        "discrepancy_from_model": 1.7007,
+        "alignment_score": 0.8034,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 7.11,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 1.5407,
+        "alignment_score": 0.8219,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 7.27,
+        "percentage_from_ref": -7.97,
+        "discrepancy_from_model": 1.3807,
+        "alignment_score": 0.8404,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 7.43,
+        "percentage_from_ref": -5.95,
+        "discrepancy_from_model": 1.2207,
+        "alignment_score": 0.8589,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 7.58,
+        "percentage_from_ref": -4.05,
+        "discrepancy_from_model": 1.0707,
+        "alignment_score": 0.8762,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 7.74,
+        "percentage_from_ref": -2.03,
+        "discrepancy_from_model": 0.9107,
+        "alignment_score": 0.8947,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 7.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 0.7507,
+        "alignment_score": 0.9132,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 8.06,
+        "percentage_from_ref": 2.03,
+        "discrepancy_from_model": 0.5907,
+        "alignment_score": 0.9317,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 8.22,
+        "percentage_from_ref": 4.05,
+        "discrepancy_from_model": 0.4307,
+        "alignment_score": 0.9502,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 8.37,
+        "percentage_from_ref": 5.95,
+        "discrepancy_from_model": 0.2807,
+        "alignment_score": 0.9676,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 8.53,
+        "percentage_from_ref": 7.97,
+        "discrepancy_from_model": 0.1207,
+        "alignment_score": 0.986,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 8.69,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 0.0393,
+        "alignment_score": 0.9955,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 8.85,
+        "percentage_from_ref": 12.03,
+        "discrepancy_from_model": 0.1993,
+        "alignment_score": 0.977,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 9.01,
+        "percentage_from_ref": 14.05,
+        "discrepancy_from_model": 0.3593,
+        "alignment_score": 0.9585,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 9.16,
+        "percentage_from_ref": 15.95,
+        "discrepancy_from_model": 0.5093,
+        "alignment_score": 0.9411,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 9.32,
+        "percentage_from_ref": 17.97,
+        "discrepancy_from_model": 0.6693,
+        "alignment_score": 0.9226,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 9.48,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 0.8293,
+        "alignment_score": 0.9041,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "5aac65c2b5c0",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "СПЕЦИИ,ПРИПРАВА",
+    "class_name": "МОНОСПЕЦИИ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 62.02,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 67.66,
+    "recommended_price": 68.22,
+    "price_change_pct": 10.0,
+    "alignment_score": 0.9917,
+    "candidate_range": [
+      49.62,
+      74.42
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 67.66 under regular non-promo status. Candidate 68.22 was selected because it minimizes discrepancy (gap = 0.56) from the Random Forest predicted price, recommending to increase by 10.0% relative to reference price 62.02.",
+    "candidates_summary": [
+      {
+        "candidate_price": 49.62,
+        "percentage_from_ref": -19.99,
+        "discrepancy_from_model": 18.0385,
+        "alignment_score": 0.7334,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 50.86,
+        "percentage_from_ref": -17.99,
+        "discrepancy_from_model": 16.7985,
+        "alignment_score": 0.7517,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 52.1,
+        "percentage_from_ref": -15.99,
+        "discrepancy_from_model": 15.5585,
+        "alignment_score": 0.77,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 53.34,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 14.3185,
+        "alignment_score": 0.7884,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 54.58,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 13.0785,
+        "alignment_score": 0.8067,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 55.82,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 11.8385,
+        "alignment_score": 0.825,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 57.06,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 10.5985,
+        "alignment_score": 0.8434,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 58.3,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 9.3585,
+        "alignment_score": 0.8617,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 59.54,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 8.1185,
+        "alignment_score": 0.88,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 60.78,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 6.8785,
+        "alignment_score": 0.8983,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 62.02,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 5.6385,
+        "alignment_score": 0.9167,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 63.26,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 4.3985,
+        "alignment_score": 0.935,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 64.5,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 3.1585,
+        "alignment_score": 0.9533,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 65.74,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 1.9185,
+        "alignment_score": 0.9716,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 66.98,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 0.6785,
+        "alignment_score": 0.99,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 68.22,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 0.5615,
+        "alignment_score": 0.9917,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 69.46,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 1.8015,
+        "alignment_score": 0.9734,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 70.7,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 3.0415,
+        "alignment_score": 0.955,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 71.94,
+        "percentage_from_ref": 15.99,
+        "discrepancy_from_model": 4.2815,
+        "alignment_score": 0.9367,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 73.18,
+        "percentage_from_ref": 17.99,
+        "discrepancy_from_model": 5.5215,
+        "alignment_score": 0.9184,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 74.42,
+        "percentage_from_ref": 19.99,
+        "discrepancy_from_model": 6.7615,
+        "alignment_score": 0.9001,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "37faf08eed2b",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ПЕРСОНАЛЬНЫЙ УХОД",
+    "class_name": "УХОД ЗА ВОЛОСАМИ",
+    "is_on_promo": 1,
+    "promo_type_code": "6.0",
+    "reference_price": 299.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 300.28,
+    "recommended_price": 299.9,
+    "price_change_pct": 0.0,
+    "alignment_score": 0.9987,
+    "candidate_range": [
+      239.92,
+      359.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 300.28 under on active promotion. Candidate 299.90 was selected because it minimizes discrepancy (gap = 0.38) from the Random Forest predicted price, recommending to maintain baseline relative to reference price 299.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 239.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 60.361,
+        "alignment_score": 0.799,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 245.92,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 54.361,
+        "alignment_score": 0.819,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 251.92,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 48.361,
+        "alignment_score": 0.8389,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 257.91,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 42.371,
+        "alignment_score": 0.8589,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 263.91,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 36.371,
+        "alignment_score": 0.8789,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 269.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 30.371,
+        "alignment_score": 0.8989,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 275.91,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 24.371,
+        "alignment_score": 0.9188,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 281.91,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 18.371,
+        "alignment_score": 0.9388,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 287.9,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 12.381,
+        "alignment_score": 0.9588,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 293.9,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 6.381,
+        "alignment_score": 0.9787,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 299.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 0.381,
+        "alignment_score": 0.9987,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 305.9,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 5.619,
+        "alignment_score": 0.9813,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 311.9,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 11.619,
+        "alignment_score": 0.9613,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 317.89,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 17.609,
+        "alignment_score": 0.9414,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 323.89,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 23.609,
+        "alignment_score": 0.9214,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 329.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 29.609,
+        "alignment_score": 0.9014,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 335.89,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 35.609,
+        "alignment_score": 0.8814,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 341.89,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 41.609,
+        "alignment_score": 0.8614,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 347.88,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 47.599,
+        "alignment_score": 0.8415,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 353.88,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 53.599,
+        "alignment_score": 0.8215,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 359.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 59.599,
+        "alignment_score": 0.8015,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "2f4d415c1452",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "КОЛБАСЫ ВАРЕНЫЕ",
+    "class_name": "КОЛБАСА ВАРЕНАЯ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 467.52,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 459.85,
+    "recommended_price": 458.17,
+    "price_change_pct": -2.0,
+    "alignment_score": 0.9963,
+    "candidate_range": [
+      374.02,
+      561.02
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 459.85 under regular non-promo status. Candidate 458.17 was selected because it minimizes discrepancy (gap = 1.68) from the Random Forest predicted price, recommending to decrease by 2.0% relative to reference price 467.52.",
+    "candidates_summary": [
+      {
+        "candidate_price": 374.02,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 85.8306,
+        "alignment_score": 0.8134,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 383.37,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 76.4806,
+        "alignment_score": 0.8337,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 392.72,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 67.1306,
+        "alignment_score": 0.854,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 402.07,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 57.7806,
+        "alignment_score": 0.8743,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 411.42,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 48.4306,
+        "alignment_score": 0.8947,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 420.77,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 39.0806,
+        "alignment_score": 0.915,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 430.12,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 29.7306,
+        "alignment_score": 0.9353,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 439.47,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 20.3806,
+        "alignment_score": 0.9557,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 448.82,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 11.0306,
+        "alignment_score": 0.976,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 458.17,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 1.6806,
+        "alignment_score": 0.9963,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 467.52,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 7.6694,
+        "alignment_score": 0.9833,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 476.87,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 17.0194,
+        "alignment_score": 0.963,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 486.22,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 26.3694,
+        "alignment_score": 0.9427,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 495.57,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 35.7194,
+        "alignment_score": 0.9223,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 504.92,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 45.0694,
+        "alignment_score": 0.902,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 514.27,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 54.4194,
+        "alignment_score": 0.8817,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 523.62,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 63.7694,
+        "alignment_score": 0.8613,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 532.97,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 73.1194,
+        "alignment_score": 0.841,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 542.32,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 82.4694,
+        "alignment_score": 0.8207,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 551.67,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 91.8194,
+        "alignment_score": 0.8003,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 561.02,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 101.1694,
+        "alignment_score": 0.78,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "9e6d9549a0d4",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ТРАДИЦИОННЫЕ МОЛОЧНЫЕ ПРОДУКТЫ",
+    "class_name": "СЫРКИ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 66.51,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 64.45,
+    "recommended_price": 63.85,
+    "price_change_pct": -4.0,
+    "alignment_score": 0.9906,
+    "candidate_range": [
+      53.21,
+      79.81
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 64.45 under regular non-promo status. Candidate 63.85 was selected because it minimizes discrepancy (gap = 0.60) from the Random Forest predicted price, recommending to decrease by 4.0% relative to reference price 66.51.",
+    "candidates_summary": [
+      {
+        "candidate_price": 53.21,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 11.2449,
+        "alignment_score": 0.8255,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 54.54,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 9.9149,
+        "alignment_score": 0.8462,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 55.87,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 8.5849,
+        "alignment_score": 0.8668,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 57.2,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 7.2549,
+        "alignment_score": 0.8874,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 58.53,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 5.9249,
+        "alignment_score": 0.9081,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 59.86,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 4.5949,
+        "alignment_score": 0.9287,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 61.19,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 3.2649,
+        "alignment_score": 0.9493,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 62.52,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 1.9349,
+        "alignment_score": 0.97,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 63.85,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 0.6049,
+        "alignment_score": 0.9906,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 65.18,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 0.7251,
+        "alignment_score": 0.9887,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 66.51,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 2.0551,
+        "alignment_score": 0.9681,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 67.84,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 3.3851,
+        "alignment_score": 0.9475,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 69.17,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 4.7151,
+        "alignment_score": 0.9268,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 70.5,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 6.0451,
+        "alignment_score": 0.9062,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 71.83,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 7.3751,
+        "alignment_score": 0.8856,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 73.16,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 8.7051,
+        "alignment_score": 0.8649,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 74.49,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 10.0351,
+        "alignment_score": 0.8443,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 75.82,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 11.3651,
+        "alignment_score": 0.8237,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 77.15,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 12.6951,
+        "alignment_score": 0.803,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 78.48,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 14.0251,
+        "alignment_score": 0.7824,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 79.81,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 15.3551,
+        "alignment_score": 0.7618,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "39ae13400c7c",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ЧИСТЯЩИЕ,МОЮЩИЕ СРЕДСТВА",
+    "class_name": "МОЮЩИЕ СРЕДСТВА",
+    "is_on_promo": 1,
+    "promo_type_code": "5.0",
+    "reference_price": 168.48,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 191.76,
+    "recommended_price": 192.07,
+    "price_change_pct": 14.0,
+    "alignment_score": 0.9984,
+    "candidate_range": [
+      134.78,
+      202.18
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 191.76 under on active promotion. Candidate 192.07 was selected because it minimizes discrepancy (gap = 0.31) from the Random Forest predicted price, recommending to increase by 14.0% relative to reference price 168.48.",
+    "candidates_summary": [
+      {
+        "candidate_price": 134.78,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 56.9802,
+        "alignment_score": 0.7029,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 138.15,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 53.6102,
+        "alignment_score": 0.7204,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 141.52,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 50.2402,
+        "alignment_score": 0.738,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 144.89,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 46.8702,
+        "alignment_score": 0.7556,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 148.26,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 43.5002,
+        "alignment_score": 0.7732,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 151.63,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 40.1302,
+        "alignment_score": 0.7907,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 155.0,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 36.7602,
+        "alignment_score": 0.8083,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 158.37,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 33.3902,
+        "alignment_score": 0.8259,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 161.74,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 30.0202,
+        "alignment_score": 0.8434,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 165.11,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 26.6502,
+        "alignment_score": 0.861,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 168.48,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 23.2802,
+        "alignment_score": 0.8786,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 171.85,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 19.9102,
+        "alignment_score": 0.8962,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 175.22,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 16.5402,
+        "alignment_score": 0.9137,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 178.59,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 13.1702,
+        "alignment_score": 0.9313,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 181.96,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 9.8002,
+        "alignment_score": 0.9489,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 185.33,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 6.4302,
+        "alignment_score": 0.9665,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 188.7,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 3.0602,
+        "alignment_score": 0.984,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 192.07,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 0.3098,
+        "alignment_score": 0.9984,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 195.44,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 3.6798,
+        "alignment_score": 0.9808,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 198.81,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 7.0498,
+        "alignment_score": 0.9632,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 202.18,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 10.4198,
+        "alignment_score": 0.9457,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "211171fd6b9b",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ПЕРСОНАЛЬНЫЙ УХОД",
+    "class_name": "СРЕДСТВА ДЛЯ БРИТЬЯ",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 174.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 178.66,
+    "recommended_price": 178.4,
+    "price_change_pct": 2.0,
+    "alignment_score": 0.9985,
+    "candidate_range": [
+      139.92,
+      209.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 178.66 under regular non-promo status. Candidate 178.40 was selected because it minimizes discrepancy (gap = 0.26) from the Random Forest predicted price, recommending to increase by 2.0% relative to reference price 174.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 139.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 38.7414,
+        "alignment_score": 0.7832,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 143.42,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 35.2414,
+        "alignment_score": 0.8027,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 146.92,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 31.7414,
+        "alignment_score": 0.8223,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 150.41,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 28.2514,
+        "alignment_score": 0.8419,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 153.91,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 24.7514,
+        "alignment_score": 0.8615,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 157.41,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 21.2514,
+        "alignment_score": 0.8811,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 160.91,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 17.7514,
+        "alignment_score": 0.9006,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 164.41,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 14.2514,
+        "alignment_score": 0.9202,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 167.9,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 10.7614,
+        "alignment_score": 0.9398,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 171.4,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 7.2614,
+        "alignment_score": 0.9594,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 174.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 3.7614,
+        "alignment_score": 0.9789,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 178.4,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 0.2614,
+        "alignment_score": 0.9985,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 181.9,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 3.2386,
+        "alignment_score": 0.9819,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 185.39,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 6.7286,
+        "alignment_score": 0.9623,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 188.89,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 10.2286,
+        "alignment_score": 0.9427,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 192.39,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 13.7286,
+        "alignment_score": 0.9232,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 195.89,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 17.2286,
+        "alignment_score": 0.9036,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 199.39,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 20.7286,
+        "alignment_score": 0.884,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 202.88,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 24.2186,
+        "alignment_score": 0.8644,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 206.38,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 27.7186,
+        "alignment_score": 0.8449,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 209.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 31.2186,
+        "alignment_score": 0.8253,
+        "is_recommended": false
+      }
+    ]
+  },
+  {
+    "item_id": "fe7d98ec073a",
+    "store_id": 1,
+    "date": "2024-08-04",
+    "dept_name": "ШОКОЛАД,ШОКОЛАДНАЯ ПАСТА",
+    "class_name": "ШОКОЛАД",
+    "is_on_promo": 0,
+    "promo_type_code": "NO_PROMO",
+    "reference_price": 259.9,
+    "reference_source": "price_lag_1",
+    "predicted_expected_price": 258.07,
+    "recommended_price": 259.9,
+    "price_change_pct": 0.0,
+    "alignment_score": 0.9929,
+    "candidate_range": [
+      207.92,
+      311.88
+    ],
+    "candidate_step": 2.0,
+    "num_candidates_evaluated": 21,
+    "recommendation_reason": "Model-predicted clearing price is 258.07 under regular non-promo status. Candidate 259.90 was selected because it minimizes discrepancy (gap = 1.83) from the Random Forest predicted price, recommending to maintain baseline relative to reference price 259.90.",
+    "candidates_summary": [
+      {
+        "candidate_price": 207.92,
+        "percentage_from_ref": -20.0,
+        "discrepancy_from_model": 50.1499,
+        "alignment_score": 0.8057,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 213.12,
+        "percentage_from_ref": -18.0,
+        "discrepancy_from_model": 44.9499,
+        "alignment_score": 0.8258,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 218.32,
+        "percentage_from_ref": -16.0,
+        "discrepancy_from_model": 39.7499,
+        "alignment_score": 0.846,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 223.51,
+        "percentage_from_ref": -14.0,
+        "discrepancy_from_model": 34.5599,
+        "alignment_score": 0.8661,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 228.71,
+        "percentage_from_ref": -12.0,
+        "discrepancy_from_model": 29.3599,
+        "alignment_score": 0.8862,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 233.91,
+        "percentage_from_ref": -10.0,
+        "discrepancy_from_model": 24.1599,
+        "alignment_score": 0.9064,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 239.11,
+        "percentage_from_ref": -8.0,
+        "discrepancy_from_model": 18.9599,
+        "alignment_score": 0.9265,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 244.31,
+        "percentage_from_ref": -6.0,
+        "discrepancy_from_model": 13.7599,
+        "alignment_score": 0.9467,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 249.5,
+        "percentage_from_ref": -4.0,
+        "discrepancy_from_model": 8.5699,
+        "alignment_score": 0.9668,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 254.7,
+        "percentage_from_ref": -2.0,
+        "discrepancy_from_model": 3.3699,
+        "alignment_score": 0.9869,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 259.9,
+        "percentage_from_ref": 0.0,
+        "discrepancy_from_model": 1.8301,
+        "alignment_score": 0.9929,
+        "is_recommended": true
+      },
+      {
+        "candidate_price": 265.1,
+        "percentage_from_ref": 2.0,
+        "discrepancy_from_model": 7.0301,
+        "alignment_score": 0.9728,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 270.3,
+        "percentage_from_ref": 4.0,
+        "discrepancy_from_model": 12.2301,
+        "alignment_score": 0.9526,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 275.49,
+        "percentage_from_ref": 6.0,
+        "discrepancy_from_model": 17.4201,
+        "alignment_score": 0.9325,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 280.69,
+        "percentage_from_ref": 8.0,
+        "discrepancy_from_model": 22.6201,
+        "alignment_score": 0.9123,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 285.89,
+        "percentage_from_ref": 10.0,
+        "discrepancy_from_model": 27.8201,
+        "alignment_score": 0.8922,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 291.09,
+        "percentage_from_ref": 12.0,
+        "discrepancy_from_model": 33.0201,
+        "alignment_score": 0.872,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 296.29,
+        "percentage_from_ref": 14.0,
+        "discrepancy_from_model": 38.2201,
+        "alignment_score": 0.8519,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 301.48,
+        "percentage_from_ref": 16.0,
+        "discrepancy_from_model": 43.4101,
+        "alignment_score": 0.8318,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 306.68,
+        "percentage_from_ref": 18.0,
+        "discrepancy_from_model": 48.6101,
+        "alignment_score": 0.8116,
+        "is_recommended": false
+      },
+      {
+        "candidate_price": 311.88,
+        "percentage_from_ref": 20.0,
+        "discrepancy_from_model": 53.8101,
+        "alignment_score": 0.7915,
+        "is_recommended": false
+      }
+    ]
+  }
+]
