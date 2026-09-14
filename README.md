@@ -154,7 +154,6 @@ Milestone 2 operationalizes predictive modeling, business rules, LLM synthesis, 
 ### 9.7 Step 9: Gemini LLM Business Insights Engine
 - Integrates Google's Gemini API via structured business context payloads.
 - Generates 6-part executive briefings (Summary, Rationale, Demand, Promo, Risks, Directives).
-- Secure credential management with deterministic offline fallback mode.
 
 ### 9.8 Step 10 & 10A: Presentation Dashboard
 - Enterprise-grade Streamlit application free of internal development milestone jargon.
@@ -242,29 +241,14 @@ Navigate to `http://localhost:8501` in your browser.
 
 ---
 
-## 14. Security & API Key Setup
-
-The project supports optional live Google Gemini LLM API generation. To configure:
-1. Create a `.env` file in the project root:
-   ```env
-   GEMINI_API_KEY="your-gemini-api-key-here"
-   GEMINI_MODEL="gemini-2.5-flash"
-   ```
-2. The engine safely loads credentials at runtime via `python-dotenv`.
-3. If no key is configured, the system automatically and safely operates in **verified offline fallback mode** using pre-computed executive briefings. Zero credentials are hardcoded or exposed.
-
----
-
-## 15. Limitations & Scope Boundaries
+## 14. Limitations & Scope Boundaries
 
 1. **Model-Alignment Recommendation vs Causal Optimization**: The price recommendation engine aligns prices with predicted fair clearing price within $\pm 20\%$ safety bounds. It does **not** estimate econometric price elasticity curves or perform continuous non-linear profit optimization.
 2. **Heuristic Confidence Index**: The confidence score is an operational data completeness and horizon agreement index, **not a calibrated Bayesian or statistical probability**.
 3. **Sparse Long-Tail Demand**: Low-velocity retail products naturally exhibit intermittent zero-sales transactions, reflected in portfolio SMAPE.
-4. **Gemini Live Testing Notice**: Live Gemini API testing was not performed during development testing due to absent live API credentials; the deterministic offline fallback was fully verified.
-
 ---
 
-## 16. Future Scope
+## 15. Future Scope
 
 - **Causal Double-ML Elasticity Estimation**: Incorporate econometric instrumental variables to estimate individual product price elasticity curves.
 - **Conformal Prediction Intervals**: Upgrade heuristic confidence scores to formal conformal prediction uncertainty bands (e.g. 90% demand coverage).
@@ -272,7 +256,7 @@ The project supports optional live Google Gemini LLM API generation. To configur
 
 ---
 
-## 17. Current Project Status
+## 16. Current Project Status
 
 - **Milestone 1 (Data Understanding & EDA)**: ✅ **COMPLETE**
 - **Milestone 2 (Predictive Modeling & Intelligence Setup)**: ✅ **COMPLETE**
