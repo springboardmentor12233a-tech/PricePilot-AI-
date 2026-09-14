@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.database.database import get_db
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:

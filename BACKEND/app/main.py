@@ -10,7 +10,7 @@ from app.routes.pricing import router as pricing_router
 from app.routes.products import router as products_router
 from app.routes.sales import router as sales_router
 from app.routes.users import router as users_router
-
+from app.routes.ai_v2 import router as ai_v2_router
 app = FastAPI(
     title="PricePilot AI",
     description="AI-powered product price prediction and tracking API backend",
@@ -46,6 +46,8 @@ app.include_router(competitors_router, prefix="/api/v1")
 app.include_router(pricing_router, prefix="/api/v1")
 app.include_router(sales_router, prefix="/api/v1")
 
+# Register AI v2 router under /api/v2 prefix
+app.include_router(ai_v2_router, prefix="/api/v2")
 
 @app.get("/")
 def home():
