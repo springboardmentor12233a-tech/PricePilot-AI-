@@ -453,3 +453,44 @@ c:\Infosys_project\PRICEPILOT_AI\BACKEND\venv\Scripts\python.exe -m pytest -v
 ### Test Result Summary:
 - `35/35 Endpoints Passed (100% Success Rate)`
 - `11/11 Pytest Test Suites Passed`
+
+|  # | Module         | Method | Endpoint                                                    | Primary Purpose               |
+| -: | -------------- | ------ | ----------------------------------------------------------- | ----------------------------- |
+|  1 | Authentication | POST   | `/api/v1/auth/register`                                     | Register user                 |
+|  2 | Authentication | POST   | `/api/v1/auth/login`                                        | Login                         |
+|  3 | Authentication | POST   | `/api/v1/auth/token`                                        | Generate authentication token |
+|  4 | Authentication | GET    | `/api/v1/auth/me`                                           | Get current user              |
+|  5 | Users          | GET    | `/api/v1/users/`                                            | List users                    |
+|  6 | Users          | GET    | `/api/v1/users/{user_id}`                                   | Get user                      |
+|  7 | Users          | PUT    | `/api/v1/users/{user_id}`                                   | Update user                   |
+|  8 | Organizations  | GET    | `/api/v1/organizations/`                                    | Get user's organizations      |
+|  9 | Organizations  | POST   | `/api/v1/organizations/`                                    | Create organization           |
+| 10 | Organizations  | GET    | `/api/v1/organizations/{org_id}`                            | Get organization              |
+| 11 | Organizations  | POST   | `/api/v1/organizations/{org_id}/members`                    | Add member                    |
+| 12 | Categories     | POST   | `/api/v1/categories/`                                       | Create category               |
+| 13 | Categories     | GET    | `/api/v1/categories/organization/{org_id}`                  | List categories               |
+| 14 | Products       | POST   | `/api/v1/products/`                                         | Create product                |
+| 15 | Products       | GET    | `/api/v1/products/organization/{org_id}`                    | List products                 |
+| 16 | Products       | GET    | `/api/v1/products/{product_id}`                             | Get product                   |
+| 17 | Products       | PUT    | `/api/v1/products/{product_id}`                             | Update product                |
+| 18 | Products       | DELETE | `/api/v1/products/{product_id}`                             | Delete product                |
+| 19 | Products       | POST   | `/api/v1/products/{product_id}/variants`                    | Add variant                   |
+| 20 | Products       | GET    | `/api/v1/products/{product_id}/inventory`                   | Get inventory                 |
+| 21 | Products       | PUT    | `/api/v1/products/{product_id}/inventory`                   | Update inventory              |
+| 22 | Competitors    | POST   | `/api/v1/competitors/`                                      | Add competitor                |
+| 23 | Competitors    | GET    | `/api/v1/competitors/organization/{org_id}`                 | List competitors              |
+| 24 | Competitors    | PUT    | `/api/v1/competitors/{competitor_id}`                       | Update competitor             |
+| 25 | Competitors    | POST   | `/api/v1/competitors/match`                                 | Match competitor product      |
+| 26 | Competitors    | POST   | `/api/v1/competitors/prices`                                | Record competitor price       |
+| 27 | Competitors    | GET    | `/api/v1/competitors/product/{product_id}/prices`           | Get competitor prices         |
+| 28 | Pricing Engine | POST   | `/api/v1/pricing/predict`                                   | Predict pricing outcome       |
+| 29 | Pricing Engine | POST   | `/api/v1/pricing/recommendations`                           | Create pricing recommendation |
+| 30 | Pricing Engine | POST   | `/api/v1/pricing/recommendations/{recommendation_id}/apply` | Apply recommendation          |
+| 31 | Pricing Engine | GET    | `/api/v1/pricing/history/{product_id}`                      | Get price history             |
+| 32 | Sales          | POST   | `/api/v1/sales/`                                            | Record sale                   |
+| 33 | Sales          | GET    | `/api/v1/sales/analytics/{organization_id}`                 | Sales analytics               |
+| 34 | AI v2          | POST   | `/api/v2/ai/gemini`                                         | Gemini AI                     |
+| 35 | AI v2          | POST   | `/api/v2/ai/grok`                                           | Grok AI                       |
+| 36 | AI v2          | POST   | `/api/v2/ai/predict`                                        | Custom ML prediction          |
+| 37 | System         | GET    | `/`                                                         | API home/status               |
+| 38 | System         | GET    | `/health`                                                   | Health monitoring             |
