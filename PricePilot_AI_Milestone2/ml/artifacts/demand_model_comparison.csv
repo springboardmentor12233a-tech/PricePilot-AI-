@@ -1,0 +1,5 @@
+model,cv_r2,test_r2,mae,rmse,best_params
+XGBoost,0.9058,0.905,5.0671,6.7503,"{'colsample_bytree': 1.0, 'learning_rate': 0.05, 'max_depth': 4, 'n_estimators': 200, 'subsample': 0.8}"
+LightGBM,0.9026,0.9043,5.0884,6.7755,"{'learning_rate': 0.05, 'max_depth': 6, 'n_estimators': 200, 'num_leaves': 31}"
+Random Forest,0.8911,0.899,5.2701,6.9591,"{'max_depth': 10, 'max_features': 'sqrt', 'min_samples_split': 2, 'n_estimators': 400}"
+Ridge (Baseline),0.8453,0.8479,6.4114,8.5415,{'alpha': 1.0}

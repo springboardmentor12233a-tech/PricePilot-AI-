@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PricePilot AI — ARIA Interactive Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap');
+:root{
+  --bg:#04080f;--card:#0a1628;--card2:#0f1e36;--bdr:#1a3055;
+  --p:#6366f1;--g:#10b981;--a:#f59e0b;--r:#ef4444;--c:#06b6d4;--pk:#ec4899;--v:#8b5cf6;
+  --text:#e2e8f0;--muted:#64748b;--sub:#94a3b8;
+}
+body.theme-blue{--bg:#020b18;--card:#051425;--card2:#071d35;--bdr:#0e3060}
+body.theme-purple{--bg:#080412;--card:#120821;--card2:#180d2e;--bdr:#2d1060}
+body.theme-green{--bg:#020f0a;--card:#031a10;--card2:#052415;--bdr:#0a4020}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* ─ Stars ─ */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d) infinite var(--delay)}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:var(--o)}}
+
+/* ═══════ INTRO ═══════ */
+#intro{position:fixed;inset:0;z-index:1000;
+  background:radial-gradient(ellipse at 50% 40%,#0a1628,#04080f);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .8s ease}
+#intro.out{opacity:0;pointer-events:none}
+.ititle{font-family:'Orbitron',monospace;font-size:clamp(22px,4vw,52px);font-weight:900;
+  background:linear-gradient(135deg,#6366f1,#a78bfa,#06b6d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-align:center;margin-bottom:6px;opacity:0;animation:fup .8s .3s forwards}
+.isub{font-size:13px;color:var(--muted);margin-bottom:36px;opacity:0;animation:fup .8s .6s forwards}
+@keyframes fup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+#irobot{width:180px;height:200px;margin-bottom:22px;
+  opacity:0;animation:rollIn 1s .2s cubic-bezier(.17,.67,.37,1.2) forwards}
+@keyframes rollIn{from{opacity:0;transform:translateX(-320px) rotate(-25deg)}to{opacity:1;transform:none}}
+#ibubble{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.35);
+  border-radius:16px 16px 16px 4px;padding:15px 20px;max-width:380px;
+  font-size:13px;line-height:1.7;color:#c7d2fe;margin-bottom:26px;
+  opacity:0;animation:fup .5s 1.3s forwards;min-height:60px}
+#ttext{display:inline}
+#tcur{display:inline-block;width:2px;height:13px;background:#a78bfa;
+  vertical-align:middle;animation:cblink .7s infinite}
+@keyframes cblink{0%,100%{opacity:1}50%{opacity:0}}
+.ebtn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;
+  border:none;border-radius:12px;padding:14px 42px;font-size:16px;font-weight:700;
+  cursor:pointer;box-shadow:0 0 32px rgba(99,102,241,.45);
+  opacity:0;animation:fup .5s 1.5s forwards;transition:all .25s}
+.ebtn:hover{transform:scale(1.06);box-shadow:0 0 52px rgba(99,102,241,.65)}
+
+/* ═══════ APP ═══════ */
+#app{position:relative;z-index:1;opacity:0;transition:opacity .8s;display:none}
+#app.on{opacity:1;display:block}
+
+/* ─ Header ─ */
+.hdr{background:rgba(4,8,15,.94);border-bottom:1px solid var(--bdr);
+  padding:9px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  position:sticky;top:0;z-index:200;backdrop-filter:blur(20px)}
+.logo{font-family:'Orbitron',monospace;font-size:15px;font-weight:900;
+  background:linear-gradient(135deg,#6366f1,#a78bfa,#06b6d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+.hpill{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700}
+.hp1{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.hp2{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.28)}
+.hdot{width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;animation:hblink 2s infinite}
+@keyframes hblink{0%,100%{opacity:1}50%{opacity:.3}}
+.hbtn{background:var(--card2);border:1px solid var(--bdr);color:var(--sub);
+  border-radius:7px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.hbtn.on,.hbtn:hover{border-color:var(--p);color:#a78bfa;background:rgba(99,102,241,.09)}
+.hstat{background:rgba(99,102,241,.09);border:1px solid rgba(99,102,241,.2);
+  border-radius:7px;padding:4px 10px;font-size:10px;color:#a78bfa;font-weight:600;white-space:nowrap}
+.hml{margin-left:auto;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+
+/* ─ Layout ─ */
+.layout{display:flex;position:relative;z-index:1}
+
+/* ─ Sidebar ─ */
+.sb{width:185px;min-height:calc(100vh - 46px);background:rgba(10,22,40,.95);
+  border-right:1px solid var(--bdr);padding:14px 0;
+  position:sticky;top:46px;height:calc(100vh - 46px);overflow-y:auto;flex-shrink:0}
+.sb::-webkit-scrollbar{width:4px}
+.sb::-webkit-scrollbar-thumb{background:#1e3055;border-radius:2px}
+.sblbl{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  letter-spacing:1.5px;padding:10px 14px 4px}
+.sbit{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;
+  font-size:11.5px;color:var(--sub);transition:all .2s;border-left:2px solid transparent}
+.sbit:hover,.sbit.on{color:#a78bfa;background:rgba(99,102,241,.07);border-left-color:#6366f1}
+
+/* ─ Main ─ */
+.main{flex:1;padding:22px 24px;overflow-x:hidden;min-width:0}
+
+/* ─ Section ─ */
+.sec{margin-bottom:28px;scroll-margin-top:54px;
+  opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+.sec.vis{opacity:1;transform:none}
+.sechd{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:1.4px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sechd::before{content:'';width:3px;height:12px;border-radius:2px;display:block}
+.sp::before{background:#6366f1}.sg::before{background:#10b981}
+.sa::before{background:#f59e0b}.sc::before{background:#06b6d4}
+.sv::before{background:#8b5cf6}.sr::before{background:#ef4444}
+.spk::before{background:#ec4899}
+
+/* ─ Grids ─ */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}
+.sp2{grid-column:span 2}.sp3{grid-column:span 3}
+
+/* ─ Card ─ */
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;
+  padding:18px;transition:all .3s;position:relative;overflow:hidden}
+.card:hover{border-color:#2a3f6e;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+
+/* ─ KPI cards ─ */
+.kpi{background:var(--card);border:1px solid var(--bdr);border-radius:13px;
+  padding:15px 17px;position:relative;overflow:hidden;transition:all .3s;cursor:default}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.6)}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kp::after{background:linear-gradient(90deg,#6366f1,#a78bfa)}
+.kg::after{background:linear-gradient(90deg,#10b981,#34d399)}
+.ka::after{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
+.kc::after{background:linear-gradient(90deg,#06b6d4,#67e8f9)}
+.kv::after{background:linear-gradient(90deg,#8b5cf6,#c4b5fd)}
+.kr::after{background:linear-gradient(90deg,#ef4444,#f87171)}
+.kpk::after{background:linear-gradient(90deg,#ec4899,#f9a8d4)}
+.kval{font-size:24px;font-weight:900;line-height:1.1}
+.vp{color:#a78bfa}.vg{color:#34d399}.va{color:#fcd34d}.vc{color:#67e8f9}.vv{color:#c4b5fd}.vr{color:#f87171}.vpk{color:#f9a8d4}
+.klbl{font-size:11px;color:var(--muted);margin-top:4px}
+.kbadge{font-size:9px;margin-top:6px;padding:2px 7px;border-radius:5px;display:inline-block;font-weight:600}
+.bu{background:rgba(16,185,129,.12);color:#10b981}
+.ba{background:rgba(245,158,11,.12);color:#f59e0b}
+.bp{background:rgba(99,102,241,.12);color:#a78bfa}
+.bc{background:rgba(6,182,212,.12);color:#06b6d4}
+
+/* ─ Charts ─ */
+.ch{position:relative}
+.ch-xs{height:140px}.ch-sm{height:195px}.ch-md{height:255px}.ch-lg{height:300px}
+
+/* ─ Controls ─ */
+.ctrlrow{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.cbtn{background:var(--card2);border:1px solid var(--bdr);color:var(--sub);
+  border-radius:7px;padding:4px 13px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.cbtn.on,.cbtn:hover{background:var(--p);color:#fff;border-color:var(--p)}
+.csel{background:var(--card2);border:1px solid var(--bdr);color:var(--text);
+  border-radius:7px;padding:5px 9px;font-size:11px;cursor:pointer}
+
+/* ─ Table ─ */
+table{width:100%;border-collapse:collapse}
+th{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);
+  font-weight:700;padding:7px 10px;border-bottom:1px solid var(--bdr);text-align:left}
+td{padding:9px 10px;font-size:11.5px;border-bottom:1px solid rgba(26,48,85,.4)}
+tr:hover td{background:rgba(99,102,241,.04)}
+.badge{padding:2px 7px;border-radius:9px;font-size:9px;font-weight:700}
+.mbar{display:flex;align-items:center;gap:5px}
+.mbg{height:4px;flex:1;border-radius:2px;background:#1e293b;overflow:hidden}
+.mbf{height:100%;border-radius:2px}
+
+/* ─ Simulator ─ */
+.simwrap{background:linear-gradient(135deg,rgba(99,102,241,.05),rgba(6,182,212,.04));
+  border:1px solid rgba(99,102,241,.15);border-radius:14px;padding:18px}
+.simrow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;align-items:flex-end}
+.sf{flex:1;min-width:115px}
+.sf label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;display:block;margin-bottom:4px}
+.sf input[type=range]{width:100%;accent-color:var(--p);cursor:pointer}
+.sf select{width:100%;background:#060d1f;border:1px solid var(--bdr);
+  color:var(--text);border-radius:7px;padding:5px 8px;font-size:11px}
+.sfv{font-size:14px;font-weight:800;color:var(--p);margin-top:2px}
+.simout{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:12px}
+.soc{background:#060d1f;border:1px solid var(--bdr);border-radius:9px;padding:11px;text-align:center}
+.sov{font-size:17px;font-weight:900;margin-bottom:2px}
+.sol{font-size:10px;color:var(--muted)}
+
+/* ─ Prog bar ─ */
+.prog{height:5px;border-radius:3px;background:#1e293b;overflow:hidden}
+.pf{height:100%;border-radius:3px;transition:width 1.3s ease}
+
+/* ─ Floating Robot ─ */
+#frobot{position:fixed;bottom:90px;right:310px;z-index:300;cursor:pointer;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);
+  transform:translateX(500px);opacity:0}
+#frobot.on{transform:none;opacity:1}
+#frobot svg{width:86px;height:96px;filter:drop-shadow(0 0 14px rgba(99,102,241,.55))}
+.rbanim{animation:rbob 3s ease-in-out infinite}
+@keyframes rbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.reye{animation:reblink 4s infinite}
+@keyframes reblink{0%,88%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}
+
+/* ─ Robot bubble ─ */
+#rbub{position:fixed;bottom:195px;right:320px;z-index:301;
+  background:rgba(10,22,40,.97);border:1px solid rgba(99,102,241,.4);
+  border-radius:14px 14px 4px 14px;padding:11px 15px;max-width:275px;
+  font-size:11.5px;line-height:1.6;color:#c7d2fe;
+  box-shadow:0 8px 28px rgba(99,102,241,.2);
+  opacity:0;transform:scale(.9) translateY(6px);transition:all .3s;pointer-events:none}
+#rbub.on{opacity:1;transform:scale(1) translateY(0)}
+#rbubtext{display:inline}
+#rbcur{display:inline-block;width:2px;height:11px;background:#a78bfa;
+  animation:cblink .7s infinite;vertical-align:middle}
+
+/* ─ Chatbot ─ */
+#chatbot{position:fixed;right:0;top:0;bottom:0;width:285px;z-index:250;
+  background:rgba(4,8,15,.97);border-left:1px solid var(--bdr);
+  display:flex;flex-direction:column;backdrop-filter:blur(20px);
+  transform:translateX(290px);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+#chatbot.on{transform:none}
+.chd{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(6,182,212,.07));
+  border-bottom:1px solid var(--bdr);padding:12px 14px;display:flex;align-items:center;gap:9px}
+.chdinfo{flex:1}
+.chdname{font-weight:800;font-size:13px;color:#a78bfa}
+.chdst{font-size:10px;color:#10b981;margin-top:1px}
+.chcl{background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;padding:3px}
+.chcl:hover{color:var(--text)}
+.chmsgs{flex:1;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:9px}
+.chmsgs::-webkit-scrollbar{width:3px}
+.chmsgs::-webkit-scrollbar-thumb{background:#1e293b;border-radius:2px}
+.msg{max-width:88%;padding:8px 12px;border-radius:11px;font-size:11.5px;line-height:1.55;
+  animation:mpop .2s ease}
+@keyframes mpop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.mbot{background:rgba(99,102,241,.11);border:1px solid rgba(99,102,241,.2);color:#c7d2fe;
+  border-radius:11px 11px 11px 3px;align-self:flex-start}
+.musr{background:linear-gradient(135deg,rgba(99,102,241,.28),rgba(139,92,246,.18));
+  color:#e2e8f0;border-radius:11px 11px 3px 11px;align-self:flex-end}
+.tping{display:flex;gap:4px;align-items:center;padding:9px 13px}
+.tdot{width:6px;height:6px;border-radius:50%;background:#6366f1;animation:tdot .8s infinite}
+.tdot:nth-child(2){animation-delay:.15s}.tdot:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-5px);opacity:1}}
+.cmds{padding:8px 10px;border-top:1px solid var(--bdr);display:flex;flex-wrap:wrap;gap:5px}
+.chip{background:rgba(99,102,241,.09);border:1px solid rgba(99,102,241,.2);
+  color:#a78bfa;border-radius:12px;padding:4px 9px;font-size:10px;cursor:pointer;transition:all .2s}
+.chip:hover{background:rgba(99,102,241,.22);transform:scale(1.04)}
+.chinrow{padding:9px 10px;border-top:1px solid var(--bdr);display:flex;gap:7px}
+.chinp{flex:1;background:#060d1f;border:1px solid var(--bdr);color:var(--text);
+  border-radius:7px;padding:7px 10px;font-size:11.5px;font-family:'Inter',sans-serif;resize:none;height:36px}
+.chinp:focus{outline:none;border-color:var(--p)}
+.csend{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;
+  border-radius:7px;padding:7px 12px;font-size:12px;cursor:pointer;font-weight:700;transition:all .2s}
+.csend:hover{transform:scale(1.05)}
+
+/* ─ Chat toggle ─ */
+#chtgl{position:fixed;bottom:18px;right:18px;z-index:260;width:52px;height:52px;
+  border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);border:none;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;
+  box-shadow:0 4px 18px rgba(99,102,241,.5);transition:all .3s}
+#chtgl:hover{transform:scale(1.1);box-shadow:0 6px 26px rgba(99,102,241,.7)}
+#cbadge{position:absolute;top:-2px;right:-2px;width:15px;height:15px;border-radius:50%;
+  background:#ef4444;font-size:9px;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--bg);opacity:0;transition:opacity .2s}
+#cbadge.on{opacity:1}
+
+/* ─ Toast ─ */
+#toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;
+  padding:9px 18px;border-radius:9px;font-size:12px;font-weight:600;
+  opacity:0;transition:all .3s;z-index:999;pointer-events:none;white-space:nowrap}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ─ Winner cards ─ */
+.winner{border-radius:13px;padding:18px}
+
+/* ─ responsive ─ */
+@media(max-width:1100px){.g4{grid-template-columns:1fr 1fr}.g5{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:850px){.sb{display:none}.main{padding:16px}.g2,.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- STARS -->
+<div id="stars"></div>
+
+<!-- ══════════════════════════════════════════ INTRO ══ -->
+<div id="intro">
+  <div class="ititle">⚡ PricePilot AI</div>
+  <div class="isub">Dynamic Pricing Intelligence · EDA Integrated · ML Powered</div>
+  <svg id="irobot" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ig1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#6366f1"/><stop offset="100%" style="stop-color:#8b5cf6"/>
+      </linearGradient>
+      <filter id="iglow"><feGaussianBlur stdDeviation="3" result="b"/>
+        <feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+    </defs>
+    <g class="rbanim">
+      <ellipse cx="65" cy="210" rx="19" ry="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
+      <ellipse cx="135" cy="210" rx="19" ry="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
+      <rect x="46" y="130" width="108" height="78" rx="11" fill="#0a1628" stroke="url(#ig1)" stroke-width="2"/>
+      <rect x="62" y="148" width="28" height="14" rx="4" fill="rgba(99,102,241,.3)" stroke="#6366f1" stroke-width="1"/>
+      <rect x="110" y="148" width="28" height="14" rx="4" fill="rgba(16,185,129,.3)" stroke="#10b981" stroke-width="1"/>
+      <rect x="62" y="170" width="76" height="7" rx="3.5" fill="rgba(245,158,11,.2)" stroke="#f59e0b" stroke-width="1"/>
+      <circle cx="76" cy="155" r="3.5" fill="#10b981"><animate attributeName="opacity" values="1;.2;1" dur="1.4s" repeatCount="indefinite"/></circle>
+      <circle cx="124" cy="155" r="3.5" fill="#6366f1"><animate attributeName="opacity" values=".2;1;.2" dur="1.4s" repeatCount="indefinite"/></circle>
+      <rect x="16" y="146" width="30" height="11" rx="5.5" fill="#0a1628" stroke="url(#ig1)" stroke-width="1.5"/>
+      <circle cx="10" cy="151" r="8" fill="#6366f1" filter="url(#iglow)"/>
+      <rect x="154" y="146" width="30" height="11" rx="5.5" fill="#0a1628" stroke="url(#ig1)" stroke-width="1.5"/>
+      <circle cx="190" cy="151" r="8" fill="#6366f1" filter="url(#iglow)"/>
+      <rect x="88" y="118" width="24" height="15" rx="4" fill="#0a1628" stroke="url(#ig1)" stroke-width="1.5"/>
+      <rect x="41" y="45" width="118" height="78" rx="15" fill="#0a1628" stroke="url(#ig1)" stroke-width="2.5"/>
+      <line x1="100" y1="45" x2="100" y2="19" stroke="#6366f1" stroke-width="2"/>
+      <circle cx="100" cy="13" r="7" fill="#6366f1" filter="url(#iglow)">
+        <animate attributeName="r" values="7;9;7" dur="1s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;.55;1" dur="1s" repeatCount="indefinite"/>
+      </circle>
+      <g class="reye">
+        <rect x="57" y="63" width="27" height="21" rx="6" fill="#060d1f" stroke="#06b6d4" stroke-width="1.5"/>
+        <circle cx="70.5" cy="73.5" r="8" fill="#06b6d4">
+          <animate attributeName="cx" values="70.5;72.5;70.5;68.5;70.5" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="72" cy="72" r="3" fill="#fff" opacity=".8"/>
+      </g>
+      <g class="reye">
+        <rect x="116" y="63" width="27" height="21" rx="6" fill="#060d1f" stroke="#06b6d4" stroke-width="1.5"/>
+        <circle cx="129.5" cy="73.5" r="8" fill="#06b6d4">
+          <animate attributeName="cx" values="129.5;131.5;129.5;127.5;129.5" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="131" cy="72" r="3" fill="#fff" opacity=".8"/>
+      </g>
+      <rect x="72" y="99" width="56" height="11" rx="5.5" fill="rgba(99,102,241,.25)" stroke="#6366f1" stroke-width="1.5"/>
+      <rect x="78" y="102" width="7" height="5" rx="2" fill="#6366f1"/>
+      <rect x="89" y="102" width="7" height="5" rx="2" fill="#6366f1"/>
+      <rect x="100" y="102" width="7" height="5" rx="2" fill="#6366f1"/>
+      <rect x="111" y="102" width="7" height="5" rx="2" fill="#6366f1"/>
+    </g>
+  </svg>
+  <div id="ibubble"><span id="ttext"></span><span id="tcur">|</span></div>
+  <button class="ebtn" onclick="enterDash()">🚀 Enter Dashboard</button>
+</div>
+
+<!-- ══════════════════════════════════════════ APP ══ -->
+<div id="app">
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="logo">⚡ PricePilot AI</div>
+    <span class="hpill hp1">MILESTONE 2</span>
+    <span class="hpill hp2"><span class="hdot"></span>&nbsp;Live EDA</span>
+    <div class="hml">
+      <span class="hstat">$28.2M Revenue</span>
+      <span class="hstat">LightGBM R²=1.000</span>
+      <span class="hstat">XGBoost R²=0.905</span>
+      <button class="hbtn on" onclick="setTheme('dark',this)">🌑 Dark</button>
+      <button class="hbtn" onclick="setTheme('blue',this)">💙 Blue</button>
+      <button class="hbtn" onclick="setTheme('purple',this)">💜 Purple</button>
+      <button class="hbtn" onclick="setTheme('green',this)">💚 Green</button>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <nav class="sb" id="sidebar">
+      <div class="sblbl">Overview</div>
+      <div class="sbit on" onclick="goSec('kpi',this)">📊 KPI Summary</div>
+      <div class="sbit" onclick="goSec('revenue',this)">💰 Revenue Growth</div>
+      <div class="sblbl">EDA Analysis</div>
+      <div class="sbit" onclick="goSec('category',this)">🏷️ Category Analysis</div>
+      <div class="sbit" onclick="goSec('products',this)">📦 Product Explorer</div>
+      <div class="sbit" onclick="goSec('pricing',this)">💲 Price Distribution</div>
+      <div class="sbit" onclick="goSec('channels',this)">📡 Sales Channels</div>
+      <div class="sbit" onclick="goSec('promo',this)">🎯 Promo &amp; Holiday</div>
+      <div class="sbit" onclick="goSec('weekly',this)">📅 Weekly Patterns</div>
+      <div class="sblbl">ML Insights</div>
+      <div class="sbit" onclick="goSec('models',this)">🏆 Model Results</div>
+      <div class="sbit" onclick="goSec('simulator',this)">⚡ Demand Simulator</div>
+      <div class="sbit" onclick="goSec('competitor',this)">⚔️ Competitor Gap</div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="main">
+
+<!-- ══ KPI SUMMARY ══════════════════════════════════════ -->
+<div class="sec" id="s-kpi">
+  <div class="sechd sp">📊 KPI Summary — 7,300 Rows · 20 Products · 5 Categories · 2025</div>
+  <div class="g4" style="margin-bottom:14px">
+    <div class="kpi kp">
+      <div style="font-size:20px;margin-bottom:7px">💰</div>
+      <div class="kval vp" id="kv-rev">$0</div>
+      <div class="klbl">Total Revenue</div>
+      <span class="kbadge bu">Q4 Peak $8.79M</span>
+    </div>
+    <div class="kpi kg">
+      <div style="font-size:20px;margin-bottom:7px">📈</div>
+      <div class="kval vg" id="kv-profit">$0</div>
+      <div class="klbl">Gross Profit</div>
+      <span class="kbadge bu">54.89% Avg Margin</span>
+    </div>
+    <div class="kpi ka">
+      <div style="font-size:20px;margin-bottom:7px">🛒</div>
+      <div class="kval va" id="kv-units">0</div>
+      <div class="klbl">Units Sold</div>
+      <span class="kbadge ba">Nov-Dec Spike</span>
+    </div>
+    <div class="kpi kc">
+      <div style="font-size:20px;margin-bottom:7px">⭐</div>
+      <div class="kval vc">4.60</div>
+      <div class="klbl">Avg Product Rating</div>
+      <span class="kbadge bc">Excellent NPS</span>
+    </div>
+  </div>
+  <div class="g4">
+    <div class="kpi kv">
+      <div style="font-size:20px;margin-bottom:7px">🏷️</div>
+      <div class="kval vv">$98.94</div>
+      <div class="klbl">Avg Selling Price</div>
+      <span class="kbadge bp">vs $104.26 comp avg</span>
+    </div>
+    <div class="kpi kr">
+      <div style="font-size:20px;margin-bottom:7px">📊</div>
+      <div class="kval vr">54.89%</div>
+      <div class="klbl">Avg Gross Margin</div>
+      <span class="kbadge bu">H&amp;B leads: 64.4%</span>
+    </div>
+    <div class="kpi kpk">
+      <div style="font-size:20px;margin-bottom:7px">🎯</div>
+      <div class="kval vpk">+137%</div>
+      <div class="klbl">Promo Revenue Lift</div>
+      <span class="kbadge bu">vs no-promo days</span>
+    </div>
+    <div class="kpi kg">
+      <div style="font-size:20px;margin-bottom:7px">🏆</div>
+      <div class="kval vg">20 SKUs</div>
+      <div class="klbl">Active Products</div>
+      <span class="kbadge bu">5 Categories</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ REVENUE GROWTH ════════════════════════════════════ -->
+<div class="sec" id="s-revenue">
+  <div class="sechd sg">💰 Revenue Growth — Monthly & Quarterly (Real 2025 Data)</div>
+  <div class="ctrlrow">
+    <button class="cbtn on" onclick="setRevView('both',this)">Revenue + Profit</button>
+    <button class="cbtn" onclick="setRevView('revenue',this)">Revenue Only</button>
+    <button class="cbtn" onclick="setRevView('profit',this)">Profit Only</button>
+    <button class="cbtn" onclick="setRevView('units',this)">Units Sold</button>
+  </div>
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card sp2">
+      <div class="sechd sg" style="margin-bottom:10px">Monthly 2025 Trend</div>
+      <div class="ch ch-md"><canvas id="revChart"></canvas></div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="sechd sp" style="margin-bottom:10px">Quarterly Revenue & Profit</div>
+      <div class="ch ch-sm"><canvas id="qtrChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sechd sa" style="margin-bottom:10px">Monthly Units by Category (Stacked)</div>
+      <div class="ch ch-sm"><canvas id="stackChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CATEGORY ANALYSIS ══════════════════════════════════ -->
+<div class="sec" id="s-category">
+  <div class="sechd sc">🏷️ Category Analysis — EDA Breakdown</div>
+  <div class="g5" id="cat-kpis" style="margin-bottom:16px"></div>
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="sechd sp" style="margin-bottom:10px">Revenue by Category ($M)</div>
+      <div class="ch ch-md"><canvas id="catRevChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sechd sg" style="margin-bottom:10px">Gross Profit Share (Doughnut)</div>
+      <div class="ch ch-md"><canvas id="catPie"></canvas></div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="sechd sa" style="margin-bottom:10px">Margin % by Category</div>
+      <div class="ch ch-sm"><canvas id="catMargin"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sechd sc" style="margin-bottom:10px">Avg Rating by Category</div>
+      <div class="ch ch-sm"><canvas id="catRating"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRODUCT EXPLORER ═══════════════════════════════════ -->
+<div class="sec" id="s-products">
+  <div class="sechd sv">📦 Product Explorer — All 15 Products with Real EDA Data</div>
+  <div class="ctrlrow">
+    <select class="csel" id="psort" onchange="renderProds()">
+      <option value="rev">Sort: Revenue</option>
+      <option value="profit">Sort: Profit</option>
+      <option value="units">Sort: Units</option>
+      <option value="margin">Sort: Margin %</option>
+      <option value="rating">Sort: Rating</option>
+    </select>
+    <select class="csel" id="pcat" onchange="renderProds()">
+      <option value="all">All Categories</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Sports & Outdoors">Sports & Outdoors</option>
+      <option value="Home & Kitchen">Home & Kitchen</option>
+      <option value="Apparel">Apparel</option>
+      <option value="Health & Beauty">Health & Beauty</option>
+    </select>
+    <button class="cbtn on" id="ptv-btn" onclick="setProdView('table',this)">📋 Table</button>
+    <button class="cbtn" id="pcv-btn" onclick="setProdView('chart',this)">📊 Chart</button>
+  </div>
+  <div class="card" id="prod-table-w">
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>#</th><th>Product</th><th>Category</th>
+        <th>Revenue</th><th>Profit</th><th>Units</th>
+        <th>Avg Price</th><th>Comp Avg</th><th>Margin %</th><th>Rating</th>
+      </tr></thead>
+      <tbody id="prod-tbody"></tbody>
+    </table>
+    </div>
+  </div>
+  <div class="card" id="prod-chart-w" style="display:none">
+    <div class="ch ch-lg"><canvas id="prodBarChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ══ PRICE DISTRIBUTION ════════════════════════════════ -->
+<div class="sec" id="s-pricing">
+  <div class="sechd sa">💲 Price Distribution — Min / Avg / Max by Category</div>
+  <div class="g2">
+    <div class="card">
+      <div class="sechd sa" style="margin-bottom:10px">Price Range per Category</div>
+      <div class="ch ch-md"><canvas id="priceRange"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sechd sg" style="margin-bottom:10px">Our Avg Price vs Competitor Avg</div>
+      <div class="ch ch-md"><canvas id="priceComp"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SALES CHANNELS ════════════════════════════════════ -->
+<div class="sec" id="s-channels">
+  <div class="sechd sc">📡 Sales Channels — Revenue & Unit Performance</div>
+  <div class="g3">
+    <div class="card" style="display:flex;flex-direction:column;align-items:center">
+      <div class="sechd sc" style="margin-bottom:10px">Revenue Share (Doughnut)</div>
+      <div style="height:180px;width:180px"><canvas id="chanPie"></canvas></div>
+      <div id="chan-legend" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;width:100%"></div>
+    </div>
+    <div class="card sp2">
+      <div class="sechd sg" style="margin-bottom:10px">Revenue & Units by Channel</div>
+      <div class="ch ch-md"><canvas id="chanBar"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROMO & HOLIDAY ════════════════════════════════════ -->
+<div class="sec" id="s-promo">
+  <div class="sechd sr">🎯 Promo &amp; Holiday Impact — EDA Findings</div>
+  <div class="g4" style="margin-bottom:16px">
+    <div class="kpi kp"><div style="font-size:20px;margin-bottom:7px">🎯</div>
+      <div class="kval vp">$7.89M</div><div class="klbl">Promo Revenue</div>
+      <span class="kbadge bp">27.9% of total</span></div>
+    <div class="kpi kg"><div style="font-size:20px;margin-bottom:7px">📦</div>
+      <div class="kval vg">92,073</div><div class="klbl">Promo Units</div>
+      <span class="kbadge bu">31.4% of total</span></div>
+    <div class="kpi ka"><div style="font-size:20px;margin-bottom:7px">🎄</div>
+      <div class="kval va">$1.70M</div><div class="klbl">Holiday Revenue</div>
+      <span class="kbadge ba">6.0% of total</span></div>
+    <div class="kpi kc"><div style="font-size:20px;margin-bottom:7px">🛒</div>
+      <div class="kval vc">+275%</div><div class="klbl">Holiday Demand Lift</div>
+      <span class="kbadge bc">vs normal days</span></div>
+  </div>
+  <div class="g3">
+    <div class="card"><div class="sechd sp" style="margin-bottom:10px">Revenue: Promo vs No Promo</div>
+      <div class="ch ch-sm"><canvas id="promoRev"></canvas></div></div>
+    <div class="card"><div class="sechd sg" style="margin-bottom:10px">Units: Promo vs No Promo</div>
+      <div class="ch ch-sm"><canvas id="promoUnits"></canvas></div></div>
+    <div class="card"><div class="sechd sa" style="margin-bottom:10px">Margin %: Promo vs No Promo</div>
+      <div class="ch ch-sm"><canvas id="promoMargin"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ WEEKLY PATTERNS ════════════════════════════════════ -->
+<div class="sec" id="s-weekly">
+  <div class="sechd spk">📅 Weekly Patterns — Day of Week Demand Analysis</div>
+  <div class="g2">
+    <div class="card"><div class="sechd spk" style="margin-bottom:10px">Avg Daily Units by Day</div>
+      <div class="ch ch-sm"><canvas id="dowUnits"></canvas></div></div>
+    <div class="card"><div class="sechd sa" style="margin-bottom:10px">Avg Daily Revenue by Day</div>
+      <div class="ch ch-sm"><canvas id="dowRev"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ MODEL RESULTS ══════════════════════════════════════ -->
+<div class="sec" id="s-models">
+  <div class="sechd sa">🏆 Model Results — GridSearchCV Real Training (4 Models, 3-Fold CV)</div>
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card"><div class="sechd sp" style="margin-bottom:10px">Price Model — Test R²</div>
+      <div class="ch ch-sm"><canvas id="priceModelChart"></canvas></div></div>
+    <div class="card"><div class="sechd sg" style="margin-bottom:10px">Demand Model — Test R²</div>
+      <div class="ch ch-sm"><canvas id="demandModelChart"></canvas></div></div>
+  </div>
+  <div class="g2">
+    <div class="winner" style="border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.03)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Price Model Winner</div>
+          <div style="font-size:22px;font-weight:900;color:#fcd34d;margin-top:3px">LightGBM</div>
+        </div>
+        <div style="font-size:34px">🥇</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#fcd34d">1.0000</div>
+          <div style="font-size:10px;color:var(--muted)">Test R²</div></div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#34d399">$0.45</div>
+          <div style="font-size:10px;color:var(--muted)">RMSE</div></div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#67e8f9">3-fold</div>
+          <div style="font-size:10px;color:var(--muted)">CV</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted)">Best: lr=0.1, leaves=31, n_estimators=400</div>
+    </div>
+    <div class="winner" style="border:1px solid rgba(99,102,241,.35);background:rgba(99,102,241,.03)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Demand Model Winner</div>
+          <div style="font-size:22px;font-weight:900;color:#a78bfa;margin-top:3px">XGBoost</div>
+        </div>
+        <div style="font-size:34px">🥇</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#a78bfa">0.9050</div>
+          <div style="font-size:10px;color:var(--muted)">Test R²</div></div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#34d399">5.07</div>
+          <div style="font-size:10px;color:var(--muted)">MAE (units)</div></div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#67e8f9">3-fold</div>
+          <div style="font-size:10px;color:var(--muted)">CV</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted)">Best: lr=0.05, depth=4, n=200, subsample=0.8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DEMAND SIMULATOR ═══════════════════════════════════ -->
+<div class="sec" id="s-simulator">
+  <div class="sechd sp">⚡ Demand Simulator — Real EDA Elasticity Model</div>
+  <div class="simwrap">
+    <div class="simrow">
+      <div class="sf"><label>Category</label>
+        <select id="s-cat" onchange="simUp()">
+          <option value="Electronics">Electronics (elasticity −1.85)</option>
+          <option value="Sports">Sports & Outdoors (−1.72)</option>
+          <option value="Home">Home & Kitchen (−1.65)</option>
+          <option value="Apparel">Apparel (−1.90)</option>
+          <option value="Health">Health & Beauty (−1.55)</option>
+        </select>
+      </div>
+      <div class="sf"><label>Price ($) <span class="sfv" id="sv-p">$148</span></label>
+        <input type="range" id="s-price" min="20" max="350" value="148" oninput="simUp()">
+      </div>
+      <div class="sf"><label>Comp Avg ($) <span class="sfv" id="sv-c">$156</span></label>
+        <input type="range" id="s-comp" min="20" max="400" value="156" oninput="simUp()">
+      </div>
+      <div class="sf"><label>Stock <span class="sfv" id="sv-s">200</span></label>
+        <input type="range" id="s-stock" min="0" max="500" value="200" oninput="simUp()">
+      </div>
+    </div>
+    <div class="simrow">
+      <div class="sf"><label>Promotion Active?</label>
+        <select id="s-promo" onchange="simUp()">
+          <option value="1">No (Normal)</option>
+          <option value="1.45">Yes (+45% lift)</option>
+        </select>
+      </div>
+      <div class="sf"><label>Holiday Period?</label>
+        <select id="s-holiday" onchange="simUp()">
+          <option value="1">No (Normal)</option>
+          <option value="1.28">Yes (+28% lift)</option>
+        </select>
+      </div>
+    </div>
+    <div class="simout">
+      <div class="soc"><div class="sov" id="so-u" style="color:#6366f1">40</div><div class="sol">Daily Units</div></div>
+      <div class="soc"><div class="sov" id="so-r" style="color:#10b981">$5.9K</div><div class="sol">Daily Revenue</div></div>
+      <div class="soc"><div class="sov" id="so-m" style="color:#f59e0b">47.8%</div><div class="sol">Gross Margin</div></div>
+      <div class="soc"><div class="sov" id="so-g" style="color:#06b6d4">+$8</div><div class="sol">vs Competitor</div></div>
+      <div class="soc"><div class="sov" id="so-sc" style="color:#8b5cf6">80/100</div><div class="sol">Price Score</div></div>
+    </div>
+    <div style="margin-top:14px;height:105px"><canvas id="simSpark"></canvas></div>
+  </div>
+</div>
+
+<!-- ══ COMPETITOR GAP ════════════════════════════════════ -->
+<div class="sec" id="s-competitor">
+  <div class="sechd sv">⚔️ Competitor Gap — Our Price vs Market</div>
+  <div class="g2">
+    <div class="card">
+      <div class="sechd sg" style="margin-bottom:10px">Price Advantage by Category (Our Price − Comp Avg)</div>
+      <div class="ch ch-md"><canvas id="compGap"></canvas></div>
+      <div style="margin-top:12px;font-size:11px;color:var(--muted)">✅ Positive = we are cheaper than competitors (better value)</div>
+    </div>
+    <div class="card">
+      <div class="sechd sa" style="margin-bottom:10px">Our Price vs Competitor Avg — Top 10 Products</div>
+      <div class="ch ch-md"><canvas id="prodComp"></canvas></div>
+    </div>
+  </div>
+</div>
+
+    </main>
+  </div><!-- /layout -->
+
+  <!-- ── Floating Robot ── -->
+  <div id="frobot" onclick="toggleChat()">
+    <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="frg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#6366f1"/><stop offset="100%" style="stop-color:#8b5cf6"/>
+      </linearGradient></defs>
+      <g class="rbanim">
+        <ellipse cx="65" cy="210" rx="17" ry="7" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
+        <ellipse cx="135" cy="210" rx="17" ry="7" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
+        <rect x="48" y="132" width="104" height="74" rx="10" fill="#0a1628" stroke="url(#frg)" stroke-width="2"/>
+        <rect x="62" y="150" width="25" height="12" rx="3" fill="rgba(99,102,241,.3)" stroke="#6366f1" stroke-width="1"/>
+        <rect x="113" y="150" width="25" height="12" rx="3" fill="rgba(16,185,129,.3)" stroke="#10b981" stroke-width="1"/>
+        <rect x="62" y="170" width="76" height="6" rx="3" fill="rgba(245,158,11,.2)" stroke="#f59e0b" stroke-width="1"/>
+        <circle cx="74" cy="156" r="3" fill="#10b981"><animate attributeName="opacity" values="1;.2;1" dur="1.2s" repeatCount="indefinite"/></circle>
+        <circle cx="126" cy="156" r="3" fill="#6366f1"><animate attributeName="opacity" values=".2;1;.2" dur="1.2s" repeatCount="indefinite"/></circle>
+        <rect x="18" y="147" width="30" height="10" rx="5" fill="#0a1628" stroke="url(#frg)" stroke-width="1.5"/>
+        <circle cx="12" cy="152" r="7" fill="#6366f1"/>
+        <rect x="152" y="147" width="30" height="10" rx="5" fill="#0a1628" stroke="url(#frg)" stroke-width="1.5"/>
+        <circle cx="188" cy="152" r="7" fill="#6366f1"/>
+        <rect x="88" y="120" width="24" height="14" rx="4" fill="#0a1628" stroke="url(#frg)" stroke-width="1.5"/>
+        <rect x="42" y="46" width="116" height="78" rx="14" fill="#0a1628" stroke="url(#frg)" stroke-width="2"/>
+        <line x1="100" y1="46" x2="100" y2="22" stroke="#6366f1" stroke-width="2"/>
+        <circle cx="100" cy="16" r="6" fill="#6366f1"><animate attributeName="r" values="6;8;6" dur="1s" repeatCount="indefinite"/></circle>
+        <g class="reye">
+          <rect x="58" y="63" width="26" height="20" rx="5" fill="#060d1f" stroke="#06b6d4" stroke-width="1.5"/>
+          <circle cx="71" cy="73" r="7" fill="#06b6d4"/>
+          <circle cx="73" cy="71" r="2.5" fill="#fff" opacity=".8"/>
+        </g>
+        <g class="reye">
+          <rect x="116" y="63" width="26" height="20" rx="5" fill="#060d1f" stroke="#06b6d4" stroke-width="1.5"/>
+          <circle cx="129" cy="73" r="7" fill="#06b6d4"/>
+          <circle cx="131" cy="71" r="2.5" fill="#fff" opacity=".8"/>
+        </g>
+        <rect x="74" y="97" width="52" height="10" rx="5" fill="rgba(99,102,241,.25)" stroke="#6366f1" stroke-width="1.5"/>
+        <rect x="79" y="100" width="6" height="4" rx="1.5" fill="#6366f1"/>
+        <rect x="89" y="100" width="6" height="4" rx="1.5" fill="#6366f1"/>
+        <rect x="99" y="100" width="6" height="4" rx="1.5" fill="#6366f1"/>
+        <rect x="109" y="100" width="6" height="4" rx="1.5" fill="#6366f1"/>
+      </g>
+    </svg>
+  </div>
+  <div id="rbub"><span id="rbubtext"></span><span id="rbcur">|</span></div>
+
+</div><!-- /app -->
+
+<!-- ═══ CHATBOT ═══════════════════════════════════════════ -->
+<div id="chatbot">
+  <div class="chd">
+    <svg width="34" height="38" viewBox="0 0 200 220" class="rbanim">
+      <rect x="42" y="46" width="116" height="78" rx="14" fill="#0a1628" stroke="#6366f1" stroke-width="2"/>
+      <rect x="48" y="132" width="104" height="60" rx="10" fill="#0a1628" stroke="#6366f1" stroke-width="2"/>
+      <circle cx="100" cy="16" r="6" fill="#6366f1"><animate attributeName="r" values="6;8;6" dur="1s" repeatCount="indefinite"/></circle>
+      <line x1="100" y1="46" x2="100" y2="22" stroke="#6366f1" stroke-width="2"/>
+      <rect x="58" y="63" width="26" height="20" rx="5" fill="#060d1f" stroke="#06b6d4" stroke-width="1.5"/>
+      <circle cx="71" cy="73" r="7" fill="#06b6d4"/>
+      <rect x="116" y="63" width="26" height="20" rx="5" fill="#060d1f" stroke="#06b6d4" stroke-width="1.5"/>
+      <circle cx="129" cy="73" r="7" fill="#06b6d4"/>
+      <rect x="74" y="97" width="52" height="10" rx="5" fill="rgba(99,102,241,.25)" stroke="#6366f1" stroke-width="1.5"/>
+    </svg>
+    <div class="chdinfo">
+      <div class="chdname">ARIA — PricePilot AI</div>
+      <div class="chdst">● Online · All 12 Sections Active</div>
+    </div>
+    <button class="chcl" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chmsgs" id="chmsgs">
+    <div class="msg mbot">👋 Hi! I'm <strong>ARIA</strong>. I have full access to your 7,300-row EDA dataset and all 12 dashboard sections. Use the commands below or ask me anything!</div>
+  </div>
+  <div class="cmds">
+    <span class="chip" onclick="sendCmd('show kpi summary')">📊 KPIs</span>
+    <span class="chip" onclick="sendCmd('show revenue growth')">💰 Revenue</span>
+    <span class="chip" onclick="sendCmd('category analysis')">🏷️ Categories</span>
+    <span class="chip" onclick="sendCmd('product explorer')">📦 Products</span>
+    <span class="chip" onclick="sendCmd('price distribution')">💲 Pricing</span>
+    <span class="chip" onclick="sendCmd('sales channels')">📡 Channels</span>
+    <span class="chip" onclick="sendCmd('promo impact')">🎯 Promos</span>
+    <span class="chip" onclick="sendCmd('weekly patterns')">📅 Weekly</span>
+    <span class="chip" onclick="sendCmd('model results')">🏆 Models</span>
+    <span class="chip" onclick="sendCmd('demand simulator')">⚡ Simulate</span>
+    <span class="chip" onclick="sendCmd('competitor gap')">⚔️ Competitors</span>
+    <span class="chip" onclick="sendCmd('change theme purple')">💜 Theme</span>
+  </div>
+  <div class="chinrow">
+    <textarea class="chinp" id="chinp" placeholder="Ask ARIA..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+    <button class="csend" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<button id="chtgl" onclick="toggleChat()">🤖
+  <div id="cbadge">1</div>
+</button>
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// ██  REAL EDA DATA (7,300 rows)  ██
+// ═══════════════════════════════════════════════════════════
+const MONTHLY=[{m:"Jan",rev:2148213,profit:1021339,units:23168},{m:"Feb",rev:1782749,profit:853359,units:19606},{m:"Mar",rev:2001838,profit:951769,units:21946},{m:"Apr",rev:2070060,profit:994156,units:21504},{m:"May",rev:2041805,profit:970748,units:21198},{m:"Jun",rev:2369317,profit:1164375,units:23865},{m:"Jul",rev:2626005,profit:1259002,units:25946},{m:"Aug",rev:2127892,profit:1023614,units:21555},{m:"Sep",rev:2155253,profit:1023322,units:22179},{m:"Oct",rev:2070479,profit:991225,units:21065},{m:"Nov",rev:3297614,profit:1575386,units:34257},{m:"Dec",rev:3554753,profit:1703180,units:37056}];
+const CATS=[{c:"Electronics",rev:10587390,profit:4269714,units:72765,margin:47.77,rating:4.6,comp:155.48},{c:"Home & Kitchen",rev:6299345,profit:3179235,units:58920,margin:53.58,rating:4.55,comp:115.63},{c:"Sports & Outdoors",rev:5720629,profit:2774243,units:58097,margin:54.5,rating:4.7,comp:106.9},{c:"Apparel",rev:4010629,profit:2279883,units:61071,margin:58.32,rating:4.53,comp:71.35},{c:"Health & Beauty",rev:1627985,profit:1008199,units:42492,margin:64.44,rating:4.63,comp:40.93}];
+const PRODS=[{n:"UltraView 27\" 4K Gaming Monitor",cat:"Electronics",rev:4659532,profit:1603822,units:14551,price:328.22,comp:345.02,margin:35.75,rating:4.7},{n:"FlexCore Adjustable Dumbbell Set",cat:"Sports & Outdoors",rev:3615842,profit:1651362,units:14032,price:262.86,comp:275.2,margin:46.53,rating:4.8},{n:"Aura Pro Noise-Cancelling Headphones",cat:"Electronics",rev:2714064,profit:1078034,units:14873,price:187.5,comp:196.43,margin:41.09,rating:4.6},{n:"BaristaTouch 15-Bar Espresso Machine",cat:"Home & Kitchen",rev:2529696,profit:1149536,units:14528,price:178.12,comp:187.16,margin:46.46,rating:4.5},{n:"Vortex Pulse Smartwatch with GPS",cat:"Electronics",rev:2036817,profit:926067,units:14810,price:140.94,comp:147.46,margin:46.6,rating:4.4},{n:"PureBreeze HEPA Smart Air Purifier",cat:"Home & Kitchen",rev:1718594,profit:921754,units:14488,price:121.65,comp:127.88,margin:54.6,rating:4.6},{n:"ThermalShield Puffer Jacket",cat:"Apparel",rev:1612990,profit:905998,units:14729,price:112.36,comp:117.85,margin:57.1,rating:4.6},{n:"ChefMaster 8-in-1 Air Fryer",cat:"Home & Kitchen",rev:1370349,profit:695619,units:14994,price:93.77,comp:98.23,margin:51.83,rating:4.7},{n:"AeroGlide Folding Kick Scooter",cat:"Sports & Outdoors",rev:1232877,profit:602919,units:14999,price:84.52,comp:88.47,margin:50.11,rating:4.4},{n:"AeroFit Men's Running Jacket",cat:"Apparel",rev:1013369,profit:567217,units:15934,price:65.48,comp:69.02,margin:57.06,rating:4.3},{n:"SonicShine Electric Toothbrush",cat:"Health & Beauty",rev:790613,profit:444917,units:14404,price:56.4,comp:58.91,margin:57.27,rating:4.6},{n:"Oxford Heritage Cotton Shirt",cat:"Apparel",rev:759649,profit:425711,units:15179,price:51.58,comp:54.33,margin:57.15,rating:4.5},{n:"ErgoRest Memory Foam Pillow",cat:"Home & Kitchen",rev:680705,profit:412325,units:14910,price:46.87,comp:49.26,margin:61.43,rating:4.4},{n:"NovaCast 4K Streaming Player",cat:"Electronics",rev:662481,profit:344163,units:14469,price:46.9,comp:49.25,margin:52.9,rating:4.5},{n:"Lumina High-Waist Leggings",cat:"Apparel",rev:624621,profit:380957,units:15229,price:42.24,comp:44.19,margin:61.96,rating:4.7}];
+const CHANNELS=[{ch:"Mobile App",rev:10045655,units:102158},{ch:"Direct Web",rev:9117825,units:95740},{ch:"Amazon",rev:9082499,units:95447}];
+const DOW=[{d:"Mon",u:49.75,r:4476.59},{d:"Tue",u:49.74,r:4516.1},{d:"Wed",u:36.22,r:3544.9},{d:"Thu",u:33.98,r:3348},{d:"Fri",u:33.74,r:3316.92},{d:"Sat",u:38.87,r:3940.96},{d:"Sun",u:39.06,r:3947.95}];
+const PRICE_DIST=[{cat:"Apparel",min:33.88,max:119.99,avg:67.91,med:54.74},{cat:"Electronics",min:30.03,max:349.99,avg:148.21,med:142.49},{cat:"Health & Beauty",min:22.52,max:59.99,avg:39.13,med:33.35},{cat:"Home & Kitchen",min:37.54,max:189.99,avg:110.1,med:99.86},{cat:"Sports & Outdoors",min:19.04,max:279.71,avg:102.09,med:53.83}];
+const COMP_GAP=[{cat:"Apparel",adv:3.44},{cat:"Electronics",adv:7.27},{cat:"Health & Beauty",adv:1.8},{cat:"Home & Kitchen",adv:5.53},{cat:"Sports & Outdoors",adv:4.81}];
+const QTR=[{q:"Q1",rev:6242341,profit:3006427},{q:"Q2",rev:6481182,profit:3129280},{q:"Q3",rev:6728075,profit:3226338},{q:"Q4",rev:8794380,profit:4149230}];
+const MCAT=[{m:"Jan",Apparel:4812,Electronics:5746,"Health & Beauty":3434,"Home & Kitchen":4556,"Sports & Outdoors":4620},{m:"Feb",Apparel:4100,Electronics:4869,"Health & Beauty":2794,"Home & Kitchen":3976,"Sports & Outdoors":3867},{m:"Mar",Apparel:4511,Electronics:5431,"Health & Beauty":3272,"Home & Kitchen":4377,"Sports & Outdoors":4355},{m:"Apr",Apparel:4620,Electronics:5347,"Health & Beauty":3126,"Home & Kitchen":4226,"Sports & Outdoors":4185},{m:"May",Apparel:4515,Electronics:5264,"Health & Beauty":2953,"Home & Kitchen":4234,"Sports & Outdoors":4232},{m:"Jun",Apparel:4880,Electronics:5936,"Health & Beauty":3456,"Home & Kitchen":4879,"Sports & Outdoors":4714},{m:"Jul",Apparel:5307,Electronics:6515,"Health & Beauty":3711,"Home & Kitchen":5270,"Sports & Outdoors":5143},{m:"Aug",Apparel:4378,Electronics:5259,"Health & Beauty":3160,"Home & Kitchen":4404,"Sports & Outdoors":4354},{m:"Sep",Apparel:4646,Electronics:5397,"Health & Beauty":3222,"Home & Kitchen":4406,"Sports & Outdoors":4508},{m:"Oct",Apparel:4254,Electronics:5265,"Health & Beauty":3098,"Home & Kitchen":4260,"Sports & Outdoors":4188},{m:"Nov",Apparel:7201,Electronics:8659,"Health & Beauty":4903,"Home & Kitchen":6739,"Sports & Outdoors":6755},{m:"Dec",Apparel:7847,Electronics:9077,"Health & Beauty":5363,"Home & Kitchen":7593,"Sports & Outdoors":7176}];
+const CC={"Electronics":"#6366f1","Home & Kitchen":"#06b6d4","Sports & Outdoors":"#10b981","Apparel":"#ec4899","Health & Beauty":"#f59e0b"};
+const CATLIST=["Electronics","Home & Kitchen","Sports & Outdoors","Apparel","Health & Beauty"];
+
+// ─ Stars ─
+(()=>{const s=document.getElementById('stars');for(let i=0;i<100;i++){const e=document.createElement('div');e.className='star';const sz=Math.random()*2.5+.5;e.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*4}s;--o:${.3+Math.random()*.7};--delay:${Math.random()*4}s`;s.appendChild(e)}})();
+
+// ─ Typewriter Intro ─
+const msgs=["Hello! I'm ARIA 🤖 — your AI pricing analyst!","I've analysed 7,300 rows of real retail data across 20 products & 5 categories.","GridSearchCV selected LightGBM (R²=1.000) for price & XGBoost (R²=0.905) for demand!","Explore 12 interactive sections: KPIs, EDA Analysis, ML Insights & more. Click Enter! 🚀"];
+let mi=0,ci=0;const tEl=document.getElementById('ttext');
+function typeNext(){if(mi>=msgs.length)return;const msg=msgs[mi];if(ci<msg.length){tEl.textContent+=msg[ci++];setTimeout(typeNext,26)}else{setTimeout(()=>{tEl.textContent='';ci=0;mi++;if(mi<msgs.length)setTimeout(typeNext,350);else{tEl.textContent=msgs[msgs.length-1]}},1900)}}
+setTimeout(typeNext,1500);
+
+// ─ Enter Dashboard ─
+function enterDash(){
+  document.getElementById('intro').classList.add('out');
+  setTimeout(()=>{
+    document.getElementById('intro').style.display='none';
+    const app=document.getElementById('app');
+    app.classList.add('on');
+    initCharts();animateKPIs();buildCatKPIs();renderProds();
+    setTimeout(()=>document.getElementById('frobot').classList.add('on'),700);
+    setTimeout(()=>robotSay("🎉 Welcome! All 12 sections loaded with real EDA data. Click any sidebar item or ask me via chat!"),1100);
+    setTimeout(()=>document.getElementById('cbadge').classList.add('on'),5000);
+    // Animate sections on scroll
+    const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.08});
+    document.querySelectorAll('.sec').forEach(s=>{s.classList.add('vis');obs.observe(s)});
+  },820);
+}
+
+// ─ Charts setup ─
+Chart.defaults.color='#64748b';
+Chart.defaults.borderColor='rgba(26,48,85,.45)';
+const CHS={};
+function mk(id,type,labels,datasets,opts={}){
+  if(CHS[id]){CHS[id].destroy()}
+  const ctx=document.getElementById(id)?.getContext('2d');
+  if(!ctx)return null;
+  CHS[id]=new Chart(ctx,{type,data:{labels,datasets},options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#94a3b8',font:{size:10},boxWidth:10,padding:8}},...(opts.plugins||{})},
+    scales:type==='pie'||type==='doughnut'?{}:{
+      x:{ticks:{color:'#475569',font:{size:9}},grid:{color:'rgba(26,48,85,.5)'}},
+      y:{ticks:{color:'#475569',font:{size:9}},grid:{color:'rgba(26,48,85,.5)'}},
+      ...(opts.scales||{})},
+    animation:{duration:700,easing:'easeInOutCubic'},...opts
+  }});
+  return CHS[id];
+}
+
+let revChart,simSpark;
+function initCharts(){
+  // Revenue (default: both)
+  buildRevChart('both');
+  // Quarterly
+  mk('qtrChart','bar',QTR.map(q=>q.q),[
+    {label:'Revenue',data:QTR.map(q=>q.rev/1e6),backgroundColor:['#6366f133','#6366f166','#6366f199','#6366f1'],borderRadius:6,borderSkipped:false},
+    {label:'Profit',data:QTR.map(q=>q.profit/1e6),backgroundColor:['#10b98133','#10b98166','#10b98199','#10b981'],borderRadius:6,borderSkipped:false}
+  ]);
+  // Stacked monthly by category
+  mk('stackChart','bar',MCAT.map(m=>m.m),CATLIST.map(c=>({label:c,data:MCAT.map(m=>m[c]||0),backgroundColor:CC[c]+'cc',borderRadius:2,borderSkipped:false})),{scales:{x:{stacked:true,ticks:{color:'#475569',font:{size:8}}},y:{stacked:true,ticks:{color:'#475569',font:{size:8}}}}});
+  // Category charts
+  mk('catRevChart','bar',CATS.map(c=>c.c.split(' ')[0]),[{label:'Revenue ($M)',data:CATS.map(c=>+(c.rev/1e6).toFixed(2)),backgroundColor:CATLIST.map(c=>CC[c]+'cc'),borderRadius:6,borderSkipped:false}]);
+  mk('catPie','doughnut',CATS.map(c=>c.c),[{data:CATS.map(c=>c.profit),backgroundColor:CATLIST.map(c=>CC[c]),borderColor:'#04080f',borderWidth:3}],{plugins:{legend:{position:'right'}}});
+  mk('catMargin','bar',CATS.map(c=>c.c.split(' ')[0]),[{label:'Margin %',data:CATS.map(c=>c.margin),backgroundColor:CATLIST.map(c=>CC[c]+'cc'),borderRadius:5,borderSkipped:false}],{scales:{y:{min:42,max:70}}});
+  mk('catRating','bar',CATS.map(c=>c.c.split(' ')[0]),[{label:'Avg Rating',data:CATS.map(c=>c.rating),backgroundColor:CATLIST.map(c=>CC[c]+'bb'),borderRadius:5,borderSkipped:false}],{scales:{y:{min:4.0,max:5.0}}});
+  // Price distribution
+  mk('priceRange','bar',PRICE_DIST.map(p=>p.cat.split(' ')[0]),[
+    {label:'Min',data:PRICE_DIST.map(p=>p.min),backgroundColor:'#6366f144',borderRadius:4,borderSkipped:false},
+    {label:'Avg',data:PRICE_DIST.map(p=>p.avg),backgroundColor:'#6366f1aa',borderRadius:4,borderSkipped:false},
+    {label:'Max',data:PRICE_DIST.map(p=>p.max),backgroundColor:'#6366f1',borderRadius:4,borderSkipped:false}
+  ]);
+  mk('priceComp','bar',CATS.map(c=>c.c.split(' ')[0]),[
+    {label:'Our Avg Price',data:CATS.map(c=>+(c.rev/c.units).toFixed(2)),backgroundColor:'#6366f1cc',borderRadius:5,borderSkipped:false},
+    {label:'Competitor Avg',data:CATS.map(c=>c.comp),backgroundColor:'#ef444466',borderRadius:5,borderSkipped:false}
+  ]);
+  // Channels
+  const ccolors=['#6366f1','#10b981','#f59e0b'];
+  mk('chanPie','doughnut',CHANNELS.map(c=>c.ch),[{data:CHANNELS.map(c=>c.rev),backgroundColor:ccolors,borderColor:'#04080f',borderWidth:3}],{plugins:{legend:{display:false}}});
+  document.getElementById('chan-legend').innerHTML=CHANNELS.map((c,i)=>`<div style="display:flex;align-items:center;gap:7px;font-size:11px"><div style="width:9px;height:9px;border-radius:2px;background:${ccolors[i]}"></div><span style="color:var(--sub)">${c.ch}</span><span style="margin-left:auto;color:${ccolors[i]};font-weight:700">$${(c.rev/1e6).toFixed(2)}M</span></div>`).join('');
+  mk('chanBar','bar',CHANNELS.map(c=>c.ch),[
+    {label:'Revenue ($M)',data:CHANNELS.map(c=>+(c.rev/1e6).toFixed(2)),backgroundColor:ccolors.map(c=>c+'cc'),borderRadius:6,borderSkipped:false},
+    {label:'Units (K)',data:CHANNELS.map(c=>+(c.units/1e3).toFixed(1)),backgroundColor:ccolors.map(c=>c+'44'),borderRadius:6,borderSkipped:false}
+  ]);
+  // Promo
+  mk('promoRev','bar',['No Promo','With Promo'],[{label:'Revenue ($M)',data:[20.36,7.89],backgroundColor:['#33415588','#6366f1cc'],borderRadius:6,borderSkipped:false}]);
+  mk('promoUnits','bar',['No Promo','With Promo'],[{label:'Units (K)',data:[201.3,92.1],backgroundColor:['#33415588','#10b981cc'],borderRadius:6,borderSkipped:false}]);
+  mk('promoMargin','bar',['No Promo','With Promo'],[{label:'Margin %',data:[56.06,48.82],backgroundColor:['#33415588','#f59e0bcc'],borderRadius:6,borderSkipped:false}],{scales:{y:{min:44,max:60}}});
+  // Day of week
+  mk('dowUnits','bar',DOW.map(d=>d.d),[{label:'Avg Units',data:DOW.map(d=>d.u),backgroundColor:DOW.map((_,i)=>i<5?'#6366f1bb':'#ec4899bb'),borderRadius:5,borderSkipped:false}],{scales:{y:{min:28,max:55}}});
+  mk('dowRev','bar',DOW.map(d=>d.d),[{label:'Avg Revenue ($)',data:DOW.map(d=>d.r),backgroundColor:DOW.map((_,i)=>i<5?'#f59e0bbb':'#10b981bb'),borderRadius:5,borderSkipped:false}]);
+  // Model charts
+  mk('priceModelChart','bar',['LightGBM ⭐','XGBoost','Rand Forest','Ridge'],[{label:'Test R²',data:[1.0000,1.0000,1.0000,0.9963],backgroundColor:['#10b981cc','#6366f1cc','#f59e0bcc','#ef4444cc'],borderRadius:6,borderSkipped:false}],{scales:{y:{min:0.993,max:1.002}}});
+  mk('demandModelChart','bar',['XGBoost ⭐','LightGBM','Rand Forest','Ridge'],[{label:'Test R²',data:[0.9050,0.9043,0.8990,0.8479],backgroundColor:['#6366f1cc','#10b981cc','#f59e0bcc','#ef4444cc'],borderRadius:6,borderSkipped:false}],{scales:{y:{min:0.82,max:0.92}}});
+  // Competitor gap
+  mk('compGap','bar',COMP_GAP.map(c=>c.cat.split(' ')[0]),[{label:'Price Advantage ($)',data:COMP_GAP.map(c=>c.adv),backgroundColor:COMP_GAP.map(c=>c.adv>=0?'#10b981cc':'#ef4444cc'),borderColor:COMP_GAP.map(c=>c.adv>=0?'#10b981':'#ef4444'),borderWidth:1,borderRadius:5,borderSkipped:false}]);
+  mk('prodComp','bar',PRODS.slice(0,10).map(p=>p.n.split(' ').slice(0,2).join(' ')),[
+    {label:'Our Price',data:PRODS.slice(0,10).map(p=>p.price),backgroundColor:'#6366f1cc',borderRadius:4,borderSkipped:false},
+    {label:'Comp Avg',data:PRODS.slice(0,10).map(p=>p.comp),backgroundColor:'#ef444466',borderRadius:4,borderSkipped:false}
+  ],{indexAxis:'y'});
+  // Simulator spark
+  simSpark=mk('simSpark','line',Array.from({length:14},(_,i)=>`D${i+1}`),[{label:'Demand',data:Array(14).fill(40),borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.15)',fill:true,tension:.4,pointRadius:2,borderWidth:2}],{plugins:{legend:{display:false}}});
+}
+
+let revView='both';
+function buildRevChart(v){
+  revView=v;if(CHS['revChart'])CHS['revChart'].destroy();
+  const ds=[];
+  if(v==='both'||v==='revenue')ds.push({label:'Revenue',data:MONTHLY.map(m=>m.rev),borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.12)',fill:true,tension:.4,pointRadius:3,borderWidth:2.5});
+  if(v==='both'||v==='profit')ds.push({label:'Profit',data:MONTHLY.map(m=>m.profit),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2,borderDash:[5,4]});
+  if(v==='units')ds.push({label:'Units',data:MONTHLY.map(m=>m.units),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.12)',fill:true,tension:.4,pointRadius:3,borderWidth:2.5});
+  mk('revChart','line',MONTHLY.map(m=>m.m),ds);
+}
+function setRevView(v,el){document.querySelectorAll('#s-revenue .cbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');buildRevChart(v);}
+
+// ─ KPI Counters ─
+function animateKPIs(){
+  cu('kv-rev',0,28245979,v=>'$'+(v/1e6).toFixed(1)+'M');
+  cu('kv-profit',0,13511274,v=>'$'+(v/1e6).toFixed(1)+'M');
+  cu('kv-units',0,293345,v=>Math.round(v).toLocaleString());
+}
+function cu(id,from,to,fmt){
+  const el=document.getElementById(id);if(!el)return;
+  const dur=1800,steps=dur/16;let i=0;
+  const t=setInterval(()=>{i++;const p=i/steps;const e=1-Math.pow(1-p,3);
+    el.textContent=fmt(from+(to-from)*e);if(i>=steps){el.textContent=fmt(to);clearInterval(t)}},16);
+}
+
+// ─ Category KPI mini-cards ─
+function buildCatKPIs(){
+  const icons={"Electronics":"💻","Home & Kitchen":"🏠","Sports & Outdoors":"🏃","Apparel":"👗","Health & Beauty":"💊"};
+  document.getElementById('cat-kpis').innerHTML=CATS.map((c,i)=>`
+    <div class="kpi" style="border-top:2px solid ${CATLIST.map(x=>CC[x])[i]}44;cursor:pointer;padding:12px 14px" onclick="filterCat('${c.c}')">
+      <div style="font-size:20px;margin-bottom:5px">${icons[c.c]||'📦'}</div>
+      <div style="font-size:14px;font-weight:800;color:${CATLIST.map(x=>CC[x])[i]}">${(c.rev/1e6).toFixed(2)}M</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px">${c.c}</div>
+      <div style="font-size:10px;color:#10b981;margin-top:4px">${c.margin.toFixed(1)}% margin · ⭐${c.rating}</div>
+    </div>`).join('');
+}
+function filterCat(cat){document.getElementById('pcat').value=cat;goSec('products',null);renderProds();}
+
+// ─ Product table ─
+let prodView='table';
+function renderProds(){
+  const sort=document.getElementById('psort')?.value||'rev';
+  const cat=document.getElementById('pcat')?.value||'all';
+  let d=[...PRODS];
+  if(cat!=='all')d=d.filter(p=>p.cat===cat);
+  d.sort((a,b)=>b[sort]-a[sort]);
+  const maxR=Math.max(...d.map(p=>p.rev));
+  const cc={"Electronics":"rgba(99,102,241,.15)","Sports & Outdoors":"rgba(16,185,129,.15)","Home & Kitchen":"rgba(6,182,212,.15)","Apparel":"rgba(236,72,153,.15)","Health & Beauty":"rgba(245,158,11,.15)"};
+  const ct={"Electronics":"#a78bfa","Sports & Outdoors":"#34d399","Home & Kitchen":"#67e8f9","Apparel":"#f9a8d4","Health & Beauty":"#fcd34d"};
+  document.getElementById('prod-tbody').innerHTML=d.map((p,i)=>`<tr>
+    <td><b style="color:${['#f59e0b','#9ca3af','#cd7f32'][Math.min(i,2)]||'#6366f155'}">${i+1}</b></td>
+    <td style="font-weight:600;font-size:11px;max-width:170px">${p.n}</td>
+    <td><span class="badge" style="background:${cc[p.cat]};color:${ct[p.cat]}">${p.cat.split(' ')[0]}</span></td>
+    <td><div class="mbar"><span style="color:#a78bfa;font-weight:700;white-space:nowrap">$${(p.rev/1e3).toFixed(0)}K</span><div class="mbg"><div class="mbf" style="width:${(p.rev/maxR*100).toFixed(0)}%;background:#6366f1"></div></div></div></td>
+    <td style="color:#34d399;font-weight:700">$${(p.profit/1e3).toFixed(0)}K</td>
+    <td style="color:#67e8f9">${p.units.toLocaleString()}</td>
+    <td style="font-weight:700">$${p.price.toFixed(2)}</td>
+    <td style="color:var(--muted)">$${p.comp.toFixed(2)}</td>
+    <td><span style="color:#34d399">${p.margin.toFixed(1)}%</span></td>
+    <td><span style="color:#fcd34d">${p.rating}⭐</span></td>
+  </tr>`).join('');
+  if(prodView==='chart'&&CHS['prodBarChart'])CHS['prodBarChart'].destroy();
+  if(prodView==='chart'){
+    mk('prodBarChart','bar',d.map(p=>p.n.split(' ').slice(0,3).join(' ')),[{label:'Revenue',data:d.map(p=>p.rev),backgroundColor:d.map(p=>CC[p.cat]+'cc'),borderRadius:5,borderSkipped:false}],{indexAxis:'y'});
+  }
+}
+function setProdView(v,el){
+  prodView=v;
+  document.getElementById('ptv-btn').classList.toggle('on',v==='table');
+  document.getElementById('pcv-btn').classList.toggle('on',v==='chart');
+  document.getElementById('prod-table-w').style.display=v==='table'?'block':'none';
+  document.getElementById('prod-chart-w').style.display=v==='chart'?'block':'none';
+  renderProds();
+}
+
+// ─ Simulator ─
+const SIM={Electronics:{base:40,margin:47.77,el:1.85},Sports:{base:52,margin:54.5,el:1.72},Home:{base:46,margin:53.58,el:1.65},Apparel:{base:58,margin:58.32,el:1.9},Health:{base:62,margin:64.44,el:1.55}};
+function simUp(){
+  const cat=document.getElementById('s-cat')?.value||'Electronics';
+  const price=+document.getElementById('s-price')?.value||148;
+  const comp=+document.getElementById('s-comp')?.value||156;
+  const stock=+document.getElementById('s-stock')?.value||200;
+  const promo=+document.getElementById('s-promo')?.value||1;
+  const holiday=+document.getElementById('s-holiday')?.value||1;
+  document.getElementById('sv-p').textContent='$'+price;
+  document.getElementById('sv-c').textContent='$'+comp;
+  document.getElementById('sv-s').textContent=stock;
+  const cd=SIM[cat]||SIM.Electronics;
+  const ratio=comp/Math.max(price,1);
+  const sf=0.85+(stock/500)*0.3;
+  const demand=Math.max(0,Math.round(cd.base*Math.pow(ratio,cd.el)*sf*promo*holiday));
+  const rev=demand*price;
+  const gap=comp-price;
+  const score=Math.min(100,Math.max(0,Math.round(50+(gap/comp)*30+(cd.margin/100)*20)));
+  document.getElementById('so-u').textContent=demand;
+  document.getElementById('so-r').textContent='$'+(rev>=1000?(rev/1000).toFixed(1)+'K':rev.toFixed(0));
+  document.getElementById('so-m').textContent=cd.margin.toFixed(1)+'%';
+  document.getElementById('so-g').textContent=(gap>=0?'+':'')+gap.toFixed(0);
+  document.getElementById('so-sc').textContent=score+'/100';
+  if(simSpark){
+    simSpark.data.datasets[0].data=Array.from({length:14},(_,i)=>Math.max(0,Math.round(demand+Math.sin(i*.4)*(demand*.13)+(Math.random()-.5)*(demand*.09))));
+    simSpark.update('none');
+  }
+}
+
+// ─ Theme ─
+function setTheme(t,el){
+  document.body.className='theme-'+t;
+  document.querySelectorAll('.hbtn').forEach(b=>b.classList.remove('on'));
+  if(el)el.classList.add('on');
+  toast('Theme: '+t[0].toUpperCase()+t.slice(1));
+}
+
+// ─ Sidebar navigation ─
+function goSec(id,el){
+  if(el){document.querySelectorAll('.sbit').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+  const target=document.getElementById('s-'+id);
+  if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  toast('Section: '+id.charAt(0).toUpperCase()+id.slice(1));
+}
+
+// ─ Floating Robot ─
+let rbTimer;
+function robotSay(text,dur=4500){
+  const bub=document.getElementById('rbub'),btxt=document.getElementById('rbubtext');
+  clearTimeout(rbTimer);bub.classList.remove('on');
+  setTimeout(()=>{btxt.textContent='';bub.classList.add('on');
+    let i=0;function t(){if(i<text.length){btxt.textContent+=text[i++];setTimeout(t,18)}}t();
+    rbTimer=setTimeout(()=>bub.classList.remove('on'),dur);},120);
+}
+
+// ─ Chatbot ─
+let chatOpen=false;
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatbot').classList.toggle('on',chatOpen);
+  document.getElementById('cbadge').classList.remove('on');
+  const fr=document.getElementById('frobot'),rb=document.getElementById('rbub');
+  if(chatOpen){fr.style.right='300px';rb.style.right='310px';robotSay("💬 Chat open! Use quick commands or ask me anything!",3500);}
+  else{fr.style.right='18px';rb.style.right='28px';}
+}
+function sendCmd(c){document.getElementById('chinp').value=c;sendChat();}
+function addMsg(txt,type){
+  const el=document.createElement('div');el.className='msg m'+type;el.innerHTML=txt;
+  document.getElementById('chmsgs').appendChild(el);
+  document.getElementById('chmsgs').scrollTop=99999;
+}
+function addTyping(){
+  const el=document.createElement('div');el.className='msg mbot tping';el.id='tind';
+  el.innerHTML='<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
+  document.getElementById('chmsgs').appendChild(el);
+  document.getElementById('chmsgs').scrollTop=99999;
+}
+function removeTyping(){document.getElementById('tind')?.remove();}
+
+const RESPONSES=[
+  {kw:['kpi','summary','overview','total','stats','metric'],sec:'kpi',
+   fn:()=>`📊 <strong>KPI Summary (Real EDA):</strong><br>💰 Revenue: <strong>$28.25M</strong><br>📈 Profit: <strong>$13.51M</strong> (54.89% margin)<br>🛒 Units: <strong>293,345</strong><br>⭐ Rating: <strong>4.60/5.0</strong><br>🏷️ 20 SKUs · 5 Categories · Full 2025`},
+  {kw:['revenue','growth','income','monthly','quarterly','earning'],sec:'revenue',
+   fn:()=>`💰 <strong>Revenue Growth (2025):</strong><br>• <strong>Best month: Dec $3.55M</strong><br>• Worst: Feb $1.78M<br>• Q4 total: <strong>$8.79M (31% of annual!)</strong><br>• Nov-Dec holiday spike is massive! 🎄<br>Revenue chart is highlighted above ☝️`},
+  {kw:['category','electronics','apparel','kitchen','sports','health','segment'],sec:'category',
+   fn:()=>`🏷️ <strong>Category Breakdown:</strong><br>🥇 Electronics: <strong>$10.59M</strong> (37%)<br>🥈 Home & Kitchen: <strong>$6.30M</strong><br>🥉 Sports & Outdoors: <strong>$5.72M</strong><br>• Apparel: $4.01M | Health: $1.63M<br>💡 <strong>Highest margin: Health & Beauty 64.44%!</strong>`},
+  {kw:['product','explorer','item','sku','top product','best seller'],sec:'products',
+   fn:()=>`📦 <strong>Product Intelligence:</strong><br>🥇 UltraView 4K Monitor — <strong>$4.66M revenue</strong><br>🥈 FlexCore Dumbbells — <strong>$3.62M</strong><br>🏆 Best margin: Lumina Leggings — <strong>61.96%</strong><br>⭐ Best rated: FlexCore — <strong>4.8/5.0</strong><br>Showing all 15 products in table!`},
+  {kw:['price','distribution','pricing','range','min','max','median'],sec:'pricing',
+   fn:()=>`💲 <strong>Price Distribution:</strong><br>• Electronics: $30–$350 (widest range!)<br>• Health & Beauty: $22–$60 (most affordable)<br>• Sports & Outdoors: $19–$280<br>• Home & Kitchen: $38–$190<br>• Apparel: $34–$120<br>We're below competitor avg in ALL categories! ✅`},
+  {kw:['channel','mobile','amazon','web','store','platform','sales channel'],sec:'channels',
+   fn:()=>`📡 <strong>Sales Channels:</strong><br>📱 Mobile App: <strong>$10.05M</strong> — TOP! (35.6%)<br>🌐 Direct Web: <strong>$9.12M</strong> (32.3%)<br>🛒 Amazon: <strong>$9.08M</strong> (32.1%)<br>Very balanced mix! Mobile App leads 📲<br>Recommendation: Double down on mobile UX!`},
+  {kw:['promo','promotion','holiday','discount','campaign','marketing'],sec:'promo',
+   fn:()=>`🎯 <strong>Promo & Holiday Impact:</strong><br>• Without promo: $20.36M, 201K units<br>• With promo: $7.89M, 92K units (31% lift!)<br>• Promo <strong>drops margin</strong>: 56.1% → 48.8%<br>• Holiday demand: <strong>+275% lift!</strong> 🎄<br>• Holiday revenue: $1.70M (6% of total)`},
+  {kw:['weekly','day','week','monday','tuesday','pattern','daily'],sec:'weekly',
+   fn:()=>`📅 <strong>Weekly Demand Patterns:</strong><br>🔥 Peak days: <strong>Mon & Tue</strong> (49.7 avg units)<br>📉 Lowest: Fri (33.7 units)<br>💡 Weekend avg: 39 units (moderate)<br>Action: Run promotions on <strong>Wed-Fri</strong> to boost slow days! 📈`},
+  {kw:['model','gridsearch','xgboost','lightgbm','r2','accuracy','ml','machine learning','result'],sec:'models',
+   fn:()=>`🏆 <strong>GridSearchCV Results (4 models, 3-fold CV):</strong><br>💰 Price: <strong>LightGBM wins!</strong> R²=1.0000 RMSE=$0.45<br>🛒 Demand: <strong>XGBoost wins!</strong> R²=0.9050 MAE=5.07<br>Ridge baseline: R²=0.9963 (price), 0.8479 (demand)<br>LightGBM best params: lr=0.1, leaves=31, n=400`},
+  {kw:['simulator','demand','predict','forecast','elasticity','simulate'],sec:'simulator',
+   fn:()=>`⚡ <strong>Demand Simulator Active!</strong><br>Real EDA elasticity values:<br>• Electronics: −1.85 (price-sensitive)<br>• Apparel: −1.90 (most sensitive!)<br>• Health & Beauty: −1.55 (least sensitive)<br>Drag the sliders to simulate demand in real time! 🎯`},
+  {kw:['competitor','competition','gap','advantage','rival','market price'],sec:'competitor',
+   fn:()=>`⚔️ <strong>Competitor Price Gap:</strong><br>✅ Electronics: <strong>+$7.27 cheaper</strong> than avg<br>✅ Home & Kitchen: <strong>+$5.53 cheaper</strong><br>✅ Sports & Outdoors: <strong>+$4.81 cheaper</strong><br>✅ Apparel: <strong>+$3.44 cheaper</strong><br>✅ Health & Beauty: <strong>+$1.80 cheaper</strong><br>💡 We could raise prices 3-7% for better margins!`},
+  {kw:['theme','color','dark','blue','purple','green'],sec:null,
+   fn:(m)=>{const ml=m.toLowerCase();const t=ml.includes('blue')?'blue':ml.includes('purple')?'purple':ml.includes('green')?'green':'dark';setTheme(t,null);return `🎨 Theme changed to <strong>${t}</strong>! You can also click the theme buttons in the header. ✨`}},
+];
+
+function getReply(msg){
+  const ml=msg.toLowerCase();
+  for(const r of RESPONSES){
+    if(r.kw.some(k=>ml.includes(k))){
+      if(r.sec)goSec(r.sec,null);
+      const reply=r.fn(msg);
+      robotSay(reply.replace(/<[^>]*>/g,'').slice(0,90)+'…',4000);
+      return reply;
+    }
+  }
+  if(ml.includes('hi')||ml.includes('hello')||ml.includes('hey'))
+    return `👋 Hi! I'm <strong>ARIA</strong>, your PricePilot AI analyst! I know all 12 sections of this dashboard and have access to 7,300 rows of real EDA data. Use the command chips or ask me about revenue, products, categories, models, promotions, channels, pricing, weekly patterns, or competitor gaps!`;
+  if(ml.includes('help'))
+    return `🆘 <strong>ARIA Help:</strong><br>Use sidebar navigation or ask me:<br>• "show kpi summary" / "revenue growth"<br>• "category analysis" / "product explorer"<br>• "price distribution" / "sales channels"<br>• "promo impact" / "weekly patterns"<br>• "model results" / "demand simulator"<br>• "competitor gap" / "change theme purple"`;
+  if(ml.includes('thank'))
+    return `😊 Glad to help! Your business is performing well — $28.2M revenue with 54.89% margins is excellent! 🚀 Let me know if you need more insights.`;
+  return `🤔 I didn't catch that, but here's a quick summary:<br>💰 Revenue: <strong>$28.2M</strong> | Profit: <strong>$13.5M</strong><br>🏆 LightGBM R²=1.000 (price) | XGBoost R²=0.905 (demand)<br>Try: "show kpis", "product explorer", "model results" or "help"`;
+}
+
+function sendChat(){
+  const inp=document.getElementById('chinp');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';addMsg(msg,'usr');addTyping();
+  setTimeout(()=>{removeTyping();addMsg(getReply(msg),'bot');},500+Math.random()*400);
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),2400);
+}
+
+// Scroll active nav
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY+80;
+  ['kpi','revenue','category','products','pricing','channels','promo','weekly','models','simulator','competitor'].forEach(id=>{
+    const el=document.getElementById('s-'+id);
+    if(el&&el.offsetTop<=y&&el.offsetTop+el.offsetHeight>y){
+      document.querySelectorAll('.sbit').forEach(b=>b.classList.remove('on'));
+      document.querySelectorAll('.sbit').forEach(b=>{if(b.getAttribute('onclick')?.includes("'"+id+"'"))b.classList.add('on')});
+    }
+  });
+});
+</script>
+</body>
+</html>

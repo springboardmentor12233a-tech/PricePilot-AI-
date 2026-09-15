@@ -1,0 +1,261 @@
+{
+  "summary": {
+    "total_revenue": 28245978.64,
+    "total_profit": 13511274.14,
+    "avg_margin_pct": 54.89,
+    "total_units": 293345,
+    "avg_price": 98.94,
+    "avg_rating": 4.6,
+    "num_products": 20,
+    "num_categories": 5
+  },
+  "monthly": [
+    {
+      "ym": "2025-01",
+      "revenue": 2226935.22,
+      "profit": 1066067.72,
+      "units": 23168
+    },
+    {
+      "ym": "2025-02",
+      "revenue": 1892331.31,
+      "profit": 917546.3099999999,
+      "units": 19606
+    },
+    {
+      "ym": "2025-03",
+      "revenue": 2123074.39,
+      "profit": 1022812.89,
+      "units": 21946
+    },
+    {
+      "ym": "2025-04",
+      "revenue": 2090414.65,
+      "profit": 1005042.65,
+      "units": 21504
+    },
+    {
+      "ym": "2025-05",
+      "revenue": 2078491.9,
+      "profit": 1009378.9,
+      "units": 21198
+    },
+    {
+      "ym": "2025-06",
+      "revenue": 2312275.88,
+      "profit": 1114858.3800000001,
+      "units": 23865
+    },
+    {
+      "ym": "2025-07",
+      "revenue": 2521842.45,
+      "profit": 1200365.45,
+      "units": 25946
+    },
+    {
+      "ym": "2025-08",
+      "revenue": 2077863.48,
+      "profit": 1010610.98,
+      "units": 21555
+    },
+    {
+      "ym": "2025-09",
+      "revenue": 2128369.13,
+      "profit": 1015361.13,
+      "units": 22179
+    },
+    {
+      "ym": "2025-10",
+      "revenue": 2049301.1,
+      "profit": 994353.6,
+      "units": 21065
+    },
+    {
+      "ym": "2025-11",
+      "revenue": 3261096.18,
+      "profit": 1530919.68,
+      "units": 34257
+    },
+    {
+      "ym": "2025-12",
+      "revenue": 3483982.95,
+      "profit": 1623956.45,
+      "units": 37056
+    }
+  ],
+  "categories": [
+    {
+      "category": "Electronics",
+      "revenue": 10587390.1,
+      "profit": 4269714.1,
+      "units": 72765,
+      "avg_price": 148.21,
+      "margin": 47.77,
+      "rating": 4.6
+    },
+    {
+      "category": "Home & Kitchen",
+      "revenue": 6299345.17,
+      "profit": 3179235.17,
+      "units": 58920,
+      "avg_price": 110.1,
+      "margin": 53.58,
+      "rating": 4.55
+    },
+    {
+      "category": "Sports & Outdoors",
+      "revenue": 5720628.96,
+      "profit": 2774242.96,
+      "units": 58097,
+      "avg_price": 102.09,
+      "margin": 54.5,
+      "rating": 4.7
+    },
+    {
+      "category": "Apparel",
+      "revenue": 4010629.24,
+      "profit": 2279883.24,
+      "units": 61071,
+      "avg_price": 67.91,
+      "margin": 58.32,
+      "rating": 4.53
+    },
+    {
+      "category": "Health & Beauty",
+      "revenue": 1627985.17,
+      "profit": 1008198.67,
+      "units": 42492,
+      "avg_price": 39.13,
+      "margin": 64.44,
+      "rating": 4.63
+    }
+  ],
+  "promo": [
+    {
+      "is_promotion": 0,
+      "revenue": 20358680.61,
+      "units": 201272
+    },
+    {
+      "is_promotion": 1,
+      "revenue": 7887298.03,
+      "units": 92073
+    }
+  ],
+  "holiday": [
+    {
+      "is_holiday": 0,
+      "revenue": 26550239.74,
+      "units": 273280
+    },
+    {
+      "is_holiday": 1,
+      "revenue": 1695738.9,
+      "units": 20065
+    }
+  ],
+  "top_products": [
+    {
+      "product_name": "UltraView 27-inch 4K UHD Gaming Monitor",
+      "revenue": 4659532.24,
+      "profit": 1603822.24,
+      "units": 14551,
+      "avg_price": 328.22,
+      "margin": 35.75
+    },
+    {
+      "product_name": "FlexCore Adjustable Dumbbell Set (5-52.5 lbs)",
+      "revenue": 3615841.56,
+      "profit": 1651361.56,
+      "units": 14032,
+      "avg_price": 262.86,
+      "margin": 46.53
+    },
+    {
+      "product_name": "Aura Pro Wireless Noise-Cancelling Headphones",
+      "revenue": 2714064.47,
+      "profit": 1078034.47,
+      "units": 14873,
+      "avg_price": 187.5,
+      "margin": 41.09
+    },
+    {
+      "product_name": "BaristaTouch 15-Bar Espresso & Cappuccino Machine",
+      "revenue": 2529696.17,
+      "profit": 1149536.17,
+      "units": 14528,
+      "avg_price": 178.12,
+      "margin": 46.46
+    },
+    {
+      "product_name": "Vortex Pulse Smartwatch with Heart Rate & GPS",
+      "revenue": 2036817.1,
+      "profit": 926067.1,
+      "units": 14810,
+      "avg_price": 140.94,
+      "margin": 46.6
+    },
+    {
+      "product_name": "PureBreeze HEPA Smart Air Purifier with Sensor",
+      "revenue": 1718594.09,
+      "profit": 921754.09,
+      "units": 14488,
+      "avg_price": 121.65,
+      "margin": 54.6
+    },
+    {
+      "product_name": "ThermalShield Lightweight Down Winter Puffer",
+      "revenue": 1612990.15,
+      "profit": 905998.15,
+      "units": 14729,
+      "avg_price": 112.36,
+      "margin": 57.1
+    },
+    {
+      "product_name": "ChefMaster 8-in-1 Digital Air Fryer & Roaster 6Qt",
+      "revenue": 1370349.46,
+      "profit": 695619.46,
+      "units": 14994,
+      "avg_price": 93.77,
+      "margin": 51.83
+    },
+    {
+      "product_name": "AeroGlide High-Speed Folding Kick Scooter",
+      "revenue": 1232876.56,
+      "profit": 602918.56,
+      "units": 14999,
+      "avg_price": 84.52,
+      "margin": 50.11
+    },
+    {
+      "product_name": "AeroFit Men's Breathable Running Performance Jacket",
+      "revenue": 1013368.98,
+      "profit": 567216.98,
+      "units": 15934,
+      "avg_price": 65.48,
+      "margin": 57.06
+    }
+  ],
+  "comp_gap": [
+    {
+      "category": "Apparel",
+      "price_advantage": 3.44
+    },
+    {
+      "category": "Electronics",
+      "price_advantage": 7.27
+    },
+    {
+      "category": "Health & Beauty",
+      "price_advantage": 1.8
+    },
+    {
+      "category": "Home & Kitchen",
+      "price_advantage": 5.53
+    },
+    {
+      "category": "Sports & Outdoors",
+      "price_advantage": 4.81
+    }
+  ]
+}

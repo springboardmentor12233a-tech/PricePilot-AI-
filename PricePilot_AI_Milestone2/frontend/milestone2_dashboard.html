@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PricePilot AI — Interactive EDA Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+:root{
+  --bg:#060d1f;--card:#0d1b33;--card2:#13243d;--bdr:#1a2f52;
+  --p:#6366f1;--g:#10b981;--a:#f59e0b;--r:#ef4444;--c:#06b6d4;--pk:#ec4899;--v:#8b5cf6;
+  --text:#e2e8f0;--muted:#64748b;--sub:#94a3b8;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 15% 5%,rgba(99,102,241,.09),transparent),
+             radial-gradient(ellipse 60% 40% at 85% 85%,rgba(6,182,212,.07),transparent),
+             radial-gradient(ellipse 50% 30% at 50% 50%,rgba(16,185,129,.04),transparent)}
+
+/* ── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:#060d1f}
+::-webkit-scrollbar-thumb{background:#2a3f6e;border-radius:3px}
+
+/* ── Header ────────────────────────────────────────── */
+.header{background:rgba(6,13,31,.96);border-bottom:1px solid var(--bdr);
+  padding:12px 28px;display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:200;backdrop-filter:blur(20px)}
+.logo{font-size:19px;font-weight:900;
+  background:linear-gradient(135deg,#6366f1,#a78bfa,#06b6d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pill{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.4px}
+.pill-p{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.pill-g{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+.dot{width:7px;height:7px;border-radius:50%;background:#10b981;display:inline-block;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.header-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.header-stat{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);
+  border-radius:8px;padding:4px 12px;font-size:11px;color:#a78bfa;font-weight:600;white-space:nowrap}
+
+/* ── Layout ─────────────────────────────────────────── */
+.wrap{display:flex;position:relative;z-index:1}
+
+/* ── Sidebar ─────────────────────────────────────────── */
+.sidebar{width:190px;min-height:calc(100vh - 49px);background:rgba(13,27,51,.9);
+  border-right:1px solid var(--bdr);padding:16px 0;
+  position:sticky;top:49px;height:calc(100vh - 49px);overflow-y:auto}
+.nav-sec{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  letter-spacing:1.5px;padding:10px 16px 5px}
+.nav-it{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;
+  font-size:12px;color:var(--sub);transition:all .2s;border-left:2px solid transparent;
+  text-decoration:none}
+.nav-it:hover,.nav-it.active{color:#e2e8f0;background:rgba(99,102,241,.08);border-left-color:#6366f1;color:#a78bfa}
+
+/* ── Main ─────────────────────────────────────────────── */
+.main{flex:1;padding:24px 28px;overflow-x:hidden}
+
+/* ── Section ──────────────────────────────────────────── */
+.sec{margin-bottom:32px;scroll-margin-top:56px}
+.sec-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:1.5px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sec-title::before{content:'';display:block;width:3px;height:12px;border-radius:2px}
+.stp::before{background:#6366f1}.stg::before{background:#10b981}
+.sta::before{background:#f59e0b}.stc::before{background:#06b6d4}
+.str::before{background:#ef4444}.stv::before{background:#8b5cf6}
+.stpk::before{background:#ec4899}
+
+/* ── Grid ─────────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.sp2{grid-column:span 2}.sp3{grid-column:span 3}
+
+/* ── Card ─────────────────────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;
+  transition:all .3s;position:relative;overflow:hidden}
+.card:hover{border-color:#2a3f6e;box-shadow:0 8px 32px rgba(0,0,0,.45)}
+
+/* ── KPI ──────────────────────────────────────────────── */
+.kpi{background:var(--card);border:1px solid var(--bdr);border-radius:13px;padding:16px 18px;
+  position:relative;overflow:hidden;transition:all .3s;cursor:default}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kp::after{background:linear-gradient(90deg,#6366f1,#a78bfa)}
+.kg::after{background:linear-gradient(90deg,#10b981,#34d399)}
+.ka::after{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
+.kc::after{background:linear-gradient(90deg,#06b6d4,#67e8f9)}
+.kv::after{background:linear-gradient(90deg,#8b5cf6,#c4b5fd)}
+.kr::after{background:linear-gradient(90deg,#ef4444,#f87171)}
+.kpk::after{background:linear-gradient(90deg,#ec4899,#f9a8d4)}
+.kpi-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:17px;margin-bottom:10px}
+.kpi-val{font-size:24px;font-weight:900;line-height:1}
+.vp{color:#a78bfa}.vg{color:#34d399}.va{color:#fcd34d}.vc{color:#67e8f9}.vv{color:#c4b5fd}.vr{color:#f87171}.vpk{color:#f9a8d4}
+.kpi-lbl{font-size:11px;color:var(--muted);margin-top:5px;font-weight:500}
+.kpi-badge{font-size:9px;margin-top:6px;padding:2px 7px;border-radius:5px;display:inline-block;font-weight:600}
+.bu{background:rgba(16,185,129,.12);color:#10b981}
+.bd{background:rgba(239,68,68,.12);color:#ef4444}
+
+/* ── Chart ─────────────────────────────────────────────── */
+.ch{position:relative}
+.ch-xs{height:160px}.ch-sm{height:200px}.ch-md{height:260px}.ch-lg{height:310px}
+
+/* ── Controls ─────────────────────────────────────────── */
+.ctrl-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.ctrl-btn{background:var(--card2);border:1px solid var(--bdr);color:var(--sub);
+  border-radius:7px;padding:5px 14px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.ctrl-btn:hover,.ctrl-btn.on{background:var(--p);color:#fff;border-color:var(--p)}
+.ctrl-sel{background:var(--card2);border:1px solid var(--bdr);color:var(--text);
+  border-radius:7px;padding:5px 10px;font-size:11px;cursor:pointer}
+
+/* ── Table ─────────────────────────────────────────────── */
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.5px;
+  color:var(--muted);font-weight:700;padding:8px 12px;border-bottom:1px solid var(--bdr)}
+td{padding:10px 12px;font-size:12px;border-bottom:1px solid rgba(26,47,82,.4)}
+tr:hover td{background:rgba(99,102,241,.04)}
+.badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.bar-cell{display:flex;align-items:center;gap:6px}
+.mini-bar{height:5px;border-radius:3px;background:#1e293b;overflow:hidden;flex:1}
+.mini-fill{height:100%;border-radius:3px}
+.rank{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:9px;font-weight:800}
+
+/* ── Slider/Filter panel ────────────────────────────── */
+.filter-card{background:linear-gradient(135deg,rgba(99,102,241,.05),rgba(6,182,212,.04));
+  border:1px solid rgba(99,102,241,.15);border-radius:14px;padding:18px}
+.filter-row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.ff{flex:1;min-width:130px}
+.ff label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;display:block;margin-bottom:5px}
+.ff input[type=range]{width:100%;accent-color:var(--p);cursor:pointer}
+.ff select,.ff input[type=number]{
+  width:100%;background:#060d1f;border:1px solid var(--bdr);color:var(--text);
+  border-radius:7px;padding:6px 10px;font-size:11px}
+.fv{font-size:15px;font-weight:800;color:var(--p);margin-top:3px}
+.sim-out{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+.soc{background:#060d1f;border:1px solid var(--bdr);border-radius:9px;padding:12px;text-align:center}
+.sov{font-size:18px;font-weight:900;margin-bottom:2px}
+.sol{font-size:10px;color:var(--muted)}
+
+/* ── Tooltip ─────────────────────────────────────────── */
+.info-tip{position:relative;display:inline-block;cursor:help}
+.info-tip::after{content:attr(data-tip);position:absolute;bottom:120%;left:50%;transform:translateX(-50%);
+  background:#1e293b;border:1px solid var(--bdr);color:#94a3b8;font-size:10px;
+  white-space:nowrap;padding:5px 10px;border-radius:6px;z-index:99;pointer-events:none;
+  opacity:0;transition:opacity .2s}
+.info-tip:hover::after{opacity:1}
+
+/* ── Toast ───────────────────────────────────────────── */
+#toast{position:fixed;bottom:22px;right:22px;background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:#fff;padding:10px 18px;border-radius:10px;font-size:12px;font-weight:600;
+  transform:translateX(220px);opacity:0;transition:all .3s;z-index:9999;
+  box-shadow:0 6px 24px rgba(99,102,241,.4)}
+#toast.show{transform:translateX(0);opacity:1}
+
+/* ── Progress ────────────────────────────────────────── */
+.prog{height:5px;border-radius:3px;background:#1e293b;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media(max-width:1100px){.g4{grid-template-columns:1fr 1fr}.g5{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:800px){.sidebar{display:none}.g2,.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ───────────────────────────────────────────────── -->
+<header class="header">
+  <div class="logo">⚡ PricePilot AI</div>
+  <span class="pill pill-p">EDA INTEGRATED</span>
+  <span class="pill pill-g"><span class="dot"></span> &nbsp;Live Data</span>
+  <span style="font-size:11px;color:var(--muted)">7,300 rows · 20 products · 5 categories · 2025</span>
+  <div class="header-right">
+    <span class="header-stat">$28.2M Revenue</span>
+    <span class="header-stat">XGBoost R²=0.905</span>
+    <span class="header-stat">LightGBM R²=1.000</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ── SIDEBAR ──────────────────────────────────────────────── -->
+<nav class="sidebar">
+  <div class="nav-sec">Overview</div>
+  <div class="nav-it active" onclick="goTo('kpi')">📊 KPI Summary</div>
+  <div class="nav-it" onclick="goTo('revenue')">💰 Revenue Growth</div>
+  <div class="nav-sec">EDA Analysis</div>
+  <div class="nav-it" onclick="goTo('category')">🏷️ Category Analysis</div>
+  <div class="nav-it" onclick="goTo('products')">📦 Product Explorer</div>
+  <div class="nav-it" onclick="goTo('pricing')">💲 Price Distribution</div>
+  <div class="nav-it" onclick="goTo('channels')">📡 Sales Channels</div>
+  <div class="nav-it" onclick="goTo('promo')">🎯 Promo & Holiday</div>
+  <div class="nav-it" onclick="goTo('weekly')">📅 Weekly Patterns</div>
+  <div class="nav-sec">ML Insights</div>
+  <div class="nav-it" onclick="goTo('models')">🏆 Model Results</div>
+  <div class="nav-it" onclick="goTo('simulator')">⚡ Demand Simulator</div>
+  <div class="nav-it" onclick="goTo('competitor')">⚔️ Competitor Gap</div>
+</nav>
+
+<!-- ── MAIN ─────────────────────────────────────────────────── -->
+<main class="main">
+
+<!-- ══ KPI SUMMARY ══════════════════════════════════════════ -->
+<div class="sec" id="kpi">
+  <div class="sec-title stp">📊 Business KPI Summary — From EDA Dataset (7,300 Rows)</div>
+  <div class="g4" style="margin-bottom:14px">
+    <div class="kpi kp"><div class="kpi-ico" style="background:rgba(99,102,241,.15)">💰</div>
+      <div class="kpi-val vp">$28.2M</div><div class="kpi-lbl">Total Revenue (2025)</div>
+      <span class="kpi-badge bu">↑ Q4 Peak: $8.79M</span></div>
+    <div class="kpi kg"><div class="kpi-ico" style="background:rgba(16,185,129,.15)">📈</div>
+      <div class="kpi-val vg">$13.5M</div><div class="kpi-lbl">Gross Profit</div>
+      <span class="kpi-badge bu">↑ 54.89% Avg Margin</span></div>
+    <div class="kpi ka"><div class="kpi-ico" style="background:rgba(245,158,11,.15)">🛒</div>
+      <div class="kpi-val va">293,345</div><div class="kpi-lbl">Total Units Sold</div>
+      <span class="kpi-badge bu">↑ Nov-Dec Peak</span></div>
+    <div class="kpi kc"><div class="kpi-ico" style="background:rgba(6,182,212,.15)">⭐</div>
+      <div class="kpi-val vc">4.60</div><div class="kpi-lbl">Avg Product Rating</div>
+      <span class="kpi-badge bu">↑ Excellent NPS</span></div>
+  </div>
+  <div class="g4">
+    <div class="kpi kv"><div class="kpi-ico" style="background:rgba(139,92,246,.15)">🏷️</div>
+      <div class="kpi-val vv">$98.94</div><div class="kpi-lbl">Avg Selling Price</div>
+      <span class="kpi-badge bu">↑ vs $104.26 comp avg</span></div>
+    <div class="kpi kr"><div class="kpi-ico" style="background:rgba(239,68,68,.15)">📊</div>
+      <div class="kpi-val vr">54.89%</div><div class="kpi-lbl">Avg Gross Margin</div>
+      <span class="kpi-badge bu">↑ H&amp;B leads: 64.4%</span></div>
+    <div class="kpi kpk"><div class="kpi-ico" style="background:rgba(236,72,153,.15)">🎯</div>
+      <div class="kpi-val vpk">20 SKUs</div><div class="kpi-lbl">Active Products</div>
+      <span class="kpi-badge bu">5 Categories</span></div>
+    <div class="kpi kg"><div class="kpi-ico" style="background:rgba(16,185,129,.15)">🏆</div>
+      <div class="kpi-val vg">XGBoost</div><div class="kpi-lbl">Demand Model Winner</div>
+      <span class="kpi-badge bu">R²=0.905 · MAE=5.07</span></div>
+  </div>
+</div>
+
+<!-- ══ REVENUE GROWTH ═══════════════════════════════════════ -->
+<div class="sec" id="revenue">
+  <div class="sec-title stg">💰 Revenue & Profit Growth — Monthly & Quarterly (Real Data)</div>
+
+  <!-- Controls -->
+  <div class="ctrl-row">
+    <button class="ctrl-btn on" onclick="setRevView('both',this)">Revenue + Profit</button>
+    <button class="ctrl-btn" onclick="setRevView('revenue',this)">Revenue Only</button>
+    <button class="ctrl-btn" onclick="setRevView('profit',this)">Profit Only</button>
+    <button class="ctrl-btn" onclick="setRevView('units',this)">Units Sold</button>
+  </div>
+
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card sp2"><div class="sec-title stg" style="margin-bottom:10px">Monthly Trend (2025)</div>
+      <div class="ch ch-md"><canvas id="revChart"></canvas></div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><div class="sec-title stp" style="margin-bottom:10px">Quarterly Revenue & QoQ Growth</div>
+      <div class="ch ch-sm"><canvas id="qtrChart"></canvas></div></div>
+    <div class="card"><div class="sec-title sta" style="margin-bottom:10px">Monthly Units by Category (Stacked)</div>
+      <div class="ch ch-sm"><canvas id="stackedCatChart"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ CATEGORY ANALYSIS ════════════════════════════════════ -->
+<div class="sec" id="category">
+  <div class="sec-title stc">🏷️ Category Deep-Dive — EDA Breakdown</div>
+
+  <!-- KPI mini cards per category -->
+  <div class="g5" style="margin-bottom:16px" id="cat-kpi-row"></div>
+
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card"><div class="sec-title stp" style="margin-bottom:10px">Revenue by Category</div>
+      <div class="ch ch-md"><canvas id="catRevChart"></canvas></div></div>
+    <div class="card"><div class="sec-title stg" style="margin-bottom:10px">Gross Profit Share</div>
+      <div class="ch ch-md"><canvas id="catPieChart"></canvas></div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><div class="sec-title sta" style="margin-bottom:10px">Margin % by Category</div>
+      <div class="ch ch-sm"><canvas id="catMarginChart"></canvas></div></div>
+    <div class="card"><div class="sec-title stc" style="margin-bottom:10px">Avg Rating by Category</div>
+      <div class="ch ch-sm"><canvas id="catRatingChart"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ PRODUCT EXPLORER ══════════════════════════════════════ -->
+<div class="sec" id="products">
+  <div class="sec-title stv">📦 Product Explorer — All 15 Products with Real EDA Data</div>
+
+  <div class="ctrl-row">
+    <select class="ctrl-sel" id="prod-sort" onchange="renderProdTable()">
+      <option value="revenue">Sort by Revenue</option>
+      <option value="profit">Sort by Profit</option>
+      <option value="units">Sort by Units</option>
+      <option value="margin">Sort by Margin %</option>
+      <option value="rating">Sort by Rating</option>
+    </select>
+    <select class="ctrl-sel" id="prod-cat" onchange="renderProdTable()">
+      <option value="all">All Categories</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Sports &amp; Outdoors">Sports &amp; Outdoors</option>
+      <option value="Home &amp; Kitchen">Home &amp; Kitchen</option>
+      <option value="Apparel">Apparel</option>
+      <option value="Health &amp; Beauty">Health &amp; Beauty</option>
+    </select>
+    <button class="ctrl-btn on" onclick="setProdView('table',this)">Table View</button>
+    <button class="ctrl-btn" onclick="setProdView('chart',this)">Chart View</button>
+  </div>
+
+  <div class="card" id="prod-table-wrap">
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>#</th><th>Product</th><th>Category</th>
+        <th>Revenue</th><th>Gross Profit</th><th>Units</th>
+        <th>Avg Price</th><th>Comp Avg</th><th>Margin %</th><th>Rating</th>
+      </tr></thead>
+      <tbody id="prod-tbody"></tbody>
+    </table>
+    </div>
+  </div>
+  <div class="card" id="prod-chart-wrap" style="display:none">
+    <div class="ch ch-lg"><canvas id="prodBarChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ══ PRICE DISTRIBUTION ════════════════════════════════════ -->
+<div class="sec" id="pricing">
+  <div class="sec-title sta">💲 Price Distribution Analysis — By Category</div>
+  <div class="g2">
+    <div class="card"><div class="sec-title sta" style="margin-bottom:10px">Price Range by Category (Min / Avg / Max)</div>
+      <div class="ch ch-md"><canvas id="priceRangeChart"></canvas></div></div>
+    <div class="card"><div class="sec-title stg" style="margin-bottom:10px">Avg Price vs Avg Competitor Price</div>
+      <div class="ch ch-md"><canvas id="priceCompChart"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ SALES CHANNELS ════════════════════════════════════════ -->
+<div class="sec" id="channels">
+  <div class="sec-title stc">📡 Sales Channel Performance — EDA Data</div>
+  <div class="g3">
+    <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div class="sec-title stc" style="margin-bottom:10px">Revenue Share by Channel</div>
+      <div class="ch" style="height:200px;width:200px"><canvas id="chanPieChart"></canvas></div>
+      <div id="chan-legend" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;width:100%"></div>
+    </div>
+    <div class="card sp2"><div class="sec-title stg" style="margin-bottom:10px">Units Sold by Channel</div>
+      <div class="ch ch-md"><canvas id="chanBarChart"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ PROMO & HOLIDAY ══════════════════════════════════════ -->
+<div class="sec" id="promo">
+  <div class="sec-title str">🎯 Promotion & Holiday Impact — EDA Findings</div>
+
+  <!-- Summary stats -->
+  <div class="g4" style="margin-bottom:16px">
+    <div class="kpi kp"><div class="kpi-ico" style="background:rgba(99,102,241,.15)">🎯</div>
+      <div class="kpi-val vp">$7.89M</div><div class="kpi-lbl">Promotion Revenue</div>
+      <span class="kpi-badge bu">27.9% of total</span></div>
+    <div class="kpi kg"><div class="kpi-ico" style="background:rgba(16,185,129,.15)">📦</div>
+      <div class="kpi-val vg">92,073</div><div class="kpi-lbl">Promo Units Sold</div>
+      <span class="kpi-badge bu">31.4% of total</span></div>
+    <div class="kpi ka"><div class="kpi-ico" style="background:rgba(245,158,11,.15)">🎄</div>
+      <div class="kpi-val va">$1.70M</div><div class="kpi-lbl">Holiday Revenue</div>
+      <span class="kpi-badge bu">6.0% of total</span></div>
+    <div class="kpi kr"><div class="kpi-ico" style="background:rgba(239,68,68,.15)">🛒</div>
+      <div class="kpi-val vr">20,065</div><div class="kpi-lbl">Holiday Units</div>
+      <span class="kpi-badge bu">6.8% of total</span></div>
+  </div>
+
+  <div class="g3">
+    <div class="card"><div class="sec-title stp" style="margin-bottom:10px">Revenue: Promo vs No Promo</div>
+      <div class="ch ch-sm"><canvas id="promoRevChart"></canvas></div></div>
+    <div class="card"><div class="sec-title stg" style="margin-bottom:10px">Units: Promo vs No Promo</div>
+      <div class="ch ch-sm"><canvas id="promoUnitChart"></canvas></div></div>
+    <div class="card"><div class="sec-title sta" style="margin-bottom:10px">Margin %: Promo vs No Promo</div>
+      <div class="ch ch-sm"><canvas id="promoMarginChart"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ WEEKLY PATTERNS ══════════════════════════════════════ -->
+<div class="sec" id="weekly">
+  <div class="sec-title stpk">📅 Weekly Demand Patterns — Day of Week Analysis</div>
+  <div class="g2">
+    <div class="card"><div class="sec-title stpk" style="margin-bottom:10px">Avg Daily Units by Day of Week</div>
+      <div class="ch ch-sm"><canvas id="dowUnitsChart"></canvas></div></div>
+    <div class="card"><div class="sec-title sta" style="margin-bottom:10px">Avg Daily Revenue by Day of Week</div>
+      <div class="ch ch-sm"><canvas id="dowRevChart"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ══ MODEL RESULTS ════════════════════════════════════════ -->
+<div class="sec" id="models">
+  <div class="sec-title sta">🏆 GridSearchCV Model Comparison — Real Training Results</div>
+
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card"><div class="sec-title stp" style="margin-bottom:10px">Price Model — Test R²</div>
+      <div class="ch ch-sm"><canvas id="priceModelChart"></canvas></div></div>
+    <div class="card"><div class="sec-title stg" style="margin-bottom:10px">Demand Model — Test R²</div>
+      <div class="ch ch-sm"><canvas id="demandModelChart"></canvas></div></div>
+  </div>
+
+  <!-- Winner cards -->
+  <div class="g2">
+    <div class="card" style="border-color:#f59e0b;background:rgba(245,158,11,.04)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Price Model Winner</div>
+          <div style="font-size:22px;font-weight:900;color:#fcd34d;margin-top:4px">LightGBM</div>
+        </div>
+        <div style="font-size:36px">🥇</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#fcd34d">1.0000</div>
+          <div style="font-size:10px;color:var(--muted)">Test R²</div>
+        </div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#34d399">$0.45</div>
+          <div style="font-size:10px;color:var(--muted)">RMSE</div>
+        </div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#67e8f9">0.9999</div>
+          <div style="font-size:10px;color:var(--muted)">CV R²</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:var(--muted)">Best params: lr=0.1, leaves=31, n_estimators=400</div>
+    </div>
+    <div class="card" style="border-color:#6366f1;background:rgba(99,102,241,.04)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Demand Model Winner</div>
+          <div style="font-size:22px;font-weight:900;color:#a78bfa;margin-top:4px">XGBoost</div>
+        </div>
+        <div style="font-size:36px">🥇</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#a78bfa">0.9050</div>
+          <div style="font-size:10px;color:var(--muted)">Test R²</div>
+        </div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#34d399">5.07</div>
+          <div style="font-size:10px;color:var(--muted)">MAE (units)</div>
+        </div>
+        <div style="text-align:center;background:#060d1f;border-radius:8px;padding:10px">
+          <div style="font-size:18px;font-weight:900;color:#67e8f9">0.9058</div>
+          <div style="font-size:10px;color:var(--muted)">CV R²</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:var(--muted)">Best params: lr=0.05, depth=4, n_estimators=200, subsample=0.8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INTERACTIVE DEMAND SIMULATOR ════════════════════════ -->
+<div class="sec" id="simulator">
+  <div class="sec-title stp">⚡ Interactive Demand Simulator — Powered by EDA Elasticity Data</div>
+  <div class="filter-card">
+    <div class="filter-row">
+      <div class="ff">
+        <label>Category</label>
+        <select id="sim-cat" onchange="updateSim()">
+          <option value="Electronics" data-base="40" data-margin="47.77" data-comp="155.48">Electronics</option>
+          <option value="Sports &amp; Outdoors" data-base="52" data-margin="54.50" data-comp="106.90">Sports &amp; Outdoors</option>
+          <option value="Home &amp; Kitchen" data-base="46" data-margin="53.58" data-comp="115.63">Home &amp; Kitchen</option>
+          <option value="Apparel" data-base="58" data-margin="58.32" data-comp="71.35">Apparel</option>
+          <option value="Health &amp; Beauty" data-base="62" data-margin="64.44" data-comp="40.93">Health &amp; Beauty</option>
+        </select>
+      </div>
+      <div class="ff">
+        <label>Current Price ($) <span class="info-tip" data-tip="Drag to change price">ℹ</span></label>
+        <input type="range" id="sim-price" min="20" max="350" value="148" oninput="updateSim()">
+        <div class="fv" id="sv-price">$148</div>
+      </div>
+      <div class="ff">
+        <label>Stock Level</label>
+        <input type="range" id="sim-stock" min="0" max="500" value="200" oninput="updateSim()">
+        <div class="fv" id="sv-stock">200</div>
+      </div>
+      <div class="ff">
+        <label>Promotion Active?</label>
+        <select id="sim-promo" onchange="updateSim()">
+          <option value="0">No (Normal)</option>
+          <option value="1">Yes (+demand)</option>
+        </select>
+      </div>
+      <div class="ff">
+        <label>Holiday Period?</label>
+        <select id="sim-holiday" onchange="updateSim()">
+          <option value="0">No (Normal)</option>
+          <option value="1">Yes (+demand)</option>
+        </select>
+      </div>
+    </div>
+    <div class="sim-out">
+      <div class="soc"><div class="sov" id="so-units" style="color:var(--p)">40</div><div class="sol">Pred. Daily Units</div></div>
+      <div class="soc"><div class="sov" id="so-rev" style="color:var(--g)">$5,920</div><div class="sol">Daily Revenue</div></div>
+      <div class="soc"><div class="sov" id="so-margin" style="color:var(--a)">47.8%</div><div class="sol">Gross Margin</div></div>
+      <div class="soc"><div class="sov" id="so-gap" style="color:var(--c)">+$7.27</div><div class="sol">vs Competitor Avg</div></div>
+      <div class="soc"><div class="sov" id="so-score" style="color:var(--v)">82/100</div><div class="sol">Price Score</div></div>
+    </div>
+    <!-- Sparkline forecast -->
+    <div style="margin-top:14px;height:110px"><canvas id="simSparkChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ══ COMPETITOR GAP ════════════════════════════════════════ -->
+<div class="sec" id="competitor">
+  <div class="sec-title stv">⚔️ Competitor Price Gap — EDA Data</div>
+  <div class="g2">
+    <div class="card">
+      <div class="sec-title stg" style="margin-bottom:10px">Price Advantage by Category (Our Price vs Competitor Avg)</div>
+      <div class="ch ch-md"><canvas id="compGapChart"></canvas></div>
+      <div style="margin-top:14px;font-size:11px;color:var(--muted)">
+        ✅ Positive = we are cheaper than competitors &nbsp;|&nbsp; 🔴 Negative = we are more expensive
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-title sta" style="margin-bottom:10px">Our Price vs Competitor Avg — By Product</div>
+      <div class="ch ch-md"><canvas id="prodCompChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// ██████  REAL EDA DATASET  ██████
+// ════════════════════════════════════════════════════════════
+const MONTHLY = [{"ym":"2025-01","revenue":2148213.19,"profit":1021338.69,"units":23168},{"ym":"2025-02","revenue":1782748.68,"profit":853358.68,"units":19606},{"ym":"2025-03","revenue":2001838.34,"profit":951768.84,"units":21946},{"ym":"2025-04","revenue":2070060.36,"profit":994155.86,"units":21504},{"ym":"2025-05","revenue":2041804.88,"profit":970748.38,"units":21198},{"ym":"2025-06","revenue":2369317.19,"profit":1164375.19,"units":23865},{"ym":"2025-07","revenue":2626004.55,"profit":1259001.55,"units":25946},{"ym":"2025-08","revenue":2127892.4,"profit":1023613.9,"units":21555},{"ym":"2025-09","revenue":2155253.0,"profit":1023322.0,"units":22179},{"ym":"2025-10","revenue":2070479.13,"profit":991225.13,"units":21065},{"ym":"2025-11","revenue":3297614.0,"profit":1575386.0,"units":34257},{"ym":"2025-12","revenue":3554752.92,"profit":1703179.92,"units":37056}];
+
+const CATEGORIES = [{"category":"Electronics","revenue":10587390.1,"profit":4269714.1,"units":72765,"avg_price":148.21,"margin":47.77,"rating":4.6},{"category":"Home & Kitchen","revenue":6299345.17,"profit":3179235.17,"units":58920,"avg_price":110.1,"margin":53.58,"rating":4.55},{"category":"Sports & Outdoors","revenue":5720628.96,"profit":2774242.96,"units":58097,"avg_price":102.09,"margin":54.5,"rating":4.7},{"category":"Apparel","revenue":4010629.24,"profit":2279883.24,"units":61071,"avg_price":67.91,"margin":58.32,"rating":4.53},{"category":"Health & Beauty","revenue":1627985.17,"profit":1008198.67,"units":42492,"avg_price":39.13,"margin":64.44,"rating":4.63}];
+
+const PRODUCTS = [{"product_name":"UltraView 27-inch 4K UHD Gaming Monitor","revenue":4659532.24,"profit":1603822.24,"units":14551,"avg_price":328.22,"margin":35.75,"rating":4.7,"comp_avg":345.02,"category":"Electronics"},{"product_name":"FlexCore Adjustable Dumbbell Set (5-52.5 lbs)","revenue":3615841.56,"profit":1651361.56,"units":14032,"avg_price":262.86,"margin":46.53,"rating":4.8,"comp_avg":275.2,"category":"Sports & Outdoors"},{"product_name":"Aura Pro Wireless Noise-Cancelling Headphones","revenue":2714064.47,"profit":1078034.47,"units":14873,"avg_price":187.5,"margin":41.09,"rating":4.6,"comp_avg":196.43,"category":"Electronics"},{"product_name":"BaristaTouch 15-Bar Espresso Machine","revenue":2529696.17,"profit":1149536.17,"units":14528,"avg_price":178.12,"margin":46.46,"rating":4.5,"comp_avg":187.16,"category":"Home & Kitchen"},{"product_name":"Vortex Pulse Smartwatch with GPS","revenue":2036817.1,"profit":926067.1,"units":14810,"avg_price":140.94,"margin":46.6,"rating":4.4,"comp_avg":147.46,"category":"Electronics"},{"product_name":"PureBreeze HEPA Smart Air Purifier","revenue":1718594.09,"profit":921754.09,"units":14488,"avg_price":121.65,"margin":54.6,"rating":4.6,"comp_avg":127.88,"category":"Home & Kitchen"},{"product_name":"ThermalShield Lightweight Puffer Jacket","revenue":1612990.15,"profit":905998.15,"units":14729,"avg_price":112.36,"margin":57.1,"rating":4.6,"comp_avg":117.85,"category":"Apparel"},{"product_name":"ChefMaster 8-in-1 Air Fryer 6Qt","revenue":1370349.46,"profit":695619.46,"units":14994,"avg_price":93.77,"margin":51.83,"rating":4.7,"comp_avg":98.23,"category":"Home & Kitchen"},{"product_name":"AeroGlide High-Speed Folding Kick Scooter","revenue":1232876.56,"profit":602918.56,"units":14999,"avg_price":84.52,"margin":50.11,"rating":4.4,"comp_avg":88.47,"category":"Sports & Outdoors"},{"product_name":"AeroFit Men's Breathable Running Jacket","revenue":1013368.98,"profit":567216.98,"units":15934,"avg_price":65.48,"margin":57.06,"rating":4.3,"comp_avg":69.02,"category":"Apparel"},{"product_name":"SonicShine Ultrasonic Electric Toothbrush","revenue":790613.18,"profit":444917.18,"units":14404,"avg_price":56.4,"margin":57.27,"rating":4.6,"comp_avg":58.91,"category":"Health & Beauty"},{"product_name":"Oxford Heritage Slim-Fit Organic Shirt","revenue":759649.37,"profit":425711.37,"units":15179,"avg_price":51.58,"margin":57.15,"rating":4.5,"comp_avg":54.33,"category":"Apparel"},{"product_name":"ErgoRest Memory Foam Ergonomic Pillow","revenue":680705.45,"profit":412325.45,"units":14910,"avg_price":46.87,"margin":61.43,"rating":4.4,"comp_avg":49.26,"category":"Home & Kitchen"},{"product_name":"NovaCast 4K Streaming Media Player","revenue":662481.31,"profit":344163.31,"units":14469,"avg_price":46.9,"margin":52.9,"rating":4.5,"comp_avg":49.25,"category":"Electronics"},{"product_name":"Lumina High-Waist Workout Leggings","revenue":624620.74,"profit":380956.74,"units":15229,"avg_price":42.24,"margin":61.96,"rating":4.7,"comp_avg":44.19,"category":"Apparel"}];
+
+const PROMO = [{"is_promotion":0,"revenue":20358680.61,"units":201272,"margin":56.06},{"is_promotion":1,"revenue":7887298.03,"units":92073,"margin":48.82}];
+const HOLIDAY = [{"is_holiday":0,"revenue":26550239.74,"units":273280},{"is_holiday":1,"revenue":1695738.9,"units":20065}];
+const QUARTERLY = [{"yq":"2025Q1","revenue":6242340.92,"profit":3006426.92},{"yq":"2025Q2","revenue":6481182.43,"profit":3129279.93},{"yq":"2025Q3","revenue":6728075.06,"profit":3226337.56},{"yq":"2025Q4","revenue":8794380.23,"profit":4149229.73}];
+const COMP_GAP = [{"category":"Apparel","price_adv":3.44},{"category":"Electronics","price_adv":7.27},{"category":"Health & Beauty","price_adv":1.8},{"category":"Home & Kitchen","price_adv":5.53},{"category":"Sports & Outdoors","price_adv":4.81}];
+const CHANNELS = [{"sales_channel":"Mobile App","revenue":10045654.53,"units":102158},{"sales_channel":"Direct Web Store","revenue":9117825.49,"units":95740},{"sales_channel":"Amazon Marketplace","revenue":9082498.62,"units":95447}];
+const DOW = [{"day_of_week":"Monday","units":49.75,"revenue":4476.59},{"day_of_week":"Tuesday","units":49.74,"revenue":4516.1},{"day_of_week":"Wednesday","units":36.22,"revenue":3544.9},{"day_of_week":"Thursday","units":33.98,"revenue":3348.0},{"day_of_week":"Friday","units":33.74,"revenue":3316.92},{"day_of_week":"Saturday","units":38.87,"revenue":3940.96},{"day_of_week":"Sunday","units":39.06,"revenue":3947.95}];
+const PRICE_DIST = [{"category":"Apparel","min_price":33.88,"max_price":119.99,"avg_price":67.91,"median_price":54.74},{"category":"Electronics","min_price":30.03,"max_price":349.99,"avg_price":148.21,"median_price":142.49},{"category":"Health & Beauty","min_price":22.52,"max_price":59.99,"avg_price":39.13,"median_price":33.35},{"category":"Home & Kitchen","min_price":37.54,"max_price":189.99,"avg_price":110.1,"median_price":99.86},{"category":"Sports & Outdoors","min_price":19.04,"max_price":279.71,"avg_price":102.09,"median_price":53.83}];
+const MONTHLY_CAT = [{"ym":"2025-01","Apparel":4812,"Electronics":5746,"Health & Beauty":3434,"Home & Kitchen":4556,"Sports & Outdoors":4620},{"ym":"2025-02","Apparel":4100,"Electronics":4869,"Health & Beauty":2794,"Home & Kitchen":3976,"Sports & Outdoors":3867},{"ym":"2025-03","Apparel":4511,"Electronics":5431,"Health & Beauty":3272,"Home & Kitchen":4377,"Sports & Outdoors":4355},{"ym":"2025-04","Apparel":4620,"Electronics":5347,"Health & Beauty":3126,"Home & Kitchen":4226,"Sports & Outdoors":4185},{"ym":"2025-05","Apparel":4515,"Electronics":5264,"Health & Beauty":2953,"Home & Kitchen":4234,"Sports & Outdoors":4232},{"ym":"2025-06","Apparel":4880,"Electronics":5936,"Health & Beauty":3456,"Home & Kitchen":4879,"Sports & Outdoors":4714},{"ym":"2025-07","Apparel":5307,"Electronics":6515,"Health & Beauty":3711,"Home & Kitchen":5270,"Sports & Outdoors":5143},{"ym":"2025-08","Apparel":4378,"Electronics":5259,"Health & Beauty":3160,"Home & Kitchen":4404,"Sports & Outdoors":4354},{"ym":"2025-09","Apparel":4646,"Electronics":5397,"Health & Beauty":3222,"Home & Kitchen":4406,"Sports & Outdoors":4508},{"ym":"2025-10","Apparel":4254,"Electronics":5265,"Health & Beauty":3098,"Home & Kitchen":4260,"Sports & Outdoors":4188},{"ym":"2025-11","Apparel":7201,"Electronics":8659,"Health & Beauty":4903,"Home & Kitchen":6739,"Sports & Outdoors":6755},{"ym":"2025-12","Apparel":7847,"Electronics":9077,"Health & Beauty":5363,"Home & Kitchen":7593,"Sports & Outdoors":7176}];
+
+// ════════════════════════════════════════════════════════════
+// ██████  CHART HELPERS  ██████
+// ════════════════════════════════════════════════════════════
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = 'rgba(26,47,82,.5)';
+const CAT_COLORS = {'Electronics':'#6366f1','Home & Kitchen':'#06b6d4','Sports & Outdoors':'#10b981','Apparel':'#ec4899','Health & Beauty':'#f59e0b'};
+const CAT_LIST = ['Electronics','Home & Kitchen','Sports & Outdoors','Apparel','Health & Beauty'];
+
+function mk(id, type, labels, datasets, opts={}) {
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return null;
+  return new Chart(ctx, {type, data:{labels, datasets}, options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#94a3b8',font:{size:10},boxWidth:10,padding:10}},...opts.plugins},
+    scales: type==='pie'||type==='doughnut'||type==='radar' ? {} : {
+      x:{ticks:{color:'#475569',font:{size:9}}, grid:{color:'rgba(26,47,82,.6)'}},
+      y:{ticks:{color:'#475569',font:{size:9}}, grid:{color:'rgba(26,47,82,.6)'}},
+      ...opts.scales
+    },
+    animation:{duration:600, easing:'easeInOutCubic'},
+    ...opts,
+  }});
+}
+
+// ════════════════════════════════════════════════════════════
+// ██████  CHART INIT  ██████
+// ════════════════════════════════════════════════════════════
+let revChart, simSpark;
+
+// ── Revenue Chart (dynamic) ────────────────────────────────
+function buildRevChart(view='both') {
+  if (revChart) revChart.destroy();
+  const labels = MONTHLY.map(m=>m.ym.replace('2025-',''));
+  const ds = [];
+  if (view==='both'||view==='revenue') ds.push({label:'Revenue ($)',data:MONTHLY.map(m=>m.revenue),borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.12)',fill:true,tension:0.4,pointRadius:3,borderWidth:2.5});
+  if (view==='both'||view==='profit')  ds.push({label:'Gross Profit ($)',data:MONTHLY.map(m=>m.profit),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.08)',fill:true,tension:0.4,pointRadius:3,borderWidth:2,borderDash:[5,4]});
+  if (view==='units') ds.push({label:'Units Sold',data:MONTHLY.map(m=>m.units),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.12)',fill:true,tension:0.4,pointRadius:3,borderWidth:2.5});
+  revChart = mk('revChart','line',labels,ds);
+}
+
+function setRevView(v,el) {
+  document.querySelectorAll('.ctrl-row .ctrl-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  buildRevChart(v);
+}
+
+// ── Quarterly ──────────────────────────────────────────────
+mk('qtrChart','bar',QUARTERLY.map(q=>q.yq),
+  [{label:'Revenue',data:QUARTERLY.map(q=>q.revenue),backgroundColor:['#6366f144','#6366f166','#6366f199','#6366f1'],borderRadius:6,borderSkipped:false},
+   {label:'Profit',data:QUARTERLY.map(q=>q.profit),backgroundColor:['#10b98144','#10b98166','#10b98199','#10b981'],borderRadius:6,borderSkipped:false}]);
+
+// ── Stacked Monthly Category ───────────────────────────────
+mk('stackedCatChart','bar',MONTHLY_CAT.map(m=>m.ym.replace('2025-','')),
+  CAT_LIST.map(c=>({label:c,data:MONTHLY_CAT.map(m=>m[c]||0),backgroundColor:CAT_COLORS[c]+'cc',borderRadius:2,borderSkipped:false})),
+  {scales:{x:{stacked:true,ticks:{color:'#475569',font:{size:8}}},y:{stacked:true,ticks:{color:'#475569',font:{size:8}}}},plugins:{legend:{display:true}}});
+
+// ── Category KPI mini cards ────────────────────────────────
+function buildCatKPIs() {
+  const icons = {'Electronics':'💻','Home & Kitchen':'🏠','Sports & Outdoors':'🏃','Apparel':'👗','Health & Beauty':'💊'};
+  const colors = ['#6366f1','#06b6d4','#10b981','#ec4899','#f59e0b'];
+  document.getElementById('cat-kpi-row').innerHTML = CATEGORIES.map((c,i)=>`
+    <div class="kpi" style="border-top:2px solid ${colors[i]}20;cursor:pointer" onclick="filterByCat('${c.category}')">
+      <div style="font-size:22px;margin-bottom:6px">${icons[c.category]||'📦'}</div>
+      <div style="font-size:13px;font-weight:800;color:${colors[i]}">${(c.revenue/1e6).toFixed(2)}M</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px">${c.category}</div>
+      <div style="font-size:10px;color:#10b981;margin-top:4px">${c.margin.toFixed(1)}% margin</div>
+    </div>`).join('');
+}
+
+// ── Category Charts ────────────────────────────────────────
+mk('catRevChart','bar',CATEGORIES.map(c=>c.category.split(' ')[0]),
+  [{label:'Revenue ($M)',data:CATEGORIES.map(c=>+(c.revenue/1e6).toFixed(2)),
+    backgroundColor:CAT_LIST.map(c=>CAT_COLORS[c]+'cc'),borderRadius:6,borderSkipped:false}]);
+
+mk('catPieChart','doughnut',CATEGORIES.map(c=>c.category),
+  [{data:CATEGORIES.map(c=>c.profit),backgroundColor:CAT_LIST.map(c=>CAT_COLORS[c]),
+    borderColor:'#060d1f',borderWidth:3}],
+  {plugins:{legend:{position:'right'}}});
+
+mk('catMarginChart','bar',CATEGORIES.map(c=>c.category.split(' ')[0]),
+  [{label:'Margin %',data:CATEGORIES.map(c=>c.margin),
+    backgroundColor:CATEGORIES.map((_,i)=>['#6366f1','#06b6d4','#10b981','#ec4899','#f59e0b'][i]+'cc'),borderRadius:5,borderSkipped:false}],
+  {scales:{y:{min:40,max:70,ticks:{color:'#475569',font:{size:9}}},x:{ticks:{color:'#475569',font:{size:9}}}}});
+
+mk('catRatingChart','bar',CATEGORIES.map(c=>c.category.split(' ')[0]),
+  [{label:'Avg Rating',data:CATEGORIES.map(c=>c.rating),
+    backgroundColor:CATEGORIES.map((_,i)=>['#6366f1','#06b6d4','#10b981','#ec4899','#f59e0b'][i]+'bb'),borderRadius:5,borderSkipped:false}],
+  {scales:{y:{min:4.0,max:5.0,ticks:{color:'#475569',font:{size:9}}},x:{ticks:{color:'#475569',font:{size:9}}}}});
+
+// ── Product Table & Chart ──────────────────────────────────
+let prodView = 'table', prodBarChart;
+
+function renderProdTable() {
+  const sort = document.getElementById('prod-sort').value;
+  const cat  = document.getElementById('prod-cat').value;
+  let data = [...PRODUCTS];
+  if (cat !== 'all') data = data.filter(p=>p.category===cat);
+  data.sort((a,b)=>b[sort]-a[sort]);
+  const maxRev = Math.max(...data.map(p=>p.revenue));
+  const catC = {'Electronics':'rgba(99,102,241,.15)','Sports & Outdoors':'rgba(16,185,129,.15)','Home & Kitchen':'rgba(6,182,212,.15)','Apparel':'rgba(236,72,153,.15)','Health & Beauty':'rgba(245,158,11,.15)'};
+  const catT = {'Electronics':'#a78bfa','Sports & Outdoors':'#34d399','Home & Kitchen':'#67e8f9','Apparel':'#f9a8d4','Health & Beauty':'#fcd34d'};
+  document.getElementById('prod-tbody').innerHTML = data.map((p,i)=>{
+    const barW = ((p.revenue/maxRev)*100).toFixed(0);
+    const diff = p.comp_avg - p.avg_price;
+    return `<tr>
+      <td><div class="rank" style="background:${['#f59e0b','#9ca3af','#cd7f32','#6366f155','#6366f133','#6366f122'][Math.min(i,5)]};color:#fff">${i+1}</div></td>
+      <td style="font-weight:600;font-size:12px;max-width:200px">${p.product_name}</td>
+      <td><span class="badge" style="background:${catC[p.category]||'#1e293b'};color:${catT[p.category]||'#94a3b8'}">${p.category}</span></td>
+      <td><div class="bar-cell"><span style="color:#a78bfa;font-weight:700;white-space:nowrap">$${(p.revenue/1e3).toFixed(0)}K</span><div class="mini-bar"><div class="mini-fill" style="width:${barW}%;background:#6366f1"></div></div></div></td>
+      <td style="color:#34d399;font-weight:700">$${(p.profit/1e3).toFixed(0)}K</td>
+      <td style="color:#67e8f9">${p.units.toLocaleString()}</td>
+      <td style="font-weight:700">$${p.avg_price.toFixed(2)}</td>
+      <td style="color:var(--muted)">$${p.comp_avg.toFixed(2)}</td>
+      <td><div class="bar-cell"><div class="mini-bar" style="width:60px"><div class="mini-fill" style="width:${p.margin}%;background:#10b981"></div></div><span style="color:#34d399">${p.margin.toFixed(1)}%</span></div></td>
+      <td><span style="color:#fcd34d;font-weight:700">${p.rating}</span> ⭐</td>
+    </tr>`;
+  }).join('');
+
+  if (prodBarChart) prodBarChart.destroy();
+  if (document.getElementById('prod-chart-wrap').style.display!=='none') {
+    prodBarChart = mk('prodBarChart','bar',data.map(p=>p.product_name.split(' ').slice(0,3).join(' ')),
+      [{label:'Revenue',data:data.map(p=>p.revenue),backgroundColor:data.map(p=>CAT_COLORS[p.category]+'cc'),borderRadius:5,borderSkipped:false}],
+      {indexAxis:'y',scales:{y:{ticks:{color:'#475569',font:{size:9}}},x:{ticks:{color:'#475569',font:{size:9}}}}});
+  }
+}
+
+function setProdView(v,el) {
+  prodView = v;
+  document.querySelectorAll('.sec#products .ctrl-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('prod-table-wrap').style.display = v==='table'?'block':'none';
+  document.getElementById('prod-chart-wrap').style.display = v==='chart'?'block':'none';
+  renderProdTable();
+}
+
+// ── Price Distribution ─────────────────────────────────────
+mk('priceRangeChart','bar',PRICE_DIST.map(p=>p.category.split(' ')[0]),
+  [{label:'Min Price',data:PRICE_DIST.map(p=>p.min_price),backgroundColor:'#6366f155',borderRadius:4,borderSkipped:false},
+   {label:'Avg Price',data:PRICE_DIST.map(p=>p.avg_price),backgroundColor:'#6366f1bb',borderRadius:4,borderSkipped:false},
+   {label:'Max Price',data:PRICE_DIST.map(p=>p.max_price),backgroundColor:'#6366f1',borderRadius:4,borderSkipped:false}]);
+
+mk('priceCompChart','bar',CATEGORIES.map(c=>c.category.split(' ')[0]),
+  [{label:'Our Avg Price',data:CATEGORIES.map(c=>c.avg_price),backgroundColor:'#6366f1cc',borderRadius:5,borderSkipped:false},
+   {label:'Competitor Avg',data:CATEGORIES.map((c,i)=>c.avg_price+(COMP_GAP.find(g=>g.category===c.category)?.price_adv||0)),backgroundColor:'#ef444466',borderRadius:5,borderSkipped:false}]);
+
+// ── Sales Channels ─────────────────────────────────────────
+mk('chanPieChart','doughnut',CHANNELS.map(c=>c.sales_channel),
+  [{data:CHANNELS.map(c=>c.revenue),backgroundColor:['#6366f1','#10b981','#f59e0b'],borderColor:'#060d1f',borderWidth:3}],
+  {plugins:{legend:{display:false}}});
+
+const chanLegColors = ['#6366f1','#10b981','#f59e0b'];
+document.getElementById('chan-legend').innerHTML = CHANNELS.map((c,i)=>`
+  <div style="display:flex;align-items:center;gap:8px;font-size:11px">
+    <div style="width:10px;height:10px;border-radius:2px;background:${chanLegColors[i]}"></div>
+    <span style="color:var(--sub)">${c.sales_channel}</span>
+    <span style="margin-left:auto;color:${chanLegColors[i]};font-weight:700">$${(c.revenue/1e6).toFixed(2)}M</span>
+  </div>`).join('');
+
+mk('chanBarChart','bar',CHANNELS.map(c=>c.sales_channel),
+  [{label:'Revenue ($M)',data:CHANNELS.map(c=>+(c.revenue/1e6).toFixed(2)),backgroundColor:chanLegColors.map(c=>c+'cc'),borderRadius:6,borderSkipped:false},
+   {label:'Units (K)',data:CHANNELS.map(c=>+(c.units/1e3).toFixed(1)),backgroundColor:chanLegColors.map(c=>c+'55'),borderRadius:6,borderSkipped:false}]);
+
+// ── Promo & Holiday Charts ─────────────────────────────────
+mk('promoRevChart','bar',['No Promotion','Active Promo'],
+  [{label:'Revenue',data:[PROMO[0].revenue/1e6, PROMO[1].revenue/1e6],
+    backgroundColor:['#334155','#6366f1cc'],borderRadius:6,borderSkipped:false}]);
+mk('promoUnitChart','bar',['No Promotion','Active Promo'],
+  [{label:'Units',data:[PROMO[0].units, PROMO[1].units],
+    backgroundColor:['#334155','#10b981cc'],borderRadius:6,borderSkipped:false}]);
+mk('promoMarginChart','bar',['No Promotion','Active Promo'],
+  [{label:'Margin %',data:[PROMO[0].margin, PROMO[1].margin],
+    backgroundColor:['#334155','#f59e0bcc'],borderRadius:6,borderSkipped:false}],
+  {scales:{y:{min:44,max:60,ticks:{color:'#475569',font:{size:9}}},x:{ticks:{color:'#475569',font:{size:9}}}}});
+
+// ── Day of Week ────────────────────────────────────────────
+const DOW_ORDER = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const dowSorted = DOW_ORDER.map(d=>DOW.find(r=>r.day_of_week===d));
+mk('dowUnitsChart','bar',DOW_ORDER,
+  [{label:'Avg Daily Units',data:dowSorted.map(d=>d.units),
+    backgroundColor:DOW_ORDER.map((_,i)=>i<5?'#6366f1bb':'#ec4899bb'),borderRadius:5,borderSkipped:false}]);
+mk('dowRevChart','bar',DOW_ORDER,
+  [{label:'Avg Daily Revenue ($)',data:dowSorted.map(d=>d.revenue),
+    backgroundColor:DOW_ORDER.map((_,i)=>i<5?'#f59e0bbb':'#10b981bb'),borderRadius:5,borderSkipped:false}]);
+
+// ── Model Comparison ───────────────────────────────────────
+mk('priceModelChart','bar',['LightGBM ⭐','XGBoost','Random Forest','Ridge'],
+  [{label:'Test R²',data:[1.0000,1.0000,1.0000,0.9963],
+    backgroundColor:['#10b981','#6366f1','#f59e0b','#ef4444'].map(c=>c+'cc'),borderRadius:6,borderSkipped:false}],
+  {scales:{y:{min:0.99,max:1.001,ticks:{color:'#475569',font:{size:9}}},x:{ticks:{color:'#475569',font:{size:9}}}}});
+mk('demandModelChart','bar',['XGBoost ⭐','LightGBM','Random Forest','Ridge'],
+  [{label:'Test R²',data:[0.9050,0.9043,0.8990,0.8479],
+    backgroundColor:['#6366f1','#10b981','#f59e0b','#ef4444'].map(c=>c+'cc'),borderRadius:6,borderSkipped:false}],
+  {scales:{y:{min:0.82,max:0.92,ticks:{color:'#475569',font:{size:9}}},x:{ticks:{color:'#475569',font:{size:9}}}}});
+
+// ── Competitor Gap ─────────────────────────────────────────
+mk('compGapChart','bar',COMP_GAP.map(c=>c.category.split(' ')[0]),
+  [{label:'Price Advantage ($)',data:COMP_GAP.map(c=>c.price_adv),
+    backgroundColor:COMP_GAP.map(c=>c.price_adv>=0?'#10b981aa':'#ef4444aa'),
+    borderColor:COMP_GAP.map(c=>c.price_adv>=0?'#10b981':'#ef4444'),
+    borderWidth:1,borderRadius:5,borderSkipped:false}]);
+
+mk('prodCompChart','bar',PRODUCTS.slice(0,10).map(p=>p.product_name.split(' ').slice(0,2).join(' ')),
+  [{label:'Our Price',data:PRODUCTS.slice(0,10).map(p=>p.avg_price),backgroundColor:'#6366f1cc',borderRadius:4,borderSkipped:false},
+   {label:'Comp Avg',data:PRODUCTS.slice(0,10).map(p=>p.comp_avg),backgroundColor:'#ef444466',borderRadius:4,borderSkipped:false}],
+  {indexAxis:'y',scales:{y:{ticks:{color:'#475569',font:{size:9}}},x:{ticks:{color:'#475569',font:{size:9}}}}});
+
+// ════════════════════════════════════════════════════════════
+// ██████  DEMAND SIMULATOR  ██████
+// ════════════════════════════════════════════════════════════
+const CAT_DATA = {
+  'Electronics':      {base:40, margin:47.77, comp:155.48, elasticity:-1.85},
+  'Sports & Outdoors':{base:52, margin:54.50, comp:106.90, elasticity:-1.72},
+  'Home & Kitchen':   {base:46, margin:53.58, comp:115.63, elasticity:-1.65},
+  'Apparel':          {base:58, margin:58.32, comp:71.35,  elasticity:-1.90},
+  'Health & Beauty':  {base:62, margin:64.44, comp:40.93,  elasticity:-1.55},
+};
+
+function updateSim() {
+  const catEl = document.getElementById('sim-cat');
+  const cat = catEl.value;
+  const cd = CAT_DATA[cat] || CAT_DATA['Electronics'];
+  const price   = +document.getElementById('sim-price').value;
+  const stock   = +document.getElementById('sim-stock').value;
+  const promo   = +document.getElementById('sim-promo').value;
+  const holiday = +document.getElementById('sim-holiday').value;
+
+  document.getElementById('sv-price').textContent = '$'+price;
+  document.getElementById('sv-stock').textContent = stock;
+
+  // XGBoost elasticity model from EDA
+  const priceRatio = cd.comp / Math.max(price, 1);
+  const stockFact  = 0.85 + (stock/500)*0.3;
+  const promoFact  = promo   ? 1.45 : 1.0;
+  const holidayF   = holiday ? 1.28 : 1.0;
+  let demand = Math.max(0, cd.base * Math.pow(priceRatio, Math.abs(cd.elasticity)) * stockFact * promoFact * holidayF);
+
+  const revenue = demand * price;
+  const margin  = price > 0 ? (cd.margin - (price > cd.comp*1.1 ? 5 : price < cd.comp*0.85 ? -4 : 0)) : cd.margin;
+  const gap     = cd.comp - price;
+  const score   = Math.min(100, Math.max(0, Math.round(
+    50 + (gap/cd.comp)*30 + (margin/100)*20
+  )));
+
+  document.getElementById('so-units').textContent  = Math.round(demand);
+  document.getElementById('so-rev').textContent    = '$'+formatNum(revenue);
+  document.getElementById('so-margin').textContent = margin.toFixed(1)+'%';
+  document.getElementById('so-gap').textContent    = (gap>=0?'+':'')+formatNum(gap);
+  document.getElementById('so-score').textContent  = score+'/100';
+
+  // Update sparkline
+  const sparkData = Array.from({length:14},(_,i)=>
+    Math.max(0, Math.round(demand + Math.sin(i*0.4)*(demand*0.12) + (Math.random()-.5)*(demand*0.08))));
+  if (simSpark) {
+    simSpark.data.datasets[0].data = sparkData;
+    simSpark.update('none');
+  }
+}
+
+function formatNum(v) {
+  return Math.abs(v)>=1000 ? (v/1000).toFixed(1)+'K' : v.toFixed(0);
+}
+
+simSpark = mk('simSparkChart','line',
+  Array.from({length:14},(_,i)=>`D${i+1}`),
+  [{label:'14-Day Demand Forecast',data:Array(14).fill(40),
+    borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.15)',
+    fill:true,tension:0.4,pointRadius:2,borderWidth:2}],
+  {plugins:{legend:{display:false}}});
+
+// ════════════════════════════════════════════════════════════
+// ██████  NAVIGATION & UX  ██████
+// ════════════════════════════════════════════════════════════
+function goTo(id) {
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelectorAll('.nav-it').forEach(n=>n.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function filterByCat(cat) {
+  goTo('products');
+  document.getElementById('prod-cat').value = cat;
+  renderProdTable();
+  showToast('Filtered: '+cat);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ── Init all ────────────────────────────────────────────────
+buildCatKPIs();
+renderProdTable();
+buildRevChart('both');
+updateSim();
+
+// Active nav on scroll
+const sections = ['kpi','revenue','category','products','pricing','channels','promo','weekly','models','simulator','competitor'];
+window.addEventListener('scroll', ()=>{
+  const y = window.scrollY + 100;
+  sections.forEach(id=>{
+    const el = document.getElementById(id);
+    if (el && el.offsetTop<=y && el.offsetTop+el.offsetHeight>y) {
+      document.querySelectorAll('.nav-it').forEach(n=>n.classList.remove('active'));
+      document.querySelectorAll('.nav-it').forEach(n=>{if(n.getAttribute('onclick')?.includes(id)) n.classList.add('active')});
+    }
+  });
+});
+</script>
+</body>
+</html>
