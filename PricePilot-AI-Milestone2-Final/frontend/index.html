@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PricePilot AI — Milestone 2</title><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#111827;color:white;padding:28px 7%}header h1{margin:0 0 6px}header p{margin:0;opacity:.8}
+main{max-width:1200px;margin:28px auto;padding:0 20px}.bar,.card{background:white;border-radius:16px;padding:20px;box-shadow:0 7px 25px #10182812}
+.bar{display:flex;gap:14px;align-items:end;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:6px}
+select,button{padding:11px;border:1px solid #d0d5dd;border-radius:9px;background:white}button{background:#111827;color:white;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}.kpi span{color:#667085;font-size:13px}.kpi strong{display:block;font-size:26px;margin-top:8px}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.card h2{font-size:18px;margin-top:0}
+#status{margin:12px 0;color:#667085}@media(max-width:800px){.grid,.charts{grid-template-columns:1fr 1fr}}@media(max-width:550px){.grid,.charts{grid-template-columns:1fr}}
+</style></head>
+<body><header><h1>PricePilot AI</h1><p>Dynamic Pricing Optimization & Revenue Intelligence — Milestone 2</p></header>
+<main>
+<div class="bar">
+<div class="field"><label>Dataset</label><select id="dataset"><option>Online Retail</option><option>Amazon</option></select></div>
+<div class="field"><label>Product</label><select id="product"></select></div>
+<div class="field"><label>Forecast Horizon</label><select id="horizon"><option value="7d">7 Days</option><option value="14d">14 Days</option><option value="30d" selected>30 Days</option><option value="3m">3 Months</option><option value="6m">6 Months</option><option value="12m">12 Months</option></select></div>
+<button onclick="runForecast()">Forecast Demand</button><button onclick="runRecommend()">Recommend Price</button></div>
+<div id="status">Loading...</div>
+<div class="grid">
+<div class="card kpi"><span>Predicted Units</span><strong id="units">—</strong></div>
+<div class="card kpi"><span>Trend</span><strong id="trend">—</strong></div>
+<div class="card kpi"><span>Confidence</span><strong id="confidence">—</strong></div>
+<div class="card kpi"><span>Recommended Price</span><strong id="price">—</strong></div></div>
+<div class="charts"><div class="card"><h2>Demand Forecast</h2><canvas id="demandChart"></canvas></div>
+<div class="card"><h2>Current vs Recommended Price</h2><canvas id="priceChart"></canvas></div></div>
+<div class="card" style="margin-top:18px"><h2>Model Evaluation</h2><p id="metrics">—</p></div>
+</main>
+<script>
+let dc,pc; const $=id=>document.getElementById(id); const fmt=n=>Number(n).toLocaleString(undefined,{maximumFractionDigits:2});
+async function loadProducts(){let d=$('dataset').value;let p=await fetch('/api/products/'+encodeURIComponent(d)).then(r=>r.json());$('product').innerHTML='';p.forEach(x=>{let o=document.createElement('option');o.value=x.product_id;o.textContent=x.product_id+' — '+x.product_name;$('product').appendChild(o)});$('status').textContent=d+' dataset loaded';runForecast();runRecommend();}
+async function runForecast(){let d=$('dataset').value,id=encodeURIComponent($('product').value),h=$('horizon').value;if(!id)return;let r=await fetch(`/api/forecast/${encodeURIComponent(d)}/${id}?horizon=${h}`).then(x=>x.json());if(r.detail){$('status').textContent=r.detail;return}$('units').textContent=fmt(r.predicted_units);$('trend').textContent=r.trend;$('confidence').textContent=fmt(r.confidence_score)+'%';$('status').textContent=`${d} • ${h} forecast • ${r.model_used}`;if(dc)dc.destroy();dc=new Chart($('demandChart'),{type:'bar',data:{labels:['Predicted total','Average/day'],datasets:[{data:[r.predicted_units,r.average_daily_units]}]},options:{plugins:{legend:{display:false}}}});}
+async function runRecommend(){let d=$('dataset').value,id=encodeURIComponent($('product').value);if(!id)return;let r=await fetch(`/api/recommend/${encodeURIComponent(d)}/${id}`).then(x=>x.json());if(r.detail)return;$('price').textContent='₹'+fmt(r.recommended_price);if(pc)pc.destroy();pc=new Chart($('priceChart'),{type:'bar',data:{labels:['Current','Recommended'],datasets:[{data:[r.current_price,r.recommended_price]}]},options:{plugins:{legend:{display:false}}}});}
+async function metrics(){let m=await fetch('/api/metrics').then(r=>r.json());$('metrics').innerHTML=`<b>Demand:</b> MAE ${fmt(m.demand.mae)} | RMSE ${fmt(m.demand.rmse)} &nbsp;&nbsp; <b>Price:</b> MAE ${fmt(m.price.mae)} | RMSE ${fmt(m.price.rmse)}`;}
+$('dataset').onchange=loadProducts; loadProducts(); metrics();
+</script></body></html>

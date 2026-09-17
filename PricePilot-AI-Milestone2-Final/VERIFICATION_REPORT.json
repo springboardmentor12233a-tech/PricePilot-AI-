@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "datasets": {
+    "Online Retail": {
+      "raw_file": "data/raw/Online Retail.xlsx",
+      "daily_rows": 276148,
+      "products": 3923,
+      "date_range": [
+        "2010-12-01",
+        "2011-12-09"
+      ]
+    },
+    "Amazon": {
+      "raw_file": "data/raw/Amazon.csv",
+      "daily_rows": 50993,
+      "products": 50,
+      "categories": 6,
+      "date_range": [
+        "2020-01-01",
+        "2024-12-29"
+      ]
+    }
+  },
+  "models": {
+    "demand": {
+      "algorithm": "HistGradientBoostingRegressor",
+      "mae": 2.1194335994263525,
+      "rmse": 2.786262860144133
+    },
+    "price": {
+      "algorithm": "HistGradientBoostingRegressor",
+      "mae": 249.54226598034097,
+      "rmse": 306.4594500926364
+    }
+  },
+  "forecast_horizons_verified": [
+    "7d",
+    "14d",
+    "30d",
+    "3m",
+    "6m",
+    "12m"
+  ],
+  "separate_eda_files": [
+    "backend/app/ml/EDA_Online_Retail.py",
+    "backend/app/ml/EDA_Amazon.py"
+  ],
+  "api_smoke_test": [
+    "/health",
+    "/api/products/{dataset}",
+    "/api/metrics",
+    "/api/forecast/{dataset}/{product_id}",
+    "/api/recommend/{dataset}/{product_id}"
+  ]
+}
