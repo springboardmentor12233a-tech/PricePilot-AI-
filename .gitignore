@@ -1,14 +1,17 @@
 # --- Python / Backend ---
 venv/
+.venv/
 __pycache__/
 *.pyc
 *.pyo
 .env
 backend/app/ml/saved_models/*.pkl
+.ipynb_checkpoints/
 
 # --- Node / Frontend ---
 node_modules/
 .next/
+dist/
 *.tsbuildinfo
 
 # --- Data (large files, don't belong in git) ---

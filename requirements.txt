@@ -4,3 +4,6 @@ psycopg2-binary>=2.9
 scikit-learn>=1.4
 fastapi>=0.110
 uvicorn[standard]>=0.29
+xgboost>=2.0
+matplotlib>=3.8
+seaborn>=0.13
