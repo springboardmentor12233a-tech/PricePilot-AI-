@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    GROQ_API_KEY: str
 
     # --- App ---
     APP_NAME: str = "PricePilot AI"
@@ -33,3 +34,4 @@ class Settings(BaseSettings):
 
 # Created once, imported everywhere else via `from app.core.config import settings`
 settings = Settings()
+

@@ -12,6 +12,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
+from app.api.routes.pricing import router as pricing_router
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -31,7 +32,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.include_router(pricing_router)
 
 @app.get("/health")
 def health_check():
