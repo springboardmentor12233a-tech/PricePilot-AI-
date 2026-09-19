@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PricePilot AI — Interactive Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f172a;--surface:#1e293b;--surface2:#263347;--border:#334155;--text:#e2e8f0;--text2:#94a3b8;--accent:#8b5cf6;--accent2:#06b6d4;--green:#10b981;--red:#ef4444;--yellow:#f59e0b;--radius:12px;--radius-sm:8px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+header{background:linear-gradient(135deg,#1e1b4b,#0f172a);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px}.logo-icon{font-size:28px}
+.logo-text h1{font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-text p{font-size:11px;color:var(--text2)}
+.clock #time{font-size:18px;font-weight:700;color:var(--accent2);text-align:right}
+.clock #date{font-size:11px;color:var(--text2);text-align:right}
+.layout{display:grid;grid-template-columns:255px 1fr;height:calc(100vh - 64px)}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:14px 10px}
+.sidebar-title{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:1px;text-transform:uppercase;padding:0 8px;margin-bottom:10px}
+.cat-group{margin-bottom:14px}
+.cat-label{font-size:10px;font-weight:600;color:var(--text2);padding:4px 8px;text-transform:uppercase;letter-spacing:1px;opacity:.7}
+.product-btn{width:100%;background:transparent;border:none;border-radius:var(--radius-sm);padding:8px 10px;cursor:pointer;text-align:left;transition:all .15s;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.product-btn:hover{background:var(--surface2)}
+.product-btn.active{background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(6,182,212,.15));border:1px solid rgba(139,92,246,.3)}
+.prod-name{font-size:12.5px;font-weight:500;color:var(--text);display:block}
+.prod-price{font-size:11px;color:var(--text2)}
+.product-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.main{overflow-y:auto;padding:20px;background:var(--bg)}
+.placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh;text-align:center;gap:16px}
+.placeholder-icon{font-size:64px;opacity:.3}
+.placeholder h2{font-size:20px;color:var(--text2)}
+.placeholder p{font-size:13px;color:var(--text2);opacity:.7}
+.kpi-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px}
+.kpi-mini{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;text-align:center}
+.kpi-mini-val{font-size:15px;font-weight:800;margin-bottom:2px}
+.kpi-mini-lbl{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px}
+.product-hero{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.hero-name{font-size:22px;font-weight:700}
+.hero-cat{font-size:12px;color:var(--accent);font-weight:600;margin-top:3px}
+.status-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-green{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+.badge-yellow{background:rgba(245,158,11,.15);color:var(--yellow);border:1px solid rgba(245,158,11,.3)}
+.hero-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.stat-box{background:var(--bg);border-radius:var(--radius-sm);padding:11px;text-align:center;border:1px solid var(--border)}
+.stat-val{font-size:17px;font-weight:700;margin-bottom:2px}
+.stat-lbl{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px}
+.tabs{display:flex;gap:4px;margin-bottom:14px;background:var(--surface);border-radius:var(--radius);padding:4px}
+.tab-btn{flex:1;padding:9px 0;background:transparent;border:none;border-radius:var(--radius-sm);cursor:pointer;font-size:12.5px;font-weight:600;color:var(--text2);transition:all .2s;font-family:'Inter',sans-serif}
+.tab-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.tab-btn:hover:not(.active){color:var(--text);background:var(--surface2)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.input-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.input-group label{display:block;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.input-group .desc{font-size:11px;color:var(--text2);margin-bottom:8px;font-style:italic;line-height:1.4}
+.slider-wrap{display:flex;align-items:center;gap:10px}
+.slider-wrap input[type=range]{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer}
+.slider-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer}
+.slider-val{min-width:64px;text-align:right;font-weight:700;font-size:14px;color:var(--accent2)}
+.num-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;font-weight:600;font-family:'Inter',sans-serif;outline:none;transition:border .15s;margin-top:8px}
+.num-input:focus{border-color:var(--accent)}
+.toggle-wrap{display:flex;align-items:center;gap:12px;margin-top:6px}
+.toggle{position:relative;width:44px;height:24px}
+.toggle input{opacity:0;width:0;height:0}
+.slider-toggle{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--border);transition:.3s;border-radius:24px}
+.slider-toggle:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background:white;transition:.3s;border-radius:50%}
+input:checked+.slider-toggle{background:var(--accent)}
+input:checked+.slider-toggle:before{transform:translateX(20px)}
+.toggle-label{font-size:12.5px;font-weight:600;color:var(--text)}
+.sel-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;outline:none;cursor:pointer;margin-top:4px}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:var(--radius);cursor:pointer;color:#fff;font-size:14px;font-weight:700;font-family:'Inter',sans-serif;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.submit-btn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 8px 24px rgba(139,92,246,.35)}
+.results-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:18px;display:none}
+.results-panel.show{display:block;animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.results-title{font-size:14px;font-weight:700;margin-bottom:14px}
+.change-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.change-card{border-radius:var(--radius-sm);padding:14px;text-align:center;border:1px solid}
+.change-card.positive{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.3)}
+.change-card.negative{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.3)}
+.change-card.neutral{background:rgba(148,163,184,.06);border-color:rgba(148,163,184,.2)}
+.change-pct{font-size:22px;font-weight:800;margin-bottom:3px}
+.change-card.positive .change-pct{color:var(--green)}
+.change-card.negative .change-pct{color:var(--red)}
+.change-card.neutral .change-pct{color:var(--text2)}
+.change-metric{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.change-val{font-size:11px;color:var(--text2)}
+.before-after{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.ba-box{background:var(--bg);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border)}
+.ba-box h4{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.ba-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(51,65,85,.4);font-size:13px}
+.ba-row:last-child{border:none}.ba-row span:last-child{font-weight:600}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.chart-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.chart-box h4{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.chart-full{grid-column:1/-1}
+.insight-box{background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(6,182,212,.04));border:1px solid rgba(139,92,246,.22);border-radius:var(--radius);padding:14px;margin-top:12px}
+.insight-box p{font-size:13px;color:var(--text);line-height:1.7}
+.section-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text"><h1>PricePilot AI</h1><p>Dynamic Pricing Optimization &amp; Revenue Intelligence</p></div>
+  </div>
+  <div class="clock"><div id="time">--:--:--</div><div id="date">Loading...</div></div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">📦 Select a Product</div>
+    <div class="cat-group">
+      <div class="cat-label">⚡ Electronics</div>
+      <button class="product-btn" onclick="selectProduct('UltraView 4K Monitor')" id="btn-UltraView 4K Monitor"><div class="product-dot" style="background:#6366f1"></div><div><span class="prod-name">UltraView 4K Monitor</span><span class="prod-price">$245.50</span></div></button>
+      <button class="product-btn" onclick="selectProduct('Aura Pro Headphones')" id="btn-Aura Pro Headphones"><div class="product-dot" style="background:#6366f1"></div><div><span class="prod-name">Aura Pro Headphones</span><span class="prod-price">$187.50</span></div></button>
+      <button class="product-btn" onclick="selectProduct('SmartHome Hub Pro')" id="btn-SmartHome Hub Pro"><div class="product-dot" style="background:#6366f1"></div><div><span class="prod-name">SmartHome Hub Pro</span><span class="prod-price">$132.00</span></div></button>
+      <button class="product-btn" onclick="selectProduct('ThermoComfort Cooler')" id="btn-ThermoComfort Cooler"><div class="product-dot" style="background:#6366f1"></div><div><span class="prod-name">ThermoComfort Cooler</span><span class="prod-price">$89.99</span></div></button>
+    </div>
+    <div class="cat-group">
+      <div class="cat-label">🏠 Home &amp; Kitchen</div>
+      <button class="product-btn" onclick="selectProduct('LuxeDream Mattress')" id="btn-LuxeDream Mattress"><div class="product-dot" style="background:#06b6d4"></div><div><span class="prod-name">LuxeDream Mattress</span><span class="prod-price">$189.00</span></div></button>
+      <button class="product-btn" onclick="selectProduct('ChefMaster Blender')" id="btn-ChefMaster Blender"><div class="product-dot" style="background:#06b6d4"></div><div><span class="prod-name">ChefMaster Blender</span><span class="prod-price">$98.50</span></div></button>
+      <button class="product-btn" onclick="selectProduct('AquaPure Filter')" id="btn-AquaPure Filter"><div class="product-dot" style="background:#06b6d4"></div><div><span class="prod-name">AquaPure Filter</span><span class="prod-price">$67.00</span></div></button>
+    </div>
+    <div class="cat-group">
+      <div class="cat-label">🏃 Sports &amp; Outdoors</div>
+      <button class="product-btn" onclick="selectProduct('FlexFit Yoga Mat')" id="btn-FlexFit Yoga Mat"><div class="product-dot" style="background:#10b981"></div><div><span class="prod-name">FlexFit Yoga Mat</span><span class="prod-price">$45.00</span></div></button>
+      <button class="product-btn" onclick="selectProduct('ProRunner Shoes')" id="btn-ProRunner Shoes"><div class="product-dot" style="background:#10b981"></div><div><span class="prod-name">ProRunner Shoes</span><span class="prod-price">$142.00</span></div></button>
+      <button class="product-btn" onclick="selectProduct('HydroPeak Bottle')" id="btn-HydroPeak Bottle"><div class="product-dot" style="background:#10b981"></div><div><span class="prod-name">HydroPeak Bottle</span><span class="prod-price">$35.00</span></div></button>
+    </div>
+    <div class="cat-group">
+      <div class="cat-label">👕 Apparel</div>
+      <button class="product-btn" onclick="selectProduct('UrbanEdge Jacket')" id="btn-UrbanEdge Jacket"><div class="product-dot" style="background:#ec4899"></div><div><span class="prod-name">UrbanEdge Jacket</span><span class="prod-price">$89.00</span></div></button>
+      <button class="product-btn" onclick="selectProduct('ClassicFit Jeans')" id="btn-ClassicFit Jeans"><div class="product-dot" style="background:#ec4899"></div><div><span class="prod-name">ClassicFit Jeans</span><span class="prod-price">$68.00</span></div></button>
+    </div>
+    <div class="cat-group">
+      <div class="cat-label">💊 Health &amp; Beauty</div>
+      <button class="product-btn" onclick="selectProduct('GlowUp Serum')" id="btn-GlowUp Serum"><div class="product-dot" style="background:#f59e0b"></div><div><span class="prod-name">GlowUp Serum</span><span class="prod-price">$55.00</span></div></button>
+      <button class="product-btn" onclick="selectProduct('VitalBoost Vitamins')" id="btn-VitalBoost Vitamins"><div class="product-dot" style="background:#f59e0b"></div><div><span class="prod-name">VitalBoost Vitamins</span><span class="prod-price">$38.00</span></div></button>
+      <button class="product-btn" onclick="selectProduct('ZenAroma Diffuser')" id="btn-ZenAroma Diffuser"><div class="product-dot" style="background:#f59e0b"></div><div><span class="prod-name">ZenAroma Diffuser</span><span class="prod-price">$28.00</span></div></button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-icon">📊</div>
+      <h2>Click any product to open its analytics</h2>
+      <p>Each product shows: previous revenue history, current KPIs, and 4 interactive analysis tools.<br>Enter your data, click submit, see the % change in revenue, profit, and demand.</p>
+    </div>
+
+    <div id="productDash" style="display:none">
+      <div class="kpi-bar">
+        <div class="kpi-mini"><div class="kpi-mini-val" style="color:#8b5cf6">$28.2M</div><div class="kpi-mini-lbl">Total Revenue</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val" style="color:#10b981">$13.5M</div><div class="kpi-mini-lbl">Gross Profit</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val" style="color:#06b6d4">54.89%</div><div class="kpi-mini-lbl">Avg Margin</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val" style="color:#ec4899">293K</div><div class="kpi-mini-lbl">Units Sold</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val" style="color:#f59e0b">$98.94</div><div class="kpi-mini-lbl">Our Avg Price</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val" style="color:#94a3b8">$104.26</div><div class="kpi-mini-lbl">Comp Avg Price</div></div>
+      </div>
+      <div class="product-hero">
+        <div class="hero-top">
+          <div><div class="hero-name" id="hName">—</div><div class="hero-cat" id="hCat">—</div></div>
+          <div class="status-badge" id="hBadge">—</div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box"><div class="stat-val" id="hPrice" style="color:#8b5cf6">—</div><div class="stat-lbl">Current Price</div></div>
+          <div class="stat-box"><div class="stat-val" id="hComp" style="color:#94a3b8">—</div><div class="stat-lbl">Comp Avg Price</div></div>
+          <div class="stat-box"><div class="stat-val" id="hAdv" style="color:#10b981">—</div><div class="stat-lbl">Price Advantage</div></div>
+          <div class="stat-box"><div class="stat-val" id="hMargin" style="color:#06b6d4">—</div><div class="stat-lbl">Gross Margin</div></div>
+          <div class="stat-box"><div class="stat-val" id="hDemand" style="color:#ec4899">—</div><div class="stat-lbl">Daily Demand</div></div>
+          <div class="stat-box"><div class="stat-val" id="hRevDay" style="color:#f59e0b">—</div><div class="stat-lbl">Daily Revenue</div></div>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <div class="section-title">📈 Historical Revenue — Previous 12 Months</div>
+        <div class="chart-box"><canvas id="historyChart" height="90"></canvas></div>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('price')">💲 Price Analyzer</button>
+        <button class="tab-btn" onclick="switchTab('forecast')">📅 Demand Forecast</button>
+        <button class="tab-btn" onclick="switchTab('promo')">🎯 Promotion Sim</button>
+        <button class="tab-btn" onclick="switchTab('competitor')">⚔️ Competitor Analysis</button>
+      </div>
+
+      <!-- TAB 1: PRICE ANALYZER -->
+      <div class="tab-panel active" id="tab-price">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>New Price to Test ($)</label>
+            <div class="desc">Drag slider or type — see how this price affects revenue, demand &amp; profit</div>
+            <div class="slider-wrap">
+              <input type="range" id="p_newPrice" min="1" max="600" step="0.5" oninput="sv('p_newPrice','p_newPriceLbl','$');document.getElementById('p_newPriceNum').value=parseFloat(this.value).toFixed(2)">
+              <div class="slider-val" id="p_newPriceLbl">$—</div>
+            </div>
+            <input type="number" class="num-input" id="p_newPriceNum" placeholder="Enter new price" step="0.5" oninput="document.getElementById('p_newPrice').value=this.value;sv('p_newPrice','p_newPriceLbl','$')">
+          </div>
+          <div class="input-group">
+            <label>Price Elasticity (Customer Sensitivity)</label>
+            <div class="desc">How much do customers react to your price changes?</div>
+            <select class="sel-input" id="p_elasticity">
+              <option value="0.5">Low (-0.5) — Luxury or essential items</option>
+              <option value="1.0">Medium-Low (-1.0) — Moderate sensitivity</option>
+              <option value="1.5" selected>Medium (-1.5) — Default recommended</option>
+              <option value="2.0">High (-2.0) — Price-conscious shoppers</option>
+              <option value="2.5">Very High (-2.5) — Very price sensitive</option>
+              <option value="3.0">Extreme (-3.0) — Commodity market</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Forecast Period (Days)</label>
+            <div class="desc">Calculate total impact over how many days? (1 to 365)</div>
+            <div class="slider-wrap">
+              <input type="range" id="p_days" min="1" max="365" value="30" oninput="sv('p_days','p_daysLbl',' days');document.getElementById('p_daysNum').value=this.value">
+              <div class="slider-val" id="p_daysLbl">30 days</div>
+            </div>
+            <input type="number" class="num-input" id="p_daysNum" value="30" min="1" max="365" oninput="document.getElementById('p_days').value=this.value;sv('p_days','p_daysLbl',' days')">
+          </div>
+          <div class="input-group">
+            <label>Revenue Target ($) — Optional</label>
+            <div class="desc">Set a target revenue to check if the new price will achieve it</div>
+            <input type="number" class="num-input" id="p_targetRev" placeholder="e.g. 50000" style="margin-top:0">
+          </div>
+        </div>
+        <button class="submit-btn" onclick="runPriceAnalysis()">⚡ Analyze Price Impact — Show Revenue &amp; Profit Change</button>
+        <div class="results-panel" id="res-price">
+          <div class="results-title">📊 Price Impact Results — Change from Current Price</div>
+          <div class="change-cards" id="price-change-cards"></div>
+          <div class="before-after">
+            <div class="ba-box"><h4>📌 BEFORE — Current Price</h4><div id="ba-before"></div></div>
+            <div class="ba-box"><h4>🎯 AFTER — New Price</h4><div id="ba-after"></div></div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-box"><h4>Revenue &amp; Profit Comparison</h4><canvas id="priceRevChart" height="160"></canvas></div>
+            <div class="chart-box"><h4>Cumulative Revenue Over Time</h4><canvas id="priceForecastChart" height="160"></canvas></div>
+          </div>
+          <div class="insight-box" id="price-insight"></div>
+        </div>
+      </div>
+
+      <!-- TAB 2: DEMAND FORECAST -->
+      <div class="tab-panel" id="tab-forecast">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Forecast Horizon (Days)</label>
+            <div class="desc">How many days to forecast demand and revenue?</div>
+            <div class="slider-wrap">
+              <input type="range" id="f_days" min="1" max="365" value="30" oninput="sv('f_days','f_daysLbl',' days');document.getElementById('f_daysNum').value=this.value">
+              <div class="slider-val" id="f_daysLbl">30 days</div>
+            </div>
+            <input type="number" class="num-input" id="f_daysNum" value="30" min="1" max="365" oninput="document.getElementById('f_days').value=this.value;sv('f_days','f_daysLbl',' days')">
+          </div>
+          <div class="input-group">
+            <label>Planned Price ($)</label>
+            <div class="desc">What price will you use during this period?</div>
+            <input type="number" class="num-input" id="f_price" placeholder="Enter planned selling price" style="margin-top:0">
+          </div>
+          <div class="input-group">
+            <label>Stock Available (Units)</label>
+            <div class="desc">Low stock limits how much of the demand can actually be sold</div>
+            <div class="slider-wrap">
+              <input type="range" id="f_stock" min="0" max="2000" value="500" oninput="sv('f_stock','f_stockLbl',' units');document.getElementById('f_stockNum').value=this.value">
+              <div class="slider-val" id="f_stockLbl">500 units</div>
+            </div>
+            <input type="number" class="num-input" id="f_stockNum" value="500" oninput="document.getElementById('f_stock').value=this.value;sv('f_stock','f_stockLbl',' units')">
+          </div>
+          <div class="input-group">
+            <label>Market Growth Rate (%)</label>
+            <div class="desc">Expected demand growth trend during the period</div>
+            <div class="slider-wrap">
+              <input type="range" id="f_growth" min="-20" max="50" value="5" oninput="sv('f_growth','f_growthLbl','%');document.getElementById('f_growthNum').value=this.value">
+              <div class="slider-val" id="f_growthLbl">5%</div>
+            </div>
+            <input type="number" class="num-input" id="f_growthNum" value="5" oninput="document.getElementById('f_growth').value=this.value;sv('f_growth','f_growthLbl','%')">
+          </div>
+          <div class="input-group">
+            <label>Holiday Season?</label>
+            <div class="desc">Holiday periods (Diwali, Christmas...) drive +275% demand surge</div>
+            <div class="toggle-wrap">
+              <label class="toggle"><input type="checkbox" id="f_holiday" onchange="document.getElementById('f_holidayLbl').textContent=this.checked?'Holiday Season Active':'Not Holiday Period'"><span class="slider-toggle"></span></label>
+              <span class="toggle-label" id="f_holidayLbl">Not Holiday Period</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Promotion Active?</label>
+            <div class="desc">Running a promotion boosts demand ~45% but cuts margin by ~7 points</div>
+            <div class="toggle-wrap">
+              <label class="toggle"><input type="checkbox" id="f_promo" onchange="document.getElementById('f_promoLbl').textContent=this.checked?'Promotion Active':'No Promotion'"><span class="slider-toggle"></span></label>
+              <span class="toggle-label" id="f_promoLbl">No Promotion</span>
+            </div>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="runForecast()">📅 Generate Forecast — See Units, Revenue &amp; Profit</button>
+        <div class="results-panel" id="res-forecast">
+          <div class="results-title">📅 Demand Forecast Results</div>
+          <div class="change-cards" id="forecast-change-cards"></div>
+          <div class="chart-row">
+            <div class="chart-box chart-full"><h4>Cumulative Units &amp; Revenue — Day by Day</h4><canvas id="forecastLineChart" height="110"></canvas></div>
+          </div>
+          <div class="insight-box" id="forecast-insight"></div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PROMOTION SIMULATOR -->
+      <div class="tab-panel" id="tab-promo">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Discount Percentage (%)</label>
+            <div class="desc">How much % off to offer? Lowers the price — increases demand but cuts margin</div>
+            <div class="slider-wrap">
+              <input type="range" id="pr_discount" min="0" max="60" value="10" oninput="sv('pr_discount','pr_discountLbl','%');document.getElementById('pr_discountNum').value=this.value">
+              <div class="slider-val" id="pr_discountLbl">10%</div>
+            </div>
+            <input type="number" class="num-input" id="pr_discountNum" value="10" min="0" max="60" oninput="document.getElementById('pr_discount').value=this.value;sv('pr_discount','pr_discountLbl','%')">
+          </div>
+          <div class="input-group">
+            <label>Promotion Duration (Days)</label>
+            <div class="desc">For how many days will this promotion run?</div>
+            <div class="slider-wrap">
+              <input type="range" id="pr_days" min="1" max="90" value="7" oninput="sv('pr_days','pr_daysLbl',' days');document.getElementById('pr_daysNum').value=this.value">
+              <div class="slider-val" id="pr_daysLbl">7 days</div>
+            </div>
+            <input type="number" class="num-input" id="pr_daysNum" value="7" min="1" max="90" oninput="document.getElementById('pr_days').value=this.value;sv('pr_days','pr_daysLbl',' days')">
+          </div>
+          <div class="input-group">
+            <label>Expected Demand Lift (%)</label>
+            <div class="desc">How much more demand will the promotion generate? Our historical average = 45%</div>
+            <div class="slider-wrap">
+              <input type="range" id="pr_lift" min="0" max="300" value="45" oninput="sv('pr_lift','pr_liftLbl','%');document.getElementById('pr_liftNum').value=this.value">
+              <div class="slider-val" id="pr_liftLbl">45%</div>
+            </div>
+            <input type="number" class="num-input" id="pr_liftNum" value="45" min="0" max="300" oninput="document.getElementById('pr_lift').value=this.value;sv('pr_lift','pr_liftLbl','%')">
+          </div>
+          <div class="input-group">
+            <label>During Holiday Period?</label>
+            <div class="desc">Holiday + Promotion together creates maximum demand acceleration</div>
+            <div class="toggle-wrap">
+              <label class="toggle"><input type="checkbox" id="pr_holiday" onchange="document.getElementById('pr_holidayLbl').textContent=this.checked?'Holiday Period':'Regular Period'"><span class="slider-toggle"></span></label>
+              <span class="toggle-label" id="pr_holidayLbl">Regular Period</span>
+            </div>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="runPromoSim()">🎯 Simulate Promotion — Is It Profitable?</button>
+        <div class="results-panel" id="res-promo">
+          <div class="results-title">🎯 Promotion Simulation Results</div>
+          <div class="change-cards" id="promo-change-cards"></div>
+          <div class="before-after">
+            <div class="ba-box"><h4>📌 Without Promotion</h4><div id="promo-before"></div></div>
+            <div class="ba-box"><h4>🎯 With Promotion</h4><div id="promo-after"></div></div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-box"><h4>Revenue &amp; Units — Promo vs No Promo</h4><canvas id="promoRevChart" height="160"></canvas></div>
+            <div class="chart-box"><h4>Gross Margin — Promo vs No Promo</h4><canvas id="promoMarginChart" height="160"></canvas></div>
+          </div>
+          <div class="insight-box" id="promo-insight"></div>
+        </div>
+      </div>
+
+      <!-- TAB 4: COMPETITOR ANALYSIS -->
+      <div class="tab-panel" id="tab-competitor">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Competitor 1 Price ($)</label>
+            <div class="desc">Latest price from competitor 1's website — pre-filled with dataset values</div>
+            <input type="number" class="num-input" id="c_comp1" placeholder="e.g. 199.99" step="0.01" style="margin-top:0">
+          </div>
+          <div class="input-group">
+            <label>Competitor 2 Price ($)</label>
+            <div class="desc">Latest price from competitor 2's website</div>
+            <input type="number" class="num-input" id="c_comp2" placeholder="e.g. 195.00" step="0.01" style="margin-top:0">
+          </div>
+          <div class="input-group">
+            <label>Competitor 3 Price ($)</label>
+            <div class="desc">Latest price from competitor 3's website</div>
+            <input type="number" class="num-input" id="c_comp3" placeholder="e.g. 194.50" step="0.01" style="margin-top:0">
+          </div>
+          <div class="input-group">
+            <label>Target Market Position</label>
+            <div class="desc">Where should your price sit relative to competitor average?</div>
+            <select class="sel-input" id="c_position">
+              <option value="0.92">Market Leader — 8% below average (maximum growth)</option>
+              <option value="0.96" selected>Competitive — 4% below average (recommended)</option>
+              <option value="0.99">Near Parity — 1% below average</option>
+              <option value="1.00">Price Parity — Match the average</option>
+              <option value="1.03">Premium Brand — 3% above average</option>
+            </select>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="runCompetitorAnalysis()">⚔️ Calculate Optimal Price vs Competitors</button>
+        <div class="results-panel" id="res-competitor">
+          <div class="results-title">⚔️ Competitor Analysis Results</div>
+          <div class="change-cards" id="comp-change-cards"></div>
+          <div class="before-after">
+            <div class="ba-box"><h4>📌 Current Positioning</h4><div id="comp-before"></div></div>
+            <div class="ba-box"><h4>🎯 Recommended Positioning</h4><div id="comp-after"></div></div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-box chart-full"><h4>Price Comparison — Us vs All Competitors</h4><canvas id="compChart" height="110"></canvas></div>
+          </div>
+          <div class="insight-box" id="comp-insight"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const P={
+  'UltraView 4K Monitor':{price:245.50,cost:137.0,comp:258.90,cat:'Electronics',demand:38.2,margin:44.2,c1:265.0,c2:258.0,c3:253.7},
+  'Aura Pro Headphones':{price:187.50,cost:110.5,comp:196.43,cat:'Electronics',demand:40.7,margin:41.1,c1:199.9,c2:195.0,c3:194.3},
+  'SmartHome Hub Pro':{price:132.00,cost:63.0,comp:138.50,cat:'Electronics',demand:35.1,margin:52.3,c1:141.0,c2:138.0,c3:136.5},
+  'ThermoComfort Cooler':{price:89.99,cost:46.1,comp:94.20,cat:'Electronics',demand:42.0,margin:48.7,c1:96.0,c2:94.0,c3:92.6},
+  'LuxeDream Mattress':{price:189.00,cost:84.8,comp:198.75,cat:'Home & Kitchen',demand:28.4,margin:55.2,c1:202.0,c2:199.0,c3:195.3},
+  'ChefMaster Blender':{price:98.50,cost:46.2,comp:103.20,cat:'Home & Kitchen',demand:37.6,margin:53.1,c1:105.0,c2:103.0,c3:101.6},
+  'AquaPure Filter':{price:67.00,cost:27.8,comp:71.80,cat:'Home & Kitchen',demand:44.2,margin:58.4,c1:73.0,c2:72.0,c3:70.4},
+  'FlexFit Yoga Mat':{price:45.00,cost:18.0,comp:48.90,cat:'Sports',demand:49.8,margin:60.0,c1:50.0,c2:49.0,c3:47.7},
+  'ProRunner Shoes':{price:142.00,cost:75.0,comp:149.50,cat:'Sports',demand:33.9,margin:47.2,c1:152.0,c2:150.0,c3:146.5},
+  'HydroPeak Bottle':{price:35.00,cost:12.0,comp:37.80,cat:'Sports',demand:58.3,margin:65.7,c1:38.5,c2:37.9,c3:37.0},
+  'UrbanEdge Jacket':{price:89.00,cost:38.0,comp:93.40,cat:'Apparel',demand:43.7,margin:57.3,c1:95.0,c2:93.5,c3:91.7},
+  'ClassicFit Jeans':{price:68.00,cost:30.0,comp:71.20,cat:'Apparel',demand:46.2,margin:55.9,c1:72.5,c2:71.0,c3:70.1},
+  'GlowUp Serum':{price:55.00,cost:19.5,comp:57.50,cat:'Health & Beauty',demand:41.5,margin:64.5,c1:58.5,c2:57.5,c3:56.5},
+  'VitalBoost Vitamins':{price:38.00,cost:12.0,comp:40.20,cat:'Health & Beauty',demand:52.7,margin:68.4,c1:41.0,c2:40.5,c3:39.1},
+  'ZenAroma Diffuser':{price:28.00,cost:11.2,comp:29.80,cat:'Health & Beauty',demand:44.8,margin:60.2,c1:30.5,c2:29.9,c3:29.0}
+};
+const MM=[0.82,0.68,0.79,0.82,0.83,0.81,0.85,0.87,0.85,0.93,1.26,1.35];
+const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+let cur=null,CH={};
+
+function updateClock(){const n=new Date();document.getElementById('time').textContent=n.toLocaleTimeString('en-IN',{hour12:false});document.getElementById('date').textContent=n.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+setInterval(updateClock,1000);updateClock();
+
+function sv(sid,lid,sfx){
+  const v=parseFloat(document.getElementById(sid).value);
+  const el=document.getElementById(lid);
+  if(!el)return;
+  if(sfx==='$')el.textContent='$'+v.toFixed(2);
+  else if(sfx==='%')el.textContent=v.toFixed(0)+'%';
+  else el.textContent=v.toFixed(0)+sfx;
+}
+function switchTab(n){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  const idx=['price','forecast','promo','competitor'].indexOf(n);
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  document.getElementById('tab-'+n).classList.add('active');
+}
+function dc(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
+function mkCard(lbl,pct,b,a){
+  const cls=pct!==null&&pct>0?'positive':pct!==null&&pct<0?'negative':'neutral';
+  const sign=pct!==null&&pct>0?'+':'';
+  return `<div class="change-card ${cls}"><div class="change-metric">${lbl}</div><div class="change-pct">${pct!==null?sign+pct+'%':'—'}</div><div class="change-val">${b} &rarr; ${a}</div></div>`;
+}
+function mkRow(l,v){return `<div class="ba-row"><span>${l}</span><span>${v}</span></div>`;}
+function show(id){const el=document.getElementById(id);el.classList.add('show');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),100);}
+function fmtK(v){return v>=1000?'$'+(v/1000).toFixed(1)+'K':'$'+v.toFixed(0);}
+
+function selectProduct(name){
+  document.querySelectorAll('.product-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+name).classList.add('active');
+  cur=name;const p=P[name];
+  document.getElementById('placeholder').style.display='none';
+  document.getElementById('productDash').style.display='block';
+  const adv=+(p.comp-p.price).toFixed(2);
+  document.getElementById('hName').textContent=name;
+  document.getElementById('hCat').textContent=p.cat;
+  const bdg=document.getElementById('hBadge');
+  bdg.className='status-badge '+(adv>7?'badge-yellow':'badge-green');
+  bdg.textContent=adv>7?'⬆ Raise Price Opportunity':'✅ Price Optimal';
+  document.getElementById('hPrice').textContent='$'+p.price.toFixed(2);
+  document.getElementById('hComp').textContent='$'+p.comp.toFixed(2);
+  document.getElementById('hAdv').textContent='+$'+adv;
+  document.getElementById('hMargin').textContent=p.margin+'%';
+  document.getElementById('hDemand').textContent=p.demand+' u/day';
+  document.getElementById('hRevDay').textContent='$'+(p.demand*p.price).toFixed(0);
+  document.getElementById('p_newPrice').max=p.price*2.5;
+  document.getElementById('p_newPrice').value=p.price;
+  document.getElementById('p_newPriceNum').value=p.price.toFixed(2);
+  document.getElementById('p_newPriceLbl').textContent='$'+p.price.toFixed(2);
+  document.getElementById('f_price').value=p.price.toFixed(2);
+  document.getElementById('c_comp1').value=p.c1;
+  document.getElementById('c_comp2').value=p.c2;
+  document.getElementById('c_comp3').value=p.c3;
+  ['res-price','res-forecast','res-promo','res-competitor'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  dc('historyChart');
+  const hist=MM.map(m=>+(p.demand*m*p.price*30).toFixed(0));
+  CH['historyChart']=new Chart(document.getElementById('historyChart'),{
+    type:'bar',data:{labels:MN,datasets:[
+      {label:'Monthly Revenue',data:hist,backgroundColor:'rgba(139,92,246,0.25)',borderColor:'#8b5cf6',borderWidth:1.5,type:'bar'},
+      {label:'Trend',data:hist,type:'line',borderColor:'#06b6d4',borderWidth:2,pointRadius:3,fill:false,tension:0.4}
+    ]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(51,65,85,0.4)'}},
+              y:{ticks:{color:'#94a3b8',callback:v=>fmtK(v)},grid:{color:'rgba(51,65,85,0.4)'}}}}
+  });
+}
+
+function runPriceAnalysis(){
+  if(!cur)return;const p=P[cur];
+  const np=parseFloat(document.getElementById('p_newPriceNum').value)||p.price;
+  const el=parseFloat(document.getElementById('p_elasticity').value)||1.5;
+  const days=parseInt(document.getElementById('p_daysNum').value)||30;
+  const tgt=parseFloat(document.getElementById('p_targetRev').value)||null;
+  const nd=+(p.demand*Math.pow(p.price/np,el)).toFixed(2);
+  const nm=+((np-p.cost)/np*100).toFixed(1);
+  const ndr=+(nd*np).toFixed(2);const odr=+(p.demand*p.price).toFixed(2);
+  const ntr=+(ndr*days).toFixed(0);const otr=+(odr*days).toFixed(0);
+  const ntp=+(nd*(np-p.cost)*days).toFixed(0);const otp=+(p.demand*(p.price-p.cost)*days).toFixed(0);
+  const rc=+((ntr-otr)/otr*100).toFixed(1);
+  const dc2=+((nd-p.demand)/p.demand*100).toFixed(1);
+  const pc=+((ntp-otp)/otp*100).toFixed(1);
+  const mc=+(nm-p.margin).toFixed(1);
+  document.getElementById('price-change-cards').innerHTML=
+    mkCard('Revenue ('+days+'d)',rc,fmtK(otr),fmtK(ntr))+
+    mkCard('Daily Demand',dc2,p.demand+' u/day',nd+' u/day')+
+    mkCard('Profit ('+days+'d)',pc,fmtK(otp),fmtK(ntp))+
+    mkCard('Gross Margin',mc,p.margin+'%',nm+'%');
+  document.getElementById('ba-before').innerHTML=
+    mkRow('Price','$'+p.price.toFixed(2))+mkRow('Daily Demand',p.demand+' units')+
+    mkRow('Daily Revenue','$'+odr)+mkRow('Gross Margin',p.margin+'%')+
+    mkRow(days+'d Revenue','$'+otr.toLocaleString())+mkRow(days+'d Profit','$'+otp.toLocaleString());
+  document.getElementById('ba-after').innerHTML=
+    mkRow('New Price','$'+np.toFixed(2))+mkRow('New Demand',nd+' units')+
+    mkRow('New Daily Revenue','$'+ndr)+mkRow('New Margin',nm+'%')+
+    mkRow(days+'d Revenue','$'+ntr.toLocaleString())+mkRow(days+'d Profit','$'+ntp.toLocaleString())+
+    (tgt?mkRow('Target Hit?',ntr>=tgt?'✅ YES — Target Met':'❌ Need $'+Math.abs(tgt-ntr).toLocaleString()+' more'):'');
+  document.getElementById('price-insight').innerHTML=`<p>💡 ${rc>=0?'Raising':'Lowering'} price to <strong>$${np.toFixed(2)}</strong> ${rc>=0?'increases':'decreases'} ${days}-day revenue by <strong>${rc>=0?'+':''}${rc}%</strong> ($${Math.abs(ntr-otr).toLocaleString()} ${rc>=0?'gained':'lost'}). Demand: <strong>${p.demand}</strong> → <strong>${nd} units/day</strong>. ${np<p.comp?`Still <strong>$${(p.comp-np).toFixed(2)} below competitor average</strong> — safe move.`:`⚠️ <strong>$${(np-p.comp).toFixed(2)} above competitor average</strong> — watch demand carefully.`}</p>`;
+  dc('priceRevChart');
+  CH['priceRevChart']=new Chart(document.getElementById('priceRevChart'),{type:'bar',
+    data:{labels:['Current Price','New Price'],datasets:[
+      {label:'Revenue',data:[otr,ntr],backgroundColor:['rgba(99,102,241,.4)','rgba(16,185,129,.4)'],borderColor:['#6366f1','#10b981'],borderWidth:2},
+      {label:'Profit',data:[otp,ntp],backgroundColor:['rgba(99,102,241,.2)','rgba(16,185,129,.2)'],borderColor:['#6366f1cc','#10b981cc'],borderWidth:1.5}
+    ]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(51,65,85,0.4)'}},y:{ticks:{color:'#94a3b8',callback:v=>fmtK(v)},grid:{color:'rgba(51,65,85,0.4)'}}}}});
+  dc('priceForecastChart');
+  const fl=[],ol=[],nl=[];const step=Math.max(1,Math.floor(days/28));
+  for(let d=step;d<=days;d+=step){fl.push('D'+d);ol.push(+(odr*d).toFixed(0));nl.push(+(ndr*d).toFixed(0));}
+  if(!fl.includes('D'+days)){fl.push('D'+days);ol.push(+(odr*days).toFixed(0));nl.push(+(ndr*days).toFixed(0));}
+  CH['priceForecastChart']=new Chart(document.getElementById('priceForecastChart'),{type:'line',
+    data:{labels:fl,datasets:[
+      {label:'Current Price Path',data:ol,borderColor:'#6366f1',borderWidth:2,pointRadius:2,fill:false,tension:.4},
+      {label:'New Price Path',data:nl,borderColor:'#10b981',borderWidth:2,pointRadius:2,fill:false,tension:.4}
+    ]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(51,65,85,0.4)'}},y:{ticks:{color:'#94a3b8',callback:v=>fmtK(v)},grid:{color:'rgba(51,65,85,0.4)'}}}}});
+  show('res-price');
+}
+
+function runForecast(){
+  if(!cur)return;const p=P[cur];
+  const days=parseInt(document.getElementById('f_daysNum').value)||30;
+  const price=parseFloat(document.getElementById('f_price').value)||p.price;
+  const stock=parseInt(document.getElementById('f_stockNum').value)||500;
+  const growth=parseFloat(document.getElementById('f_growthNum').value)||5;
+  const isH=document.getElementById('f_holiday').checked;
+  const isP=document.getElementById('f_promo').checked;
+  const sm=Math.min(1,stock/300);const hm=isH?2.75:1;const pm=isP?1.45:1;
+  const gm=1+(growth/100/365*days);
+  const bd=+(p.demand*Math.pow(p.price/price,1.5)*sm*hm*pm*gm).toFixed(2);
+  const tu=+(bd*days).toFixed(0);const tr=+(bd*price*days).toFixed(0);
+  const tp=+(bd*(price-p.cost)*days).toFixed(0);
+  const mg=+((price-p.cost)/price*100).toFixed(1);
+  const ot=+(p.demand*days).toFixed(0);const or_=+(p.demand*p.price*days).toFixed(0);
+  const dc3=+((bd-p.demand)/p.demand*100).toFixed(1);
+  const rc=+((tr-or_)/or_*100).toFixed(1);
+  document.getElementById('forecast-change-cards').innerHTML=
+    mkCard('Daily Demand',dc3,p.demand+' u/day',bd+' u/day')+
+    mkCard('Total Units ('+days+'d)',null,ot.toLocaleString(),tu.toLocaleString())+
+    mkCard('Total Revenue ('+days+'d)',rc,fmtK(or_),fmtK(tr))+
+    mkCard('Gross Margin',null,'—',mg+'%');
+  dc('forecastLineChart');
+  const fl=[],cu=[],cr=[];let cua=0,cra=0;
+  const step=Math.max(1,Math.floor(Math.min(days,90)/28));
+  for(let d=1;d<=Math.min(days,90);d++){cua+=bd;cra+=bd*price;if(d===1||d%step===0||d===Math.min(days,90)){fl.push('D'+d);cu.push(+cua.toFixed(0));cr.push(+cra.toFixed(0));}}
+  CH['forecastLineChart']=new Chart(document.getElementById('forecastLineChart'),{type:'line',
+    data:{labels:fl,datasets:[
+      {label:'Cumulative Revenue ($)',data:cr,borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.1)',fill:true,borderWidth:2,pointRadius:2,tension:.4,yAxisID:'y'},
+      {label:'Cumulative Units',data:cu,borderColor:'#06b6d4',borderWidth:2,pointRadius:2,fill:false,tension:.4,yAxisID:'y1'}
+    ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(51,65,85,0.4)'}},
+              y:{ticks:{color:'#94a3b8',callback:v=>fmtK(v)},grid:{color:'rgba(51,65,85,0.4)'}},
+              y1:{position:'right',ticks:{color:'#06b6d4',callback:v=>v.toLocaleString()+'u'},grid:{drawOnChartArea:false}}}}});
+  const tags=[];
+  if(isH)tags.push('<strong>Holiday +275%</strong>');if(isP)tags.push('<strong>Promo +45%</strong>');
+  if(stock<150)tags.push('<strong style="color:#ef4444">⚠ Low stock limits demand</strong>');
+  document.getElementById('forecast-insight').innerHTML=
+    `<p>💡 At price <strong>$${price.toFixed(2)}</strong> over <strong>${days} days</strong>: <strong>${bd} units/day</strong> forecast (${tu.toLocaleString()} total). Revenue: <strong>$${tr.toLocaleString()}</strong> | Profit: <strong>$${tp.toLocaleString()}</strong> | Margin: <strong>${mg}%</strong>${tags.length?' | Active: '+tags.join(' + '):''}</p>`;
+  show('res-forecast');
+}
+
+function runPromoSim(){
+  if(!cur)return;const p=P[cur];
+  const disc=parseFloat(document.getElementById('pr_discountNum').value)||10;
+  const days=parseInt(document.getElementById('pr_daysNum').value)||7;
+  const lift=parseFloat(document.getElementById('pr_liftNum').value)||45;
+  const isH=document.getElementById('pr_holiday').checked;
+  const pp=+(p.price*(1-disc/100)).toFixed(2);
+  const hm=isH?2.75:1;const dm=(1+lift/100)*hm;
+  const pd2=+(p.demand*dm).toFixed(2);const pm=+((pp-p.cost)/pp*100).toFixed(1);
+  const npr=+(p.demand*p.price*days).toFixed(0);const pr2=+(pd2*pp*days).toFixed(0);
+  const npp=+(p.demand*(p.price-p.cost)*days).toFixed(0);const pp2=+(pd2*(pp-p.cost)*days).toFixed(0);
+  const nu=+(p.demand*days).toFixed(0);const pu=+(pd2*days).toFixed(0);
+  const rc=+((pr2-npr)/npr*100).toFixed(1);const pc=+((pp2-npp)/npp*100).toFixed(1);
+  const uc=+((pu-nu)/nu*100).toFixed(1);const mc=+(pm-p.margin).toFixed(1);
+  document.getElementById('promo-change-cards').innerHTML=
+    mkCard('Revenue ('+days+'d)',rc,fmtK(npr),fmtK(pr2))+
+    mkCard('Units Sold',uc,nu.toLocaleString(),pu.toLocaleString())+
+    mkCard('Profit ('+days+'d)',pc,fmtK(npp),fmtK(pp2))+
+    mkCard('Gross Margin',mc,p.margin+'%',pm+'%');
+  document.getElementById('promo-before').innerHTML=
+    mkRow('Price','$'+p.price)+mkRow('Daily Demand',p.demand+' u/day')+
+    mkRow('Gross Margin',p.margin+'%')+mkRow(days+'d Revenue','$'+npr.toLocaleString())+mkRow(days+'d Profit','$'+npp.toLocaleString());
+  document.getElementById('promo-after').innerHTML=
+    mkRow('Promo Price','$'+pp+' (−'+disc+'%)')+mkRow('Daily Demand',pd2+' u/day')+
+    mkRow('Gross Margin',pm+'%')+mkRow(days+'d Revenue','$'+pr2.toLocaleString())+mkRow(days+'d Profit','$'+pp2.toLocaleString())+
+    mkRow('Promotion ROI',pc>0?'✅ PROFITABLE (+'+pc+'%)':'❌ LOSS-MAKING ('+pc+'%)');
+  dc('promoRevChart');
+  CH['promoRevChart']=new Chart(document.getElementById('promoRevChart'),{type:'bar',
+    data:{labels:['No Promotion','With Promotion'],datasets:[
+      {label:'Revenue ($)',data:[npr,pr2],backgroundColor:['rgba(99,102,241,.4)','rgba(16,185,129,.4)'],borderColor:['#6366f1','#10b981'],borderWidth:2},
+      {label:'Units Sold',data:[nu,pu],backgroundColor:['rgba(99,102,241,.15)','rgba(16,185,129,.15)'],borderColor:['#6366f1aa','#10b981aa'],borderWidth:1.5,yAxisID:'y1'}
+    ]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(51,65,85,0.4)'}},
+              y:{ticks:{color:'#94a3b8',callback:v=>fmtK(v)},grid:{color:'rgba(51,65,85,0.4)'}},
+              y1:{position:'right',ticks:{color:'#06b6d4'},grid:{drawOnChartArea:false}}}}});
+  dc('promoMarginChart');
+  CH['promoMarginChart']=new Chart(document.getElementById('promoMarginChart'),{type:'bar',
+    data:{labels:['No Promotion','With Promotion'],datasets:[{label:'Gross Margin %',data:[p.margin,pm],backgroundColor:['rgba(16,185,129,.4)','rgba(245,158,11,.4)'],borderColor:['#10b981','#f59e0b'],borderWidth:2}]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(51,65,85,0.4)'}},y:{min:0,max:80,ticks:{color:'#94a3b8',callback:v=>v+'%'},grid:{color:'rgba(51,65,85,0.4)'}}}}});
+  document.getElementById('promo-insight').innerHTML=
+    `<p>💡 A <strong>${disc}% discount</strong> for <strong>${days} days</strong> ${pc>0?'✅ INCREASES':'❌ DECREASES'} profit by <strong>${Math.abs(pc)}%</strong>. Revenue: <strong>$${npr.toLocaleString()}</strong> → <strong>$${pr2.toLocaleString()}</strong>. Margin drops from <strong>${p.margin}%</strong> to <strong>${pm}%</strong> (−${Math.abs(mc)} pts). ${pc>0?'Volume gain exceeds margin loss — run the promotion.':'Margin loss too high — try a smaller discount ('+Math.max(5,disc-5)+'% instead).'}</p>`;
+  show('res-promo');
+}
+
+function runCompetitorAnalysis(){
+  if(!cur)return;const p=P[cur];
+  const c1=parseFloat(document.getElementById('c_comp1').value)||p.c1;
+  const c2=parseFloat(document.getElementById('c_comp2').value)||p.c2;
+  const c3=parseFloat(document.getElementById('c_comp3').value)||p.c3;
+  const pos=parseFloat(document.getElementById('c_position').value)||0.96;
+  const nca=+((c1+c2+c3)/3).toFixed(2);
+  const rp=+(nca*pos).toFixed(2);const oa=+(p.comp-p.price).toFixed(2);const na=+(nca-rp).toFixed(2);
+  const nm=+((rp-p.cost)/rp*100).toFixed(1);const pc=+((rp-p.price)/p.price*100).toFixed(1);
+  const nd=+(p.demand*Math.pow(p.price/rp,1.5)).toFixed(2);
+  const rc=+((rp*nd-p.price*p.demand)/(p.price*p.demand)*100).toFixed(1);
+  const mc=+(nm-p.margin).toFixed(1);
+  document.getElementById('comp-change-cards').innerHTML=
+    mkCard('Recommended Price',pc,'$'+p.price.toFixed(2),'$'+rp.toFixed(2))+
+    mkCard('Competitor Avg',null,'$'+p.comp+' (old)','$'+nca+' (new)')+
+    mkCard('Daily Revenue',rc,'$'+(p.demand*p.price).toFixed(0),'$'+(nd*rp).toFixed(0))+
+    mkCard('Gross Margin',mc,p.margin+'%',nm+'%');
+  document.getElementById('comp-before').innerHTML=
+    mkRow('Our Price','$'+p.price.toFixed(2))+mkRow('Comp Avg (old)','$'+p.comp)+
+    mkRow('Advantage','$'+oa+' cheaper')+mkRow('Daily Demand',p.demand+' u/day')+mkRow('Margin',p.margin+'%');
+  document.getElementById('comp-after').innerHTML=
+    mkRow('Recommended Price','$'+rp)+mkRow('Comp Avg (new)','$'+nca)+
+    mkRow('New Advantage','$'+na+' cheaper')+mkRow('Forecast Demand',nd+' u/day')+mkRow('New Margin',nm+'%')+
+    mkRow('3 Competitors','$'+c1+' / $'+c2+' / $'+c3);
+  dc('compChart');
+  CH['compChart']=new Chart(document.getElementById('compChart'),{type:'bar',
+    data:{labels:['Our Current','Recommended','Competitor 1','Competitor 2','Competitor 3','New Avg'],
+      datasets:[{label:'Price ($)',data:[p.price,rp,c1,c2,c3,nca],
+        backgroundColor:['rgba(99,102,241,.5)','rgba(16,185,129,.5)','rgba(239,68,68,.3)','rgba(239,68,68,.3)','rgba(239,68,68,.3)','rgba(245,158,11,.4)'],
+        borderColor:['#6366f1','#10b981','#ef4444','#ef4444','#ef4444','#f59e0b'],borderWidth:2}]},
+    options:{responsive:true,indexAxis:'y',plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8',callback:v=>'$'+v},grid:{color:'rgba(51,65,85,0.4)'}},
+              y:{ticks:{color:'#94a3b8'},grid:{color:'rgba(51,65,85,0.4)'}}}}});
+  document.getElementById('comp-insight').innerHTML=
+    `<p>💡 Updated competitor average: <strong>$${nca}</strong>. Recommended price: <strong>$${rp}</strong> (${pc>=0?'+':''}${pc}% from current). You stay <strong>$${na} cheaper than competitors</strong>. Margin: <strong>${p.margin}%</strong> → <strong>${nm}%</strong> (${mc>=0?'+':''}${mc} pts). Daily revenue: ${rc>=0?'<strong style="color:#10b981">+':'<strong style="color:#ef4444">'}${rc}%</strong>.</p>`;
+  show('res-competitor');
+}
+</script>
+</body>
+</html>
