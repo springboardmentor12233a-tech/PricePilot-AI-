@@ -98,3 +98,15 @@ export async function getAIInsights(context: string) {
 
   return response.json();
 }
+
+export async function getCompetitorAnalysis() {
+  const response = await fetch(`${API_BASE_URL}/predictions/competitor-analysis`);
+  if (!response.ok) throw new Error("Failed to fetch competitor analysis");
+  return response.json();
+}
+
+export async function getProfitability() {
+  const response = await fetch(`${API_BASE_URL}/predictions/profitability`);
+  if (!response.ok) throw new Error("Failed to fetch profitability data");
+  return response.json();
+}

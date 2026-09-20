@@ -207,3 +207,22 @@ def get_ai_insights(request: InsightRequest):
         return {"insight": insight}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"AI insight generation failed: {str(e)}")
+
+@router.get("/competitor-analysis")
+def get_competitor_analysis():
+    file_path = os.path.join(BASE_DIR, "..", "..", "..", "data", "processed_data", "competitor_analysis_results.csv")
+    df_comp = pd.read_csv(file_path)
+
+    return {
+        "comparison": df_comp.to_dict(orient="records")
+    }
+
+
+@router.get("/profitability")
+def get_profitability():
+    file_path = os.path.join(BASE_DIR, "..", "..", "..", "data", "processed_data", "profitability_analysis.csv")
+    df_profit = pd.read_csv(file_path)
+
+    return {
+        "profitability": df_profit.to_dict(orient="records")
+    }
