@@ -1,0 +1,11 @@
+export { default as AIAssistantButton } from './components/AIAssistantButton';
+export { default as AIAssistantPanel } from './components/AIAssistantPanel';
+export { default as ChatHeader } from './components/ChatHeader';
+export { default as ChatMessage } from './components/ChatMessage';
+export { default as ChatMessageList } from './components/ChatMessageList';
+export { default as ChatInput } from './components/ChatInput';
+export { default as TypingIndicator } from './components/TypingIndicator';
+export { default as EmptyChatState } from './components/EmptyChatState';
+export { default as SuggestedPrompt } from './components/SuggestedPrompt';
+export { default as useAIAssistant } from './hooks/useAIAssistant';
+export { default as aiAssistantApi } from './services/aiApi';

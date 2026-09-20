@@ -9,8 +9,20 @@ import { getAccessToken, clearAuthStorage } from './storage';
 import { extractErrorMessage } from './errorHandler';
 
 const rawBaseUrl = import.meta.env.VITE_API_BASE_URL;
-// Ensure no trailing slash on the base URL
-const baseURL = (rawBaseUrl || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+// Ensure no trailing slash on the base URL. If in browser preview and pointing to local port 8000, fallback to same-origin.
+const getEffectiveBaseUrl = () => {
+  if (!rawBaseUrl) return '';
+  if (
+    typeof window !== 'undefined' &&
+    (rawBaseUrl.includes('127.0.0.1:8000') || rawBaseUrl.includes('localhost:8000')) &&
+    window.location.port !== '8000'
+  ) {
+    return '';
+  }
+  return rawBaseUrl.replace(/\/+$/, '');
+};
+
+const baseURL = getEffectiveBaseUrl();
 
 export const apiClient = axios.create({
   baseURL,

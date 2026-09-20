@@ -1,0 +1,22 @@
+# PricePilot AI Enterprise Robots.txt
+User-agent: *
+Disallow: /dashboard
+Disallow: /products
+Disallow: /categories
+Disallow: /inventory
+Disallow: /competitors
+Disallow: /forecast
+Disallow: /forecasting
+Disallow: /pricing
+Disallow: /revenue
+Disallow: /profitability
+Disallow: /revenue-simulation
+Disallow: /pricing-analytics
+Disallow: /recommendations
+Disallow: /reports
+Disallow: /executive
+Disallow: /organization
+Disallow: /team
+Disallow: /settings
+Allow: /login
+Allow: /register

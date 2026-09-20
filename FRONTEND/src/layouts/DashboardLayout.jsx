@@ -15,14 +15,22 @@ import {
   Settings,
   LogOut,
   TrendingUp,
+  Sparkles,
 } from 'lucide-react';
 import { useToast } from '../hooks/useToast';
 import { APP_CONFIG } from '../utils/constants';
+import {
+  AIAssistantButton,
+  AIAssistantPanel,
+  useAIAssistant,
+} from '../features/ai-assistant';
 
 export default function DashboardLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  const aiAssistant = useAIAssistant();
 
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -58,12 +66,16 @@ export default function DashboardLayout() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col antialiased">
       {/* Mobile Drawer */}
-      <MobileNavigation isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      <MobileNavigation
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        onOpenAI={aiAssistant.openChat}
+      />
 
       <div className="flex flex-1 h-screen overflow-hidden">
         {/* Desktop Sidebar (Fixed 256px) */}
         <div className="hidden lg:block shrink-0">
-          <Sidebar />
+          <Sidebar onOpenAI={aiAssistant.openChat} />
         </div>
 
         {/* Main Content Area */}
@@ -105,6 +117,18 @@ export default function DashboardLayout() {
               <div className="sm:hidden">
                 <OrganizationSelector />
               </div>
+
+              {/* AI Assistant Quick Header Trigger */}
+              <button
+                type="button"
+                onClick={aiAssistant.toggleChat}
+                title="Open PricePilot AI Assistant"
+                aria-label="Open PricePilot AI Assistant"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#EFF6FF] to-[#EEF2FF] border border-[#BFDBFE] hover:border-[#93C5FD] text-[#1D4ED8] hover:bg-[#DBEAFE] transition-all cursor-pointer text-xs font-semibold shadow-2xs"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
+                <span className="hidden sm:inline">Ask AI</span>
+              </button>
 
               {/* Help Button */}
               <button
@@ -230,6 +254,26 @@ export default function DashboardLayout() {
           </main>
         </div>
       </div>
+
+      {/* Floating AI Assistant Trigger Button */}
+      <AIAssistantButton
+        onClick={aiAssistant.toggleChat}
+        isOpen={aiAssistant.isOpen}
+      />
+
+      {/* Slide-over / Modal AI Assistant Panel */}
+      <AIAssistantPanel
+        isOpen={aiAssistant.isOpen}
+        onClose={aiAssistant.closeChat}
+        onNewChat={aiAssistant.startNewChat}
+        onClear={aiAssistant.clearChat}
+        messages={aiAssistant.messages}
+        isLoading={aiAssistant.isLoading}
+        onSendMessage={aiAssistant.sendMessage}
+        onRetry={aiAssistant.retryLast}
+        onSelectPrompt={aiAssistant.sendMessage}
+        contextPage={aiAssistant.pageContext.page}
+      />
     </div>
   );
 }

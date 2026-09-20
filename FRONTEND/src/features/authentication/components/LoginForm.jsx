@@ -89,7 +89,7 @@ export default function LoginForm() {
         name="email"
         type="email"
         autoComplete="email"
-        placeholder="alex@acme.com"
+        placeholder="name@company.com"
         value={formData.email}
         onChange={handleChange}
         error={formErrors.email}

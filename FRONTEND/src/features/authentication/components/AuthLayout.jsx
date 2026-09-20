@@ -98,16 +98,52 @@ export default function AuthLayout({
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
-                <p className="text-[11px] font-medium text-[#64748B]">Target Margin Lift</p>
-                <p className="text-lg font-bold text-[#16A34A] mt-1">+5.2%</p>
-                <p className="text-[10px] text-[#94A3B8] mt-0.5">Automated price alignment</p>
+              {/* Pillar 1: Demand */}
+              <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-wider">Demand</span>
+                  <span className="text-[10px] font-medium text-[#2563EB]">PED: -1.24</span>
+                </div>
+                <p className="text-sm font-bold text-[#0F172A] mt-1">High Elasticity</p>
+                <div className="h-1.5 w-full bg-[#E2E8F0] rounded-full mt-2 overflow-hidden">
+                  <div className="h-full bg-[#2563EB] rounded-full w-3/4" />
+                </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
-                <p className="text-[11px] font-medium text-[#64748B]">Market Velocity</p>
-                <p className="text-lg font-bold text-[#0F172A] mt-1">2.4x</p>
-                <p className="text-[10px] text-[#94A3B8] mt-0.5">Inventory turnover rate</p>
+              {/* Pillar 2: Price */}
+              <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-wider">Price</span>
+                  <span className="text-[10px] font-medium text-[#16A34A]">+4.8% Lift</span>
+                </div>
+                <p className="text-sm font-bold text-[#0F172A] mt-1">Optimized Point</p>
+                <div className="h-1.5 w-full bg-[#E2E8F0] rounded-full mt-2 overflow-hidden">
+                  <div className="h-full bg-[#16A34A] rounded-full w-4/5" />
+                </div>
+              </div>
+
+              {/* Pillar 3: Revenue */}
+              <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-wider">Revenue</span>
+                  <span className="text-[10px] font-medium text-[#6366F1]">Gross Margin</span>
+                </div>
+                <p className="text-sm font-bold text-[#0F172A] mt-1">Expansion Curve</p>
+                <div className="h-1.5 w-full bg-[#E2E8F0] rounded-full mt-2 overflow-hidden">
+                  <div className="h-full bg-[#6366F1] rounded-full w-2/3" />
+                </div>
+              </div>
+
+              {/* Pillar 4: Competitor */}
+              <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-wider">Competitor</span>
+                  <span className="text-[10px] font-medium text-[#D97706]">Index: 99.2</span>
+                </div>
+                <p className="text-sm font-bold text-[#0F172A] mt-1">Market Parity</p>
+                <div className="h-1.5 w-full bg-[#E2E8F0] rounded-full mt-2 overflow-hidden">
+                  <div className="h-full bg-[#D97706] rounded-full w-11/12" />
+                </div>
               </div>
             </div>
 

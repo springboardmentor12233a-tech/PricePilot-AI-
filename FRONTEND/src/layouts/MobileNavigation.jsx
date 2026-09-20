@@ -6,7 +6,7 @@ import { X } from 'lucide-react';
  * Reusable Mobile Navigation Drawer
  * Touch-friendly with min 44px targets, smooth 200ms transition, backdrop overlay
  */
-export default function MobileNavigation({ isOpen, onClose }) {
+export default function MobileNavigation({ isOpen, onClose, onOpenAI }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -55,7 +55,11 @@ export default function MobileNavigation({ isOpen, onClose }) {
 
         {/* Sidebar Navigation */}
         <div className="h-full overflow-y-auto">
-          <Sidebar onItemClick={onClose} className="w-full border-r-0" />
+          <Sidebar
+            onItemClick={onClose}
+            onOpenAI={onOpenAI}
+            className="w-full border-r-0"
+          />
         </div>
       </div>
     </div>

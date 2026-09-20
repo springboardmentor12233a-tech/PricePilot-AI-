@@ -20,6 +20,7 @@ export const API_ENDPOINTS = {
   AUTH: {
     REGISTER: '/api/v1/auth/register',
     LOGIN: '/api/v1/auth/login',
+    TOKEN: '/api/v1/auth/token',
     ME: '/api/v1/auth/me',
   },
   // Users

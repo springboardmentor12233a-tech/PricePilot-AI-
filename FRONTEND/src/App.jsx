@@ -4,12 +4,14 @@ import { AuthProvider } from './features/authentication/hooks/useAuth';
 import { OrganizationProvider } from './features/organizations/context/OrganizationContext';
 import { ToastProvider } from './components/Toast';
 import LoadingSpinner from './components/LoadingSpinner';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Layouts & Guards
 import DashboardLayout from './layouts/DashboardLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Route-level code splitting for production performance
+const LandingPage = lazy(() => import('./features/landing/pages/LandingPage'));
 const LoginPage = lazy(() => import('./features/authentication/pages/LoginPage'));
 const RegisterPage = lazy(() => import('./features/authentication/pages/RegisterPage'));
 
@@ -27,6 +29,7 @@ const ForecastPage = lazy(() => import('./features/forecasting/pages/ForecastPag
 const RevenuePage = lazy(() => import('./features/revenue/pages/RevenuePage'));
 const ProfitabilityPage = lazy(() => import('./features/profitability/pages/ProfitabilityPage'));
 const RevenueSimulationPage = lazy(() => import('./features/revenue/pages/RevenueSimulationPage'));
+const RevenueOptimizationPage = lazy(() => import('./features/revenue-optimization/pages/RevenueOptimizationPage'));
 const PricingAnalyticsPage = lazy(() => import('./features/pricing-analytics/pages/PricingAnalyticsPage'));
 const ReportsPage = lazy(() => import('./features/reports/pages/ReportsPage'));
 const ExecutiveReportPage = lazy(() => import('./features/reports/pages/ExecutiveReportPage'));
@@ -54,56 +57,58 @@ export default function App() {
       <AuthProvider>
         <OrganizationProvider>
           <ToastProvider>
-            <Suspense fallback={<PageLoadingFallback />}>
-              <Routes>
-                {/* Public Authentication Routes */}
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoadingFallback />}>
+                <Routes>
+                  {/* Public Routes */}
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
 
-                {/* Protected SaaS Application Shell */}
-                <Route element={<ProtectedRoute />}>
-                  <Route element={<DashboardLayout />}>
-                    <Route index element={<Navigate to="/dashboard" replace />} />
-                    <Route path="/dashboard" element={<DashboardPage />} />
+                  {/* Protected SaaS Application Shell */}
+                  <Route element={<ProtectedRoute />}>
+                    <Route element={<DashboardLayout />}>
+                      <Route path="/dashboard" element={<DashboardPage />} />
 
-                    {/* Catalog */}
-                    <Route path="/products" element={<ProductsPage />} />
-                    <Route path="/products/:productId" element={<ProductDetailPage />} />
-                    <Route path="/categories" element={<CategoriesPage />} />
-                    <Route path="/inventory" element={<InventoryPage />} />
+                      {/* Catalog */}
+                      <Route path="/products" element={<ProductsPage />} />
+                      <Route path="/products/:productId" element={<ProductDetailPage />} />
+                      <Route path="/categories" element={<CategoriesPage />} />
+                      <Route path="/inventory" element={<InventoryPage />} />
 
-                    {/* Competitors & Intelligence */}
-                    <Route path="/competitors" element={<CompetitorsPage />} />
-                    <Route path="/competitors/:competitorId" element={<CompetitorDetailPage />} />
-                    <Route path="/market-intelligence" element={<MarketIntelligencePage />} />
-                    <Route path="/pricing" element={<PricingPage />} />
-                    <Route path="/recommendations" element={<RecommendationsPage />} />
-                    <Route path="/forecast" element={<ForecastPage />} />
-                    <Route path="/forecasting" element={<ForecastPage />} />
+                      {/* Competitors & Intelligence */}
+                      <Route path="/competitors" element={<CompetitorsPage />} />
+                      <Route path="/competitors/:competitorId" element={<CompetitorDetailPage />} />
+                      <Route path="/market-intelligence" element={<MarketIntelligencePage />} />
+                      <Route path="/pricing" element={<PricingPage />} />
+                      <Route path="/recommendations" element={<RecommendationsPage />} />
+                      <Route path="/forecast" element={<ForecastPage />} />
+                      <Route path="/forecasting" element={<ForecastPage />} />
 
-                    {/* Revenue & Profitability */}
-                    <Route path="/pricing-analytics" element={<PricingAnalyticsPage />} />
-                    <Route path="/revenue" element={<RevenuePage />} />
-                    <Route path="/profitability" element={<ProfitabilityPage />} />
-                    <Route path="/revenue-simulation" element={<RevenueSimulationPage />} />
-                    <Route path="/revenue-optimization" element={<RevenueSimulationPage />} />
+                      {/* Revenue & Profitability */}
+                      <Route path="/pricing-analytics" element={<PricingAnalyticsPage />} />
+                      <Route path="/revenue" element={<RevenuePage />} />
+                      <Route path="/profitability" element={<ProfitabilityPage />} />
+                      <Route path="/revenue-simulation" element={<RevenueSimulationPage />} />
+                      <Route path="/revenue-optimization" element={<RevenueOptimizationPage />} />
 
-                    {/* Reports */}
-                    <Route path="/reports" element={<ReportsPage />} />
-                    <Route path="/executive" element={<ExecutiveReportPage />} />
+                      {/* Reports */}
+                      <Route path="/reports" element={<ReportsPage />} />
+                      <Route path="/executive" element={<ExecutiveReportPage />} />
 
-                    {/* Administration & Account */}
-                    <Route path="/organization" element={<OrganizationPage />} />
-                    <Route path="/team" element={<TeamPage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
+                      {/* Administration & Account */}
+                      <Route path="/organization" element={<OrganizationPage />} />
+                      <Route path="/team" element={<TeamPage />} />
+                      <Route path="/settings" element={<SettingsPage />} />
+                    </Route>
                   </Route>
-                </Route>
 
-                {/* 404 Fallback */}
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
+                  {/* 404 Fallback */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
             </Suspense>
-          </ToastProvider>
+          </ErrorBoundary>
+        </ToastProvider>
         </OrganizationProvider>
       </AuthProvider>
     </BrowserRouter>

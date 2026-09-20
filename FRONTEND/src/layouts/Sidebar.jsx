@@ -69,7 +69,7 @@ export const NAVIGATION_SECTIONS = [
   },
 ];
 
-export default function Sidebar({ onItemClick, className = '' }) {
+export default function Sidebar({ onItemClick, onOpenAI, className = '' }) {
   const location = useLocation();
 
   return (
@@ -78,22 +78,49 @@ export default function Sidebar({ onItemClick, className = '' }) {
       aria-label="Main Navigation"
     >
       {/* Brand Header */}
-      <div className="h-16 px-6 border-b border-[#E2E8F0] flex items-center gap-3 shrink-0">
-        <div className="w-8 h-8 rounded-lg bg-[#2563EB] text-white flex items-center justify-center shadow-2xs">
-          <TrendingUp className="w-4.5 h-4.5" />
-        </div>
-        <div>
-          <span className="font-bold text-[16px] text-[#0F172A] tracking-tight block leading-none">
-            {APP_CONFIG.name}
-          </span>
-          <span className="text-[10px] text-[#64748B] font-medium tracking-wide">
-            ENTERPRISE
-          </span>
+      <div className="h-16 px-6 border-b border-[#E2E8F0] flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#2563EB] text-white flex items-center justify-center shadow-2xs">
+            <TrendingUp className="w-4.5 h-4.5" />
+          </div>
+          <div>
+            <span className="font-bold text-[16px] text-[#0F172A] tracking-tight block leading-none">
+              {APP_CONFIG.name}
+            </span>
+            <span className="text-[10px] text-[#64748B] font-medium tracking-wide">
+              ENTERPRISE
+            </span>
+          </div>
         </div>
       </div>
 
+      {/* AI Assistant Quick Trigger */}
+      <div className="px-3.5 pt-3 pb-1">
+        <button
+          type="button"
+          onClick={() => {
+            if (onOpenAI) onOpenAI();
+            if (onItemClick) onItemClick();
+          }}
+          className="w-full flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-[#EFF6FF] to-[#EEF2FF] border border-[#BFDBFE] hover:border-[#93C5FD] text-[#1D4ED8] transition-all cursor-pointer shadow-2xs group"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-lg bg-[#2563EB] text-white flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
+              <Sparkles className="w-3.5 h-3.5" />
+            </div>
+            <div className="text-left">
+              <span className="text-xs font-bold text-[#0F172A] block leading-tight">AI Assistant</span>
+              <span className="text-[10px] text-[#64748B] block leading-tight">Ask PricePilot</span>
+            </div>
+          </div>
+          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-white text-[#2563EB] border border-[#BFDBFE]">
+            AI
+          </span>
+        </button>
+      </div>
+
       {/* Navigation Groups */}
-      <nav className="flex-1 overflow-y-auto px-3.5 py-4 space-y-6">
+      <nav className="flex-1 overflow-y-auto px-3.5 py-3 space-y-5">
         {NAVIGATION_SECTIONS.map((section) => (
           <div key={section.title}>
             <p className="px-3 text-[11px] font-semibold text-[#94A3B8] tracking-wider uppercase mb-1.5">
@@ -116,9 +143,9 @@ export default function Sidebar({ onItemClick, className = '' }) {
                     <NavLink
                       to={item.path}
                       onClick={onItemClick}
-                      className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 min-h-[38px] ${
+                      className={`relative flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 min-h-[38px] ${
                         isActive
-                          ? 'bg-[#EFF6FF] text-[#2563EB] font-medium'
+                          ? 'bg-[#EFF6FF] text-[#2563EB] font-semibold before:absolute before:left-0 before:top-2 before:bottom-2 before:w-1 before:bg-[#2563EB] before:rounded-r'
                           : 'text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC]'
                       }`}
                     >
