@@ -64,44 +64,62 @@ Built and honestly validated in `notebooks/price_prediction_model.ipynb`, includ
 |---|---|---|---|
 | Price Prediction (Random Forest) | `current_price` | R² = 0.99 | Legitimate — driven by `base_price` + `promotion_type` |
 | Discount Strategy (Random Forest) | `discount_pct` | R² = 0.29 | Genuine finding: historical discounting was calendar-driven, not demand-responsive |
-| Demand Forecast, corrected (Gradient Boosting) | `units_sold` | R² = 0.48 | Leakage removed (`demand_index` was a hidden discount proxy); `discount_pct` now shows real predictive importance |
-| Demand Forecast, time-series (Prophet) | `units_sold` (30-day) | MAE 1.64 units | 41% better than a 7-day moving-average baseline; 85.5% avg. forecast confidence |
+| Demand Forecast, corrected (Gradient Boosting) | `units_sold` | R² = 0.48 | Leakage removed (`demand_index` was a hidden discount proxy) |
+| Demand Forecast, time-series (Prophet) | `units_sold` (30-day) | MAE 1.64 units | 41% better than baseline; 85.5% avg. forecast confidence |
 
-- **Price Recommendation Engine** — simulates discount scenarios (0–50%), predicts resulting demand, and recommends the revenue-maximizing price point using genuine, leak-free price elasticity
-- **Short-term (7/14/30-day), medium-term (90-day), and long-term (365-day)** demand forecasts generated via Prophet, with honestly widening confidence intervals for longer horizons
-- **Trend classification** (Increasing / Stable / Decreasing Demand) based on forecast comparison
-- Trained models saved to `models/` for reuse
+- **Price Recommendation Engine** — simulates discount scenarios and recommends the revenue-maximizing price using genuine price elasticity
+- **Short-term, medium-term, and long-term** demand forecasts generated via Prophet
+- **Trend classification** (Increasing / Stable / Decreasing Demand)
 
-### 2. Backend — ML Model Serving
+### 2. Advanced Model Selection
 
-- New `/predictions` API routes (`src/backend/app/routes/predictions.py`) load the trained models and serve live predictions
-- **POST /predictions/recommend-price** — returns price/discount scenarios and the revenue-optimal recommendation for a given product
-- **GET /predictions/demand-forecast?days=N** — returns a demand forecast (7/14/30/90/365-day horizons) with confidence bounds and trend classification
+- Compared 5 algorithms (Linear Regression, Decision Tree, Random Forest, Gradient Boosting, XGBoost) on the demand forecasting problem
+- Random Forest selected as best performer, then tuned via **GridSearchCV** (3-fold CV, 18 combinations)
+- Final tuned model: R² = 0.8031, MAE = 2.64 units
 
-### 3. Frontend — Forecasting Dashboard
+### 3. Backend — ML Model Serving
 
-- New `/forecasting` page (`src/frontend/app/forecasting/page.tsx`) built with **Recharts**
-- Interactive demand forecast chart with confidence interval band and selectable horizon (7d/14d/30d/90d)
-- Trend and % change indicators
-- Price recommendation panel with a revenue-vs-discount curve and a highlighted optimal price card
+- **POST /predictions/recommend-price** — price/discount scenarios and revenue-optimal recommendation
+- **GET /predictions/demand-forecast?days=N** — demand forecast (7/14/30/90/365-day horizons) with confidence bounds and trend classification
+- **GET /predictions/kpis** — key business metrics (revenue, growth, category/regional performance)
+- **POST /predictions/ai-insights** — AI-generated business insights via **Groq API** (`openai/gpt-oss-120b`)
+
+### 4. Frontend — Forecasting & KPI Dashboards
+
+- **`/forecasting`** page — demand forecast chart with confidence bands, horizon selector, price recommendation curve
+- **`/kpis`** page — revenue trend, category/regional performance charts, and an AI-powered "Generate Insight" panel
+
 ---
 
-### 4. Advanced Model Selection & Business Intelligence (Additional Requirements)
+## 📊 Milestone 3: Competitor Analysis & Revenue Optimization ✅
 
-**Model Comparison & Tuning:**
-- Compared 5 algorithms (Linear Regression, Decision Tree, Random Forest, Gradient Boosting, XGBoost) on the corrected, leak-free demand forecasting dataset
-- Random Forest selected as best performer (R² = 0.80)
-- Tuned via **GridSearchCV** (3-fold cross-validation, 18 parameter combinations) — final tuned model: R² = 0.8031, MAE = 2.64 units
+**Status: Completed**
 
-**KPI Dashboard (Domain Knowledge Extraction):**
-- New `/kpis` dashboard page showing key business metrics: Total Revenue, Month-over-Month Growth, Average Order Value, Total Units Sold
-- Monthly revenue trend chart, category performance breakdown, and regional revenue distribution (via Recharts)
-- Backed by a new `GET /predictions/kpis` API endpoint
+### 1. Competitor Analysis (Jupyter Notebook)
 
-**AI-Powered Insights (External LLM Integration):**
-- Integrated **Groq API** (model: `openai/gpt-oss-120b`) to generate real-time, natural-language business insights from live KPI data
-- New `POST /predictions/ai-insights` endpoint and a "Generate Insight" button on the KPI dashboard
-- API key managed securely via `.env` (excluded from version control)
+Built in `notebooks/competitor_analysis.ipynb`, comparing the platform's own product pricing against real competitor data:
+
+- Mapped 8 internal product categories to relevant categories within the **Amazon UK Products** dataset (curated manually after filtering out noisy keyword-matched and catch-all categories)
+- Compared pricing using **median** (not mean) competitor price to remain robust against extreme outliers (competitor dataset ranges from £0.01 to £100,000)
+- **Finding:** Own products are positioned "Above Market" across all 8 categories, with premium gaps ranging from 217% to 1,796% versus competitor median pricing — a genuine market positioning insight
+- Generated rule-based **pricing strategy recommendations** per category based on gap severity
+
+### 2. Profitability Analytics
+
+- Calculated **revenue retention %** (percentage of full-price revenue retained after discounting) and **margin erosion** ($ lost to discounting) per category
+- Identified Electronics as the category with the weakest revenue retention (84.7%)
+
+### 3. Backend — Competitor & Profitability API
+
+- **GET /predictions/competitor-analysis** — price positioning and strategy recommendations by category
+- **GET /predictions/profitability** — revenue retention and margin erosion analytics by category
+
+### 4. Frontend — Competitor & Executive Dashboards
+
+- **`/competitor`** page — price positioning bar chart (own vs. competitor median), strategy recommendation cards, revenue retention chart
+- **`/executive`** page — consolidated executive summary combining KPIs, competitive position, and profitability into a single view, with an AI-generated (Groq) executive briefing and a category performance summary table
+
+---
 
 ## 🛠️ Tools & Technologies
 
@@ -109,63 +127,65 @@ Built and honestly validated in `notebooks/price_prediction_model.ipynb`, includ
 |---|---|
 | Data Analysis | Python, Pandas, NumPy, Matplotlib, Seaborn |
 | Machine Learning | scikit-learn, XGBoost, Prophet |
+| LLM Integration | Groq API (`openai/gpt-oss-120b`) |
 | Backend | FastAPI, SQLAlchemy, PostgreSQL, JWT (python-jose), Passlib (bcrypt) |
 | Frontend | Next.js, React, Tailwind CSS, TypeScript, Recharts |
 | Environment | VS Code, Jupyter Notebooks, Node.js |
 | Version Control | Git & GitHub |
-| LLM Integration | Groq API (openai/gpt-oss-120b) |
 
 ---
 
 ## 📁 Project Structure
 
-```
 PRICEPILOT AI/
 │
 ├── data/
-│   ├── raw/                        (excluded from Git)
-│   └── processed_data/             (excluded from Git)
+│ ├── raw/ (excluded from Git)
+│ └── processed_data/ (excluded from Git — includes competitor_analysis_results.csv, profitability_analysis.csv)
 │
-├── models/                         (trained ML models — excluded from Git, regenerate via notebook)
+├── models/ (trained ML models — excluded from Git, regenerate via notebook)
 │
 ├── docs/
-│   ├── ui_wireframes.md
-│   └── pricing_workflows_objectives.md
+│ ├── ui_wireframes.md
+│ └── pricing_workflows_objectives.md
 │
 ├── notebooks/
-│   ├── eda_retail_pricing.ipynb
-│   ├── eda_dynamic_pricing.ipynb
-│   ├── eda_online_retail_ii.ipynb
-│   ├── eda_walmart_sales.ipynb
-│   ├── eda_amazon_products.ipynb
-│   ├── eda_amazon_uk_products.ipynb
-│   └── price_prediction_model.ipynb
+│ ├── eda_retail_pricing.ipynb
+│ ├── eda_dynamic_pricing.ipynb
+│ ├── eda_online_retail_ii.ipynb
+│ ├── eda_walmart_sales.ipynb
+│ ├── eda_amazon_products.ipynb
+│ ├── eda_amazon_uk_products.ipynb
+│ ├── price_prediction_model.ipynb
+│ └── competitor_analysis.ipynb
 │
 ├── src/
-│   ├── backend/
-│   │   ├── .env                     (excluded from Git — DB password, JWT secret, Groq API key)
-│   │   └── app/
-│   │       ├── main.py
-│   │       ├── database.py
-│   │       ├── create_tables.py
-│   │       ├── ml_models/            (excluded from Git — trained model files)
-│   │       ├── models/ (user.py, product.py, pricing_history.py)
-│   │       ├── routes/ (product.py, auth.py, predictions.py)
-│   │       ├── schemas/ (product.py, user.py)
-│   │       └── auth/ (auth_utils.py, dependencies.py)
-│   │
-│   └── frontend/
-│       └── app/
-│           ├── page.tsx, layout.tsx, globals.css, favicon.ico
-│           ├── login/page.tsx
-│           ├── dashboard/page.tsx
-│           ├── forecasting/page.tsx
-│           ├── kpis/page.tsx
-│           └── lib/api.ts
+│ ├── backend/
+│ │ ├── .env (excluded from Git — DB password, JWT secret, Groq API key)
+│ │ └── app/
+│ │ ├── main.py
+│ │ ├── database.py
+│ │ ├── create_tables.py
+│ │ ├── ml_models/ (excluded from Git — trained model files)
+│ │ ├── models/ (user.py, product.py, pricing_history.py)
+│ │ ├── routes/ (product.py, auth.py, predictions.py)
+│ │ ├── schemas/ (product.py, user.py)
+│ │ └── auth/ (auth_utils.py, dependencies.py)
+│ │
+│ └── frontend/
+│ └── app/
+│ ├── page.tsx, layout.tsx, globals.css, favicon.ico
+│ ├── login/page.tsx
+│ ├── dashboard/page.tsx
+│ ├── forecasting/page.tsx
+│ ├── kpis/page.tsx
+│ ├── competitor/page.tsx
+│ ├── executive/page.tsx
+│ └── lib/api.ts
 │
 ├── .gitignore
 └── README.md
-```
+
 
 ## 📋 Additional Documentation
 
@@ -176,7 +196,6 @@ PRICEPILOT AI/
 
 ## 🚧 Upcoming Work
 
-- Competitor Analysis & Revenue Optimization modules (Milestone 3)
 - Testing, Deployment & Documentation (Milestone 4)
 
 ---
@@ -184,4 +203,4 @@ PRICEPILOT AI/
 ## 👤 Author
 
 **Sobhit Giri**
-Infosys Springboard — PricePilot AI Project
+Infosys Springboard — PricePilot AI Project 
