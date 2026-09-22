@@ -14,9 +14,12 @@ import CompetitorPriceForm from '../../competitors/components/CompetitorPriceFor
 import CompetitorProductMatch from '../../competitors/components/CompetitorProductMatch';
 import { useMarketIntelligence } from '../hooks/useMarketIntelligence';
 import { useCompetitorMutations } from '../../competitors/hooks/useCompetitorMutations';
-import { RefreshCw, PlusCircle, Link2 } from 'lucide-react';
+import { RefreshCw, PlusCircle, Link2, Download } from 'lucide-react';
+import ReportConfigModal from '../../reports/components/ReportConfigModal';
+import { useToast } from '../../../hooks/useToast';
 
 export default function MarketIntelligencePage() {
+  const toast = useToast();
   const {
     products,
     competitors,
@@ -38,6 +41,7 @@ export default function MarketIntelligencePage() {
   const [isPriceFormOpen, setIsPriceFormOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState('');
   const [isMatchOpen, setIsMatchOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   const handleOpenPriceForm = (productId = '') => {
     setSelectedProductId(productId ? String(productId) : '');
@@ -84,6 +88,15 @@ export default function MarketIntelligencePage() {
               onClick={() => handleOpenMatch()}
             >
               Match Product
+            </Button>
+
+            <Button
+              variant="outline"
+              size="md"
+              leftIcon={Download}
+              onClick={() => setIsReportModalOpen(true)}
+            >
+              Export Report
             </Button>
 
             <Button
@@ -166,6 +179,21 @@ export default function MarketIntelligencePage() {
         competitors={competitors}
         initialProductId={selectedProductId}
         isLoading={isMutating}
+      />
+
+      {/* Intelligence Report Modal */}
+      <ReportConfigModal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+        reportContext={{
+          organizationName: 'PricePilot Enterprise',
+          products,
+          competitors,
+          comparisons,
+          summaryMetrics: {
+            pricingOpportunitiesCount: opportunities?.length || 0,
+          },
+        }}
       />
     </div>
   );

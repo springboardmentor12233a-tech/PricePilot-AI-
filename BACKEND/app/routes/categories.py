@@ -2,7 +2,7 @@ import uuid
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from app.core.security import get_current_active_user
+from app.core.security import get_current_active_user, verify_user_organization
 from app.database.database import get_db
 from app.schemas.category import CategoryCreate, CategoryResponse
 from app.services.product_service import create_category, get_categories
@@ -17,6 +17,7 @@ def add_category(
     current_user=Depends(get_current_active_user),
 ):
     """Create a new product category."""
+    verify_user_organization(db, current_user, cat_in.organization_id)
     return create_category(db, cat_in)
 
 
@@ -27,4 +28,6 @@ def list_org_categories(
     current_user=Depends(get_current_active_user),
 ):
     """List all categories for an organization."""
+    verify_user_organization(db, current_user, org_id)
     return get_categories(db, org_id)
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Tag, DollarSign, Percent, AlertCircle } from 'lucide-react';
+import { Calendar, Tag, IndianRupee, Percent, AlertCircle } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import { formatDate } from '../../../utils/formatDate';
 import Skeleton from '../../../components/Skeleton';

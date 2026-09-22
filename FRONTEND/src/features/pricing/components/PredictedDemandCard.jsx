@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, DollarSign, Wallet } from 'lucide-react';
+import { TrendingUp, IndianRupee, Wallet } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import { calculateRevenue, calculateGrossProfit } from '../utils/pricingCalculations';
 
@@ -42,7 +42,7 @@ export default function PredictedDemandCard({
       <div className="space-y-2 pt-3 border-t border-[#F1F5F9] text-xs">
         <div className="flex items-center justify-between text-[#64748B]">
           <span className="flex items-center gap-1.5">
-            <DollarSign className="w-3.5 h-3.5 text-[#64748B]" />
+            <IndianRupee className="w-3.5 h-3.5 text-[#64748B]" />
             Expected Revenue:
           </span>
           <span className="font-semibold text-[#0F172A]">

@@ -2,7 +2,7 @@ import uuid
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from app.core.security import get_current_active_user
+from app.core.security import get_current_active_user, verify_user_organization
 from app.database.database import get_db
 from app.schemas.organization import (
     OrganizationCreate,
@@ -46,6 +46,7 @@ def get_org_by_id(
     current_user=Depends(get_current_active_user),
 ):
     """Retrieve single organization details."""
+    verify_user_organization(db, current_user, org_id)
     return get_organization(db, org_id)
 
 
@@ -57,4 +58,6 @@ def add_member(
     current_user=Depends(get_current_active_user),
 ):
     """Add a member to an organization."""
+    verify_user_organization(db, current_user, org_id)
     return add_organization_member(db, org_id, member_in)
+

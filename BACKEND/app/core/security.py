@@ -116,3 +116,33 @@ def get_current_active_user(
             detail="Inactive user account",
         )
     return current_user
+
+
+def verify_user_organization(db: Session, user, org_id) -> None:
+    """Verify that the user has an active membership in the specified organization."""
+    import uuid
+    from app.models.organization_member import OrganizationMember
+
+    if isinstance(org_id, str):
+        try:
+            org_id = uuid.UUID(org_id)
+        except ValueError:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid organization ID format",
+            )
+
+    membership = (
+        db.query(OrganizationMember)
+        .filter(
+            OrganizationMember.organization_id == org_id,
+            OrganizationMember.user_id == user.id,
+        )
+        .first()
+    )
+    if not membership:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to access this organization's data",
+        )
+

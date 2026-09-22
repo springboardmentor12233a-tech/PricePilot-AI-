@@ -132,11 +132,11 @@ export default function PricingPredictionForm({
         {/* Scenario Price */}
         <div>
           <label className="block text-xs font-semibold text-[#334155] mb-1">
-            Scenario Price ({currency})
+            Scenario Price (₹ INR)
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#64748B] font-medium">
-              {currency === 'INR' ? '₹' : '$'}
+              ₹
             </span>
             <input
               type="number"
@@ -150,18 +150,18 @@ export default function PricingPredictionForm({
             />
           </div>
           <span className="text-[11px] text-[#64748B] mt-1 block">
-            Current catalog base price: {product?.base_price ? `${currency === 'INR' ? '₹' : '$'}${product.base_price}` : '—'}
+            Current catalog base price: {product?.base_price ? `₹${Number(product.base_price).toLocaleString('en-IN')}` : '—'}
           </span>
         </div>
 
         {/* Competitor Price Benchmark */}
         <div>
           <label className="block text-xs font-semibold text-[#334155] mb-1">
-            Competitor Benchmark ({currency})
+            Competitor Benchmark (₹ INR)
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#64748B] font-medium">
-              {currency === 'INR' ? '₹' : '$'}
+              ₹
             </span>
             <input
               type="number"

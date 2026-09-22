@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   Percent,
   Users2,
@@ -37,7 +37,7 @@ export default function AnalyticsSummaryCards({
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-medium text-[#64748B]">Total Revenue</span>
           <div className="w-8 h-8 rounded-xl bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center">
-            <DollarSign className="w-4 h-4" />
+            <IndianRupee className="w-4 h-4" />
           </div>
         </div>
         <div>

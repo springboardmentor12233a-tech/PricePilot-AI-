@@ -64,11 +64,13 @@ export default function App() {
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/signup" element={<RegisterPage />} />
 
                   {/* Protected SaaS Application Shell */}
                   <Route element={<ProtectedRoute />}>
                     <Route element={<DashboardLayout />}>
                       <Route path="/dashboard" element={<DashboardPage />} />
+                      <Route path="/executive-dashboard" element={<DashboardPage />} />
 
                       {/* Catalog */}
                       <Route path="/products" element={<ProductsPage />} />
@@ -95,6 +97,7 @@ export default function App() {
                       {/* Reports */}
                       <Route path="/reports" element={<ReportsPage />} />
                       <Route path="/executive" element={<ExecutiveReportPage />} />
+                      <Route path="/executive-report" element={<ExecutiveReportPage />} />
 
                       {/* Administration & Account */}
                       <Route path="/organization" element={<OrganizationPage />} />

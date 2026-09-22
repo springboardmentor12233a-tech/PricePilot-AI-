@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, ShieldAlert } from 'lucide-react';
+import { IndianRupee, ShieldAlert } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import { calculateGrossMargin } from '../utils/pricingCalculations';
 
@@ -30,7 +30,7 @@ export default function CostPriceCard({ product, className = '' }) {
           Cost Price
         </span>
         <div className="w-8 h-8 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#64748B]">
-          <DollarSign className="w-4 h-4" />
+          <IndianRupee className="w-4 h-4" />
         </div>
       </div>
 

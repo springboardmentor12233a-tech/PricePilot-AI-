@@ -13,7 +13,7 @@ import {
   ChevronDown,
   Sparkles,
   Sliders,
-  DollarSign,
+  IndianRupee,
   Users,
   Lock,
   ArrowUpRight,
@@ -30,8 +30,8 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   // Interactive Simulator State
-  const [basePrice, setBasePrice] = useState(199);
-  const [competitorPrice, setCompetitorPrice] = useState(219);
+  const [basePrice, setBasePrice] = useState(4999);
+  const [competitorPrice, setCompetitorPrice] = useState(5499);
   const [inventoryLevel, setInventoryLevel] = useState('optimal'); // 'low' | 'optimal' | 'excess'
   const [elasticity, setElasticity] = useState('medium'); // 'inelastic' | 'medium' | 'high'
 
@@ -374,7 +374,7 @@ export default function LandingPage() {
                   UltraTech Active Noise-Cancelling Pro (SKU-8921)
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                  Category: Premium Audio • Cost: $118.50 • Current Price: $249.00
+                  Category: Premium Audio • Cost: ₹2,499 • Current Price: ₹4,999
                 </p>
               </div>
               <div className="flex items-center gap-2 bg-emerald-50 text-emerald-800 px-3.5 py-1.5 rounded-lg border border-emerald-200 text-xs font-bold">
@@ -387,15 +387,15 @@ export default function LandingPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 my-6">
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
                 <span className="text-xs font-medium text-slate-500 block mb-1">Current Price</span>
-                <span className="text-2xl font-extrabold text-slate-800">$249.00</span>
+                <span className="text-2xl font-extrabold text-slate-800">₹4,999</span>
                 <span className="text-[11px] text-slate-500 block mt-1">Catalog Base</span>
               </div>
 
               <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-200">
                 <span className="text-xs font-semibold text-blue-700 block mb-1">AI Recommended</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl font-extrabold text-blue-900">$274.50</span>
-                  <span className="text-xs font-bold text-emerald-600">+10.2%</span>
+                  <span className="text-2xl font-extrabold text-blue-900">₹5,499</span>
+                  <span className="text-xs font-bold text-emerald-600">+10.0%</span>
                 </div>
                 <span className="text-[11px] text-blue-600 block mt-1">Elasticity Model</span>
               </div>
@@ -415,7 +415,7 @@ export default function LandingPage() {
                   <span className="text-2xl font-extrabold text-emerald-900">+3.8%</span>
                   <span className="text-xs font-bold text-emerald-700">Pts</span>
                 </div>
-                <span className="text-[11px] text-emerald-700 block mt-1">Margin: 56.8%</span>
+                <span className="text-[11px] text-emerald-700 block mt-1">Margin: 54.5%</span>
               </div>
             </div>
 
@@ -423,16 +423,16 @@ export default function LandingPage() {
             <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200 text-xs">
               <div className="flex items-center justify-between text-slate-600 mb-2 font-medium">
                 <span>Competitor Market Spread</span>
-                <span>Our Target: <strong className="text-blue-700">$274.50</strong> (Mid-Premium Tier)</span>
+                <span>Our Target: <strong className="text-blue-700">₹5,499</strong> (Mid-Premium Tier)</span>
               </div>
               <div className="relative h-3 rounded-full bg-slate-200 overflow-hidden">
                 <div className="absolute left-[20%] right-[30%] top-0 bottom-0 bg-blue-200 rounded-full" />
-                <div className="absolute left-[54%] w-3 h-3 bg-blue-600 rounded-full ring-2 ring-white transform -translate-x-1.5" title="PricePilot Recommendation: $274.50" />
+                <div className="absolute left-[54%] w-3 h-3 bg-blue-600 rounded-full ring-2 ring-white transform -translate-x-1.5" title="PricePilot Recommendation: ₹5,499" />
               </div>
               <div className="flex justify-between text-[11px] text-slate-500 mt-1.5">
-                <span>Low: Amazon ($259.00)</span>
-                <span>Avg Market: $278.00</span>
-                <span>High: BestBuy ($289.99)</span>
+                <span>Low: Amazon (₹5,199)</span>
+                <span>Avg Market: ₹5,599</span>
+                <span>High: Reliance Digital (₹5,999)</span>
               </div>
             </div>
           </div>
@@ -714,22 +714,22 @@ export default function LandingPage() {
                     <label htmlFor="base-price-slider" className="text-sm font-bold text-slate-800">
                       Your Base Product Price
                     </label>
-                    <span className="text-base font-extrabold text-blue-600">${basePrice}.00</span>
+                    <span className="text-base font-extrabold text-blue-600">₹{basePrice.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     id="base-price-slider"
                     type="range"
-                    min="50"
-                    max="500"
-                    step="5"
+                    min="500"
+                    max="15000"
+                    step="100"
                     value={basePrice}
                     onChange={(e) => setBasePrice(Number(e.target.value))}
                     className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
                   />
                   <div className="flex justify-between text-[11px] text-slate-400 mt-1">
-                    <span>$50</span>
-                    <span>$275</span>
-                    <span>$500</span>
+                    <span>₹500</span>
+                    <span>₹7,500</span>
+                    <span>₹15,000</span>
                   </div>
                 </div>
 
@@ -738,22 +738,22 @@ export default function LandingPage() {
                     <label htmlFor="competitor-price-slider" className="text-sm font-bold text-slate-800">
                       Competitor Market Benchmark Price
                     </label>
-                    <span className="text-base font-extrabold text-slate-800">${competitorPrice}.00</span>
+                    <span className="text-base font-extrabold text-slate-800">₹{competitorPrice.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     id="competitor-price-slider"
                     type="range"
-                    min="50"
-                    max="500"
-                    step="5"
+                    min="500"
+                    max="15000"
+                    step="100"
                     value={competitorPrice}
                     onChange={(e) => setCompetitorPrice(Number(e.target.value))}
                     className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                   />
                   <div className="flex justify-between text-[11px] text-slate-400 mt-1">
-                    <span>$50 (Deep Discount)</span>
-                    <span>$275 (Market Parity)</span>
-                    <span>$500 (Premium)</span>
+                    <span>₹500 (Deep Discount)</span>
+                    <span>₹7,500 (Market Parity)</span>
+                    <span>₹15,000 (Premium)</span>
                   </div>
                 </div>
 
@@ -830,7 +830,7 @@ export default function LandingPage() {
                   <span className="text-xs text-slate-400 block mb-1">Recommended Execution Price</span>
                   <div className="flex items-baseline gap-3">
                     <span className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-                      ${simulationResult.recommendedPrice.toFixed(2)}
+                      ₹{Math.round(simulationResult.recommendedPrice).toLocaleString('en-IN')}
                     </span>
                     <span
                       className={`text-sm font-bold ${
@@ -876,7 +876,7 @@ export default function LandingPage() {
                   <div className="flex justify-between items-center py-2">
                     <span className="text-slate-300 text-xs">Projected Annual Uplift</span>
                     <span className="font-extrabold text-white text-base">
-                      +${simulationResult.annualUplift.toLocaleString()}
+                      +₹{simulationResult.annualUplift.toLocaleString('en-IN')}
                     </span>
                   </div>
                 </div>

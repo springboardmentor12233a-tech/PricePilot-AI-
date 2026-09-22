@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tag, DollarSign, Users2, Boxes, Sparkles, Layers } from 'lucide-react';
+import { Tag, IndianRupee, Users2, Boxes, Sparkles, Layers } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 
 /**
@@ -31,7 +31,7 @@ export default function ForecastContextCard({
       value: product.base_price !== null && product.base_price !== undefined
         ? formatCurrency(product.base_price, currency)
         : '—',
-      icon: DollarSign,
+      icon: IndianRupee,
       tone: 'text-[#0F172A]',
     },
     {

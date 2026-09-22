@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, DollarSign, TrendingUp, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Sparkles, IndianRupee, TrendingUp, ShieldCheck, ArrowRight } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import Button from '../../../components/Button';
 import PredictedDemandCard from './PredictedDemandCard';

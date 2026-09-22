@@ -18,6 +18,8 @@ import PricingRecommendationCard from '../components/PricingRecommendationCard';
 import PricingConstraints from '../components/PricingConstraints';
 import CompetitorContextCard from '../components/CompetitorContextCard';
 import PricingHistoryCard from '../components/PricingHistoryCard';
+import PriceDemandSimulationEngine from '../components/PriceDemandSimulationEngine';
+import ReportConfigModal from '../../reports/components/ReportConfigModal';
 import RevenueEmptyState from '../components/RevenueEmptyState';
 
 export default function RevenueOptimizationPage() {
@@ -29,6 +31,8 @@ export default function RevenueOptimizationPage() {
   const initialProductId = searchParams.get('productId') || searchParams.get('product_id') || null;
   const [selectedProductId, setSelectedProductId] = useState(initialProductId);
   const [lastUpdated, setLastUpdated] = useState(new Date().toISOString());
+  const [activeEngineTab, setActiveEngineTab] = useState('engine'); // 'engine' | 'custom-scenarios'
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   const {
     product,
@@ -165,100 +169,161 @@ export default function RevenueOptimizationPage() {
         />
       ) : (
         <>
-          {/* Current Pricing Context Card */}
-          <PricingContextCard
-            product={product}
-            inventory={inventory}
-            competitorData={competitorData}
-            baselinePrediction={baselinePrediction}
-            isBaselinePredicting={isBaselinePredicting}
-            onRunBaselinePrediction={runBaselinePrediction}
-            isLoading={isProductLoading}
-          />
-
-          {/* Revenue & Profit Summary Highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <RevenueSummaryCard
-              currentBaseline={currentBaseline}
-              scenarios={scenarios}
-              currency={product?.currency || 'INR'}
-            />
-            <ProfitSummaryCard
-              currentBaseline={currentBaseline}
-              scenarios={scenarios}
-              product={product}
-              currency={product?.currency || 'INR'}
-            />
-          </div>
-
-          {/* Candidate Scenario Builder */}
-          <ScenarioBuilder
-            onAddScenario={handleAddScenario}
-            product={product}
-            inventory={inventory}
-            competitorData={competitorData}
-            onRunAll={handleRunAllScenarios}
-            pendingCount={pendingScenariosCount}
-            isEvaluating={isAnyScenarioLoading}
-          />
-
-          {/* Scenario Comparison Ledger */}
-          <ScenarioComparison
-            currentBaseline={currentBaseline}
-            scenarios={scenarios}
-            product={product}
-            onRunScenario={handleRunSingleScenario}
-            onRemoveScenario={removeScenario}
-            isEvaluating={isAnyScenarioLoading}
-          />
-
-          {/* Visual Impact Charts Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <RevenueChart
-              currentBaseline={currentBaseline}
-              scenarios={scenarios}
-              currency={product?.currency || 'INR'}
-            />
-            <ProfitChart
-              currentBaseline={currentBaseline}
-              scenarios={scenarios}
-              product={product}
-              currency={product?.currency || 'INR'}
-            />
-          </div>
-
-          {/* Intelligence & History Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            {/* Left: AI Pricing Recommendation Card */}
-            <PricingRecommendationCard
-              recommendation={recommendation}
-              product={product}
-              isGenerating={isGeneratingRec}
-              error={recommendationError}
-              onGenerate={handleGenerateRecommendation}
-              onApply={handleApplyRecommendation}
-              isApplying={isApplying}
-              applySuccess={applySuccess}
-            />
-
-            {/* Right: Competitor Benchmark & Pricing Constraints & History */}
-            <div className="space-y-5">
-              <CompetitorContextCard
-                product={product}
-                competitorData={competitorData}
-                isLoading={isCompetitorsLoading}
-              />
-
-              <PricingConstraints />
-
-              <PricingHistoryCard
-                history={pricingHistory}
-                product={product}
-                isLoading={isHistoryLoading}
-                error={historyError}
-              />
+          {/* Engine Navigation Tabs */}
+          <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-2">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setActiveEngineTab('engine')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeEngineTab === 'engine'
+                    ? 'bg-[#2563EB] text-white shadow-xs'
+                    : 'bg-white text-[#64748B] hover:text-[#0F172A] border border-[#E2E8F0]'
+                }`}
+              >
+                Price–Demand Simulation Engine
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveEngineTab('custom-scenarios')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeEngineTab === 'custom-scenarios'
+                    ? 'bg-[#2563EB] text-white shadow-xs'
+                    : 'bg-white text-[#64748B] hover:text-[#0F172A] border border-[#E2E8F0]'
+                }`}
+              >
+                Custom Scenarios & Guardrails
+              </button>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setIsReportModalOpen(true)}
+              className="text-xs font-semibold text-[#2563EB] hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              Export Business Report (PDF)
+            </button>
           </div>
+
+          {activeEngineTab === 'engine' ? (
+            /* Primary Milestone 3 Price-Demand Simulation & Scenario Analysis Engine */
+            <PriceDemandSimulationEngine
+              product={product}
+              inventory={inventory}
+              competitorData={competitorData}
+              currentBaseline={currentBaseline}
+              pricingHistory={pricingHistory}
+              onOpenReportModal={() => setIsReportModalOpen(true)}
+            />
+          ) : (
+            <div className="space-y-6">
+              {/* Current Pricing Context Card */}
+              <PricingContextCard
+                product={product}
+                inventory={inventory}
+                competitorData={competitorData}
+                baselinePrediction={baselinePrediction}
+                isBaselinePredicting={isBaselinePredicting}
+                onRunBaselinePrediction={runBaselinePrediction}
+                isLoading={isProductLoading}
+              />
+
+              {/* Revenue & Profit Summary Highlights */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <RevenueSummaryCard
+                  currentBaseline={currentBaseline}
+                  scenarios={scenarios}
+                  currency={product?.currency || 'INR'}
+                />
+                <ProfitSummaryCard
+                  currentBaseline={currentBaseline}
+                  scenarios={scenarios}
+                  product={product}
+                  currency={product?.currency || 'INR'}
+                />
+              </div>
+
+              {/* Candidate Scenario Builder */}
+              <ScenarioBuilder
+                onAddScenario={handleAddScenario}
+                product={product}
+                inventory={inventory}
+                competitorData={competitorData}
+                onRunAll={handleRunAllScenarios}
+                pendingCount={pendingScenariosCount}
+                isEvaluating={isAnyScenarioLoading}
+              />
+
+              {/* Scenario Comparison Ledger */}
+              <ScenarioComparison
+                currentBaseline={currentBaseline}
+                scenarios={scenarios}
+                product={product}
+                onRunScenario={handleRunSingleScenario}
+                onRemoveScenario={removeScenario}
+                isEvaluating={isAnyScenarioLoading}
+              />
+
+              {/* Visual Impact Charts Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <RevenueChart
+                  currentBaseline={currentBaseline}
+                  scenarios={scenarios}
+                  currency={product?.currency || 'INR'}
+                />
+                <ProfitChart
+                  currentBaseline={currentBaseline}
+                  scenarios={scenarios}
+                  product={product}
+                  currency={product?.currency || 'INR'}
+                />
+              </div>
+
+              {/* Intelligence & History Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <PricingRecommendationCard
+                  recommendation={recommendation}
+                  product={product}
+                  isGenerating={isGeneratingRec}
+                  error={recommendationError}
+                  onGenerate={handleGenerateRecommendation}
+                  onApply={handleApplyRecommendation}
+                  isApplying={isApplying}
+                  applySuccess={applySuccess}
+                />
+
+                <div className="space-y-5">
+                  <CompetitorContextCard
+                    product={product}
+                    competitorData={competitorData}
+                    isLoading={isCompetitorsLoading}
+                  />
+
+                  <PricingConstraints />
+
+                  <PricingHistoryCard
+                    history={pricingHistory}
+                    product={product}
+                    isLoading={isHistoryLoading}
+                    error={historyError}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Business Report Configuration Modal */}
+          <ReportConfigModal
+            isOpen={isReportModalOpen}
+            onClose={() => setIsReportModalOpen(false)}
+            reportContext={{
+              selectedProduct: product,
+              organizationName: selectedOrganization?.name,
+              currentBaseline,
+              scenarios,
+              competitors: competitorData?.observations || [],
+            }}
+          />
         </>
       )}
     </div>

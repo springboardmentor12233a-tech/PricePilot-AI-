@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, ArrowRight, CheckCircle2, AlertCircle, X, ShieldAlert, DollarSign } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, AlertCircle, X, ShieldAlert, IndianRupee } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import Button from '../../../components/Button';
 import ApplyRecommendationModal from './ApplyRecommendationModal';

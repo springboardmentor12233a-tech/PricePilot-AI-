@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Sparkles,
-  DollarSign,
+  IndianRupee,
   Users2,
   Percent,
   Boxes,
@@ -147,11 +147,11 @@ export default function ForecastControls({
           {/* Target Price */}
           <div>
             <label className="block text-xs font-medium text-[#475569] mb-1.5">
-              Tested Price ({currency}) <span className="text-[#DC2626]">*</span>
+              Tested Price (₹ INR) <span className="text-[#DC2626]">*</span>
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-[#94A3B8]">
-                {currency === 'INR' ? '₹' : '$'}
+                ₹
               </span>
               <input
                 type="number"
@@ -182,11 +182,11 @@ export default function ForecastControls({
           {/* Competitor Price Benchmark */}
           <div>
             <label className="block text-xs font-medium text-[#475569] mb-1.5">
-              Competitor Benchmark ({currency})
+              Competitor Benchmark (₹ INR)
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-[#94A3B8]">
-                {currency === 'INR' ? '₹' : '$'}
+                ₹
               </span>
               <input
                 type="number"

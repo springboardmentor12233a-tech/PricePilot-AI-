@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     XAI_API_KEY: str = ""
 
     # Local ML model
-    PERSONAL_MODEL_PATH: str = "models/personal_model.pth"
+    PERSONAL_MODEL_PATH: str = "saved_models/pricepilot_xgboost_model.pkl"
 
     # Default AI generation settings
     DEFAULT_TEMPERATURE: float = 0.7

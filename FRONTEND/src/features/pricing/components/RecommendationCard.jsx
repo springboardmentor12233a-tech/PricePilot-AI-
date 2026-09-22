@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, ArrowRight, CheckCircle2, DollarSign, BarChart2 } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, IndianRupee, BarChart2 } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import Button from '../../../components/Button';
 import RecommendationStatusBadge from './RecommendationStatusBadge';

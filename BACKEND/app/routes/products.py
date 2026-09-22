@@ -2,7 +2,7 @@ import uuid
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from app.core.security import get_current_active_user
+from app.core.security import get_current_active_user, verify_user_organization
 from app.database.database import get_db
 from app.schemas.product import (
     InventoryResponse,
@@ -34,6 +34,7 @@ def add_product(
     current_user=Depends(get_current_active_user),
 ):
     """Create a new product with base inventory."""
+    verify_user_organization(db, current_user, prod_in.organization_id)
     return create_product(db, prod_in)
 
 
@@ -46,6 +47,7 @@ def list_products(
     current_user=Depends(get_current_active_user),
 ):
     """Get all products for an organization."""
+    verify_user_organization(db, current_user, org_id)
     return get_products(db, org_id, category_id, search)
 
 
@@ -56,7 +58,9 @@ def get_product_by_id(
     current_user=Depends(get_current_active_user),
 ):
     """Get details of a specific product."""
-    return get_product(db, product_id)
+    product = get_product(db, product_id)
+    verify_user_organization(db, current_user, product.organization_id)
+    return product
 
 
 @router.put("/{product_id}", response_model=ProductResponse)
@@ -67,6 +71,8 @@ def modify_product(
     current_user=Depends(get_current_active_user),
 ):
     """Update product information."""
+    product = get_product(db, product_id)
+    verify_user_organization(db, current_user, product.organization_id)
     return update_product(db, product_id, prod_in)
 
 
@@ -77,6 +83,8 @@ def remove_product(
     current_user=Depends(get_current_active_user),
 ):
     """Delete a product."""
+    product = get_product(db, product_id)
+    verify_user_organization(db, current_user, product.organization_id)
     delete_product(db, product_id)
 
 
@@ -88,6 +96,8 @@ def add_variant(
     current_user=Depends(get_current_active_user),
 ):
     """Add a variant to a product."""
+    product = get_product(db, product_id)
+    verify_user_organization(db, current_user, product.organization_id)
     return create_product_variant(db, product_id, variant_in)
 
 
@@ -99,6 +109,8 @@ def fetch_inventory(
     current_user=Depends(get_current_active_user),
 ):
     """Fetch product or variant inventory stock level."""
+    product = get_product(db, product_id)
+    verify_user_organization(db, current_user, product.organization_id)
     return get_inventory(db, product_id, variant_id)
 
 
@@ -111,4 +123,6 @@ def modify_inventory(
     current_user=Depends(get_current_active_user),
 ):
     """Update stock quantities and reorder levels."""
+    product = get_product(db, product_id)
+    verify_user_organization(db, current_user, product.organization_id)
     return update_inventory(db, product_id, inv_in, variant_id)

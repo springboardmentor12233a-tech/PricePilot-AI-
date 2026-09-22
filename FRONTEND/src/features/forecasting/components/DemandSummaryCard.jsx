@@ -1,5 +1,5 @@
 import React from 'react';
-import { Package, DollarSign, TrendingUp, ShieldCheck, Calendar, Layers } from 'lucide-react';
+import { Package, IndianRupee, TrendingUp, ShieldCheck, Calendar, Layers } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import {
   formatDemandUnits,

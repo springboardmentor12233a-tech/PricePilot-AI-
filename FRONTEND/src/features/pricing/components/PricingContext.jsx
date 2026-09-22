@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, Package, Tag, Layers3, TrendingUp, DollarSign } from 'lucide-react';
+import { Layers, Package, Tag, Layers3, TrendingUp, IndianRupee } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import Badge from '../../../components/Badge';
 import { determineMarketPosition } from '../../competitors/utils/priceAnalysis';

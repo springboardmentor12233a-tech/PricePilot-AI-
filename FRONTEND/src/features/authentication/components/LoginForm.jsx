@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import PasswordField from './PasswordField';
-import { Mail, AlertCircle, RefreshCw } from 'lucide-react';
+import { Mail, AlertCircle, Building2, Check, Lock, ShieldCheck } from 'lucide-react';
 import { useToast } from '../../../hooks/useToast';
 
 export default function LoginForm() {
@@ -17,17 +17,45 @@ export default function LoginForm() {
     email: '',
     password: '',
   });
+  const [rememberMe, setRememberMe] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [apiError, setApiError] = useState('');
+  const [detectedDomain, setDetectedDomain] = useState('');
 
   const fromRoute = location.state?.from?.pathname || '/dashboard';
+
+  // Load saved email if remembered
+  useEffect(() => {
+    try {
+      const savedEmail = localStorage.getItem('pricepilot_remember_email');
+      if (savedEmail) {
+        setFormData((prev) => ({ ...prev, email: savedEmail }));
+        setRememberMe(true);
+        detectCompanyDomain(savedEmail);
+      }
+    } catch (_) {}
+  }, []);
+
+  const detectCompanyDomain = (emailStr) => {
+    if (!emailStr || !emailStr.includes('@')) {
+      setDetectedDomain('');
+      return;
+    }
+    const domain = emailStr.split('@')[1]?.toLowerCase().trim();
+    const genericDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com'];
+    if (domain && domain.includes('.') && !genericDomains.includes(domain)) {
+      setDetectedDomain(domain);
+    } else {
+      setDetectedDomain('');
+    }
+  };
 
   const validate = () => {
     const errors = {};
     if (!formData.email.trim()) {
-      errors.email = 'Email address is required.';
+      errors.email = 'Work email address is required.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      errors.email = 'Please enter a valid email address.';
+      errors.email = 'Please enter a valid work email address.';
     }
 
     if (!formData.password) {
@@ -45,6 +73,9 @@ export default function LoginForm() {
       setFormErrors((prev) => ({ ...prev, [name]: undefined }));
     }
     if (apiError) setApiError('');
+    if (name === 'email') {
+      detectCompanyDomain(value);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -54,6 +85,12 @@ export default function LoginForm() {
     if (!validate()) return;
 
     try {
+      if (rememberMe) {
+        localStorage.setItem('pricepilot_remember_email', formData.email.trim());
+      } else {
+        localStorage.removeItem('pricepilot_remember_email');
+      }
+
       await login({
         email: formData.email.trim(),
         password: formData.password,
@@ -62,9 +99,22 @@ export default function LoginForm() {
       navigate(fromRoute, { replace: true });
     } catch (err) {
       const errorMsg =
-        err.message || 'Invalid email or password. Please verify your credentials.';
+        err.message || 'Invalid credentials or organization access restricted. Please check your credentials.';
       setApiError(errorMsg);
     }
+  };
+
+  const handleAutoFillTest = () => {
+    const testEmail = import.meta.env.VITE_TEST_USER_EMAIL || 'test@pricepilot.ai';
+    const testPass = import.meta.env.VITE_TEST_USER_PASSWORD || 'TestPass123!';
+    setFormData({
+      email: testEmail,
+      password: testPass,
+    });
+    detectCompanyDomain(testEmail);
+    setFormErrors({});
+    setApiError('');
+    toast.info('Test credentials loaded.');
   };
 
   return (
@@ -84,19 +134,29 @@ export default function LoginForm() {
       )}
 
       {/* Email Address */}
-      <Input
-        label="Email Address"
-        name="email"
-        type="email"
-        autoComplete="email"
-        placeholder="name@company.com"
-        value={formData.email}
-        onChange={handleChange}
-        error={formErrors.email}
-        leftIcon={Mail}
-        disabled={isLoading}
-        required
-      />
+      <div className="space-y-1">
+        <Input
+          label="Work Email Address"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="name@company.com"
+          value={formData.email}
+          onChange={handleChange}
+          error={formErrors.email}
+          leftIcon={Mail}
+          disabled={isLoading}
+          required
+        />
+
+        {/* Corporate Domain Recognition Badge */}
+        {detectedDomain && (
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#EFF6FF] border border-[#BFDBFE] text-[11px] font-medium text-[#1D4ED8] animate-in fade-in-50">
+            <Building2 className="w-3.5 h-3.5 text-[#2563EB]" />
+            <span>Enterprise Workspace: <strong className="font-semibold">{detectedDomain}</strong></span>
+          </div>
+        )}
+      </div>
 
       {/* Password with Visibility Toggle */}
       <div>
@@ -109,7 +169,7 @@ export default function LoginForm() {
           </label>
           <button
             type="button"
-            onClick={() => toast.info('Password reset instructions will be provided by your administrator.')}
+            onClick={() => toast.info('Password reset instructions will be provided by your enterprise workspace admin.')}
             className="text-xs text-[#2563EB] hover:text-[#1D4ED8] font-medium transition-colors cursor-pointer"
           >
             Forgot password?
@@ -128,6 +188,19 @@ export default function LoginForm() {
         />
       </div>
 
+      {/* Remember Me & Workspace Persistence */}
+      <div className="flex items-center justify-between pt-1">
+        <label className="flex items-center gap-2 cursor-pointer select-none text-xs text-[#475569]">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="w-4 h-4 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB]"
+          />
+          <span>Remember work email & workspace</span>
+        </label>
+      </div>
+
       {/* Submit Button */}
       <div className="pt-2 space-y-2.5">
         <Button
@@ -138,23 +211,17 @@ export default function LoginForm() {
           loading={isLoading}
           disabled={isLoading}
         >
-          {isLoading ? 'Signing in...' : 'Sign In'}
+          {isLoading ? 'Authenticating...' : 'Sign In to PricePilot AI'}
         </Button>
 
-        {/* Dummy Credentials Quick Filler for Testing */}
+        {/* Test Credentials Quick Filler */}
         <div className="flex items-center justify-between px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#64748B]">
-          <span className="truncate">Test Credentials: <code className="text-[#0F172A] font-mono text-[11px]">{import.meta.env.VITE_TEST_USER_EMAIL || 'test@pricepilot.ai'}</code></span>
+          <span className="truncate">
+            Test Account: <code className="text-[#0F172A] font-mono text-[11px]">test@pricepilot.ai</code>
+          </span>
           <button
             type="button"
-            onClick={() => {
-              setFormData({
-                email: import.meta.env.VITE_TEST_USER_EMAIL || 'test@pricepilot.ai',
-                password: import.meta.env.VITE_TEST_USER_PASSWORD || 'TestPass123!',
-              });
-              setFormErrors({});
-              setApiError('');
-              toast.info('Test credentials filled.');
-            }}
+            onClick={handleAutoFillTest}
             className="text-[11px] font-semibold text-[#2563EB] hover:text-[#1D4ED8] shrink-0 ml-2 cursor-pointer"
           >
             Auto-fill
@@ -165,12 +232,12 @@ export default function LoginForm() {
       {/* Registration Link */}
       <div className="text-center pt-3 border-t border-[#F1F5F9]">
         <p className="text-xs text-[#64748B]">
-          Don't have an account?{' '}
+          Need an organization account?{' '}
           <Link
-            to="/register"
+            to="/signup"
             className="font-semibold text-[#2563EB] hover:text-[#1D4ED8] transition-colors"
           >
-            Create one
+            Create an enterprise workspace
           </Link>
         </p>
       </div>

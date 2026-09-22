@@ -3,6 +3,7 @@ import { RefreshCw, Clock, Building2 } from 'lucide-react';
 import Button from '../../../components/Button';
 import Badge from '../../../components/Badge';
 import { useOrganization } from '../../organizations/hooks/useOrganization';
+import { formatIST } from '../../../utils/formatDate';
 
 export default function ExecutiveHeader({
   lastUpdated,
@@ -11,9 +12,9 @@ export default function ExecutiveHeader({
 }) {
   const { selectedOrganization } = useOrganization();
 
-  // Format real timestamp if available
+  // Format real timestamp in Asia/Kolkata (IST)
   const formattedTime = lastUpdated
-    ? new Date(lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    ? `${formatIST(lastUpdated, 'time')} IST`
     : null;
 
   return (

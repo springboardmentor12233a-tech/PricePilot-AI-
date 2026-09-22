@@ -14,7 +14,7 @@ export const formatMetricValue = (value, type = 'number') => {
     case 'percentage':
       return formatPercentage(value, { showSign: true });
     case 'compact-currency':
-      return formatCurrency(value, 'USD', { compact: true });
+      return formatCurrency(value, 'INR', { compact: true });
     default:
       return Number(value).toLocaleString();
   }

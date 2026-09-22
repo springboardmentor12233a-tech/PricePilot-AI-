@@ -9,7 +9,7 @@ import {
   Tooltip,
   Cell,
 } from 'recharts';
-import { DollarSign, BarChart2, AlertCircle } from 'lucide-react';
+import { IndianRupee, BarChart2, AlertCircle } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 
 /**

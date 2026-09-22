@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, Package, Tag, Archive, Users, DollarSign } from 'lucide-react';
+import { Layers, Package, Tag, Archive, Users, IndianRupee } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 
 export default function PricingContextCard({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tag, DollarSign, Boxes, Users, Sparkles, AlertCircle, TrendingUp, Play } from 'lucide-react';
+import { Tag, IndianRupee, Boxes, Users, Sparkles, AlertCircle, TrendingUp, Play } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import Skeleton from '../../../components/Skeleton';
 import Button from '../../../components/Button';
@@ -64,7 +64,7 @@ export default function PricingContextCard({
       <div className="flex items-center justify-between pb-3.5 border-b border-[#F1F5F9] mb-4">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center">
-            <DollarSign className="w-4 h-4" />
+            <IndianRupee className="w-4 h-4" />
           </div>
           <div>
             <h2 className="text-sm font-semibold text-[#0F172A]">Current Pricing Context</h2>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  DollarSign,
+  IndianRupee,
   Tag,
   Percent,
   PieChart,
@@ -9,7 +9,7 @@ import {
   Sparkles,
   TrendingUp,
 } from 'lucide-react';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { formatINR } from '../../../utils/formatCurrency';
 
 export default function ExecutiveKpiGrid({
   summaryMetrics = {},
@@ -17,7 +17,6 @@ export default function ExecutiveKpiGrid({
   competitorCoverage = null,
   recommendations = [],
   latestDemandPrediction = null,
-  currency = 'INR',
 }) {
   // Pending recommendations count
   const pendingCount = recommendations.filter(
@@ -30,9 +29,9 @@ export default function ExecutiveKpiGrid({
       title: 'Revenue',
       value:
         summaryMetrics?.totalRevenue !== null && summaryMetrics?.totalRevenue !== undefined
-          ? formatCurrency(summaryMetrics.totalRevenue, currency)
+          ? formatINR(summaryMetrics.totalRevenue)
           : 'Not available',
-      icon: DollarSign,
+      icon: IndianRupee,
       description: 'Total recorded catalog revenue',
     },
     {
@@ -40,7 +39,7 @@ export default function ExecutiveKpiGrid({
       title: 'Average Price',
       value:
         summaryMetrics?.averagePrice !== null && summaryMetrics?.averagePrice !== undefined
-          ? formatCurrency(summaryMetrics.averagePrice, currency)
+          ? formatINR(summaryMetrics.averagePrice)
           : 'Not available',
       icon: Tag,
       description: 'Mean catalog base price',

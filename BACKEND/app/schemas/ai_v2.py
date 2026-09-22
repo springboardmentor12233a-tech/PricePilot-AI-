@@ -9,7 +9,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class GeminiRequest(BaseModel):
     model: str = Field(
-        default="gemini-3.5-flash",
+        default="gemini-2.5-flash",
         min_length=1,
     )
 

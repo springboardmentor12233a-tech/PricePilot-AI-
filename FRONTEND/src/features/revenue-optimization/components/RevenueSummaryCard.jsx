@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, TrendingUp, ArrowUpRight, ArrowDownRight, Layers } from 'lucide-react';
+import { IndianRupee, TrendingUp, ArrowUpRight, ArrowDownRight, Layers } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import { formatPercentage, formatCurrencyDelta } from '../utils/revenueUtils';
 
@@ -32,7 +32,7 @@ export default function RevenueSummaryCard({
         <div className="flex items-center justify-between pb-3 border-b border-[#F1F5F9] mb-3">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center">
-              <DollarSign className="w-4 h-4" />
+              <IndianRupee className="w-4 h-4" />
             </div>
             <div>
               <h3 className="text-xs font-semibold text-[#0F172A] uppercase tracking-wider">Revenue Impact</h3>
