@@ -1069,7 +1069,6 @@ and:
 ```text
 Demand prediction ≠ native time-series forecast
 ```
-
 Future forecasting requires careful treatment of unknown future variables such as:
 
 * Future price
