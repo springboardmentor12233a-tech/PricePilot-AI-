@@ -10,7 +10,7 @@ echo.
 set SCRIPT_DIR=%~dp0
 cd /d "%SCRIPT_DIR%"
 
-:: Detect Python
+:: Detect Python - prefers scratch Python 3.11 with full ML packages, or system python
 set PYTHON_EXE=C:\Users\jojo\.gemini\antigravity\scratch\python311\python.exe
 if not exist "%PYTHON_EXE%" (
     set PYTHON_EXE=python
@@ -24,17 +24,15 @@ echo [*] Waiting for Backend to initialize...
 timeout /t 3 /nobreak >nul
 
 echo.
-echo [*] Opening Application Landing Page in Default Browser...
-start "" "%SCRIPT_DIR%landing.html"
-
-echo [*] Opening Dashboard Application in Default Browser...
+echo [*] Opening PricePilot AI in your default web browser...
 start "" "%SCRIPT_DIR%index.html"
 
 echo.
 echo ===============================================================================
 echo  PricePilot AI is now running on Localhost!
-echo  - Public Landing Page : file:///%SCRIPT_DIR:\=/%landing.html
-echo  - App Dashboard       : file:///%SCRIPT_DIR:\=/%index.html
+echo  - User Flow           : Landing Page -> Sign In -> Executive Dashboard
+echo  - Direct App Entry    : file:///%SCRIPT_DIR:\=/%index.html
+echo  - Standalone Landing  : file:///%SCRIPT_DIR:\=/%landing.html
 echo  - FastAPI Swagger Docs: http://127.0.0.1:8000/docs
 echo  - Postman Test Suite  : Run RUN_API_TESTS.bat
 echo ===============================================================================

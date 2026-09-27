@@ -1,33 +1,25 @@
 @echo off
-title Push PricePilot AI Milestone 3 to GitHub
+title Push PricePilot AI to GitHub
 color 0a
 echo =====================================================================
-echo           PRICEPILOT AI - PUSH MILESTONE 3 TO GITHUB REPOSITORY       
+echo           PRICEPILOT AI - PUSH REPOSITORY TO GITHUB       
 echo =====================================================================
 echo.
 echo Target Repository: https://github.com/springboardmentor12233a-tech/PricePilot-AI-.git
-echo Target Branch:     Yuvraj-Nandu-Patil
+echo Target Branch:     Yuvraj-Nandu-Patil and main
 echo.
 
 set SCRIPT_DIR=%~dp0
-set GIT_DIR=C:\Users\jojo\.gemini\antigravity\scratch\git_repo
-set GIT_EXE=C:\Users\jojo\.gemini\antigravity\scratch\mingit\cmd\git.exe
+cd /d "%SCRIPT_DIR%"
 
+set GIT_EXE=C:\Users\jojo\.gemini\antigravity\scratch\mingit\cmd\git.exe
 if not exist "%GIT_EXE%" (
     set GIT_EXE=git
 )
 
-echo [*] Synchronizing latest Desktop files into Git repository...
-copy /Y "%SCRIPT_DIR%index.html" "%GIT_DIR%\index.html" >nul
-copy /Y "%SCRIPT_DIR%landing.html" "%GIT_DIR%\landing.html" >nul
-copy /Y "%SCRIPT_DIR%vercel.json" "%GIT_DIR%\vercel.json" >nul
-copy /Y "%SCRIPT_DIR%PricePilot_AI_Auth_Postman_Collection.json" "%GIT_DIR%\Milestone3\PricePilot_AI_Auth_Postman_Collection.json" >nul
-copy /Y "%SCRIPT_DIR%test_postman_suite.py" "%GIT_DIR%\Milestone3\test_postman_suite.py" >nul
-
-echo [*] Staging and committing all changes...
-cd /d "%GIT_DIR%"
+echo [*] Staging and committing all project files in this folder...
 "%GIT_EXE%" add -A
-"%GIT_EXE%" commit -m "feat(release): Complete end-to-end Milestone 3 with Landing Page, Dashboard, Product Info CRUD, JWT Auth, and Vercel config"
+"%GIT_EXE%" commit -m "feat(deploy): Full end-to-end release with Landing Page, Dashboard, Product Info CRUD, JWT Auth, and Vercel ready"
 
 echo.
 echo Please enter your GitHub Personal Access Token (PAT):
@@ -44,7 +36,7 @@ echo [*] Pushing branch Yuvraj-Nandu-Patil to GitHub...
 
 echo.
 echo [*] Pushing branch main to GitHub...
-"%GIT_EXE%" push https://%GITHUB_PAT%@github.com/springboardmentor12233a-tech/PricePilot-AI-.git HEAD:main --force
+"%GIT_EXE%" push https://%GITHUB_PAT%@github.com/springboardmentor12233a-tech/PricePilot-AI-.git Yuvraj-Nandu-Patil:main --force
 
 echo.
 echo =====================================================================
