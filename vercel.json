@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "name": "pricepilot-ai",
+  "cleanUrls": true,
+  "routes": [
+    {
+      "src": "/landing",
+      "dest": "/landing.html"
+    },
+    {
+      "src": "/landing.html",
+      "dest": "/landing.html"
+    },
+    {
+      "src": "/app",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.html",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/PricePilot_AI_Auth_Postman_Collection.json",
+      "dest": "/PricePilot_AI_Auth_Postman_Collection.json"
+    },
+    {
+      "src": "/",
+      "dest": "/landing.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
