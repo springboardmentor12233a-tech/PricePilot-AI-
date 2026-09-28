@@ -331,7 +331,7 @@ class ChatPayload(BaseModel):
 def chat_proxy(payload: ChatPayload):
     key = payload.api_key or os.environ.get("GROQ_API_KEY", "")
     if key:
-        key = re.sub(r'[\[\]"'\s]', '', key)
+        key = re.sub(r'[\s\[\]\'"]+', '', key)
 
     if not key:
         raise HTTPException(status_code=400, detail="No Groq API key provided")
@@ -385,7 +385,7 @@ def chat_proxy(payload: ChatPayload):
 def get_groq_models(api_key: Optional[str] = None):
     key = api_key or os.environ.get("GROQ_API_KEY", "")
     if key:
-        key = re.sub(r'[\[\]"'\s]', '', key)
+        key = re.sub(r'[\s\[\]\'"]+', '', key)
     if not key:
         raise HTTPException(status_code=400, detail="No API key provided")
 
