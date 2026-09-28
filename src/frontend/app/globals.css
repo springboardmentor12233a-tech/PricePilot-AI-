@@ -30,7 +30,6 @@ body {
   min-height: 100vh;
 }
 
-/* ---------- Brand panel ---------- */
 .brand-panel {
   background: linear-gradient(175deg, #0a0c0f 0%, #060708 100%);
   position: relative;
@@ -64,7 +63,6 @@ body {
   100% { transform: translate(-4%, 3%) scale(1.06); }
 }
 
-/* ---------- Surfaces ---------- */
 .glass-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -82,7 +80,6 @@ body {
   font-family: var(--font-mono), monospace;
 }
 
-/* ---------- Text ---------- */
 .accent-text { color: var(--accent); }
 .violet-text { color: var(--violet); }
 .muted-text { color: var(--muted); }
@@ -95,13 +92,11 @@ body {
   color: transparent;
 }
 
-/* ---------- Logo ---------- */
 .logo-mark {
   background: linear-gradient(150deg, var(--accent), var(--accent-bright));
   box-shadow: 0 4px 16px rgba(15, 216, 160, 0.25);
 }
 
-/* ---------- Status strip (replaces the clashing badge) ---------- */
 .status-strip {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -121,7 +116,6 @@ body {
   50% { opacity: 0.25; }
 }
 
-/* ---------- Buttons & inputs ---------- */
 .accent-btn {
   background: linear-gradient(135deg, var(--accent-bright), var(--accent));
   color: #052018;
@@ -150,7 +144,6 @@ body {
   box-shadow: 0 0 0 3px var(--accent-dim);
 }
 
-/* ---------- Misc ---------- */
 .divider-fade {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
@@ -162,4 +155,15 @@ body {
   border-radius: 2px;
   background: var(--accent);
   opacity: 0.6;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.skeleton {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
 }

@@ -116,6 +116,7 @@ def demand_forecast(days: int = 30):
         "change_pct": round(pct_change, 1),
         "forecast": forecast_data
     }
+
 @router.get("/kpis")
 def get_kpis():
     import pandas as pd
@@ -172,6 +173,7 @@ def get_kpis():
         "category_performance": category_data,
         "region_performance": region_data
     }
+
 from groq import Groq
 
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -226,3 +228,106 @@ def get_profitability():
     return {
         "profitability": df_profit.to_dict(orient="records")
     }
+
+@router.get("/alerts")
+def get_alerts():
+    kpi_data = get_kpis()
+    comp_data = get_competitor_analysis()
+    profit_data = get_profitability()
+
+    alerts = []
+
+    # Alert 1: Negative growth
+    if kpi_data['latest_month_growth_pct'] is not None and kpi_data['latest_month_growth_pct'] < 0:
+        alerts.append({
+            "severity": "critical",
+            "title": "Revenue Decline Detected",
+            "message": f"Month-over-month revenue growth is negative ({kpi_data['latest_month_growth_pct']}%). Immediate review recommended."
+        })
+
+    # Alert 2: Low revenue retention (profitability risk)
+    for p in profit_data['profitability']:
+        if p['revenue_retention_pct'] < 85:
+            alerts.append({
+                "severity": "warning",
+                "title": f"Low Revenue Retention — {p['category']}",
+                "message": f"{p['category']} is retaining only {p['revenue_retention_pct']:.1f}% of full-price revenue, losing ${p['margin_erosion']:,.0f} to discounting."
+            })
+
+    # Alert 3: Extreme competitor price gap
+    for c in comp_data['comparison']:
+        if c['price_gap_pct'] > 800:
+            alerts.append({
+                "severity": "warning",
+                "title": f"Extreme Price Gap — {c['category']}",
+                "message": f"{c['category']} is priced {c['price_gap_pct']:.0f}% above competitor median. Risk of demand suppression."
+            })
+
+    if len(alerts) == 0:
+        alerts.append({
+            "severity": "info",
+            "title": "No Critical Alerts",
+            "message": "All monitored metrics are within acceptable ranges."
+        })
+
+    return {"alerts": alerts, "alert_count": len(alerts)}
+
+class ChatRequest(BaseModel):
+    message: str
+    history: list = []
+
+
+@router.post("/chat")
+def chat_with_ai(request: ChatRequest):
+    try:
+        kpi_data = get_kpis()
+        comp_data = get_competitor_analysis()
+        profit_data = get_profitability()
+
+        data_context = f"""
+Current business data context:
+- Total Revenue: ${kpi_data['total_revenue']:,.2f}
+- Month-over-Month Growth: {kpi_data['latest_month_growth_pct']}%
+- Average Order Value: ${kpi_data['avg_order_value']}
+- Total Units Sold: {kpi_data['total_units_sold']:,}
+- Category Performance: {[(c['category'], f"${c['revenue']:,.0f}") for c in kpi_data['category_performance']]}
+- Regional Performance: {[(r['region'], f"${r['revenue']:,.0f}") for r in kpi_data['region_performance']]}
+- Competitor Price Positioning: {[(c['category'], f"{c['price_gap_pct']}% above market") for c in comp_data['comparison']]}
+- Revenue Retention by Category: {[(p['category'], f"{p['revenue_retention_pct']:.1f}%") for p in profit_data['profitability']]}
+"""
+
+        page_map = """
+Available dashboard pages for deeper exploration:
+- /dashboard — product catalog, prices, inventory, active alerts
+- /forecasting — demand forecast charts, price recommendations
+- /kpis — revenue trends, category/regional performance, AI insights
+- /competitor — competitor price positioning, strategy recommendations
+- /executive — consolidated executive summary, downloadable PDF report
+"""
+
+        messages = [
+            {
+                "role": "system",
+                "content": f"You are the PricePilot AI assistant, an expert on this business's pricing and revenue data. "
+                            f"Answer questions concisely and specifically using the real data provided below. "
+                            f"When relevant, end your answer by pointing to the most relevant dashboard page for more detail, "
+                            f"formatted exactly like this on its own line: 'See more: /page-name'. "
+                            f"Only include this if a specific page is genuinely more helpful than your answer alone. "
+                            f"If asked something unrelated to pricing/business, politely redirect to business topics.\n\n{data_context}\n\n{page_map}"
+            }
+        ]
+
+        for h in request.history[-6:]:
+            messages.append({"role": h["role"], "content": h["content"]})
+
+        messages.append({"role": "user", "content": request.message})
+
+        completion = groq_client.chat.completions.create(
+            model="openai/gpt-oss-120b",
+            messages=messages,
+            temperature=0.5,
+            max_tokens=500
+        )
+        return {"response": completion.choices[0].message.content}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")

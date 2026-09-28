@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getProducts, getCurrentUser } from "../lib/api";
+import { getProducts, getCurrentUser, getAlerts } from "../lib/api";
+import { SkeletonDashboard } from "../components/Skeleton";
 
 interface Product {
   id: number;
@@ -19,9 +20,18 @@ interface User {
   role: string;
 }
 
+interface Alert {
+  severity: string;
+  title: string;
+  message: string;
+}
+
+const CAN_MANAGE_ROLES = ["Pricing Manager", "Executive"];
+
 export default function DashboardPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [user, setUser] = useState<User | null>(null);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -40,6 +50,9 @@ export default function DashboardPage() {
 
         const productData = await getProducts();
         setProducts(productData);
+
+        const alertData = await getAlerts();
+        setAlerts(alertData.alerts);
       } catch (err) {
         setError("Failed to load dashboard data");
       } finally {
@@ -55,25 +68,17 @@ export default function DashboardPage() {
     router.push("/login");
   };
 
+  const canManageProducts = user ? CAN_MANAGE_ROLES.includes(user.role) : false;
+
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="muted-text mono">Loading dashboard...</p>
-      </div>
-    );
+    return <SkeletonDashboard />;
   }
 
   return (
     <div className="min-h-screen">
       {/* Top Nav */}
       <div className="status-strip px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg logo-mark flex items-center justify-center font-bold text-[#052018] text-sm">
-            P
-          </div>
-          <span className="font-semibold tracking-tight">PricePilot AI</span>
-        </div>
-
+        <div />
         <div className="flex items-center gap-4">
           {user && (
             <span className="text-sm muted-text">
@@ -91,12 +96,45 @@ export default function DashboardPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-8 py-10">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-1">Product Catalog</h1>
-          <p className="muted-text text-sm">
-            {products.length} product{products.length !== 1 ? "s" : ""} in your pricing database
-          </p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold mb-1">Product Catalog</h1>
+            <p className="muted-text text-sm">
+              {products.length} product{products.length !== 1 ? "s" : ""} in your pricing database
+            </p>
+          </div>
+
+          {canManageProducts ? (
+            <button className="accent-btn text-sm px-4 py-2 rounded-lg font-semibold">
+              + Create Product
+            </button>
+          ) : (
+            <div className="terminal-card px-3 py-2">
+              <p className="text-xs muted-text-2">🔒 Read-only access</p>
+              <p className="text-xs muted-text">Contact a Pricing Manager to edit products</p>
+            </div>
+          )}
         </div>
+
+        {/* Alerts Panel */}
+        {alerts.length > 0 && alerts[0].severity !== "info" && (
+          <div className="mb-6 space-y-2">
+            <h2 className="text-sm font-semibold muted-text uppercase tracking-wide mb-3">
+              ⚠️ Active Alerts ({alerts.length})
+            </h2>
+            {alerts.map((alert, i) => (
+              <div
+                key={i}
+                className={`terminal-card p-4 border-l-4 ${
+                  alert.severity === "critical" ? "border-l-red-500" : "border-l-yellow-500"
+                }`}
+              >
+                <p className="font-semibold text-sm mb-1">{alert.title}</p>
+                <p className="text-xs muted-text">{alert.message}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
         {error && (
           <div className="mb-6 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
@@ -146,6 +184,12 @@ export default function DashboardPage() {
                     {product.inventory_level} units
                   </span>
                 </div>
+
+                {canManageProducts && (
+                  <button className="w-full mt-3 text-xs py-2 rounded-lg border border-[var(--border)] muted-text hover:text-white hover:border-[var(--accent)] transition">
+                    Edit Price
+                  </button>
+                )}
               </div>
             ))}
           </div>

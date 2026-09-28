@@ -7,6 +7,7 @@ import {
   ResponsiveContainer, Area, AreaChart
 } from "recharts";
 import { getDemandForecast, getPriceRecommendation } from "../lib/api";
+import { SkeletonDashboard } from "../components/Skeleton";
 
 interface ForecastPoint {
   date: string;
@@ -86,6 +87,10 @@ export default function ForecastingPage() {
     trend === "Increasing Demand" ? "var(--accent)" :
     trend === "Decreasing Demand" ? "#f87171" : "var(--muted)";
 
+  if (loading) {
+    return <SkeletonDashboard />;
+  }
+
   return (
     <div className="min-h-screen">
       {/* Top Nav */}
@@ -149,30 +154,26 @@ export default function ForecastingPage() {
             </div>
           </div>
 
-          {loading ? (
-            <p className="muted-text text-sm">Loading forecast...</p>
-          ) : (
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={forecast}>
-                <defs>
-                  <linearGradient id="colorForecast" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0fd8a0" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#0fd8a0" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="date" stroke="#8b909a" fontSize={11} />
-                <YAxis stroke="#8b909a" fontSize={11} />
-                <Tooltip
-                  contentStyle={{ background: "#0d0f14", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }}
-                />
-                <Legend />
-                <Area type="monotone" dataKey="upper_bound" stroke="none" fill="url(#colorForecast)" name="Upper Bound" />
-                <Line type="monotone" dataKey="predicted_units" stroke="#0fd8a0" strokeWidth={2} name="Predicted Units" dot={false} />
-                <Line type="monotone" dataKey="lower_bound" stroke="#565d66" strokeWidth={1} strokeDasharray="4 4" name="Lower Bound" dot={false} />
-              </AreaChart>
-            </ResponsiveContainer>
-          )}
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={forecast}>
+              <defs>
+                <linearGradient id="colorForecast" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#0fd8a0" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#0fd8a0" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="date" stroke="#8b909a" fontSize={11} />
+              <YAxis stroke="#8b909a" fontSize={11} />
+              <Tooltip
+                contentStyle={{ background: "#0d0f14", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }}
+              />
+              <Legend />
+              <Area type="monotone" dataKey="upper_bound" stroke="none" fill="url(#colorForecast)" name="Upper Bound" />
+              <Line type="monotone" dataKey="predicted_units" stroke="#0fd8a0" strokeWidth={2} name="Predicted Units" dot={false} />
+              <Line type="monotone" dataKey="lower_bound" stroke="#565d66" strokeWidth={1} strokeDasharray="4 4" name="Lower Bound" dot={false} />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
 
         {/* Price Recommendation Section */}

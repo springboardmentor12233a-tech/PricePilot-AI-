@@ -110,3 +110,19 @@ export async function getProfitability() {
   if (!response.ok) throw new Error("Failed to fetch profitability data");
   return response.json();
 }
+
+export async function getAlerts() {
+  const response = await fetch(`${API_BASE_URL}/predictions/alerts`);
+  if (!response.ok) throw new Error("Failed to fetch alerts");
+  return response.json();
+}
+
+export async function sendChatMessage(message: string, history: { role: string; content: string }[]) {
+  const response = await fetch(`${API_BASE_URL}/predictions/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message, history }),
+  });
+  if (!response.ok) throw new Error("Chat failed");
+  return response.json();
+}

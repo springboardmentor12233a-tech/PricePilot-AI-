@@ -6,7 +6,10 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer
 } from "recharts";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { getCompetitorAnalysis, getProfitability } from "../lib/api";
+import { SkeletonDashboard } from "../components/Skeleton";
 
 interface ComparisonRow {
   category: string;
@@ -23,6 +26,18 @@ interface ProfitRow {
   avg_discount_pct: number;
   revenue_retention_pct: number;
   margin_erosion: number;
+}
+
+// Clean text function to remove em dashes and special characters
+function cleanText(text: string): string {
+  return text
+    .replace(/—/g, "-") // Replace em dashes with regular hyphens
+    .replace(/–/g, "-") // Replace en dashes with regular hyphens
+    .replace(/"/g, '"') // Replace smart double quotes
+    .replace(/"/g, '"') // Replace other smart double quotes
+    .replace(/'/g, "'") // Replace smart single quotes
+    .replace(/'/g, "'") // Replace other smart single quotes
+    .trim();
 }
 
 export default function CompetitorPage() {
@@ -45,12 +60,75 @@ export default function CompetitorPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  function downloadCompetitorReport() {
+    if (comparison.length === 0) return;
+
+    const doc = new jsPDF();
+    const today = new Date().toLocaleDateString();
+
+    doc.setFontSize(20);
+    doc.setTextColor(15, 216, 160);
+    doc.text("PricePilot AI", 14, 20);
+    doc.setFontSize(12);
+    doc.setTextColor(100);
+    doc.text("Competitor Analysis & Revenue Optimization Report", 14, 28);
+    doc.setFontSize(9);
+    doc.text(`Generated: ${today}`, 14, 34);
+
+    doc.setFontSize(13);
+    doc.setTextColor(0);
+    doc.text("Price Positioning vs Competitor Market", 14, 46);
+
+    autoTable(doc, {
+      startY: 50,
+      head: [["Category", "Your Price", "Competitor Median", "Gap %", "Position"]],
+      body: comparison.map((c) => [
+        c.category,
+        `$${c.own_avg_price}`,
+        `$${c.competitor_median_price}`,
+        `+${c.price_gap_pct}%`,
+        c.position,
+      ]),
+      theme: "striped",
+      headStyles: { fillColor: [15, 216, 160] },
+    });
+
+    const finalY1 = (doc as any).lastAutoTable.finalY || 90;
+    doc.setFontSize(13);
+    doc.text("Strategy Recommendations", 14, finalY1 + 12);
+
+    autoTable(doc, {
+      startY: finalY1 + 16,
+      head: [["Category", "Recommendation"]],
+      body: comparison.map((c) => [c.category, cleanText(c.recommendation)]),
+      theme: "striped",
+      headStyles: { fillColor: [157, 124, 249] },
+      columnStyles: { 1: { cellWidth: 130 } },
+    });
+
+    const finalY2 = (doc as any).lastAutoTable.finalY || 130;
+    doc.setFontSize(13);
+    doc.text("Revenue Retention by Category", 14, finalY2 + 12);
+
+    autoTable(doc, {
+      startY: finalY2 + 16,
+      head: [["Category", "Revenue", "Avg Discount %", "Retention %", "Margin Erosion"]],
+      body: profitability.map((p) => [
+        p.category,
+        `$${(p.total_revenue / 1000000).toFixed(2)}M`,
+        `${p.avg_discount_pct}%`,
+        `${p.revenue_retention_pct.toFixed(1)}%`,
+        `$${(p.margin_erosion / 1000000).toFixed(2)}M`,
+      ]),
+      theme: "striped",
+      headStyles: { fillColor: [15, 216, 160] },
+    });
+
+    doc.save(`PricePilot_Competitor_Report_${today.replace(/\//g, "-")}.pdf`);
+  }
+
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="muted-text mono">Loading competitor analysis...</p>
-      </div>
-    );
+    return <SkeletonDashboard />;
   }
 
   const priceChartData = comparison.map((c) => ({
@@ -82,9 +160,17 @@ export default function CompetitorPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-8 py-10">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-1">Competitor Analysis & Revenue Optimization</h1>
-          <p className="muted-text text-sm">Market positioning vs. Amazon UK competitor data</p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold mb-1">Competitor Analysis & Revenue Optimization</h1>
+            <p className="muted-text text-sm">Market positioning vs. Amazon UK competitor data</p>
+          </div>
+          <button
+            onClick={downloadCompetitorReport}
+            className="accent-btn text-xs px-4 py-2 rounded-lg font-semibold"
+          >
+            📥 Download Report
+          </button>
         </div>
 
         {/* Price Comparison Chart */}

@@ -3,6 +3,24 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getKPIs, getCompetitorAnalysis, getProfitability, getAIInsights } from "../lib/api";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { SkeletonDashboard } from "../components/Skeleton";
+
+function cleanText(text: string): string {
+  return text
+    .replace(/[\u2010-\u2015\u2212]/g, "-")            // all hyphen/dash variants -> "-"
+    .replace(/[\u2018\u2019]/g, "'")                   // curly single quotes
+    .replace(/[\u201C\u201D]/g, '"')                   // curly double quotes
+    .replace(/[\u00A0\u2002-\u200A\u202F\u205F]/g, " ") // special spaces -> normal space
+    .replace(/\u2026/g, "...")                         // ellipsis
+    .replace(/\u2248/g, "~")                           // approx sign
+    .replace(/\u2192/g, "->")                          // arrow
+    .replace(/\*\*/g, "")                              // markdown bold markers
+    .replace(/[^\x00-\x7F]/g, "")                      // drop anything else non-ASCII
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 export default function ExecutiveReportPage() {
   const [kpis, setKpis] = useState<any>(null);
@@ -51,12 +69,92 @@ export default function ExecutiveReportPage() {
     }
   }
 
+  function downloadReport() {
+    if (!kpis) return;
+
+    const doc = new jsPDF();
+    const today = new Date().toLocaleDateString();
+
+    // Header
+    doc.setFontSize(20);
+    doc.setTextColor(15, 216, 160);
+    doc.text("PricePilot AI", 14, 20);
+    doc.setFontSize(12);
+    doc.setTextColor(100);
+    doc.text("Executive Business Intelligence Report", 14, 28);
+    doc.setFontSize(9);
+    doc.text(`Generated: ${today}`, 14, 34);
+
+    // KPI Summary
+    doc.setFontSize(13);
+    doc.setTextColor(0);
+    doc.text("Key Performance Indicators", 14, 46);
+
+    const avgGapPct = (comparison.reduce((sum, c) => sum + c.price_gap_pct, 0) / comparison.length).toFixed(0);
+    const avgRetention = (profitability.reduce((sum, p) => sum + p.revenue_retention_pct, 0) / profitability.length).toFixed(1);
+
+    autoTable(doc, {
+      startY: 50,
+      head: [["Metric", "Value"]],
+      body: [
+        ["Total Revenue", `$${(kpis.total_revenue / 1000000).toFixed(2)}M`],
+        ["Month-over-Month Growth", `${kpis.latest_month_growth_pct}%`],
+        ["Average Order Value", `$${kpis.avg_order_value}`],
+        ["Total Units Sold", kpis.total_units_sold.toLocaleString()],
+        ["Avg. Market Position vs Competitors", `+${avgGapPct}%`],
+        ["Avg. Revenue Retention", `${avgRetention}%`],
+      ],
+      theme: "striped",
+      headStyles: { fillColor: [15, 216, 160] },
+    });
+
+    // Executive Summary
+    if (summary) {
+      const cleanSummary = cleanText(summary);
+      const finalY = (doc as any).lastAutoTable.finalY || 90;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(13);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Executive Summary", 14, finalY + 12);
+
+      doc.setFontSize(10);
+      doc.setTextColor(60, 60, 60);
+
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const usableWidth = pageWidth - 28;
+
+      const splitSummary = doc.splitTextToSize(cleanSummary, usableWidth);
+      doc.text(splitSummary, 14, finalY + 20, { lineHeightFactor: 1.5 });
+    }
+
+    // Category Performance Table
+    const finalY2 = (doc as any).lastAutoTable.finalY || 90;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableWidth = pageWidth - 28;
+    const lines = doc.splitTextToSize(cleanText(summary), usableWidth);
+    const summaryHeight = summary ? 20 + (lines.length * 5) : 0;
+
+    autoTable(doc, {
+      startY: finalY2 + summaryHeight + 15,
+      head: [["Category", "Revenue", "Market Position", "Retention"]],
+      body: profitability.map((p) => {
+        const comp = comparison.find((c) => c.category === p.category);
+        return [
+          p.category,
+          `$${(p.total_revenue / 1000000).toFixed(2)}M`,
+          `+${comp?.price_gap_pct}%`,
+          `${p.revenue_retention_pct.toFixed(1)}%`,
+        ];
+      }),
+      theme: "striped",
+      headStyles: { fillColor: [157, 124, 249] },
+    });
+
+    doc.save(`PricePilot_Executive_Report_${today.replace(/\//g, "-")}.pdf`);
+  }
+
   if (loading || !kpis) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="muted-text mono">Loading executive report...</p>
-      </div>
-    );
+    return <SkeletonDashboard />;
   }
 
   const avgGapPct = (comparison.reduce((sum, c) => sum + c.price_gap_pct, 0) / comparison.length).toFixed(0);
@@ -72,12 +170,20 @@ export default function ExecutiveReportPage() {
           </div>
           <span className="font-semibold tracking-tight">PricePilot AI</span>
         </div>
-        <button
-          onClick={() => router.push("/dashboard")}
-          className="text-sm muted-text hover:text-white transition px-3 py-1.5 rounded-lg border border-[var(--border)]"
-        >
-          ← Back to Dashboard
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={downloadReport}
+            className="accent-btn text-xs px-4 py-2 rounded-lg font-semibold mr-3"
+          >
+            📥 Download Report
+          </button>
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="text-sm muted-text hover:text-white transition px-3 py-1.5 rounded-lg border border-[var(--border)]"
+          >
+            ← Back to Dashboard
+          </button>
+        </div>
       </div>
 
       <div className="max-w-5xl mx-auto px-8 py-10">

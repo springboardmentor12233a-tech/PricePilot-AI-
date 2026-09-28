@@ -7,6 +7,9 @@ import {
   ResponsiveContainer, PieChart, Pie, Cell
 } from "recharts";
 import { getKPIs, getAIInsights } from "../lib/api";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { SkeletonDashboard } from "../components/Skeleton";
 
 interface KPIData {
   total_revenue: number;
@@ -56,12 +59,73 @@ export default function KPIsPage() {
     }
   }
 
+  function downloadKPIReport() {
+    if (!data) return;
+
+    const doc = new jsPDF();
+    const today = new Date().toLocaleDateString();
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    doc.setFontSize(20);
+    doc.setTextColor(15, 216, 160);
+    doc.text("PricePilot AI", 14, 20);
+    doc.setFontSize(12);
+    doc.setTextColor(100);
+    doc.text("Business KPIs Report", 14, 28);
+    doc.setFontSize(9);
+    doc.text(`Generated: ${today}`, 14, 34);
+
+    autoTable(doc, {
+      startY: 45,
+      head: [["Metric", "Value"]],
+      body: [
+        ["Total Revenue", `$${(data.total_revenue / 1000000).toFixed(2)}M`],
+        ["Month-over-Month Growth", `${data.latest_month_growth_pct}%`],
+        ["Average Order Value", `$${data.avg_order_value}`],
+        ["Total Units Sold", data.total_units_sold.toLocaleString()],
+      ],
+      theme: "striped",
+      headStyles: { fillColor: [15, 216, 160] },
+    });
+
+    const finalY1 = (doc as any).lastAutoTable.finalY || 90;
+    doc.setFontSize(13);
+    doc.setTextColor(0);
+    doc.text("Monthly Revenue Trend", 14, finalY1 + 12);
+
+    autoTable(doc, {
+      startY: finalY1 + 16,
+      head: [["Month", "Revenue", "Growth %"]],
+      body: data.monthly_revenue.map((m) => [
+        m.month,
+        `$${(m.revenue / 1000000).toFixed(2)}M`,
+        m.growth_pct !== null ? `${m.growth_pct}%` : "—",
+      ]),
+      theme: "striped",
+      headStyles: { fillColor: [157, 124, 249] },
+    });
+
+    const finalY2 = (doc as any).lastAutoTable.finalY || 130;
+    doc.setFontSize(13);
+    doc.text("Category Performance", 14, finalY2 + 12);
+
+    autoTable(doc, {
+      startY: finalY2 + 16,
+      head: [["Category", "Revenue", "Units Sold"]],
+      body: data.category_performance.map((c) => [
+        c.category,
+        `$${(c.revenue / 1000000).toFixed(2)}M`,
+        c.units_sold.toLocaleString(),
+      ]),
+      theme: "striped",
+      headStyles: { fillColor: [15, 216, 160] },
+    });
+
+    doc.save(`PricePilot_KPI_Report_${today.replace(/\//g, "-")}.pdf`);
+  }
+
   if (loading || !data) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="muted-text mono">Loading KPIs...</p>
-      </div>
-    );
+    return <SkeletonDashboard />;
   }
 
   const growthPositive = data.latest_month_growth_pct >= 0;
@@ -84,9 +148,17 @@ export default function KPIsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-8 py-10">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-1">Business KPIs</h1>
-          <p className="muted-text text-sm">Revenue, growth & performance analytics</p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold mb-1">Business KPIs</h1>
+            <p className="muted-text text-sm">Revenue, growth & performance analytics</p>
+          </div>
+          <button
+            onClick={downloadKPIReport}
+            className="accent-btn text-xs px-4 py-2 rounded-lg font-semibold"
+          >
+            📥 Download Report
+          </button>
         </div>
 
         {/* KPI Cards */}

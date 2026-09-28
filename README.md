@@ -119,6 +119,14 @@ Built in `notebooks/competitor_analysis.ipynb`, comparing the platform's own pro
 - **`/competitor`** page — price positioning bar chart (own vs. competitor median), strategy recommendation cards, revenue retention chart
 - **`/executive`** page — consolidated executive summary combining KPIs, competitive position, and profitability into a single view, with an AI-generated (Groq) executive briefing and a category performance summary table
 
+### 5. Additional Requirements
+
+- **Role-based access:** 4 roles (Pricing Manager, Executive, Analyst, Sales) with JWT authentication, server-side route protection, and role-aware UI controls
+- **AI alerts:** rule-based alerts on the dashboard (negative growth, low revenue retention, extreme competitor price gaps)
+- **AI assistant:** floating chatbot (Groq) grounded in live KPI, competitor, and profitability data, with suggested questions and clickable page links
+- **Downloadable reports:** PDF export on the Executive, KPI, and Competitor pages
+- **UX:** navigation sidebar and loading skeletons across all pages
+
 ---
 
 ## 🛠️ Tools & Technologies
@@ -182,7 +190,8 @@ PRICEPILOT AI/
 │ ├── competitor/page.tsx
 │ ├── executive/page.tsx
 │ └── lib/api.ts
-│
+  └── components/ (ChatWidget.tsx, Sidebar.tsx, Skeleton.tsx)
+│ 
 ├── .gitignore
 └── README.md
 
