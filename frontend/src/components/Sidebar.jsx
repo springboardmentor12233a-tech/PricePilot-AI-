@@ -1,11 +1,10 @@
 import React from "react";
 import {
   LayoutDashboard,
-  Package,
+  Users2,
   Sparkles,
   TrendingUp,
   SlidersHorizontal,
-  Compass,
   Bell,
   FileText,
   BarChart3,
@@ -25,12 +24,6 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
           badge: null,
         },
         {
-          id: "products",
-          label: "Product Catalog",
-          icon: Package,
-          badge: counts?.products || "52",
-        },
-        {
           id: "recommendations",
           label: "Price Prediction",
           icon: Sparkles,
@@ -43,17 +36,17 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
           icon: TrendingUp,
           badge: "AI ML",
         },
+        {
+          id: "competitors",
+          label: "Competitor Analysis",
+          icon: Users2,
+          badge: "3 rivals",
+        },
       ],
     },
     {
       title: "Market Intelligence",
       items: [
-        {
-          id: "market_analysis",
-          label: "Market Analysis",
-          icon: Compass,
-          badge: "3 rivals",
-        },
         {
           id: "ai_insights",
           label: "AI Insights",
@@ -140,6 +133,7 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
                   const Icon = item.icon;
                   const isActive =
                     activeTab === item.id ||
+                    (item.id === "competitors" && activeTab === "market_analysis") ||
                     (item.id === "market_analysis" && activeTab === "competitors");
 
                   return (
