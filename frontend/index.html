@@ -1,439 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>PricePilot AI | Dynamic Pricing Intelligence</title>
-
+    <title>PricePilot AI - Dynamic Pricing Optimization & Revenue Intelligence System</title>
+    <meta name="description" content="AI-based dynamic pricing and revenue intelligence platform empowering retail businesses with demand forecasting, price elasticity recommendations, and competitor benchmarking.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- Animated Background -->
-    <div class="background">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+    <!-- Ambient Glowing Background -->
+    <div class="background-glow">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-
-        <div class="brand">
-            <div class="brand-icon">
-                <span>₹</span>
-            </div>
-
-            <div>
-                <h2>PricePilot</h2>
-                <small>AI PRICING INTELLIGENCE</small>
+    <!-- Navigation Bar -->
+    <nav class="landing-nav">
+        <div class="brand-wrapper">
+            <div class="brand-symbol">₹</div>
+            <div class="brand-text">
+                <h2>PricePilot AI</h2>
+                <small>Revenue Intelligence Platform</small>
             </div>
         </div>
 
-        <div class="nav-status">
-            <span class="status-dot"></span>
-            <span>AI System Online</span>
-        </div>
+        <ul class="landing-menu">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#features">Key Features</a></li>
+            <li><a href="#pipeline">AI Pipeline</a></li>
+            <li><a href="#roles">Platform Roles</a></li>
+        </ul>
 
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+            <a href="login.html" class="btn btn-primary btn-sm">Launch Platform ✦</a>
+        </div>
     </nav>
 
+    <!-- Hero Section -->
+    <header class="hero-section" id="overview">
+        <div class="hero-content">
+            <div class="badge badge-primary">✦ AI-Based Dynamic Pricing & Revenue Intelligence</div>
+            <h1>
+                Optimize Your <span class="gradient-text">Pricing.</span><br>
+                Maximize Your Revenue.
+            </h1>
+            <p>
+                PricePilot AI is an enterprise-grade dynamic pricing and revenue intelligence platform that harnesses machine learning demand forecasting, competitor market analysis, and Groq LLM cognitive insights to automate profit-maximizing pricing decisions.
+            </p>
 
-    <!-- Main -->
-    <main class="container">
+            <div class="hero-actions">
+                <a href="login.html" class="btn btn-primary btn-lg">Access Platform ➔</a>
+                <a href="#features" class="btn btn-secondary btn-lg">Explore Features</a>
+            </div>
 
-        <!-- Hero -->
-        <section class="hero">
-
-            <div class="hero-text">
-
-                <div class="eyebrow">
-                    <span>✦</span>
-                    INTELLIGENT RETAIL ANALYTICS
+            <div class="hero-kpi-banner">
+                <div class="banner-item">
+                    <h3>76,000+</h3>
+                    <p>Historical Sales Analyzed</p>
                 </div>
-
-                <h1>
-                    Optimize Your
-                    <span>Pricing.</span>
-                    <br>
-                    Maximize Your Revenue.
-                </h1>
-
-                <p>
-                    AI-powered demand forecasting and dynamic pricing
-                    recommendations designed to help you make smarter
-                    retail decisions.
-                </p>
-
-            </div>
-
-            <div class="hero-badge">
-                <div class="pulse-ring"></div>
-                <div class="ai-symbol">AI</div>
-            </div>
-
-        </section>
-
-
-        <!-- Control Panel -->
-        <section class="control-panel">
-
-            <div class="control-info">
-                <div class="control-icon">⚡</div>
-
-                <div>
-                    <h3>Run AI Analysis</h3>
-                    <p>Select a dataset record to generate a complete pricing analysis.</p>
+                <div class="banner-item">
+                    <h3>82.6%</h3>
+                    <p>Model R² Forecast Accuracy</p>
+                </div>
+                <div class="banner-item">
+                    <h3>Sub-10ms</h3>
+                    <p>Real-Time Pricing Inference</p>
                 </div>
             </div>
-
-            <div class="controls">
-
-                <label for="rowId">DATASET ROW</label>
-
-                <input
-                    type="number"
-                    id="rowId"
-                    value="0"
-                    min="0"
-                    placeholder="Row ID"
-                >
-
-                <button id="analyzeBtn" onclick="getAnalysis()">
-                    <span id="buttonIcon">✦</span>
-                    <span id="buttonText">Analyze Now</span>
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- Loading -->
-        <div id="loading" class="loading-container">
-
-            <div class="loader"></div>
-
-            <div>
-                <strong>AI is analyzing your data...</strong>
-                <p>Forecasting demand • Optimizing price • Generating insights</p>
-            </div>
-
         </div>
 
+        <div class="hero-visual">
+            <div class="hero-card-preview">
+                <div class="preview-top">
+                    <div>
+                        <span class="badge badge-cyan">LIVE AI REVENUE ENGINE</span>
+                        <h3 style="margin-top: 6px;">Optimal Price Intelligence</h3>
+                    </div>
+                    <span class="badge badge-emerald">Engine Online</span>
+                </div>
 
-        <!-- Error -->
-        <div id="error" class="error-message"></div>
+                <div class="preview-kpi-row">
+                    <div class="mini-kpi">
+                        <span>Current Market Price</span>
+                        <h4>₹72.50</h4>
+                    </div>
+                    <div class="mini-kpi">
+                        <span>Competitor Benchmark</span>
+                        <h4>₹84.00</h4>
+                    </div>
+                </div>
 
+                <div class="preview-kpi-row">
+                    <div class="mini-kpi">
+                        <span>Forecasted Demand</span>
+                        <h4>142 <small style="font-size:12px; color:var(--text-muted)">units</small></h4>
+                    </div>
+                    <div class="mini-kpi">
+                        <span>Inventory Balance</span>
+                        <h4>195 <small style="font-size:12px; color:var(--text-muted)">units</small></h4>
+                    </div>
+                </div>
 
-        <!-- KPI Cards -->
-        <section class="section">
+                <div class="preview-action-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <span style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">AI Recommended Price</span>
+                            <div style="font-size:28px; font-weight:900; color:var(--emerald);">₹76.12 <span style="font-size:14px; font-weight:600;">(+5.0%)</span></div>
+                        </div>
+                        <span class="badge badge-emerald" style="padding:6px 14px; font-size:13px;">INCREASE PRICE</span>
+                    </div>
+                    <p style="font-size:12.5px; color:var(--text-secondary); margin-top:8px;">
+                        Groq Insight: "High demand velocity combined with a ₹11.50 competitor cushion permits a 5% margin expansion without demand degradation."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
 
-            <div class="section-heading">
+    <!-- Key Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <span class="badge badge-primary">Core Capabilities</span>
+            <h2>Intelligent Retail Pricing Levers</h2>
+            <p>Built for modern commerce teams needing real-time market responsiveness, machine-learning demand foresight, and automated executive intelligence.</p>
+        </div>
 
+        <div class="grid-3">
+            <div class="feature-card">
+                <div class="feature-icon icon-purple">🎯</div>
+                <h3>AI Dynamic Pricing Engine</h3>
+                <p>Continuously balances demand elasticity, competitor price tags, and warehouse inventory thresholds to recommend optimal pricing actions: Increase, Decrease, or Maintain.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-cyan">📈</div>
+                <h3>Demand Forecasting with Confidence</h3>
+                <p>High-precision Gradient Boosting Regressors forecast product demand across regional clusters, delivering granular predictions accompanied by dynamic confidence scores.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-emerald">🤖</div>
+                <h3>Groq LLM Cognitive Insights</h3>
+                <p>Harnesses state-of-the-art LLM intelligence to translate complex numerical metrics into structured pricing alerts, surplus stock notifications, and strategic business takeaways.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-amber">⚔️</div>
+                <h3>Competitor Price Benchmarking</h3>
+                <p>Monitors rival market positioning in real time to capitalize on margin upside when competitors price higher, and safeguards sales velocity when undercut.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-purple">🛡️</div>
+                <h3>Role-Based Access Control</h3>
+                <p>Dedicated access workflows for <strong>Administrators</strong>, <strong>Business Analysts</strong>, and <strong>Operational Users</strong> with permission-enforced security.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-cyan">📑</div>
+                <h3>Exportable BI Reports</h3>
+                <p>Instant executive summaries compiling catalog KPIs, sales trends, demand distributions, and AI strategies into downloadable, print-ready intelligence reports.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture & Pipeline Section -->
+    <section class="pipeline-section" id="pipeline">
+        <div class="section-header">
+            <span class="badge badge-cyan">System Architecture</span>
+            <h2>End-to-End Intelligence Pipeline</h2>
+            <p>From raw retail transactional data to automated real-time price decisions.</p>
+        </div>
+
+        <div class="pipeline-steps">
+            <div class="step-card">
+                <span class="step-num">01</span>
+                <h4>Clean Dataset</h4>
+                <p>76,000 retail records normalized across inventory, pricing, and regional attributes.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">02</span>
+                <h4>MySQL Relational Store</h4>
+                <p>Structured catalog, store profiles, user authentications, and historical sales logs.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">03</span>
+                <h4>ML Demand Model</h4>
+                <p>Trained Gradient Boosting Regressor (82.6% R²) predicts demand velocity.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">04</span>
+                <h4>Groq AI Reasoning</h4>
+                <p>Fast inference LLM delivers contextual business rationale and operational alerts.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">05</span>
+                <h4>Decision Dashboard</h4>
+                <p>Interactive KPIs, visual charts, scenario simulators, and downloadable reports.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roles Showcase Section -->
+    <section class="roles-showcase" id="roles">
+        <div class="section-header">
+            <span class="badge badge-emerald">Targeted Dashboards</span>
+            <h2>Built for Three Distinct Roles</h2>
+            <p>Granular access control tailored to team responsibilities.</p>
+        </div>
+
+        <div class="grid-3">
+            <div class="role-card">
                 <div>
-                    <span class="section-label">REAL-TIME ANALYTICS</span>
-                    <h2>Pricing Intelligence</h2>
-                </div>
-
-                <div class="live-indicator">
-                    <span></span>
-                    LIVE ANALYSIS
-                </div>
-
-            </div>
-
-
-            <div class="dashboard-grid">
-
-                <!-- Demand -->
-                <div class="metric-card demand-card">
-
-                    <div class="card-top">
-                        <div class="metric-icon">📈</div>
-                        <span class="card-label">FORECASTED DEMAND</span>
-                    </div>
-
-                    <div class="metric-value">
-                        <span id="demand">—</span>
-                        <small>units</small>
-                    </div>
-
-                    <div class="metric-footer">
-                        <span class="trend-icon">↗</span>
-                        AI Forecast
-                    </div>
-
-                </div>
-
-
-                <!-- Inventory -->
-                <div class="metric-card inventory-card">
-
-                    <div class="card-top">
-                        <div class="metric-icon">📦</div>
-                        <span class="card-label">INVENTORY LEVEL</span>
-                    </div>
-
-                    <div class="metric-value">
-                        <span id="inventory">—</span>
-                        <small>units</small>
-                    </div>
-
-                    <div class="metric-footer">
-                        <span class="trend-icon">◉</span>
-                        Current Stock
-                    </div>
-
-                </div>
-
-
-                <!-- Current Price -->
-                <div class="metric-card">
-
-                    <div class="card-top">
-                        <div class="metric-icon">💰</div>
-                        <span class="card-label">CURRENT PRICE</span>
-                    </div>
-
-                    <div class="metric-value">
-                        ₹<span id="currentPrice">—</span>
-                    </div>
-
-                    <div class="metric-footer">
-                        Market Price
-                    </div>
-
-                </div>
-
-
-                <!-- Competitor -->
-                <div class="metric-card">
-
-                    <div class="card-top">
-                        <div class="metric-icon">⚔️</div>
-                        <span class="card-label">COMPETITOR PRICE</span>
-                    </div>
-
-                    <div class="metric-value">
-                        ₹<span id="competitorPrice">—</span>
-                    </div>
-
-                    <div class="metric-footer">
-                        Market Comparison
-                    </div>
-
-                </div>
-
-
-                <!-- Recommended -->
-                <div class="metric-card recommended-card">
-
-                    <div class="card-top">
-                        <div class="metric-icon">🎯</div>
-                        <span class="card-label">RECOMMENDED PRICE</span>
-                    </div>
-
-                    <div class="metric-value highlight">
-                        ₹<span id="recommendedPrice">—</span>
-                    </div>
-
-                    <div class="metric-footer">
-                        <span class="spark"></span>
-                        AI Optimized
-                    </div>
-
-                </div>
-
-
-                <!-- Action -->
-                <div class="metric-card action-card">
-
-                    <div class="card-top">
-                        <div class="metric-icon">⚡</div>
-                        <span class="card-label">PRICING ACTION</span>
-                    </div>
-
-                    <div id="action" class="action-badge">
-                        WAITING
-                    </div>
-
-                    <div class="metric-footer">
-                        Recommended Strategy
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- Price Comparison -->
-        <section class="analysis-grid">
-
-            <div class="visual-card">
-
-                <div class="visual-header">
-                    <div>
-                        <span class="section-label">PRICE ANALYSIS</span>
-                        <h2>Market Position</h2>
-                    </div>
-
-                    <div class="chart-icon">◈</div>
-                </div>
-
-                <div class="price-comparison">
-
-                    <div class="price-item">
-                        <span>Your Price</span>
-                        <strong id="visualCurrentPrice">₹—</strong>
-                        <div class="bar">
-                            <div id="currentBar"></div>
-                        </div>
-                    </div>
-
-                    <div class="price-item">
-                        <span>Competitor</span>
-                        <strong id="visualCompetitorPrice">₹—</strong>
-                        <div class="bar">
-                            <div id="competitorBar"></div>
-                        </div>
-                    </div>
-
-                    <div class="price-item recommended">
-                        <span>AI Recommendation</span>
-                        <strong id="visualRecommendedPrice">₹—</strong>
-                        <div class="bar">
-                            <div id="recommendedBar"></div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- System Workflow -->
-            <div class="visual-card workflow-card">
-
-                <div class="visual-header">
-                    <div>
-                        <span class="section-label">AI PIPELINE</span>
-                        <h2>Decision Workflow</h2>
-                    </div>
-                </div>
-
-                <div class="workflow">
-
-                    <div class="workflow-step active">
-                        <div class="step-number">01</div>
+                    <div class="role-card-header">
+                        <div class="role-avatar icon-purple">🛡️</div>
                         <div>
-                            <strong>Demand Forecast</strong>
-                            <span>Gradient Boosting Model</span>
+                            <h4>Administrator</h4>
+                            <small style="color:var(--text-muted)">Full Governance</small>
                         </div>
                     </div>
+                    <p style="font-size:13.5px; color:var(--text-secondary);">Full authority over platform records, system diagnostics, product catalogs, and user permission management.</p>
+                    <ul class="role-features-list">
+                        <li>View, edit & delete products</li>
+                        <li>User account management</li>
+                        <li>Live system health diagnostics</li>
+                        <li>All analytic dashboards & reports</li>
+                    </ul>
+                </div>
+                <a href="login.html" class="btn btn-outline btn-sm">Login as Admin</a>
+            </div>
 
-                    <div class="workflow-line"></div>
-
-                    <div class="workflow-step">
-                        <div class="step-number">02</div>
+            <div class="role-card">
+                <div>
+                    <div class="role-card-header">
+                        <div class="role-avatar icon-cyan">📊</div>
                         <div>
-                            <strong>Price Optimization</strong>
-                            <span>Dynamic Pricing Engine</span>
+                            <h4>Business Analyst</h4>
+                            <small style="color:var(--text-muted)">Decision Support</small>
                         </div>
                     </div>
+                    <p style="font-size:13.5px; color:var(--text-secondary);">Deep exploratory data analytics, price elasticity curves, demand forecasting, and competitor spread modeling.</p>
+                    <ul class="role-features-list">
+                        <li>Comprehensive KPI dashboards</li>
+                        <li>Demand & competitor analytics</li>
+                        <li>Forecast confidence modeling</li>
+                        <li>Exportable BI intelligence reports</li>
+                    </ul>
+                </div>
+                <a href="login.html" class="btn btn-outline btn-sm">Login as Analyst</a>
+            </div>
 
-                    <div class="workflow-line"></div>
-
-                    <div class="workflow-step">
-                        <div class="step-number">03</div>
+            <div class="role-card">
+                <div>
+                    <div class="role-card-header">
+                        <div class="role-avatar icon-emerald">👤</div>
                         <div>
-                            <strong>AI Business Insight</strong>
-                            <span>Groq LLM</span>
+                            <h4>Store User</h4>
+                            <small style="color:var(--text-muted)">Operational Management</small>
                         </div>
                     </div>
-
+                    <p style="font-size:13.5px; color:var(--text-secondary);">Simplified operational interface for evaluating product pricing, checking stockout risks, and viewing AI insights.</p>
+                    <ul class="role-features-list">
+                        <li>Product price recommendations</li>
+                        <li>Stockout & surplus inventory alerts</li>
+                        <li>Demand forecast visualizations</li>
+                        <li>Role-permitted report views</li>
+                    </ul>
                 </div>
-
+                <a href="login.html" class="btn btn-outline btn-sm">Login as User</a>
             </div>
+        </div>
+    </section>
 
-        </section>
-
-
-        <!-- AI Insight -->
-        <section class="ai-insight-card">
-
-            <div class="ai-header">
-
-                <div class="ai-title">
-
-                    <div class="ai-avatar">
-                        <span>✦</span>
-                    </div>
-
-                    <div>
-                        <span class="section-label">POWERED BY GROQ</span>
-                        <h2>AI Business Insight</h2>
-                    </div>
-
+    <!-- Footer -->
+    <footer class="landing-footer">
+        <div class="footer-top">
+            <div class="brand-wrapper">
+                <div class="brand-symbol">₹</div>
+                <div class="brand-text">
+                    <h2>PricePilot AI</h2>
+                    <small>Dynamic Pricing & Revenue Intelligence</small>
                 </div>
-
-                <div class="ai-status">
-                    <span></span>
-                    AI READY
-                </div>
-
             </div>
-
-
-            <div class="insight-content">
-
-                <div class="quote-mark">“</div>
-
-                <p id="aiInsight">
-                    Run an analysis to generate an intelligent
-                    business recommendation based on demand,
-                    inventory and market pricing.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- Footer -->
-        <footer>
 
             <div>
-                <strong>PricePilot AI</strong>
-                <span>Dynamic Pricing & Revenue Intelligence</span>
+                <a href="login.html" class="btn btn-primary">Sign In to Dashboard ➔</a>
             </div>
+        </div>
 
-            <div class="footer-right">
-                <span>Gradient Boosting</span>
-                <span>•</span>
-                <span>Groq AI</span>
-                <span>•</span>
-                <span>FastAPI</span>
-            </div>
-
-        </footer>
-
-    </main>
-
-    <script src="script.js"></script>
+        <div class="footer-bottom">
+            PricePilot AI &copy; 2026. Built with FastAPI, Scikit-Learn Gradient Boosting, MySQL, Groq LLM & Chart.js.
+        </div>
+    </footer>
 
 </body>
-
 </html>

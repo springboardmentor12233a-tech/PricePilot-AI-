@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PricePilot AI - Enterprise Pricing Optimization & Revenue Intelligence</title>
+    <meta name="description" content="AI-based dynamic pricing, demand forecasting with confidence scoring, Groq LLM recommendations, and role-based revenue intelligence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js for all visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Ambient Glowing Background -->
+    <div class="background-glow">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-wrapper">
+                    <div class="brand-symbol">₹</div>
+                    <div class="brand-text">
+                        <h2>PricePilot AI</h2>
+                        <small>Revenue Intelligence</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Role Indicator -->
+            <div class="sidebar-role-indicator">
+                <div class="role-indicator-badge">
+                    <span style="display:flex; align-items:center; gap:6px;">
+                        <span id="roleIcon">🛡️</span>
+                        <strong id="roleName">Admin Mode</strong>
+                    </span>
+                    <span class="badge badge-primary" id="roleBadge">ACTIVE</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="sidebar-nav">
+                <li class="nav-section-title">Core Operations</li>
+                <li class="nav-link active" onclick="switchView('dashboard')" id="nav-dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard & KPIs</span>
+                </li>
+                <li class="nav-link" onclick="switchView('prediction')" id="nav-prediction">
+                    <span class="nav-icon">🏷️</span>
+                    <span>Price Prediction</span>
+                </li>
+                <li class="nav-link" onclick="switchView('forecasting')" id="nav-forecasting">
+                    <span class="nav-icon">📈</span>
+                    <span>Demand Forecasting</span>
+                </li>
+
+                <li class="nav-section-title">Cognitive Intelligence</li>
+                <li class="nav-link" onclick="switchView('ai')" id="nav-ai">
+                    <span class="nav-icon">🤖</span>
+                    <span>AI Insights & Alerts</span>
+                </li>
+                <li class="nav-link" onclick="switchView('analytics')" id="nav-analytics">
+                    <span class="nav-icon">📉</span>
+                    <span>Visual Analytics</span>
+                </li>
+                <li class="nav-link" onclick="switchView('report')" id="nav-report">
+                    <span class="nav-icon">📑</span>
+                    <span>Business Report</span>
+                </li>
+
+                <!-- Admin Management: Conditionally displayed only for Admin -->
+                <li class="nav-section-title admin-only" id="adminNavHeader">Governance</li>
+                <li class="nav-link admin-only" onclick="switchView('admin')" id="nav-admin">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Admin Management</span>
+                </li>
+            </ul>
+
+            <!-- Sidebar User Profile & Logout -->
+            <div class="sidebar-footer">
+                <div class="user-profile-summary">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-info-text">
+                        <strong id="userName">Administrator</strong>
+                        <small id="userRoleTitle">admin@pricepilot.ai</small>
+                    </div>
+                </div>
+                <button onclick="handleLogout()" class="btn btn-secondary btn-sm" title="Log out" style="padding: 6px 10px;">
+                    🚪
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <main class="main-wrapper">
+            <!-- Topbar Header -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h2 id="viewTitle">Dashboard & Business Intelligence</h2>
+                    <p id="viewSubtitle">Product and revenue KPIs powered by machine learning and historical retail analytics</p>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Product / Row Selector -->
+                    <div class="dataset-selector">
+                        <span>Product:</span>
+                        <select id="productSelect" onchange="onProductSelectChanged()" style="padding:3px 8px; font-size:12.5px;">
+                            <option value="0">Loading catalog...</option>
+                        </select>
+                    </div>
+
+                    <div class="dataset-selector">
+                        <span>Row:</span>
+                        <input type="number" id="globalRowId" value="0" min="0" max="75999" onchange="onRowIdChanged()">
+                        <button class="btn btn-primary btn-sm" onclick="runAnalysisForCurrentRow()" style="padding: 4px 10px;">Load</button>
+                    </div>
+
+                    <!-- Quick Role Switcher for demonstration -->
+                    <div class="dataset-selector" style="border-color: rgba(99, 102, 241, 0.4);">
+                        <span>Role:</span>
+                        <select id="roleSwitcherSelect" onchange="switchRoleDemo(this.value)" style="padding:3px 8px; font-size:12.5px; background: rgba(99, 102, 241, 0.15);">
+                            <option value="admin">🛡️ Admin</option>
+                            <option value="business_analyst">📊 Business Analyst</option>
+                            <option value="user">👤 User</option>
+                        </select>
+                    </div>
+
+                    <span class="badge badge-emerald" style="display:flex; align-items:center; gap:4px;">
+                        <span style="width:6px; height:6px; border-radius:50%; background:var(--emerald);"></span>
+                        LIVE
+                    </span>
+                </div>
+            </header>
+
+            <!-- App Content Body -->
+            <div class="content-body">
+
+                <!-- ====================================================
+                     VIEW 1: DASHBOARD & KPIS
+                     ==================================================== -->
+                <section class="view-section active-view" id="view-dashboard">
+                    <!-- Dynamic Role Welcome Banner -->
+                    <div class="role-welcome-banner" id="roleWelcomeBanner">
+                        <div>
+                            <h3 id="roleGreeting">Welcome to PricePilot AI Platform</h3>
+                            <p id="roleDescription">System operational. Displaying enterprise business KPIs, market positions, and real-time inventory demand telemetry.</p>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-primary btn-sm" onclick="switchView('prediction')">Price Prediction ➔</button>
+                            <button class="btn btn-secondary btn-sm" onclick="switchView('forecasting')">Demand Forecast ➔</button>
+                        </div>
+                    </div>
+
+                    <!-- 6 KPI CARDS (Requirement 3) -->
+                    <div class="kpi-row">
+                        <div class="kpi-box">
+                            <div class="kpi-box-top">
+                                <span class="label">Total Products</span>
+                                <span class="icon">📦</span>
+                            </div>
+                            <div class="value" id="kpiProducts">—</div>
+                            <div class="subtext"><span style="color:var(--cyan)">●</span> In Active Catalog</div>
+                        </div>
+
+                        <div class="kpi-box">
+                            <div class="kpi-box-top">
+                                <span class="label">Total Sales</span>
+                                <span class="icon">💰</span>
+                            </div>
+                            <div class="value" id="kpiSales">—</div>
+                            <div class="subtext"><span style="color:var(--emerald)">↗</span> Total Units Sold</div>
+                        </div>
+
+                        <div class="kpi-box">
+                            <div class="kpi-box-top">
+                                <span class="label">Average Price</span>
+                                <span class="icon">🏷️</span>
+                            </div>
+                            <div class="value">₹<span id="kpiPrice">—</span></div>
+                            <div class="subtext"><span style="color:var(--primary-light)">●</span> Store Price Avg</div>
+                        </div>
+
+                        <div class="kpi-box">
+                            <div class="kpi-box-top">
+                                <span class="label">Average Demand</span>
+                                <span class="icon">📈</span>
+                            </div>
+                            <div class="value" id="kpiDemand">—</div>
+                            <div class="subtext"><span style="color:var(--cyan)">↗</span> Units per cycle</div>
+                        </div>
+
+                        <div class="kpi-box">
+                            <div class="kpi-box-top">
+                                <span class="label">Average Inventory</span>
+                                <span class="icon">🏢</span>
+                            </div>
+                            <div class="value" id="kpiInventory">—</div>
+                            <div class="subtext"><span style="color:var(--amber)">◉</span> Warehouse Units</div>
+                        </div>
+
+                        <div class="kpi-box">
+                            <div class="kpi-box-top">
+                                <span class="label">Competitor Price</span>
+                                <span class="icon">⚔️</span>
+                            </div>
+                            <div class="value">₹<span id="kpiCompPrice">—</span></div>
+                            <div class="subtext"><span style="color:var(--rose)">●</span> Rival Benchmark</div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Overview Charts -->
+                    <div class="charts-grid-2">
+                        <div class="chart-card">
+                            <div class="card-title-bar">
+                                <div>
+                                    <h3>Competitor vs Current Price</h3>
+                                    <p style="margin:0; font-size:12px; color:var(--text-muted)">Category level market comparison</p>
+                                </div>
+                                <span class="badge badge-primary">Market Spread</span>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="dashCompChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="card-title-bar">
+                                <div>
+                                    <h3>Demand by Product Category</h3>
+                                    <p style="margin:0; font-size:12px; color:var(--text-muted)">Average unit demand distribution</p>
+                                </div>
+                                <span class="badge badge-cyan">Velocity</span>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="dashDemandChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ====================================================
+                     VIEW 2: PRICE PREDICTION PAGE (Requirement 4)
+                     ==================================================== -->
+                <section class="view-section" id="view-prediction">
+                    <div class="prediction-grid">
+                        <!-- Dynamic Simulator Controls -->
+                        <div class="simulator-card">
+                            <div class="card-title-bar">
+                                <div>
+                                    <h3>Dynamic Pricing Simulator</h3>
+                                    <p style="margin:0; font-size:12px; color:var(--text-muted)">Adjust market factors or use live record parameters</p>
+                                </div>
+                                <span class="badge badge-primary">Real-Time</span>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-input-group">
+                                    <label>Current Price (₹)</label>
+                                    <input type="number" id="simCurrentPrice" value="70.00" step="0.5" oninput="runSimulator()">
+                                </div>
+                                <div class="sim-input-group">
+                                    <label>Competitor Price (₹)</label>
+                                    <input type="number" id="simCompetitorPrice" value="68.00" step="0.5" oninput="runSimulator()">
+                                </div>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-input-group">
+                                    <label>Inventory Level (Units)</label>
+                                    <input type="number" id="simInventory" value="150" step="5" oninput="runSimulator()">
+                                </div>
+                                <div class="sim-input-group">
+                                    <label>Predicted Demand (Units)</label>
+                                    <input type="number" id="simDemand" value="110" step="2" oninput="runSimulator()">
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                <button class="btn btn-primary" onclick="runSimulator()" style="flex:1;">Recalculate Price ✦</button>
+                                <button class="btn btn-secondary" onclick="loadSelectedRowToSimulator()">Reset to Row Data</button>
+                            </div>
+
+                            <div style="margin-top: 24px; padding: 16px; background: rgba(15, 23, 42, 0.5); border-radius: var(--radius-sm); border: 1px solid var(--card-border);">
+                                <h4 style="font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Pricing Optimization Logic:</h4>
+                                <ul style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; padding-left: 18px;">
+                                    <li>High demand (>120) & constrained inventory (<200): <strong>+5% Price Bump</strong></li>
+                                    <li>Low demand (<80) & excessive inventory (>300): <strong>-5% Liquidation Discount</strong></li>
+                                    <li>Current price higher than competitor: <strong>Match Competitor Ceiling</strong></li>
+                                    <li>Otherwise: <strong>Maintain Current Price</strong> to protect steady margin velocity.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Prediction Outcome Card -->
+                        <div class="result-card">
+                            <div class="card-title-bar">
+                                <div>
+                                    <h3>AI Recommended Pricing Action</h3>
+                                    <p style="margin:0; font-size:12px; color:var(--text-muted)">Optimal equilibrium output</p>
+                                </div>
+                                <span id="predActionBadge" class="action-badge-large action-maintain">MAINTAIN PRICE</span>
+                            </div>
+
+                            <div class="price-action-hero">
+                                <span class="rec-label">Target Recommended Price</span>
+                                <div class="rec-price" id="predRecommendedPrice">₹70.00</div>
+                                <p style="font-size: 13px; color: var(--text-secondary);" id="predPriceDeltaText">
+                                    Difference from Current: ₹0.00 (0.0%)
+                                </p>
+                            </div>
+
+                            <!-- Visual Market Position Bars -->
+                            <div class="price-bars-visualizer">
+                                <div class="bar-track-wrap">
+                                    <div class="bar-track-label">
+                                        <span>Current Store Price</span>
+                                        <strong id="barLabelCurrent">₹70.00</strong>
+                                    </div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill fill-current" id="barFillCurrent" style="width: 70%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="bar-track-wrap">
+                                    <div class="bar-track-label">
+                                        <span>Competitor Market Price</span>
+                                        <strong id="barLabelCompetitor">₹68.00</strong>
+                                    </div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill fill-competitor" id="barFillCompetitor" style="width: 68%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="bar-track-wrap">
+                                    <div class="bar-track-label">
+                                        <span style="color:var(--primary-light);">✦ AI Recommended Target</span>
+                                        <strong id="barLabelRecommended" style="color:var(--primary-light);">₹70.00</strong>
+                                    </div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill fill-recommended" id="barFillRecommended" style="width: 70%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ====================================================
+                     VIEW 3: DEMAND FORECASTING (Requirement 5)
+                     ==================================================== -->
+                <section class="view-section" id="view-forecasting">
+                    <div class="forecast-grid">
+                        <!-- Product Metadata & Confidence Metric -->
+                        <div class="simulator-card">
+                            <div class="card-title-bar">
+                                <div>
+                                    <h3>Model Confidence & Metrics</h3>
+                                    <p style="margin:0; font-size:12px; color:var(--text-muted)">Gradient Boosting Regressor (200 trees)</p>
+                                </div>
+                                <span class="badge badge-cyan" id="forecastStockBadge">OPTIMAL STOCK</span>
+                            </div>
+
+                            <div class="confidence-meter-card">
+                                <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Forecast Confidence Score</div>
+                                <div class="confidence-score-number" id="forecastConfidence">88.5%</div>
+                                <p style="font-size:12.5px; color:var(--text-secondary); margin-top:4px;">
+                                    High statistical certainty based on regional historical demand stability
+                                </p>
+                            </div>
+
+                            <table class="forecast-stats-table">
+                                <tr>
+                                    <td style="color:var(--text-muted)">Product Identifier</td>
+                                    <td id="fcProductId">P0001</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Category</td>
+                                    <td id="fcCategory">Electronics</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Sales Region</td>
+                                    <td id="fcRegion">North</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Current Inventory Level</td>
+                                    <td id="fcInventory">195 units</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Historical Category Average</td>
+                                    <td id="fcHistoricalAvg">105.2 units</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted); font-weight:700;">Forecasted Period Demand</td>
+                                    <td id="fcForecastedDemand" style="color:var(--primary-light); font-size:16px;">142.0 units</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Demand vs Inventory Comparison Chart -->
+                        <div class="result-card">
+                            <div class="card-title-bar">
+                                <div>
+                                    <h3>Historical vs Projected Demand & Inventory</h3>
+                                    <p style="margin:0; font-size:12px; color:var(--text-muted)">Visual timeline comparison across cycles</p>
+                                </div>
+                                <span class="badge badge-emerald">6-Month Trend</span>
+                            </div>
+                            <div class="chart-wrapper" style="height: 380px;">
+                                <canvas id="forecastCompareChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ====================================================
+                     VIEW 4: AI RECOMMENDATIONS & ALERTS (Requirement 6)
+                     ==================================================== -->
+                <section class="view-section" id="view-ai">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                        <div>
+                            <h3 style="font-size:20px; font-weight:800;">Groq AI Executive Recommendations & Alerts</h3>
+                            <p style="font-size:13.5px; color:var(--text-secondary)">Cognitive insights translated into clear operational directives</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateAiInsights()">
+                            <span>✦</span> Regenerate Groq Insights
+                        </button>
+                    </div>
+
+                    <div class="ai-alerts-grid">
+                        <!-- Pricing Recommendation Card -->
+                        <div class="ai-alert-card">
+                            <div class="alert-card-header">
+                                <h4><span>🏷️</span> Pricing Recommendation</h4>
+                                <span class="badge badge-emerald" id="aiPricingBadge">OPTIMAL</span>
+                            </div>
+                            <p id="aiPricingDesc">Target price adjusted to maximize revenue capture while preserving customer demand velocity.</p>
+                        </div>
+
+                        <!-- Inventory Alert Card -->
+                        <div class="ai-alert-card">
+                            <div class="alert-card-header">
+                                <h4><span>📦</span> Inventory Alert</h4>
+                                <span class="badge badge-amber" id="aiInventoryBadge">SURPLUS WARNING</span>
+                            </div>
+                            <p id="aiInventoryDesc">Current warehouse inventory exceeds near-term forecasted demand. Consider bundling promotions.</p>
+                        </div>
+
+                        <!-- Demand-Related Insights Card -->
+                        <div class="ai-alert-card">
+                            <div class="alert-card-header">
+                                <h4><span>📈</span> Demand Insights</h4>
+                                <span class="badge badge-cyan" id="aiDemandBadge">STEADY</span>
+                            </div>
+                            <p id="aiDemandDesc">Consumer purchase velocity remains stable across core metropolitan stores.</p>
+                        </div>
+
+                        <!-- Competitive Pricing Insights Card -->
+                        <div class="ai-alert-card">
+                            <div class="alert-card-header">
+                                <h4><span>⚔️</span> Competitive Pricing</h4>
+                                <span class="badge badge-primary" id="aiCompBadge">COMPETITIVE</span>
+                            </div>
+                            <p id="aiCompDesc">Store pricing matches competitor benchmarks with a favorable margin buffer.</p>
+                        </div>
+                    </div>
+
+                    <!-- Business Recommendations Strategic Checklist -->
+                    <div class="simulator-card" style="margin-bottom:24px;">
+                        <div class="card-title-bar">
+                            <div>
+                                <h3>Executive Strategic Action Items</h3>
+                                <p style="margin:0; font-size:12px; color:var(--text-muted)">High-impact recommendations derived from market telemetry</p>
+                            </div>
+                            <span class="badge badge-primary">Action Plan</span>
+                        </div>
+                        <ul id="aiBusinessRecList" style="list-style:none; padding:0;">
+                            <li style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; display:flex; align-items:center; gap:10px;">
+                                <span style="color:var(--emerald)">✔</span> Implement dynamic pricing adjustments across selected tier-1 retail products.
+                            </li>
+                            <li style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; display:flex; align-items:center; gap:10px;">
+                                <span style="color:var(--emerald)">✔</span> Coordinate with logistics to balance warehouse storage before next seasonal cycle.
+                            </li>
+                            <li style="padding:10px 0; font-size:14px; display:flex; align-items:center; gap:10px;">
+                                <span style="color:var(--emerald)">✔</span> Re-evaluate competitor promotional discounts scheduled for month-end.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Groq LLM Narrative -->
+                    <div class="ai-narrative-box">
+                        <div class="quote-icon">“</div>
+                        <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; color:var(--primary-light);">
+                            Groq AI Deep Insight Narrative:
+                        </h4>
+                        <div class="ai-narrative-text" id="aiNarrativeText">
+                            Loading AI insight from Groq LLM service...
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ====================================================
+                     VIEW 5: VISUAL ANALYTICS (Requirement 11)
+                     ==================================================== -->
+                <section class="view-section" id="view-analytics">
+                    <div style="margin-bottom:24px;">
+                        <h3 style="font-size:20px; font-weight:800;">Exploratory Data Analysis & Business Intelligence Visualizations</h3>
+                        <p style="font-size:13.5px; color:var(--text-secondary)">Seven real-data analytical perspectives powered directly by clean historical dataset records</p>
+                    </div>
+
+                    <!-- Row 1: Category Demand & Region Demand -->
+                    <div class="charts-grid-2">
+                        <div class="chart-card">
+                            <h3>1. Demand by Product Category</h3>
+                            <p>Average customer purchase demand across primary categories</p>
+                            <div class="chart-wrapper">
+                                <canvas id="chartCatDemand"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h3>2. Demand by Regional Market</h3>
+                            <p>Geographical sales performance across North, South, East, West</p>
+                            <div class="chart-wrapper">
+                                <canvas id="chartRegDemand"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Price vs Demand Curve & Competitor Price vs Current Price -->
+                    <div class="charts-grid-2">
+                        <div class="chart-card">
+                            <h3>3. Price vs Demand Elasticity Curve</h3>
+                            <p>How varying price brackets influence unit sales velocity</p>
+                            <div class="chart-wrapper">
+                                <canvas id="chartPriceDemand"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h3>4. Competitor Price vs Current Store Price</h3>
+                            <p>Direct category-by-category pricing positioning benchmark</p>
+                            <div class="chart-wrapper">
+                                <canvas id="chartCompCurrent"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Inventory vs Demand & Top Products Performance -->
+                    <div class="charts-grid-2">
+                        <div class="chart-card">
+                            <h3>5. Warehouse Inventory vs Consumer Demand</h3>
+                            <p>Assessing supply buffer and potential stockout or surplus risks</p>
+                            <div class="chart-wrapper">
+                                <canvas id="chartInvDemand"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h3>6. Product Performance Leaderboard</h3>
+                            <p>Top ranked products by accumulated total units sold</p>
+                            <div class="chart-wrapper">
+                                <canvas id="chartProdPerf"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Demand Trends Over Time (Full Width) -->
+                    <div class="chart-card-full">
+                        <h3>7. Demand & Sales Trends Over Time</h3>
+                        <p>24-month historical trajectory of demand and units sold</p>
+                        <div class="chart-wrapper" style="height:360px;">
+                            <canvas id="chartDemandTrends"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ====================================================
+                     VIEW 6: BUSINESS INTELLIGENCE REPORT (Requirement 7)
+                     ==================================================== -->
+                <section class="view-section" id="view-report">
+                    <div class="report-container">
+                        <div class="report-header">
+                            <div>
+                                <span class="badge badge-primary">OFFICIAL EXECUTIVE REPORT</span>
+                                <h1 style="font-size:26px; font-weight:900; margin-top:8px;">PricePilot AI Business Intelligence Report</h1>
+                                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
+                                    Generated: <span id="reportGenDate">Loading...</span> • Confidential
+                                </p>
+                            </div>
+
+                            <div class="report-toolbar">
+                                <button class="btn btn-primary" onclick="downloadReport()">
+                                    <span>📥</span> Download Report (PDF / Print)
+                                </button>
+                                <button class="btn btn-secondary" onclick="exportReportData()">
+                                    <span>💾</span> Export JSON
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Strategic Executive Summary -->
+                        <div class="report-section">
+                            <h3>1. Executive Strategic Summary</h3>
+                            <p id="reportSummaryText" style="font-size:14px; color:var(--text-secondary); line-height:1.7;">
+                                Compiling real-time report telemetry...
+                            </p>
+                        </div>
+
+                        <!-- KPI Summary Table -->
+                        <div class="report-section">
+                            <h3>2. Key Performance Indicators Summary</h3>
+                            <table class="report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Platform Value</th>
+                                        <th>Benchmark Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Total Products Tracked</td>
+                                        <td id="repTotalProducts">20</td>
+                                        <td><span class="badge badge-emerald">Optimal</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Cumulative Sales</td>
+                                        <td id="repTotalSales">7,200,000+</td>
+                                        <td><span class="badge badge-emerald">High Volume</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Unit Price</td>
+                                        <td id="repAvgPrice">₹68.40</td>
+                                        <td><span class="badge badge-primary">Competitive</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Competitor Price</td>
+                                        <td id="repAvgCompPrice">₹71.20</td>
+                                        <td><span class="badge badge-cyan">₹2.80 Advantage</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Inventory Level</td>
+                                        <td id="repAvgInventory">248 units</td>
+                                        <td><span class="badge badge-amber">Healthy Buffer</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Customer Demand</td>
+                                        <td id="repAvgDemand">104.5 units</td>
+                                        <td><span class="badge badge-emerald">Stable</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Product Performance Table -->
+                        <div class="report-section">
+                            <h3>3. Top Performing Product Catalog</h3>
+                            <table class="report-table" id="reportTopProductsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product ID</th>
+                                        <th>Category</th>
+                                        <th>Units Sold</th>
+                                        <th>Average Demand</th>
+                                        <th>Average Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportTopProductsBody">
+                                    <!-- Populated via script -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Demand & Pricing Strategy Analysis -->
+                        <div class="report-section">
+                            <h3>4. AI Strategic Pricing & Demand Outlook</h3>
+                            <div style="background:rgba(15,23,42,0.5); padding:20px; border-radius:var(--radius-sm); border:1px solid var(--card-border);">
+                                <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.6;">
+                                    Based on gradient boosting regression forecasts across 76,000 retail observations, products exhibit a price elasticity threshold at approximately ₹85.00. Competitor price matching is highly effective when inventory levels exceed 250 units, while low-inventory segments yield up to a 5% margin premium without consumer resistance.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ====================================================
+                     VIEW 7: ADMIN MANAGEMENT (Requirement 8)
+                     ==================================================== -->
+                <section class="view-section" id="view-admin">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                        <div>
+                            <h3 style="font-size:20px; font-weight:800;">Administrator System Governance</h3>
+                            <p style="font-size:13.5px; color:var(--text-secondary)">Manage products catalog, user accounts, and review server infrastructure diagnostics</p>
+                        </div>
+                        <span class="badge badge-rose" style="font-size:13px; padding:6px 14px;">RESTRICTED: ADMIN ROLE ONLY</span>
+                    </div>
+
+                    <!-- Admin Navigation Tabs -->
+                    <div class="admin-tabs">
+                        <button class="admin-tab-btn active" onclick="switchAdminTab('sysinfo')" id="tabBtn-sysinfo">System Diagnostics</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('products')" id="tabBtn-products">Product Catalog CRUD</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('users')" id="tabBtn-users">User Accounts CRUD</button>
+                    </div>
+
+                    <!-- Tab 1: System Info -->
+                    <div class="admin-tab-pane active-pane" id="pane-sysinfo">
+                        <div class="grid-3" style="margin-bottom:24px;">
+                            <div class="kpi-box">
+                                <div class="kpi-box-top"><span class="label">Backend API</span><span class="icon">⚡</span></div>
+                                <div class="value" style="font-size:20px;" id="admSysBackend">FastAPI</div>
+                                <div class="subtext" style="color:var(--emerald)">● Online & Serving</div>
+                            </div>
+                            <div class="kpi-box">
+                                <div class="kpi-box-top"><span class="label">Relational Database</span><span class="icon">🗄️</span></div>
+                                <div class="value" style="font-size:20px;" id="admSysDatabase">MySQL (pricepilot_db)</div>
+                                <div class="subtext" style="color:var(--emerald)">● Connected</div>
+                            </div>
+                            <div class="kpi-box">
+                                <div class="kpi-box-top"><span class="label">Machine Learning</span><span class="icon">🧠</span></div>
+                                <div class="value" style="font-size:20px;">GBDT Regressor</div>
+                                <div class="subtext" style="color:var(--cyan)">● R² Accuracy: 0.826</div>
+                            </div>
+                        </div>
+
+                        <div class="simulator-card">
+                            <h3 style="font-size:16px; margin-bottom:14px;">Runtime Environment Diagnostic Summary</h3>
+                            <table class="report-table">
+                                <tr>
+                                    <td style="color:var(--text-muted); width:30%;">Platform Engine</td>
+                                    <td>PricePilot AI Enterprise v2.4.0</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Groq Cognitive Engine</td>
+                                    <td>Groq Cloud LLM (Active / Ready)</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Historical Sales Training Set</td>
+                                    <td>76,000 processed rows (data/processed/clean_sales_data.csv)</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Active Users Registered</td>
+                                    <td id="admTotalUsersCount">—</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:var(--text-muted)">Products in Database</td>
+                                    <td id="admTotalProdsCount">—</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Products CRUD -->
+                    <div class="admin-tab-pane" id="pane-products">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                            <h4 style="font-size:16px; font-weight:700;">Catalog Product Records</h4>
+                            <button class="btn btn-primary btn-sm" onclick="openAddProductModal()">+ Add New Product</button>
+                        </div>
+
+                        <div class="data-table-card">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Product ID</th>
+                                        <th>Category</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminProductsTableBody">
+                                    <tr><td colspan="3" style="text-align:center;">Loading products from database...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Users CRUD -->
+                    <div class="admin-tab-pane" id="pane-users">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                            <h4 style="font-size:16px; font-weight:700;">Platform User Accounts</h4>
+                            <button class="btn btn-primary btn-sm" onclick="openAddUserModal()">+ Add New User</button>
+                        </div>
+
+                        <div class="data-table-card">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>Name</th>
+                                        <th>Email / Username</th>
+                                        <th>Role</th>
+                                        <th>Created At</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminUsersTableBody">
+                                    <tr><td colspan="6" style="text-align:center;">Loading users from database...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ====================================================
+         CONFIRMATION MODAL (Requirement 8)
+         ==================================================== -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="confirmModalTitle">Confirm Action</h3>
+                <button class="modal-close" onclick="closeConfirmModal()">✕</button>
+            </div>
+            <p id="confirmModalMessage" style="font-size:14px; color:var(--text-secondary); line-height:1.6;">
+                Are you sure you want to proceed with this operation?
+            </p>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirmModalActionBtn">Delete Record</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal-overlay" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Catalog Product</h3>
+                <button class="modal-close" onclick="closeAddProductModal()">✕</button>
+            </div>
+            <form onsubmit="handleCreateProduct(event)">
+                <div class="form-group">
+                    <label>Product Identifier (e.g. P0021)</label>
+                    <input type="text" id="newProdId" required placeholder="P0021">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="newProdCategory" style="width:100%;">
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Toys">Toys</option>
+                        <option value="Furniture">Furniture</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddProductModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Platform User</h3>
+                <button class="modal-close" onclick="closeAddUserModal()">✕</button>
+            </div>
+            <form onsubmit="handleCreateUser(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="newUserName" required placeholder="Jane Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="newUserEmail" required placeholder="jane@company.com">
+                </div>
+                <div class="form-group">
+                    <label>Temporary Password</label>
+                    <input type="password" id="newUserPassword" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>Assigned Platform Role</label>
+                    <select id="newUserRole" style="width:100%;">
+                        <option value="user">User (Operational Store User)</option>
+                        <option value="business_analyst">Business Analyst (Decision Analytics)</option>
+                        <option value="admin">Admin (System Governance)</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddUserModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Dashboard App Script -->
+    <script src="script.js"></script>
+</body>
+</html>

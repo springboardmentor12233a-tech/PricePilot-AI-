@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PricePilot AI - Authentication & Role Access</title>
+    <meta name="description" content="Secure login portal for PricePilot AI platform. Role-based access for Administrators, Business Analysts, and Users.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+
+    <!-- Ambient Glowing Background -->
+    <div class="background-glow">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+    </div>
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="brand-symbol">₹</div>
+            <h2>PricePilot AI</h2>
+            <p>Dynamic Pricing & Revenue Intelligence</p>
+        </div>
+
+        <!-- Quick Demo Role Switcher Chips -->
+        <div class="role-quick-chips">
+            <label>⚡ Quick Fill Demo Roles:</label>
+            <div class="chips-row">
+                <button type="button" class="chip-btn" onclick="quickFill('admin', 'admin123')">
+                    <span>🛡️ Admin</span>
+                    <small style="opacity:0.7">admin123</small>
+                </button>
+                <button type="button" class="chip-btn" onclick="quickFill('analyst', 'analyst123')">
+                    <span>📊 Analyst</span>
+                    <small style="opacity:0.7">analyst123</small>
+                </button>
+                <button type="button" class="chip-btn" onclick="quickFill('user', 'user123')">
+                    <span>👤 User</span>
+                    <small style="opacity:0.7">user123</small>
+                </button>
+            </div>
+        </div>
+
+        <div id="loginAlert" class="login-alert"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" placeholder="Enter username (e.g. admin)" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                <span id="btnSpinner" style="display:none;">◌ </span>
+                <span id="btnText">Sign In to Platform</span>
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 24px;">
+            <a href="index.html" style="font-size: 13px; color: var(--text-muted); text-decoration: none; transition: var(--transition);">
+                ← Back to Landing Page
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // API Base detection
+        const API_BASE = window.location.origin.includes('8000') 
+            ? window.location.origin 
+            : 'http://127.0.0.1:8000';
+
+        function quickFill(user, pass) {
+            document.getElementById('username').value = user;
+            document.getElementById('password').value = pass;
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const alertBox = document.getElementById('loginAlert');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            alertBox.className = 'login-alert';
+            alertBox.style.display = 'none';
+            btnSpinner.style.display = 'inline';
+            btnText.textContent = 'Authenticating...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || data.status === 'error') {
+                    throw new Error(data.detail || data.message || 'Invalid username or password');
+                }
+
+                // Store credentials & token
+                localStorage.setItem('pricepilot_token', data.access_token);
+                localStorage.setItem('pricepilot_role', data.role);
+                localStorage.setItem('pricepilot_user', data.username || username);
+
+                alertBox.className = 'login-alert alert-success';
+                alertBox.textContent = `Welcome back, ${data.username || username}! Redirecting to ${data.role.replace('_', ' ').toUpperCase()} dashboard...`;
+                alertBox.style.display = 'block';
+
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 700);
+
+            } catch (err) {
+                alertBox.className = 'login-alert alert-error';
+                alertBox.textContent = err.message || 'Unable to connect to authentication server.';
+                alertBox.style.display = 'block';
+            } finally {
+                btnSpinner.style.display = 'none';
+                btnText.textContent = 'Sign In to Platform';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Auto-fill admin on first load if empty
+        if (!document.getElementById('username').value) {
+            quickFill('admin', 'admin123');
+        }
+    </script>
+</body>
+</html>

@@ -3,6 +3,7 @@ import joblib
 
 from fastapi import FastAPI
 from pydantic import BaseModel
+from backend.auth_routes import router as auth_router
 from backend.db_connection import get_connection
 from backend.pricing_optimizer import recommend_price
 from backend.real_time_pricing import generate_pricing_recommendation
@@ -21,6 +22,7 @@ app = FastAPI(
     description="Dynamic Pricing Optimization and Revenue Intelligence System",
     version="1.0.0"
 )
+app.include_router(auth_router)
 
 
 # =========================================================
@@ -459,3 +461,40 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# =========================================================
+# KPI Dashboard
+# =========================================================
+
+@app.get("/api/kpis")
+def get_kpis():
+
+    total_products = df["Product ID"].nunique()
+
+    total_sales = int(df["Units Sold"].sum())
+
+    average_price = round(
+        float(df["Price"].mean()), 2
+    )
+
+    average_demand = round(
+        float(df["Demand"].mean()), 2
+    )
+
+    average_inventory = round(
+        float(df["Inventory Level"].mean()), 2
+    )
+
+    average_competitor_price = round(
+        float(df["Competitor Pricing"].mean()), 2
+    )
+
+    return {
+        "status": "success",
+        "total_products": total_products,
+        "total_sales": total_sales,
+        "average_price": average_price,
+        "average_demand": average_demand,
+        "average_inventory": average_inventory,
+        "average_competitor_price": average_competitor_price
+    }
