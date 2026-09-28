@@ -6,6 +6,10 @@ import ProductCatalog from "./components/ProductCatalog";
 import PriceRecommendationModal from "./components/PriceRecommendationModal";
 import DemandForecastingView from "./components/DemandForecastingView";
 import CompetitorIntelligenceView from "./components/CompetitorIntelligenceView";
+import AiInsightsView from "./components/AiInsightsView";
+import AlertsView from "./components/AlertsView";
+import BiReportsView from "./components/BiReportsView";
+import AnalyticsView from "./components/AnalyticsView";
 import SettingsView from "./components/SettingsView";
 import HeroSection from "./components/HeroSection";
 import PredictionPage from "./components/PredictionPage";
@@ -317,10 +321,10 @@ export default function App() {
                       <div className="p-6 rounded-2xl bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border border-indigo-900/40 backdrop-blur-md">
                         <h2 className="text-xl font-extrabold text-white flex items-center gap-2">
                           <Sparkles className="w-5 h-5 text-indigo-400" />
-                          AI Pricing Recommendation Engine
+                          Price Prediction & Recommendations
                         </h2>
                         <p className="text-xs text-slate-400 mt-1">
-                          Select any product below to review AI-recommended target pricing, competitor benchmarks, and elasticity simulations.
+                          Select any product below to review AI-predicted target pricing, competitor benchmarks, and elasticity simulations.
                         </p>
                       </div>
 
@@ -334,8 +338,35 @@ export default function App() {
                     </div>
                   )}
 
-                  {activeTab === "competitors" && (
+                  {(activeTab === "market_analysis" || activeTab === "competitors") && (
                     <CompetitorIntelligenceView
+                      products={products}
+                      onSelectProduct={handleOpenPredictor}
+                    />
+                  )}
+
+                  {activeTab === "ai_insights" && (
+                    <AiInsightsView
+                      products={products}
+                      onSelectProduct={handleOpenPredictor}
+                    />
+                  )}
+
+                  {activeTab === "alerts" && (
+                    <AlertsView
+                      onSelectProduct={handleOpenPredictor}
+                    />
+                  )}
+
+                  {activeTab === "bi_reports" && (
+                    <BiReportsView
+                      products={products}
+                      summary={summary}
+                    />
+                  )}
+
+                  {activeTab === "analytics" && (
+                    <AnalyticsView
                       products={products}
                       onSelectProduct={handleOpenPredictor}
                     />

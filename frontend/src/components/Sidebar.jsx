@@ -3,57 +3,104 @@ import {
   LayoutDashboard,
   Package,
   Sparkles,
-  Users2,
   TrendingUp,
   SlidersHorizontal,
-  ChevronRight,
+  Compass,
+  Bell,
+  FileText,
+  BarChart3,
   BrainCircuit,
   Lock,
 } from "lucide-react";
 
 export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
-  const navItems = [
+  const sections = [
     {
-      id: "dashboard",
-      label: "Executive Overview",
-      icon: LayoutDashboard,
-      badge: null,
+      title: "Core Modules",
+      items: [
+        {
+          id: "dashboard",
+          label: "Executive Overview",
+          icon: LayoutDashboard,
+          badge: null,
+        },
+        {
+          id: "products",
+          label: "Product Catalog",
+          icon: Package,
+          badge: counts?.products || "52",
+        },
+        {
+          id: "recommendations",
+          label: "Price Prediction",
+          icon: Sparkles,
+          badge: "Active",
+          badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+        },
+        {
+          id: "forecasting",
+          label: "Demand Forecasting",
+          icon: TrendingUp,
+          badge: "AI ML",
+        },
+      ],
     },
     {
-      id: "products",
-      label: "Product Catalog",
-      icon: Package,
-      badge: counts?.products || "6",
+      title: "Market Intelligence",
+      items: [
+        {
+          id: "market_analysis",
+          label: "Market Analysis",
+          icon: Compass,
+          badge: "3 rivals",
+        },
+        {
+          id: "ai_insights",
+          label: "AI Insights",
+          icon: Sparkles,
+          badge: null,
+        },
+        {
+          id: "alerts",
+          label: "Alerts",
+          icon: Bell,
+          badge: "3 New",
+          badgeColor: "bg-rose-500/20 text-rose-300 border-rose-500/40 font-semibold",
+        },
+      ],
     },
     {
-      id: "recommendations",
-      label: "AI Price Engine",
-      icon: Sparkles,
-      badge: "Active",
-      badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+      title: "Reporting",
+      items: [
+        {
+          id: "bi_reports",
+          label: "BI Reports",
+          icon: FileText,
+          badge: null,
+        },
+        {
+          id: "analytics",
+          label: "Analytics",
+          icon: BarChart3,
+          badge: null,
+        },
+      ],
     },
     {
-      id: "competitors",
-      label: "Competitor Intel",
-      icon: Users2,
-      badge: "3 comps",
-    },
-    {
-      id: "forecasting",
-      label: "Demand Forecasting",
-      icon: TrendingUp,
-      badge: "AI ML",
-    },
-    {
-      id: "settings",
-      label: "Model & DB Settings",
-      icon: SlidersHorizontal,
-      badge: null,
+      title: "System",
+      items: [
+        {
+          id: "settings",
+          label: "Model & DB Settings",
+          icon: SlidersHorizontal,
+          badge: null,
+        },
+      ],
     },
   ];
 
   return (
-    <aside className="w-64 border-r border-slate-800/80 bg-slate-950/40 backdrop-blur-md flex flex-col justify-between p-4 shrink-0">
+    <aside className="w-64 border-r border-slate-800/80 bg-slate-950/40 backdrop-blur-md flex flex-col justify-between p-4 shrink-0 overflow-y-auto">
       <div className="space-y-6">
         {/* Role Badge Indicator */}
         <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800/90 shadow-inner">
@@ -81,56 +128,65 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
           </p>
         </div>
 
-        {/* Navigation Menu */}
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 px-3 mb-2">
-            Core Modules
-          </p>
-          <nav className="space-y-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                    isActive
-                      ? "bg-indigo-600/15 text-indigo-400 border border-indigo-500/30 shadow-sm"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 border border-transparent"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      className={`w-4 h-4 ${isActive ? "text-indigo-400" : "text-slate-400"}`}
-                    />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
-                        item.badgeColor ||
-                        "bg-slate-800 text-slate-400 border-slate-700"
+        {/* Navigation Sections */}
+        <div className="space-y-5">
+          {sections.map((section) => (
+            <div key={section.title}>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 px-3 mb-1.5">
+                {section.title}
+              </p>
+              <nav className="space-y-0.5">
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const isActive =
+                    activeTab === item.id ||
+                    (item.id === "market_analysis" && activeTab === "competitors");
+
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                        isActive
+                          ? "bg-indigo-600/15 text-indigo-400 border border-indigo-500/30 shadow-sm"
+                          : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 border border-transparent"
                       }`}
                     >
-                      {item.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </nav>
+                      <div className="flex items-center gap-2.5">
+                        <Icon
+                          className={`w-4 h-4 ${
+                            isActive ? "text-indigo-400" : "text-slate-400"
+                          }`}
+                        />
+                        <span>{item.label}</span>
+                      </div>
+                      {item.badge && (
+                        <span
+                          className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
+                            item.badgeColor ||
+                            "bg-slate-800 text-slate-400 border-slate-700"
+                          }`}
+                        >
+                          {item.badge}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Footer Info */}
-      <div className="pt-4 border-t border-slate-800/80">
+      <div className="pt-4 border-t border-slate-800/80 mt-6">
         <div className="bg-gradient-to-br from-indigo-950/40 to-slate-900 p-3 rounded-xl border border-indigo-900/30">
           <p className="text-xs font-medium text-indigo-300">
-            Milestone 1 Active
+            PricePilot Enterprise
           </p>
           <p className="text-[11px] text-slate-400 mt-0.5">
-            Anchored RF Model · Multi-Competitor Parser
+            ML Demand & Competitor Radar
           </p>
         </div>
       </div>
