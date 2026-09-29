@@ -11,6 +11,7 @@ import AlertsView from "./components/AlertsView";
 import BiReportsView from "./components/BiReportsView";
 import AnalyticsView from "./components/AnalyticsView";
 import SettingsView from "./components/SettingsView";
+import KpiDashboardView from "./components/KpiDashboardView";
 import HeroSection from "./components/HeroSection";
 import PredictionPage from "./components/PredictionPage";
 import CustomerQueryChatbot from "./components/CustomerQueryChatbot";
@@ -336,6 +337,14 @@ export default function App() {
                         searchQuery={searchQuery}
                       />
                     </div>
+                  )}
+
+                  {activeTab === "kpis" && (
+                    <KpiDashboardView
+                      products={products}
+                      summary={summary}
+                      onSelectProduct={handleOpenPredictor}
+                    />
                   )}
 
                   {(activeTab === "market_analysis" || activeTab === "competitors") && (

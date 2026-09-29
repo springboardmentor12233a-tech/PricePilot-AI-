@@ -4,6 +4,7 @@ import {
   Users2,
   Sparkles,
   TrendingUp,
+  Target,
   SlidersHorizontal,
   Bell,
   FileText,
@@ -41,6 +42,18 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
           label: "Competitor Analysis",
           icon: Users2,
           badge: "3 rivals",
+        },
+      ],
+    },
+    {
+      title: "Key Performance Indicators",
+      items: [
+        {
+          id: "kpis",
+          label: "Executive KPIs",
+          icon: Target,
+          badge: "Live",
+          badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30 font-semibold",
         },
       ],
     },
