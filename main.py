@@ -27,17 +27,22 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup():
+    print("[PricePilot AI] Connecting to PostgreSQL database...")
     try:
         n = pricing_model.train_price_model(engine)
-        print(f"Pricing model initialized on {n} rows")
+        print(f"[PricePilot AI] Pricing model initialized ({n} rows).")
     except Exception as e:
-        print(f"Pricing model initialization deferred: {e}")
+        print(f"[PricePilot AI] Pricing model initialization deferred: {e}")
 
     try:
         meta = demand_model.train_demand_model(engine)
-        print(f"Demand model initialized ({meta.get('champion_model', 'Trained')})")
+        print(f"[PricePilot AI] Demand forecasting engine initialized ({meta.get('champion_model', 'RandomForest')}).")
     except Exception as e:
-        print(f"Demand model initialization deferred: {e}")
+        print(f"[PricePilot AI] Demand model initialization deferred: {e}")
+
+    print("[PricePilot AI] Backend is LIVE and listening on http://127.0.0.1:8000")
+    print("[PricePilot AI] Swagger API docs: http://127.0.0.1:8000/docs")
+    print("[PricePilot AI] Keep this terminal open while using the app!\n")
 
 
 @app.get("/health")
@@ -411,4 +416,11 @@ def get_groq_models(api_key: Optional[str] = None):
 
 if __name__ == "__main__":
     import uvicorn
+    print("\n" + "=" * 60)
+    print("  PricePilot AI Backend Server Starting...")
+    print("  Host: http://127.0.0.1:8000")
+    print("  Interactive Swagger Docs: http://127.0.0.1:8000/docs")
+    print("  Notice: This is a persistent server process.")
+    print("  It stays open to handle frontend requests (CTRL+C to stop).")
+    print("=" * 60 + "\n")
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
