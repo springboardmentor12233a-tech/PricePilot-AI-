@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 
 export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
+  const isPricingManager = role === "pricing_manager";
+
   const sections = [
     {
       title: "Core Modules",
@@ -29,7 +31,8 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
           label: "Price Prediction",
           icon: Sparkles,
           badge: "Active",
-          badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+          badgeColor:
+            "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
         },
         {
           id: "forecasting",
@@ -53,7 +56,8 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
           label: "Executive KPIs",
           icon: Target,
           badge: "Live",
-          badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30 font-semibold",
+          badgeColor:
+            "bg-indigo-500/20 text-indigo-300 border-indigo-500/30 font-semibold",
         },
       ],
     },
@@ -62,17 +66,22 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
       items: [
         {
           id: "ai_insights",
-          label: "AI Insights",
+          label: "AI Information",
           icon: Sparkles,
           badge: null,
         },
-        {
-          id: "alerts",
-          label: "Alerts",
-          icon: Bell,
-          badge: "3 New",
-          badgeColor: "bg-rose-500/20 text-rose-300 border-rose-500/40 font-semibold",
-        },
+        ...(isPricingManager
+          ? [
+              {
+                id: "alerts",
+                label: "Alerts",
+                icon: Bell,
+                badge: "3 New",
+                badgeColor:
+                  "bg-rose-500/20 text-rose-300 border-rose-500/40 font-semibold",
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -80,29 +89,27 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
       items: [
         {
           id: "bi_reports",
-          label: "BI Reports",
+          label: "Automated Reports",
           icon: FileText,
           badge: null,
         },
-        {
-          id: "analytics",
-          label: "Analytics",
-          icon: BarChart3,
-          badge: null,
-        },
       ],
     },
-    {
-      title: "System",
-      items: [
-        {
-          id: "settings",
-          label: "Model & DB Settings",
-          icon: SlidersHorizontal,
-          badge: null,
-        },
-      ],
-    },
+    ...(isPricingManager
+      ? [
+          {
+            title: "System",
+            items: [
+              {
+                id: "settings",
+                label: "Settings",
+                icon: SlidersHorizontal,
+                badge: null,
+              },
+            ],
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -146,8 +153,10 @@ export default function Sidebar({ activeTab, setActiveTab, role, counts }) {
                   const Icon = item.icon;
                   const isActive =
                     activeTab === item.id ||
-                    (item.id === "competitors" && activeTab === "market_analysis") ||
-                    (item.id === "market_analysis" && activeTab === "competitors");
+                    (item.id === "competitors" &&
+                      activeTab === "market_analysis") ||
+                    (item.id === "market_analysis" &&
+                      activeTab === "competitors");
 
                   return (
                     <button

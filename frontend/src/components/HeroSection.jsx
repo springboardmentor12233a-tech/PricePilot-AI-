@@ -145,7 +145,7 @@ const HeroSection = ({ onNavigatePrediction, onNavigateDashboard }) => {
         <p className="mt-6 text-slate-400 text-base sm:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
           Continuously balance real-time competitor feeds, historical demand
           elasticity, and seasonal trends to deploy maximum-margin prices with
-          99.1% R² precision.
+          precision.
         </p>
 
         {/* Interactive Action Buttons */}
@@ -166,58 +166,7 @@ const HeroSection = ({ onNavigatePrediction, onNavigateDashboard }) => {
             <BarChart3 className="w-4 h-4 text-slate-400" />
             <span>Explore Live Dashboard</span>
           </button>
-        </div>
-
-        {/* Platform Highlights / Telemetry Badges */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-slate-800/80 pt-10">
-          <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 backdrop-blur-sm">
-            <div className="text-2xl font-extrabold text-white font-mono">
-              0.9908
-            </div>
-            <div className="text-xs text-indigo-400 font-semibold mt-0.5">
-              Test R² Score
-            </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Random Forest Benchmarked
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 backdrop-blur-sm">
-            <div className="text-2xl font-extrabold text-white font-mono">
-              $3.32
-            </div>
-            <div className="text-xs text-emerald-400 font-semibold mt-0.5">
-              Mean Abs. Error
-            </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              On $98+ Avg Unit Price
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 backdrop-blur-sm">
-            <div className="text-2xl font-extrabold text-white font-mono">
-              3 Feeds
-            </div>
-            <div className="text-xs text-amber-400 font-semibold mt-0.5">
-              Competitor Intel
-            </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Real-time market tracking
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 backdrop-blur-sm">
-            <div className="text-2xl font-extrabold text-white font-mono">
-              &lt; 86 ms
-            </div>
-            <div className="text-xs text-cyan-400 font-semibold mt-0.5">
-              Inference Latency
-            </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Instant dynamic re-pricing
-            </p>
-          </div>
-        </div>
+        </div>        
       </div>
     </section>
   );

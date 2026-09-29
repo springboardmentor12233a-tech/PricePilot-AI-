@@ -86,6 +86,16 @@ export default function App() {
     checkAuthAndLoad();
   }, []);
 
+  const userRole = currentUser?.role || "guest";
+
+  useEffect(() => {
+    if (userRole === "business_user") {
+      if (activeTab === "alerts" || activeTab === "settings" || activeTab === "analytics") {
+        setActiveTab("dashboard");
+      }
+    }
+  }, [userRole, activeTab]);
+
   const handleLogout = () => {
     logoutUser();
     setCurrentUser(null);
@@ -123,8 +133,6 @@ export default function App() {
     setSelectedProductId(productId);
     setActivePage("prediction");
   };
-
-  const userRole = currentUser?.role || "guest";
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-indigo-500 selection:text-white">
@@ -361,7 +369,7 @@ export default function App() {
                     />
                   )}
 
-                  {activeTab === "alerts" && (
+                  {activeTab === "alerts" && userRole === "pricing_manager" && (
                     <AlertsView
                       onSelectProduct={handleOpenPredictor}
                     />
@@ -374,13 +382,6 @@ export default function App() {
                     />
                   )}
 
-                  {activeTab === "analytics" && (
-                    <AnalyticsView
-                      products={products}
-                      onSelectProduct={handleOpenPredictor}
-                    />
-                  )}
-
                   {activeTab === "forecasting" && (
                     <DemandForecastingView
                       products={products}
@@ -388,7 +389,7 @@ export default function App() {
                     />
                   )}
 
-                  {activeTab === "settings" && (
+                  {activeTab === "settings" && userRole === "pricing_manager" && (
                     <SettingsView isLiveBackend={isLiveBackend} />
                   )}
                 </div>
