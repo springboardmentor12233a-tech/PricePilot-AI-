@@ -2,22 +2,35 @@
 
 ## Dynamic Pricing Optimization & Revenue Intelligence System
 
-PricePilot AI is an AI-powered platform designed to help businesses make better pricing and demand decisions using machine learning, demand forecasting, competitor analysis and business analytics.
+PricePilot AI is an AI-powered platform designed to help businesses make better pricing, demand, and revenue decisions using machine learning, demand forecasting, competitor analysis, product analytics, and business intelligence.
+
+The platform provides an end-to-end workflow for analyzing business performance, predicting demand, optimizing product prices, comparing competitor prices, generating business recommendations, and creating downloadable business intelligence reports.
+
+---
 
 ## Project Objectives
 
+The main objectives of PricePilot AI are:
+
 - Predict product demand using machine learning.
 - Generate suitable price recommendations.
-- Optimize prices based on expected profit.
+- Optimize pricing based on predicted demand and expected revenue.
 - Forecast future product demand.
 - Analyze competitor pricing.
+- Identify product market position.
 - Calculate important business KPIs.
-- Generate AI-based business insights.
-- Display pricing, demand and revenue insights through a dashboard.
+- Analyze product-level sales performance.
+- Generate automated business and pricing recommendations.
+- Implement authentication and role-based authorization.
+- Generate downloadable business intelligence reports.
+- Provide an end-to-end pricing and revenue optimization workflow.
+
+---
 
 ## Technologies Used
 
 ### Machine Learning
+
 - Python
 - Pandas
 - NumPy
@@ -25,158 +38,175 @@ PricePilot AI is an AI-powered platform designed to help businesses make better 
 - XGBoost
 
 ### Backend
+
 - FastAPI
 - Uvicorn
+- REST APIs
+- JWT Authentication
 
 ### Frontend
-- React
+
+- React.js
 - Vite
-- Recharts
 - Axios
+- Recharts
 
-### LLM
-- Google Gemini
-- google-genai
+### Authentication & Authorization
 
-### Tools
+- JSON Web Tokens (JWT)
+- Role-Based Access Control
+
+### Database
+
+- Application database
+- Product data
+- Business data
+- Competitor pricing data
+
+### Report Generation
+
+- jsPDF
+- PDF Report Generation
+
+### Development Tools
+
 - Jupyter Notebook
-- VS Code
+- Visual Studio Code
 - Git
 - GitHub
 - FastAPI Swagger UI
 
-## Datasets
+---
 
-### Demand Prediction Dataset
+# System Features
 
-A dataset containing 35,000 records and 13 features was used for the initial demand prediction model.
+## 1. User Authentication and Role-Based Access
 
-### M5 Forecasting Dataset
+PricePilot AI implements secure JWT-based authentication and role-based authorization.
 
-The M5 Forecasting dataset was used for weekly demand forecasting. Sales, pricing and calendar information were prepared and used to train the forecasting model.
+The system supports three roles:
 
-### UCI Online Retail Dataset
+### Admin
 
-The UCI Online Retail dataset was used for business performance and KPI analysis.
+Admin users have access to:
 
-## Main Features
+- Dashboard
+- Product Analytics
+- Price Prediction
+- Demand Forecasting
+- Administrative functionality
 
-### 1. Demand Prediction
+### Business Analyst
 
-Predicts product demand using historical sales, pricing, marketing and seasonal features.
+Business Analysts have access to:
 
-### 2. Price Optimization
+- Dashboard
+- Product Analytics
+- Price Prediction
+- Demand Forecasting
+- Competitor Analysis
+- AI Recommendations
+- Business Intelligence Reports
 
-Tests different candidate prices and calculates predicted demand, expected revenue and expected profit to generate a price recommendation.
+### User
 
-### 3. Demand Forecasting
+Normal users have access to:
 
-Generates weekly demand forecasts and trend information using the M5 forecasting data.
+- Dashboard
+- Product Analytics
+- Basic business information
 
-### 4. Competitor Analysis
+The Admin account is created separately through the backend and is not available as an option during normal user registration.
 
-Analyzes competitor prices and provides information about the product's market position.
+---
 
-### 5. KPI Analysis
+# 2. Business Dashboard
 
-Calculates important business metrics such as:
+The Business Dashboard provides an overview of the organization's business performance.
+
+### Key Performance Indicators
 
 - Total Revenue
-- Total Orders
-- Total Quantity Sold
-- Average Order Value
-- Top Products
-- Top Customers
-- Country-wise Revenue
+- Total Sales
+- Total Products
+- Unique Orders
 
-### 6. Revenue Analysis
+The dashboard provides a centralized view of important business metrics.
 
-Provides monthly revenue trends and other revenue-related business metrics.
+---
 
-### 7. AI Business Insights
+# 3. Product Analytics
 
-Google Gemini is integrated to generate simple business insights from pricing, demand, revenue and competitor results.
+The Product Analytics module provides detailed product-level analysis.
 
-## Machine Learning Models
+### Product KPIs
 
-The following models were evaluated for demand prediction:
+- Product Price
+- Units Sold
+- Revenue
+- Total Transactions
+- Average Selling Price
 
-- Linear Regression
-- Random Forest Regressor
-- Gradient Boosting Regressor
-- XGBoost Regressor
+### Product Analytics Includes
 
-XGBoost was selected for the final demand prediction model after model comparison and hyperparameter tuning.
+- Sales trends
+- Category performance
+- Product performance
+- Historical sales analysis
+- Product-level KPIs
 
-## Backend APIs
+The system displays the latest 12 months of sales information for selected products.
 
-The FastAPI backend provides APIs for:
+---
 
-- Demand Prediction
-- Price Optimization
-- Weekly Demand Prediction
-- Weekly Demand Forecasting
-- Competitor Analysis
-- Revenue and Profit Analysis
-- Pricing Recommendation
-- KPI Analysis
-- LLM Business Insights
+# 4. Price Prediction and Revenue Optimization
 
-## Dashboard
+The Price Prediction module uses machine learning to estimate demand at different price points.
 
-The dashboard provides:
+The system tests multiple candidate prices and predicts:
 
-- Business KPI cards
-- Price optimization results
-- Demand forecasts
-- Revenue trend visualization
-- Competitor analysis
-- AI business insights
+- Demand
+- Expected Revenue
 
-## Project Structure
+The price producing the highest predicted revenue is selected as the recommended price.
+
+### Price Prediction Results
+
+The module provides:
+
+- Current Price
+- Recommended Price
+- Price Change Percentage
+- Predicted Demand
+- Expected Revenue
+- Price Elasticity
+- Reference Price
+- Reference Demand
+- Total Units Sold
+- Total Revenue
+- Total Transactions
+- Average Selling Price
+- Demand Level
+
+### Price Optimization Workflow
 
 ```text
-Price-Pilot-AI/
-│
-├── backend/
-│   ├── competitor_analysis.py
-│   ├── main.py
-│   └── revenue_optimization.py
-│
-├── data/
-│   ├── m5/
-│   │   └── demand_forecasting_data.csv
-│   └── Online Retail.xlsx
-│
-├── eda/
-│   ├── EDA_Demand_Forecasting.ipynb
-│   └── Online_Retail_EDA.ipynb
-│
-├── frontend/
-│   ├── src/
-│   │   └── App.jsx
-│   └── ...
-│
-├── kpi/
-│   ├── country_revenue.csv
-│   ├── KPI_Analysis.ipynb
-│   ├── monthly_sales_kpis.csv
-│   ├── top_customers.csv
-│   ├── top_product_quantity.csv
-│   └── top_product_revenue.csv
-│
-├── llm/
-│   └── llm_service.py
-│
-├── models/
-│   ├── demand_model_features.pkl
-│   ├── demand_prediction_model.json
-│   ├── demand_prediction_model.pkl
-│   ├── M5_Demand_Forecasting_Model.ipynb
-│   ├── m5_weekly_demand_model.json
-│   ├── m5_weekly_model_features.pkl
-│   └── ML_Model_Training_and_Price_Optimization.ipynb
-│
-├── .env
-├── .gitignore
-└── README.md
+Product Data
+     |
+     v
+Current Price
+     |
+     v
+Generate Candidate Prices
+     |
+     v
+Predict Demand
+     |
+     v
+Calculate Expected Revenue
+     |
+     v
+Compare Candidate Prices
+     |
+     v
+Recommended Price
