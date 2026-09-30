@@ -2,3 +2,5 @@
 __pycache__/
 node_modules/
 *.pyc
+data/m5/sales_train_validation.csv
+data/m5/sell_prices.csv

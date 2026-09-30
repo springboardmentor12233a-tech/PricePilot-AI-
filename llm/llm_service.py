@@ -1,104 +1,183 @@
 import os
+import json
 from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 
 
-# Find the main project folder
+# ============================================================
+# PROJECT PATH
+# ============================================================
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load .env
+
+# ============================================================
+# LOAD ENVIRONMENT
+# ============================================================
+
 load_dotenv(BASE_DIR / ".env")
 
-# Get Gemini API key
+
+# ============================================================
+# GEMINI API KEY
+# ============================================================
+
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
-    raise ValueError("GEMINI_API_KEY was not found in the .env file.")
+    raise ValueError(
+        "GEMINI_API_KEY was not found in the .env file."
+    )
 
-# Create Gemini client
+
+# ============================================================
+# GEMINI CLIENT
+# ============================================================
+
 client = genai.Client(
     api_key=api_key,
-    http_options={"api_version": "v1"}
+    http_options={
+        "api_version": "v1"
+    }
 )
 
 
+# ============================================================
+# GENERATE BUSINESS INSIGHTS
+# ============================================================
+
 def generate_business_insights(business_data):
+
+    # Extract only the information Gemini actually needs
+    question = business_data.get(
+        "question",
+        "Analyze my business performance and identify important recommendations."
+    )
+
+    historical_kpis = business_data.get("Historical KPIs", {})
+    products = business_data.get("Products", [])
+    product_count = business_data.get("Product Count", 0)
+    user_role = business_data.get("User Role", "Business Analyst")
+
     prompt = f"""
-You are PricePilot AI, a business intelligence assistant for a
-dynamic pricing and revenue intelligence system.
+You are PricePilot AI, a business intelligence assistant.
 
-Business data:
-{business_data}
+Analyze the following business data and answer the user's question.
 
-The user's question is:
-{business_data.get("question")}
+USER QUESTION:
+{question}
 
-Important definitions:
-Total Revenue is historical revenue from the UCI Online Retail dataset
-and is expressed in GBP (£).
+BUSINESS ROLE:
+{user_role}
 
-Recommended Price is the model's recommended price for a product.
+HISTORICAL KPIs:
+{json.dumps(historical_kpis, default=str)}
 
-Predicted Demand is the ML model's predicted demand quantity.
+PRODUCT DATA:
+{json.dumps(products, default=str)}
 
-Expected Revenue is the estimated revenue for the tested pricing scenario.
+TOTAL PRODUCTS:
+{product_count}
 
-Expected Profit is the estimated profit for the tested pricing scenario.
-
-Profit Improvement Percentage compares the estimated profit at the
-recommended price with the current-price scenario.
-
-Market Position describes the current price compared with competitors.
-
-Pricing results are model-based estimates and are not guaranteed
-real-world outcomes.
-
-Predicted Demand is not the number of orders.
-
-Recommended Price and Average Order Value are different metrics.
-
-Do not assume historical revenue and scenario expected revenue
-cover the same period or products.
-
-Answer the user's question directly.
-
-Response rules:
-- Keep the answer short.
-- Use a maximum of 5 short sentences.
-- Use simple business language.
-- Use plain text only.
-- Do not use markdown.
-- Do not use #, *, -, or bullet symbols.
-- Do not create headings.
-- Do not repeat the question.
-- Use £ for GBP values.
-- Clearly distinguish historical metrics from model predictions.
+IMPORTANT:
+- Historical Revenue is in GBP (£).
+- Recommended Price is an ML-based estimate.
+- Predicted Demand is predicted quantity, not orders.
+- Expected Revenue is a pricing scenario estimate.
+- Expected Profit is a pricing scenario estimate.
+- Do not mix historical metrics with ML scenario estimates.
 - Do not invent missing information.
-- Do not make causal claims unless the data supports them.
+- Do not make unsupported causal claims.
+
+TASK:
+
+Provide:
+1. One short overall business insight.
+2. Three to five actionable recommendations.
+3. Key factors considered in the analysis.
+
+Recommendations may relate to:
+Pricing, Demand, Sales, Inventory, Promotion, Revenue, Product Performance.
+
+RETURN ONLY VALID JSON.
+
+Use exactly this structure:
+
+{{
+    "summary": "Short overall business insight",
+
+    "recommendations": [
+        {{
+            "title": "Recommendation title",
+            "description": "Short explanation based on the provided data",
+            "priority": "High"
+        }}
+    ],
+
+    "key_factors": [
+        {{
+            "name": "Price",
+            "importance": "High",
+            "reason": "Why this factor matters"
+        }},
+        {{
+            "name": "Demand",
+            "importance": "High",
+            "reason": "Why this factor matters"
+        }},
+        {{
+            "name": "Sales",
+            "importance": "Medium",
+            "reason": "Why this factor matters"
+        }},
+        {{
+            "name": "Competition",
+            "importance": "Medium",
+            "reason": "Why this factor matters"
+        }}
+    ]
+}}
+
+RULES:
+- Keep responses concise.
+- Use simple business language.
+- Do not use markdown.
+- Do not create alerts.
+- Do not create additional fields.
+- Do not invent numerical values.
+- Use £ for GBP values.
 """
 
     interaction = client.interactions.create(
         model="gemini-3.6-flash",
-        input=prompt
+        input=prompt,
+        generation_config={
+            "thinking_level": "minimal"
+        }
     )
 
-    return interaction.output_text
+    response_text = interaction.output_text.strip()
 
-# Test the function
-if __name__ == "__main__":
+    try:
 
-    sample_data = {
-        "Total Revenue": 10666684.54,
-        "Total Orders": 19960,
-        "Total Customers": 4335,
-        "Average Order Value": 534.40,
-        "Recommended Price": 100,
-        "Predicted Demand": 63428,
-        "Expected Revenue": 6342655.61
-    }
+        if response_text.startswith("```json"):
+            response_text = response_text[7:]
 
-    insights = generate_business_insights(sample_data)
+        elif response_text.startswith("```"):
+            response_text = response_text[3:]
 
-    print("\n===== PRICEPILOT BUSINESS INSIGHTS =====\n")
-    print(insights)
+        if response_text.endswith("```"):
+            response_text = response_text[:-3]
+
+        response_text = response_text.strip()
+
+        return json.loads(response_text)
+
+    except json.JSONDecodeError:
+
+        return {
+            "summary": response_text,
+            "recommendations": [],
+            "key_factors": []
+        }
