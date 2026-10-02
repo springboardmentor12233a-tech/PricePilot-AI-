@@ -1,5 +1,4 @@
 from groq import Groq
-
 from app.core.config import settings
 
 
@@ -17,7 +16,10 @@ def generate_pricing_insight(
 ) -> str:
 
     if not settings.GROQ_API_KEY:
-        return "Groq AI is not configured. Add GROQ_API_KEY to backend/.env."
+        return (
+            "Groq AI is not configured. "
+            "Add GROQ_API_KEY to backend/.env."
+        )
 
     prompt = f"""
 You are a pricing analyst for PricePilot AI.
@@ -45,25 +47,32 @@ Keep the response within 4-5 sentences.
 """
 
     try:
-        client = Groq(api_key=settings.GROQ_API_KEY)
+        client = Groq(
+            api_key=settings.GROQ_API_KEY
+        )
 
         response = client.chat.completions.create(
             model="openai/gpt-oss-20b",
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a concise retail pricing analyst."
+                    "content": (
+                        "You are a concise retail pricing analyst."
+                    ),
                 },
                 {
                     "role": "user",
-                    "content": prompt
-                }
+                    "content": prompt,
+                },
             ],
             temperature=0.3,
             max_completion_tokens=300,
         )
 
-        return response.choices[0].message.content or "No AI insight was generated."
+        return (
+            response.choices[0].message.content
+            or "No AI insight was generated."
+        )
 
     except Exception as exc:
         return f"Groq AI request failed: {exc}"
