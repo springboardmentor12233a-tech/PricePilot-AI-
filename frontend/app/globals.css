@@ -1,3 +1,189 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================================
+   6-THEME COLOR TOKENS SYSTEM
+   Sanity-checked text vs background contrast across all themes
+   ============================================================ */
+
+/* 1. Classic Dark (Default) */
+:root,
+[data-theme="classic-dark"] {
+  --bg: #070c18;
+  --surface: #0f172a;
+  --surface-card: #1e293b;
+  --surface-hover: #334155;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #14b8a6;
+  --accent-hover: #2dd4bf;
+  --accent-text: #070c18;
+  --border: #334155;
+  --border-light: rgba(51, 65, 85, 0.6);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --glass-bg: rgba(15, 23, 42, 0.85);
+  --card-gradient: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+}
+
+/* 2. Classic Light */
+[data-theme="classic-light"] {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-card: #f1f5f9;
+  --surface-hover: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --accent: #0d9488;
+  --accent-hover: #14b8a6;
+  --accent-text: #ffffff;
+  --border: #cbd5e1;
+  --border-light: rgba(203, 213, 225, 0.8);
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --card-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* 3. Cherry Blossom */
+[data-theme="cherry-blossom"] {
+  --bg: #ffffff;
+  --surface: #fff0f5;
+  --surface-card: #ffe4e9;
+  --surface-hover: #fcd0da;
+  --text: #2b2130;
+  --text-muted: #5e4963;
+  --accent: #d6336c;
+  --accent-hover: #c2255c;
+  --accent-text: #ffffff;
+  --border: #f3b9c8;
+  --border-light: rgba(243, 185, 200, 0.8);
+  --success: #198754;
+  --warning: #b07d10;
+  --danger: #dc3545;
+  --glass-bg: rgba(255, 240, 245, 0.9);
+  --card-gradient: linear-gradient(135deg, #fff0f5 0%, #ffe4e9 100%);
+}
+
+/* 4. Aqua Noir */
+[data-theme="aqua-noir"] {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface-card: #1f1f1f;
+  --surface-hover: #2d2d2d;
+  --text: #e6fdff;
+  --text-muted: #7ecad5;
+  --accent: #00d9ff;
+  --accent-hover: #33e1ff;
+  --accent-text: #0a0a0a;
+  --border: #223c40;
+  --border-light: rgba(34, 60, 64, 0.7);
+  --success: #00e699;
+  --warning: #ffb800;
+  --danger: #ff4d6d;
+  --glass-bg: rgba(20, 20, 20, 0.88);
+  --card-gradient: linear-gradient(135deg, #182022 0%, #141414 100%);
+}
+
+/* 5. Crimson Depths */
+[data-theme="crimson-depths"] {
+  --bg: #0b1120;
+  --surface: #121a2e;
+  --surface-card: #1b2540;
+  --surface-hover: #263354;
+  --text: #f5e9ec;
+  --text-muted: #9e939d;
+  --accent: #e8384f;
+  --accent-hover: #f05267;
+  --accent-text: #ffffff;
+  --border: #382c3c;
+  --border-light: rgba(56, 44, 60, 0.8);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #e8384f;
+  --glass-bg: rgba(18, 26, 46, 0.88);
+  --card-gradient: linear-gradient(135deg, #181d33 0%, #121a2e 100%);
+}
+
+/* 6. Midnight Violet */
+[data-theme="midnight-violet"] {
+  --bg: #0f0a1f;
+  --surface: #1a1030;
+  --surface-card: #281a4a;
+  --surface-hover: #372464;
+  --text: #f3e8ff;
+  --text-muted: #bda7d9;
+  --accent: #a855f7;
+  --accent-hover: #c084fc;
+  --accent-text: #0f0a1f;
+  --border: #422d6b;
+  --border-light: rgba(66, 45, 107, 0.8);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #f43f5e;
+  --glass-bg: rgba(26, 16, 48, 0.88);
+  --card-gradient: linear-gradient(135deg, #241442 0%, #1a1030 100%);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Glassmorphism & card styles */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+}
+
+.glass-card {
+  background: var(--card-gradient);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.3);
+}
+
+.glow-teal {
+  box-shadow: 0 0 25px -5px var(--accent);
+}
+
+/* Custom range slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--accent);
+}

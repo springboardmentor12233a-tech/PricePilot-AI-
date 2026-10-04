@@ -1,0 +1,14 @@
+[
+  { "month": "Oct 2025", "baseline_revenue": 3410000, "optimized_revenue": 3580000, "units_sold": 4120 },
+  { "month": "Nov 2025", "baseline_revenue": 3950000, "optimized_revenue": 4290000, "units_sold": 4980 },
+  { "month": "Dec 2025", "baseline_revenue": 4820000, "optimized_revenue": 5350000, "units_sold": 6120 },
+  { "month": "Jan 2026", "baseline_revenue": 3280000, "optimized_revenue": 3490000, "units_sold": 3890 },
+  { "month": "Feb 2026", "baseline_revenue": 3450000, "optimized_revenue": 3720000, "units_sold": 4100 },
+  { "month": "Mar 2026", "baseline_revenue": 3810000, "optimized_revenue": 4150000, "units_sold": 4620 },
+  { "month": "Apr 2026", "baseline_revenue": 3920000, "optimized_revenue": 4310000, "units_sold": 4790 },
+  { "month": "May 2026", "baseline_revenue": 4150000, "optimized_revenue": 4580000, "units_sold": 5040 },
+  { "month": "Jun 2026", "baseline_revenue": 4380000, "optimized_revenue": 4870000, "units_sold": 5390 },
+  { "month": "Jul 2026", "baseline_revenue": 4420000, "optimized_revenue": 4920000, "units_sold": 5460 },
+  { "month": "Aug 2026", "baseline_revenue": 4610000, "optimized_revenue": 5140000, "units_sold": 5710 },
+  { "month": "Sep 2026", "baseline_revenue": 4725000, "optimized_revenue": 5280000, "units_sold": 5830 }
+]
