@@ -45,3 +45,32 @@ e.g. `postgresql+psycopg2://user:pass@host:5432/dbname`.
 - **Two columns of unconfirmed meaning:** `volume` (kept, likely package
   volume) and `s` (kept as `s_metric`, meaning unclear from the column
   name alone — flagged in the schema comment, not silently assumed).
+
+## Running the Application
+
+### Backend API (FastAPI)
+```bash
+# Start backend server
+python main.py
+# API docs available at: http://127.0.0.1:8000/docs
+```
+
+### Frontend (React + Vite)
+```bash
+cd frontend
+npm install
+npm run dev
+# Dashboard available at: http://localhost:5173
+```
+
+## Testing & Quality Assurance
+
+See the comprehensive [TESTING.md](TESTING.md) guide for architecture details.
+
+```bash
+# Run in-memory Pytest test suite (10 automated tests)
+pytest test_api.py -v
+
+# Run integration endpoint test script
+python test_endpoints.py
+```
