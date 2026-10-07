@@ -3,8 +3,24 @@ import json
 
 def test_api():
     base = "http://127.0.0.1:8000"
-    with urllib.request.urlopen(f"{base}/health") as res:
-        print("1. Health:", json.loads(res.read()))
+    try:
+        with urllib.request.urlopen(f"{base}/health", timeout=3) as res:
+            print("1. Health:", json.loads(res.read()))
+    except Exception as e:
+        print("\n" + "=" * 60)
+        print(" [CONNECTION ERROR] Cannot connect to http://127.0.0.1:8000")
+        print(" The FastAPI server is not currently running.")
+        print()
+        print(" To run this test:")
+        print("   1. Open a separate terminal and start the server:")
+        print("      python main.py")
+        print("   2. Run this test script again:")
+        print("      python test_endpoints.py")
+        print()
+        print(" Or run in-memory tests without starting the server:")
+        print("      pytest test_api.py")
+        print("=" * 60 + "\n")
+        return
         
     login_data = json.dumps({"email": "manager@pricepilot.ai", "password": "Password123!"}).encode("utf-8")
     req = urllib.request.Request(f"{base}/auth/login", data=login_data, headers={"Content-Type": "application/json"})
