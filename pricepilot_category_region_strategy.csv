@@ -1,0 +1,41 @@
+Category,Region,Our_Average_Price,Competitor_Average_Price,Average_Price_Difference,Record_Count,Overall_Price_Ratio,Pricing_Position,Pricing_Strategy
+Beauty,Central,37.54186868686869,37.836969696969696,-0.29510101010101036,198,0.99,Near Competitor,Maintain competitive range
+Beauty,East,35.77682926829268,39.38170731707317,-3.604878048780488,205,0.91,Below Competitor,Evaluate room for price increase
+Beauty,North,36.256777251184836,35.91729857819905,0.3394786729857817,211,1.01,Near Competitor,Maintain competitive range
+Beauty,South,37.19155913978495,37.090591397849465,0.10096774193548382,186,1.0,Near Competitor,Maintain competitive range
+Beauty,West,40.306417112299464,37.27609625668449,3.030320855614973,187,1.08,Above Competitor,Review price competitiveness
+Books,Central,35.04265625,36.78359375,-1.7409375000000005,192,0.95,Near Competitor,Maintain competitive range
+Books,East,38.54651741293532,36.5228855721393,2.02363184079602,201,1.06,Above Competitor,Review price competitiveness
+Books,North,37.67896373056995,38.5419689119171,-0.8630051813471504,193,0.98,Near Competitor,Maintain competitive range
+Books,South,35.72230414746544,36.39566820276497,-0.6733640552995392,217,0.98,Near Competitor,Maintain competitive range
+Books,West,40.37169902912621,33.05004854368932,7.321650485436893,206,1.22,Above Competitor,Review price competitiveness
+Electronics,Central,37.289763033175355,35.94109004739337,1.3486729857819908,211,1.04,Near Competitor,Maintain competitive range
+Electronics,East,35.10346153846154,38.050219780219784,-2.9467582417582414,182,0.92,Below Competitor,Evaluate room for price increase
+Electronics,North,37.307157360406094,36.72690355329949,0.5802538071065998,197,1.02,Near Competitor,Maintain competitive range
+Electronics,South,38.298750000000005,36.802824074074074,1.4959259259259259,216,1.04,Near Competitor,Maintain competitive range
+Electronics,West,35.99678756476684,36.652849740932645,-0.6560621761658033,193,0.98,Near Competitor,Maintain competitive range
+Fashion,Central,36.08135371179039,36.42039301310044,-0.3390393013100437,229,0.99,Near Competitor,Maintain competitive range
+Fashion,East,42.71669811320755,38.413396226415095,4.303301886792452,212,1.11,Above Competitor,Review price competitiveness
+Fashion,North,40.52127167630058,39.13265895953757,1.3886127167630058,173,1.04,Near Competitor,Maintain competitive range
+Fashion,South,40.332307692307694,35.549285714285716,4.783021978021979,182,1.13,Above Competitor,Review price competitiveness
+Fashion,West,38.55143564356436,37.739059405940594,0.8123762376237623,202,1.02,Near Competitor,Maintain competitive range
+Grocery,Central,36.14689497716895,38.110547945205475,-1.9636529680365296,219,0.95,Near Competitor,Maintain competitive range
+Grocery,East,34.848082901554406,36.46056994818653,-1.6124870466321242,193,0.96,Near Competitor,Maintain competitive range
+Grocery,North,36.89834821428571,37.36513392857143,-0.4667857142857144,224,0.99,Near Competitor,Maintain competitive range
+Grocery,South,39.25940092165899,35.70230414746543,3.5570967741935484,217,1.1,Above Competitor,Review price competitiveness
+Grocery,West,36.32403587443946,36.549103139013454,-0.22506726457399087,223,0.99,Near Competitor,Maintain competitive range
+Home & Kitchen,Central,36.00153846153846,37.504505494505494,-1.5029670329670328,182,0.96,Near Competitor,Maintain competitive range
+Home & Kitchen,East,40.34871559633028,37.79655963302752,2.5521559633027513,218,1.07,Above Competitor,Review price competitiveness
+Home & Kitchen,North,35.98692682926829,37.25360975609756,-1.2666829268292676,205,0.97,Near Competitor,Maintain competitive range
+Home & Kitchen,South,35.9649,37.9877,-2.0227999999999997,200,0.95,Near Competitor,Maintain competitive range
+Home & Kitchen,West,37.19147368421053,32.205894736842104,4.985578947368421,190,1.15,Above Competitor,Review price competitiveness
+Sports,Central,36.31188073394495,36.86330275229358,-0.5514220183486239,218,0.99,Near Competitor,Maintain competitive range
+Sports,East,36.450625,38.42727272727273,-1.9766477272727272,176,0.95,Near Competitor,Maintain competitive range
+Sports,North,35.845939086294415,39.62299492385787,-3.7770558375634513,197,0.9,Below Competitor,Evaluate room for price increase
+Sports,South,34.414867724867726,34.59920634920635,-0.18433862433862433,189,0.99,Near Competitor,Maintain competitive range
+Sports,West,40.16835680751174,36.62122065727699,3.5471361502347416,213,1.1,Above Competitor,Review price competitiveness
+Toys,Central,38.64354166666667,38.5840625,0.05947916666666699,192,1.0,Near Competitor,Maintain competitive range
+Toys,East,33.98169312169312,37.10296296296296,-3.121269841269841,189,0.92,Below Competitor,Evaluate room for price increase
+Toys,North,38.15937172774869,36.749267015706806,1.410104712041885,191,1.04,Near Competitor,Maintain competitive range
+Toys,South,35.519766081871346,36.398538011695905,-0.8787719298245613,171,0.98,Near Competitor,Maintain competitive range
+Toys,West,35.45465,36.4452,-0.9905499999999999,200,0.97,Near Competitor,Maintain competitive range

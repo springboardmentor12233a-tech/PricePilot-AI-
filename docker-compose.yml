@@ -1,0 +1,28 @@
+services:
+  # FastAPI Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pricepilot_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./pricepilot.db
+      - SECRET_KEY=pricepilot_production_secret_key_2026
+    volumes:
+      - ./data:/app/data
+
+  # React Frontend (Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pricepilot_frontend
+    restart: always
+    ports:
+      - "80:80"
+      - "5173:80"
+    depends_on:
+      - backend

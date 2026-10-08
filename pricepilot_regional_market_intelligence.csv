@@ -1,0 +1,6 @@
+Region,Our_Average_Price,Competitor_Average_Price,Average_Price_Difference,Average_Price_Ratio,Cheaper,More Expensive,Similar,Overall_Price_Ratio,Regional_Pricing_Alert
+Central,36.62,37.23,-0.61,1.53,47.11,48.39,4.51,0.98,Near Competitor Average
+East,37.36,37.78,-0.41,1.56,47.65,48.03,4.31,0.99,Near Competitor Average
+North,37.26,37.62,-0.36,1.53,47.58,48.65,3.77,0.99,Near Competitor Average
+South,37.12,36.33,0.79,1.52,47.34,48.1,4.56,1.02,Near Competitor Average
+West,38.04,35.83,2.21,1.59,45.35,50.43,4.21,1.06,Above Competitor Average

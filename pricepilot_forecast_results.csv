@@ -1,0 +1,13 @@
+Month,Predicted Demand,Forecast Horizon,Confidence Score
+January 2025,5150,Short-term,85.7
+February 2025,5932,Short-term,99.6
+March 2025,6806,Short-term,89.4
+April 2025,5714,Medium-term,93.3
+May 2025,5592,Medium-term,97.9
+June 2025,6176,Medium-term,95.2
+July 2025,6425,Long-term,86.0
+August 2025,5904,Long-term,96.7
+September 2025,5960,Long-term,93.3
+October 2025,6746,Long-term,98.8
+November 2025,6124,Long-term,96.1
+December 2025,8357,Long-term,65.1
