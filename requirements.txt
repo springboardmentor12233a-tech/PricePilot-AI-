@@ -14,3 +14,4 @@ numpy==2.1.2
 joblib==1.4.2
 PyJWT
 pwdlib[argon2]
+email-validator
