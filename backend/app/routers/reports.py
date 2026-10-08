@@ -3,13 +3,14 @@ Business Intelligence Reports Download Router.
 Protected: Admin and Business Analyst roles only.
 """
 
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter, Depends, Query, Request, HTTPException
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.models import User
 from app.services.auth import require_role, log_audit
+from app.services.data_loader import get_product_by_id
 from app.services.report_generator import (
     generate_pdf_report,
     generate_excel_report,
@@ -141,6 +142,10 @@ def download_price_comparison_report(
     Dedicated endpoint for single-product price comparison PDF export.
     Authorized for Admin and Business Analyst roles.
     """
+    prod = get_product_by_id(product_id)
+    if not prod:
+        raise HTTPException(status_code=404, detail=f"Product with ID '{product_id}' not found.")
+
     log_audit(
         db=db,
         user_email=current_user.email,

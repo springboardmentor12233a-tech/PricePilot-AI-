@@ -35,19 +35,15 @@ def get_pricing_kpi_summary(
     return calculate_kpi_overview(days=days)
 
 
-@router.get("/sweep/{product_id}", response_model=PricingSweepResponse)
-def get_pricing_sweep(
-    product_id: str,
+@router.get("/history", response_model=List[Dict[str, Any]])
+def get_history(
+    days: int = Query(30, description="Date filter horizon (7, 30, 90 days)"),
     current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
 ):
     """
-    Returns candidate prices along the elasticity curve with predicted demand and revenue.
-    Grounded in Dataset 1 econometric elasticity.
+    Returns historical revenue (baseline vs. optimized) and units for requested date window.
     """
-    sweep = compute_pricing_sweep(product_id)
-    if not sweep:
-        raise HTTPException(status_code=404, detail=f"Product with ID '{product_id}' not found.")
-    return sweep
+    return get_revenue_history(days=days)
 
 
 @router.post("/optimize", response_model=OptimizePriceResponse)
@@ -65,12 +61,17 @@ def simulate_price(
     return result
 
 
-@router.get("/history", response_model=List[Dict[str, Any]])
-def get_history(
-    days: int = Query(30, description="Date filter horizon (7, 30, 90 days)"),
+@router.get("/{product_id}", response_model=PricingSweepResponse)
+@router.get("/sweep/{product_id}", response_model=PricingSweepResponse)
+def get_pricing_sweep(
+    product_id: str,
     current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
 ):
     """
-    Returns historical revenue (baseline vs. optimized) and units for requested date window.
+    Returns candidate prices along the elasticity curve with predicted demand and revenue.
+    Grounded in Dataset 1 econometric elasticity.
     """
-    return get_revenue_history(days=days)
+    sweep = compute_pricing_sweep(product_id)
+    if not sweep:
+        raise HTTPException(status_code=404, detail=f"Product with ID '{product_id}' not found.")
+    return sweep

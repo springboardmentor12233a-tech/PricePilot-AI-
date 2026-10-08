@@ -69,6 +69,24 @@ export default function UsersPage() {
     }
   };
 
+  const handleStatusToggle = async (targetUserId: number, targetEmail: string, currentActive: boolean) => {
+    const newActive = !currentActive;
+    try {
+      await api.auth.updateStatus(targetUserId, newActive);
+      setUsers((prev) =>
+        prev.map((u) => (u.id === targetUserId ? { ...u, is_active: newActive } : u))
+      );
+      setStatusMessage({
+        type: "success",
+        text: `Account ${targetEmail} has been ${newActive ? "activated" : "deactivated"}.`,
+      });
+      setTimeout(() => setStatusMessage(null), 3000);
+    } catch (err: any) {
+      const msg = err.response?.data?.detail || "Failed to update user status.";
+      setStatusMessage({ type: "error", text: msg });
+    }
+  };
+
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newEmail || !newPassword) return;
@@ -130,7 +148,7 @@ export default function UsersPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-teal-500 hover:bg-teal-400 text-navy-950 shadow-md shadow-teal-500/15 transition-all"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-teal-500 hover:bg-teal-400 text-navy-950 shadow-md shadow-teal-500/15 transition-all cursor-pointer"
                 >
                   <UserPlus className="w-3.5 h-3.5" />
                   <span>Register User</span>
@@ -168,22 +186,25 @@ export default function UsersPage() {
                   <thead className="bg-slate-900/80 text-slate-400 font-mono uppercase text-[10px] tracking-wider border-b border-slate-800">
                     <tr>
                       <th className="py-3 px-3">User & Contact</th>
-                      <th className="py-3 px-3">Current Role</th>
+                      <th className="py-3 px-3">Role</th>
+                      <th className="py-3 px-3">Status</th>
                       <th className="py-3 px-3">Role Permissions</th>
-                      <th className="py-3 px-3 text-right">Update Access Role</th>
+                      <th className="py-3 px-3">Change Role</th>
+                      <th className="py-3 px-3 text-right">Account Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60">
                     {users.map((u) => {
                       const isCurrent = currentUser?.id === u.id;
+                      const isActive = u.is_active !== false;
                       return (
                         <tr key={u.id} className="hover:bg-slate-900/40 transition-colors">
                           <td className="py-3 px-3">
                             <div className="font-semibold text-white flex items-center gap-2">
-                              <span>{u.full_name || "Enterprise User"}</span>
+                              <span>{u.full_name || u.name || "Enterprise User"}</span>
                               {isCurrent && (
-                                <span className="font-mono text-[9px] px-1.5 py-0.2 rounded bg-teal-500/20 text-teal-300 border border-teal-500/40">
-                                  You
+                                <span className="font-mono text-[9px] px-1.5 py-0.2 rounded bg-teal-500/20 text-teal-300 border border-teal-500/40 font-bold">
+                                  You (Admin)
                                 </span>
                               )}
                             </div>
@@ -200,27 +221,63 @@ export default function UsersPage() {
                                   : "bg-slate-800 text-slate-300 border-slate-700"
                               }`}
                             >
-                              {u.role}
+                              {u.role === "analyst" ? "Business Analyst" : u.role}
                             </span>
                           </td>
 
-                          <td className="py-3 px-3 text-slate-400">
-                            {u.role === "admin" && "Full administrative control, model recalibration, user governance"}
-                            {u.role === "analyst" && "View all KPIs, price predictions, run forecasts, export BI reports"}
-                            {u.role === "viewer" && "Read-only dashboard viewing; no report downloads or admin settings"}
+                          <td className="py-3 px-3">
+                            <span
+                              className={`inline-flex items-center gap-1.5 font-mono text-[10px] px-2 py-0.5 rounded-full font-bold border ${
+                                isActive
+                                  ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                                  : "bg-red-500/15 text-red-400 border-red-500/30"
+                              }`}
+                            >
+                              <span
+                                className={`w-1.5 h-1.5 rounded-full ${
+                                  isActive ? "bg-emerald-400 animate-pulse" : "bg-red-400"
+                                }`}
+                              />
+                              {isActive ? "Active" : "Deactivated"}
+                            </span>
                           </td>
 
-                          <td className="py-3 px-3 text-right">
+                          <td className="py-3 px-3 text-slate-400 text-[11px]">
+                            {u.role === "admin" && "Full administrative control, user governance, models"}
+                            {u.role === "analyst" && "Price predictions, forecasts, BI report exports"}
+                            {u.role === "viewer" && "Read-only dashboard access"}
+                          </td>
+
+                          <td className="py-3 px-3">
                             <select
                               value={u.role}
                               disabled={isCurrent}
                               onChange={(e) => handleRoleChange(u.id, u.email, e.target.value as UserRole)}
-                              className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-teal-500/80 disabled:opacity-40"
+                              title={isCurrent ? "Cannot demote your own Admin role" : "Change user role"}
+                              className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-teal-500/80 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                             >
                               <option value="admin">Admin</option>
-                              <option value="analyst">Analyst</option>
+                              <option value="analyst">Business Analyst</option>
                               <option value="viewer">Viewer</option>
                             </select>
+                          </td>
+
+                          <td className="py-3 px-3 text-right">
+                            {isCurrent ? (
+                              <span className="text-[10px] text-slate-500 italic">Self (Protected)</span>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() => handleStatusToggle(u.id, u.email, isActive)}
+                                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all border cursor-pointer ${
+                                  isActive
+                                    ? "bg-red-500/10 hover:bg-red-500/20 text-red-400 border-red-500/30"
+                                    : "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+                                }`}
+                              >
+                                {isActive ? "Deactivate" : "Activate"}
+                              </button>
+                            )}
                           </td>
                         </tr>
                       );

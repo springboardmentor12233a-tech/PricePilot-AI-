@@ -92,6 +92,11 @@ def get_current_user(
             detail="User not found in system.",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    if hasattr(user, "is_active") and not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account is deactivated. Please contact an administrator.",
+        )
     return user
 
 
@@ -141,7 +146,17 @@ def log_audit(
 # --- DB Initialization & Demo Users Seeding ---
 
 def init_db_and_seed_users():
+    from sqlalchemy import text
     Base.metadata.create_all(bind=engine)
+    try:
+        with engine.connect() as conn:
+            cols = [row[1] for row in conn.execute(text("PRAGMA table_info(users)")).fetchall()]
+            if cols and "is_active" not in cols:
+                conn.execute(text("ALTER TABLE users ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT 1"))
+                conn.commit()
+    except Exception as e:
+        print(f"[DB Schema Check] {e}")
+
     db = SessionLocal()
     try:
         demo_users = [
@@ -149,19 +164,22 @@ def init_db_and_seed_users():
                 "email": "admin@pricepilot.ai",
                 "password": "Admin@123",
                 "full_name": "Dr. Sarah Chen (Admin)",
-                "role": "admin"
+                "role": "admin",
+                "is_active": True,
             },
             {
                 "email": "analyst@pricepilot.ai",
                 "password": "Analyst@123",
                 "full_name": "Marcus Vance (Lead Analyst)",
-                "role": "analyst"
+                "role": "analyst",
+                "is_active": True,
             },
             {
                 "email": "viewer@pricepilot.ai",
                 "password": "Viewer@123",
                 "full_name": "Elena Rostova (Stakeholder)",
-                "role": "viewer"
+                "role": "viewer",
+                "is_active": True,
             }
         ]
 
@@ -173,9 +191,13 @@ def init_db_and_seed_users():
                     hashed_password=hash_password(u["password"]),
                     full_name=u["full_name"],
                     role=u["role"],
+                    is_active=True,
                     created_at=datetime.utcnow()
                 )
                 db.add(new_user)
+            else:
+                if hasattr(existing, "is_active") and existing.is_active is None:
+                    existing.is_active = True
         db.commit()
 
         # Seed initial audit log if empty

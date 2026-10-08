@@ -168,8 +168,11 @@ class ModelRegistry:
             pred_summary = self.elasticity_model.get_prediction(
                 pd.DataFrame({"price_gap_pct": [current_gap], "product_id": [eval_id]})
             ).summary_frame()
-            predicted_qty = max(pred_summary["mean"].iloc[0], 1e-6)
-            relative_std_err = pred_summary["mean_se"].iloc[0] / predicted_qty
+            mean_se = float(pred_summary["mean_se"].iloc[0])
+            # Use SKU's actual baseline mean quantity scale for well-calibrated relative standard error
+            sku_rows = self.df1_elec[self.df1_elec["product_id"] == eval_id]
+            baseline_scale = float(sku_rows["qty"].mean()) if len(sku_rows) > 0 and sku_rows["qty"].mean() > 0 else 10.0
+            relative_std_err = mean_se / baseline_scale
             conf = compute_confidence_score_ols(self.elasticity_model, relative_std_err, self.model_r_squared)
             return float(conf)
         except Exception as e:

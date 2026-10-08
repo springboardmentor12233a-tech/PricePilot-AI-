@@ -21,6 +21,7 @@ from app.services.data_loader import (
     create_product,
     update_product,
     delete_product,
+    record_sale,
 )
 from app.services.auth import require_role, log_audit
 
@@ -137,3 +138,39 @@ def delete_existing_product(
         request=request,
     )
     return {"message": f"Product '{product_id}' successfully removed from portfolio."}
+
+
+@router.patch("/{product_id}/sell", response_model=ProductResponse)
+async def sell_product(
+    product_id: str,
+    request: Request,
+    qty: int = Query(1, description="Number of units sold", ge=1),
+    current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
+    db: Session = Depends(get_db),
+):
+    """
+    Simulates a product sale (purchase).
+    Decrements inventory stock (down to 0), increments units_sold,
+    updates stock_status and audit log.
+    Authorized for Admin and Business Analyst roles.
+    """
+    try:
+        body = await request.json()
+        if isinstance(body, dict) and "qty" in body:
+            qty = int(body["qty"])
+    except Exception:
+        pass
+
+    updated = record_sale(product_id, qty=qty)
+    if not updated:
+        raise HTTPException(status_code=404, detail=f"Product with ID '{product_id}' not found.")
+
+    log_audit(
+        db=db,
+        user_email=current_user.email,
+        role=current_user.role,
+        action="sale",
+        details=f"Sale recorded: {qty} unit(s) of '{updated['name']}' ({product_id}). Remaining stock: {updated['stock_level']}, Total sold: {updated['units_sold']}",
+        request=request,
+    )
+    return updated

@@ -247,6 +247,44 @@ def delete_product(product_id: str) -> bool:
         db.close()
 
 
+def record_sale(product_id: str, qty: int = 1) -> Optional[Dict[str, Any]]:
+    """
+    Simulates recording a sale for a product:
+    decrements stock (never below 0), increments units_sold, updates monthly revenue,
+    and updates stock_status based on current threshold.
+    """
+    db = SessionLocal()
+    try:
+        p = db.query(ProductDB).filter(ProductDB.id == product_id).first()
+        if not p:
+            for cid, s_id in SKU_MAP.items():
+                if s_id == product_id or product_id == cid:
+                    p = db.query(ProductDB).filter(ProductDB.id == cid).first()
+                    break
+        if not p:
+            return None
+
+        # Decrement stock, never below 0
+        p.stock_level = max(0, int(p.stock_level) - qty)
+        p.units_sold = int(p.units_sold or 0) + qty
+        p.revenue_this_month = round(float(p.current_price) * p.units_sold, 2)
+
+        # Update stock status thresholds
+        if p.stock_level <= 15:
+            p.stock_status = "Critical"
+        elif p.stock_level <= 50:
+            p.stock_status = "Low Stock"
+        else:
+            p.stock_status = "In Stock"
+
+        p.updated_at = datetime.utcnow()
+        db.commit()
+        db.refresh(p)
+        return _enrich_product_record(p)
+    finally:
+        db.close()
+
+
 def calculate_kpi_overview(days: int = 30) -> Dict[str, Any]:
     products = get_all_products(days=days)
 
@@ -273,6 +311,8 @@ def calculate_kpi_overview(days: int = 30) -> Dict[str, Any]:
 
     avg_conf = sum(p["confidence_score"] for p in products) / len(products) if products else 0.0
 
+    uplift_pct = round((potential_lift / total_revenue_this_month * 100), 1) if total_revenue_this_month > 0 else 0.0
+
     return {
         "total_monthly_revenue": round(total_revenue_this_month, 2),
         "revenue_growth_pct": round(rev_growth, 2),
@@ -283,6 +323,11 @@ def calculate_kpi_overview(days: int = 30) -> Dict[str, Any]:
         "total_products": len(products),
         "high_urgency_alerts": high_urgency,
         "model_avg_confidence": round(avg_conf, 1),
+        # KPI fields expected by dashboard cards
+        "baseline_revenue": round(total_revenue_this_month, 2),
+        "projected_revenue": round(total_predicted_revenue, 2),
+        "revenue_uplift_dollars": round(potential_lift, 2),
+        "revenue_uplift_pct": uplift_pct,
     }
 
 
@@ -460,10 +505,18 @@ def get_revenue_history(days: int = 30) -> List[Dict[str, Any]]:
 
     # If date range filter is smaller or larger, slice or scale
     if days == 7:
-        return data[-2:]  # Most recent periods
+        sliced = data[-2:]
     elif days == 90:
-        return data  # Full quarterly history
-    return data[-6:]  # Default 30-day / 6-period view
+        sliced = data
+    else:
+        sliced = data[-6:]
+
+    result = []
+    for item in sliced:
+        entry = dict(item)
+        entry["date"] = entry.get("date") or entry.get("month", "")
+        result.append(entry)
+    return result
 
 
 def get_eda_data() -> Dict[str, Any]:

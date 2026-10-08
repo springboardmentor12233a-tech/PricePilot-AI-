@@ -117,30 +117,6 @@ export default function EDAPage() {
                 </span>
               </div>
             </div>
-
-            {/* Validation Methodology Callout Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="glass-card rounded-2xl p-5 border border-teal-500/30 glow-teal space-y-2">
-                <div className="flex items-center gap-2 text-teal-400 font-bold text-sm">
-                  <CheckCircle2 className="w-5 h-5" />
-                  <span>Dataset 1 Econometric Model (Active)</span>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Price elasticity was established via a <strong>fixed-effects OLS regression on Dataset 1</strong>. The price-gap coefficient is <strong>-71.673</strong> (p=0.0001, R²=0.328). Robust standard errors confirm statistical significance across brand and category fixed effects.
-                </p>
-              </div>
-
-              <div className="glass-card rounded-2xl p-5 border border-amber-500/30 space-y-2">
-                <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
-                  <ShieldAlert className="w-5 h-5" />
-                  <span>Candidate Dataset 2 Rigorously Discarded</span>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  A second candidate retail inventory dataset was proven to exhibit <strong>critical data leakage</strong> via the Inventory Level feature. Feature importance and correlation checks confirmed zero genuine price-demand elasticity signal. It is excluded from all PricePilot models.
-                </p>
-              </div>
-            </div>
-
             {/* EDA Charts Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Chart 1: Revenue by Category */}

@@ -11,6 +11,7 @@ from app.services.auth import init_db_and_seed_users
 from app.ml.model_registry import registry
 from app.routers import (
     auth,
+    users,
     products,
     pricing,
     forecast,
@@ -73,6 +74,7 @@ def health_check():
 
 # Register feature routers (no customer segmentation router)
 app.include_router(auth.router)
+app.include_router(users.router)
 app.include_router(products.router)
 app.include_router(pricing.router)
 app.include_router(forecast.router)

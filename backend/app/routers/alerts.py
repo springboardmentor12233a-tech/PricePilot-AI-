@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models import AlertItem, DismissedAlert, User
 from app.services.data_loader import get_all_products
-from app.services.auth import get_current_user
+from app.services.auth import get_current_user, require_role
 
 router = APIRouter(prefix="/api/alerts", tags=["AI Alerts & Notifications"])
 
@@ -113,29 +113,48 @@ def _generate_active_alerts(db: Session, user_email: Optional[str] = None) -> Li
 
 @router.get("", response_model=List[AlertItem])
 def get_alerts(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
 ):
     """
     Returns list of active proactive system alerts.
     """
-    return _generate_active_alerts(db)
+    return _generate_active_alerts(db, user_email=current_user.email)
+
+
+@router.get("/{alert_id}", response_model=AlertItem)
+def get_alert_by_id(
+    alert_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
+):
+    """
+    Returns a single active alert by alert_id, or 404 if not found.
+    """
+    alerts = _generate_active_alerts(db, user_email=current_user.email)
+    for a in alerts:
+        if a.alert_id == alert_id:
+            return a
+    raise HTTPException(status_code=404, detail=f"Alert '{alert_id}' not found.")
 
 
 @router.post("/{alert_id}/dismiss")
 def dismiss_alert(
     alert_id: str,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
 ):
     """
     Dismisses an alert item so it is removed from the active alerts list.
     """
     existing = db.query(DismissedAlert).filter(
-        DismissedAlert.alert_id == alert_id
+        DismissedAlert.alert_id == alert_id,
+        DismissedAlert.user_email == current_user.email,
     ).first()
     if not existing:
         dismissal = DismissedAlert(
             alert_id=alert_id,
-            user_email="active_user",
+            user_email=current_user.email,
             dismissed_at=datetime.utcnow()
         )
         db.add(dismissal)

@@ -3,20 +3,24 @@ AI Insights & LLM Recommendation Proxy Router.
 """
 
 from typing import List, Dict, Any, Optional
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from app.models import (
     ProductInsightResponse,
     ChatQueryRequest,
-    ChatQueryResponse
+    ChatQueryResponse,
+    User,
 )
 from app.services.llm import generate_product_insight, answer_chat_query
 from app.services.data_loader import get_all_products
+from app.services.auth import require_role
 
 router = APIRouter(prefix="/api/insight", tags=["AI Insights & LLM Proxy"])
 
 
 @router.get("", response_model=List[Dict[str, Any]])
-def list_insights():
+def list_insights(
+    current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
+):
     """
     Returns baseline LLM summaries for all products.
     Preserves backward compatibility with Milestone 1 endpoint.
@@ -35,7 +39,10 @@ def list_insights():
 
 
 @router.get("/product/{product_id}", response_model=ProductInsightResponse)
-async def get_structured_product_insight(product_id: str):
+async def get_structured_product_insight(
+    product_id: str,
+    current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
+):
     """
     Generates structured AI pricing recommendation:
     { action: "reduce price"|"increase price"|"hold"|"investigate", reasoning, urgency, expected_impact }
@@ -48,7 +55,10 @@ async def get_structured_product_insight(product_id: str):
 
 
 @router.post("/chat", response_model=ChatQueryResponse)
-async def chat_with_pilot(payload: ChatQueryRequest):
+async def chat_with_pilot(
+    payload: ChatQueryRequest,
+    current_user: User = Depends(require_role(["admin", "analyst", "viewer"])),
+):
     """
     Hybrid conversational AI assistant:
     Answers factual price/kpi/segment questions instantly via local rule engine,

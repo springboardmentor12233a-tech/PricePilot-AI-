@@ -295,7 +295,7 @@ function ForecastContent() {
                     Historical Demand & Next 3-Month Projection
                   </h3>
                   <p className="text-xs text-slate-400">
-                    Solid teal line indicates recorded unit sales (Apr–Sep 2026); dashed amber line shows rolling linear regression forecast (Oct–Dec 2026) with confidence interval
+                    Solid teal line indicates recorded unit sales ({forecastData?.history?.[0]?.period || "2018-02"} to {forecastData?.history?.[forecastData.history.length - 1]?.period || "2018-08"}); dashed amber line shows rolling linear regression forecast with confidence interval
                   </p>
                 </div>
                 <div className="flex items-center gap-4 text-xs font-mono">

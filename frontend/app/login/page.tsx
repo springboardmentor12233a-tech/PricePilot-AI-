@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme, THEMES } from "@/lib/theme-context";
 import { api } from "@/lib/api";
 import {
   Sparkles,
@@ -17,6 +19,8 @@ import {
   LineChart,
   Eye,
   HelpCircle,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 
 function LoginForm() {
@@ -225,7 +229,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-navy-950 font-bold text-xs shadow-lg shadow-teal-500/20 disabled:opacity-50 transition-all"
+                  className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-navy-950 font-bold text-xs shadow-lg shadow-teal-500/20 disabled:opacity-50 transition-all cursor-pointer"
                 >
                   {loading ? (
                     <>
@@ -239,6 +243,16 @@ function LoginForm() {
                     </>
                   )}
                 </button>
+
+                <div className="pt-2 text-center text-xs">
+                  <span className="text-slate-400">Don't have an account? </span>
+                  <Link
+                    href="/signup"
+                    className="text-teal-400 hover:text-teal-300 font-semibold hover:underline"
+                  >
+                    Create an account
+                  </Link>
+                </div>
               </form>
             </>
           )}

@@ -2,10 +2,11 @@
 Pydantic schemas and database models for PricePilot AI.
 """
 
+import re
 from datetime import datetime
 from typing import Optional, List, Dict, Any, Literal
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy import Column, Integer, String, Float, DateTime, Text
+from sqlalchemy import Column, Integer, String, Float, DateTime, Text, Boolean
 from app.core.database import Base
 
 
@@ -21,6 +22,7 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     full_name = Column(String, nullable=True)
     role = Column(String, nullable=False, default="analyst")  # "admin", "analyst", "viewer"
+    is_active = Column(Boolean, nullable=False, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
@@ -90,18 +92,59 @@ class UserLoginRequest(BaseModel):
     password: str
 
 
+class SignUpRequest(BaseModel):
+    name: str = Field(..., min_length=1)
+    email: str
+    password: str = Field(..., min_length=8)
+    role: Optional[str] = None  # Ignored by server
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str) -> str:
+        clean = v.strip()
+        if not clean:
+            raise ValueError("Name cannot be empty.")
+        return clean
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, v: str) -> str:
+        clean = v.strip().lower()
+        email_regex = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+        if not re.match(email_regex, clean):
+            raise ValueError("Invalid email format.")
+        return clean
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long.")
+        return v
+
+
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: Dict[str, Any]
+    role: Optional[str] = None
+    token: Optional[str] = None
 
 
 class UserResponse(BaseModel):
     id: int
     email: str
     full_name: Optional[str] = None
+    name: Optional[str] = None
     role: str
+    is_active: bool = True
     created_at: datetime
+
+
+class UserStatusUpdateRequest(BaseModel):
+    is_active: Optional[bool] = None
+    status: Optional[str] = None
+    role: Optional[str] = None
 
 
 class UserCreateRequest(BaseModel):
@@ -112,7 +155,17 @@ class UserCreateRequest(BaseModel):
 
 
 class RoleUpdateRequest(BaseModel):
-    role: Literal["admin", "analyst", "viewer"]
+    role: str
+
+    @field_validator("role")
+    @classmethod
+    def validate_role(cls, v: str) -> str:
+        clean = v.strip().lower()
+        if clean in ("business_analyst", "business analyst"):
+            return "analyst"
+        if clean not in ("admin", "analyst", "viewer"):
+            raise ValueError(f"Role '{v}' not allowed. Must be 'admin', 'analyst', or 'viewer'.")
+        return clean
 
 
 class ForgotPasswordRequest(BaseModel):
@@ -336,3 +389,9 @@ class KPIOverview(BaseModel):
     total_products: int
     high_urgency_alerts: int
     model_avg_confidence: float
+
+    # Dashboard KPI fields expected by frontend
+    baseline_revenue: Optional[float] = None
+    projected_revenue: Optional[float] = None
+    revenue_uplift_dollars: Optional[float] = None
+    revenue_uplift_pct: Optional[float] = None

@@ -43,6 +43,10 @@ apiClient.interceptors.response.use(
 export const api = {
   // Auth & RBAC
   auth: {
+    signup: async (data: { name: string; email: string; password: string; role?: string }) => {
+      const res = await apiClient.post("/api/auth/signup", data);
+      return res.data;
+    },
     login: async (email: string, password: string) => {
       const res = await apiClient.post("/api/auth/login", { email, password });
       return res.data;
@@ -52,7 +56,7 @@ export const api = {
       return res.data;
     },
     listUsers: async () => {
-      const res = await apiClient.get("/api/auth/users");
+      const res = await apiClient.get("/api/users");
       return res.data;
     },
     registerUser: async (data: { email: string; password: string; full_name?: string; role: string }) => {
@@ -60,11 +64,15 @@ export const api = {
       return res.data;
     },
     updateRole: async (userId: number, role: string) => {
-      const res = await apiClient.put(`/api/auth/users/${userId}/role`, { role });
+      const res = await apiClient.patch(`/api/users/${userId}/role`, { role });
+      return res.data;
+    },
+    updateStatus: async (userId: number, isActive: boolean) => {
+      const res = await apiClient.patch(`/api/users/${userId}/status`, { is_active: isActive });
       return res.data;
     },
     deleteUser: async (userId: number) => {
-      const res = await apiClient.delete(`/api/auth/users/${userId}`);
+      const res = await apiClient.delete(`/api/users/${userId}`);
       return res.data;
     },
     forgotPassword: async (email: string) => {
@@ -100,6 +108,10 @@ export const api = {
     },
     delete: async (id: string) => {
       const res = await apiClient.delete(`/api/products/${id}`);
+      return res.data;
+    },
+    recordSale: async (id: string, qty: number = 1) => {
+      const res = await apiClient.patch(`/api/products/${id}/sell`, null, { params: { qty } });
       return res.data;
     },
   },

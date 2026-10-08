@@ -15,8 +15,10 @@ from app.models import (
     AuditLog,
     PasswordResetToken,
     UserLoginRequest,
+    SignUpRequest,
     TokenResponse,
     UserResponse,
+    UserStatusUpdateRequest,
     UserCreateRequest,
     RoleUpdateRequest,
     ForgotPasswordRequest,
@@ -34,6 +36,62 @@ from app.services.auth import (
 router = APIRouter(prefix="/api/auth", tags=["Authentication & Access Control"])
 
 
+@router.post("/signup", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
+def signup(payload: SignUpRequest, request: Request, db: Session = Depends(get_db)):
+    """
+    Public self-service account registration.
+    Creates user with business_analyst ('analyst') role and signs them in immediately.
+    """
+    clean_email = payload.email.lower().strip()
+    existing = db.query(User).filter(User.email == clean_email).first()
+    if existing:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="An account with this email already exists.",
+        )
+
+    # Server strictly assigns role 'analyst' (Business Analyst)
+    new_user = User(
+        email=clean_email,
+        hashed_password=hash_password(payload.password),
+        full_name=payload.name.strip(),
+        role="analyst",
+        is_active=True,
+        created_at=datetime.utcnow(),
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    log_audit(
+        db=db,
+        user_email=new_user.email,
+        role=new_user.role,
+        action="signup",
+        details=f"Self-service account created for {new_user.email} (Role: {new_user.role})",
+        request=request,
+    )
+
+    access_token = create_access_token(
+        data={"sub": new_user.email, "role": new_user.role, "id": new_user.id}
+    )
+
+    return {
+        "access_token": access_token,
+        "token": access_token,
+        "token_type": "bearer",
+        "role": new_user.role,
+        "user": {
+            "id": new_user.id,
+            "email": new_user.email,
+            "full_name": new_user.full_name,
+            "name": new_user.full_name,
+            "role": new_user.role,
+            "is_active": new_user.is_active,
+        },
+    }
+
+
 @router.post("/login", response_model=TokenResponse)
 def login(payload: UserLoginRequest, request: Request, db: Session = Depends(get_db)):
     """
@@ -44,6 +102,12 @@ def login(payload: UserLoginRequest, request: Request, db: Session = Depends(get
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password. Please verify your credentials.",
+        )
+
+    if hasattr(user, "is_active") and not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account is deactivated. Please contact an administrator.",
         )
 
     access_token = create_access_token(
@@ -61,12 +125,16 @@ def login(payload: UserLoginRequest, request: Request, db: Session = Depends(get
 
     return {
         "access_token": access_token,
+        "token": access_token,
         "token_type": "bearer",
+        "role": user.role,
         "user": {
             "id": user.id,
             "email": user.email,
             "full_name": user.full_name,
+            "name": user.full_name,
             "role": user.role,
+            "is_active": user.is_active,
         },
     }
 
@@ -101,6 +169,7 @@ def register_user(
         hashed_password=hash_password(payload.password),
         full_name=payload.full_name,
         role=payload.role,
+        is_active=True,
         created_at=datetime.utcnow(),
     )
     db.add(new_user)
@@ -131,6 +200,7 @@ def list_users(
 
 
 @router.put("/users/{user_id}/role", response_model=UserResponse)
+@router.patch("/users/{user_id}/role", response_model=UserResponse)
 def update_user_role(
     user_id: int,
     payload: RoleUpdateRequest,
@@ -161,9 +231,64 @@ def update_user_role(
         user_email=current_user.email,
         role=current_user.role,
         action="ROLE_UPDATED",
-        details=f"Changed {target_user.email} role from '{old_role}' to '{payload.role}'",
+        details=f"Admin {current_user.email} changed {target_user.email} role from '{old_role}' to '{payload.role}'",
         request=request,
     )
+
+    return target_user
+
+
+@router.patch("/users/{user_id}/status", response_model=UserResponse)
+@router.patch("/users/{user_id}", response_model=UserResponse)
+def update_user_status(
+    user_id: int,
+    payload: UserStatusUpdateRequest,
+    request: Request,
+    current_user: User = Depends(require_role(["admin"])),
+    db: Session = Depends(get_db),
+):
+    """
+    Admin-only endpoint: Activate or deactivate a user, or update role.
+    """
+    target_user = db.query(User).filter(User.id == user_id).first()
+    if not target_user:
+        raise HTTPException(status_code=404, detail="User not found.")
+
+    is_active_val = payload.is_active
+    if is_active_val is None and payload.status is not None:
+        is_active_val = payload.status.lower() in ("active", "true", "1")
+
+    if is_active_val is False and target_user.id == current_user.id:
+        raise HTTPException(
+            status_code=400,
+            detail="Cannot deactivate your own Admin account to prevent lockout.",
+        )
+
+    old_active = target_user.is_active
+    if is_active_val is not None:
+        target_user.is_active = is_active_val
+
+    if payload.role:
+        if target_user.id == current_user.id and payload.role != "admin":
+            raise HTTPException(
+                status_code=400,
+                detail="Cannot demote yourself from Admin role to prevent lockout.",
+            )
+        target_user.role = payload.role
+
+    db.commit()
+    db.refresh(target_user)
+
+    if is_active_val is not None and is_active_val != old_active:
+        action = "USER_ACTIVATED" if target_user.is_active else "USER_DEACTIVATED"
+        log_audit(
+            db=db,
+            user_email=current_user.email,
+            role=current_user.role,
+            action=action,
+            details=f"Admin {current_user.email} {'activated' if target_user.is_active else 'deactivated'} user {target_user.email}",
+            request=request,
+        )
 
     return target_user
 

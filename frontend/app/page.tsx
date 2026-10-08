@@ -35,6 +35,8 @@ import {
   Activity,
   X,
   Check,
+  ShoppingBag,
+  CheckCircle2,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -46,6 +48,22 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
+
+function StockCountCell({ stock, status }: { stock: number; status: string }) {
+  const animStock = useCountUp(stock, 350, 0);
+  const stockBadge =
+    status === "Critical"
+      ? "text-red-400 bg-red-500/10 border-red-500/30"
+      : status === "Low Stock"
+      ? "text-amber-400 bg-amber-500/10 border-amber-500/30"
+      : "text-slate-300 bg-slate-800/80 border-slate-700";
+
+  return (
+    <span className={`text-[10px] px-2 py-0.5 rounded-full border ${stockBadge} font-mono font-medium transition-colors`}>
+      {animStock} u
+    </span>
+  );
+}
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -89,11 +107,52 @@ export default function DashboardPage() {
     stock_level: 100,
   });
 
+  // Toast state for sale simulations
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const baselineRev = kpis?.baseline_revenue ?? kpis?.total_monthly_revenue ?? 0;
+  const projectedRev = kpis?.projected_revenue ?? ((kpis?.total_monthly_revenue || 0) + (kpis?.potential_revenue_lift || 0));
+  const upliftDollars = kpis?.revenue_uplift_dollars ?? kpis?.potential_revenue_lift ?? 0;
+  const upliftPct = kpis?.revenue_uplift_pct ?? (baselineRev > 0 ? (upliftDollars / baselineRev) * 100 : 0);
+
   // Count-up animations for key metrics
-  const animBaseline = useCountUp(kpis?.baseline_revenue || 0, 600, 0);
-  const animOptimized = useCountUp(kpis?.projected_revenue || 0, 600, 0);
-  const animUplift = useCountUp(kpis?.revenue_uplift_dollars || 0, 600, 0);
+  const animBaseline = useCountUp(baselineRev, 600, 0);
+  const animOptimized = useCountUp(projectedRev, 600, 0);
+  const animUplift = useCountUp(upliftDollars, 600, 0);
   const animSkus = useCountUp(kpis?.total_products || products.length, 500, 0);
+
+  const handleRecordSale = async (p: any) => {
+    try {
+      const updated = await api.products.recordSale(p.id, 1);
+      // Update product list locally
+      setProducts((prev) =>
+        prev.map((item) => (item.id === p.id ? { ...item, ...updated } : item))
+      );
+      // Update KPIs locally
+      setKpis((prev: any) => {
+        if (!prev) return prev;
+        const bRev = (prev.baseline_revenue || prev.total_monthly_revenue || 0) + (p.current_price || 0);
+        const pRev = prev.projected_revenue || bRev;
+        const uDol = Math.max(0, pRev - bRev);
+        return {
+          ...prev,
+          baseline_revenue: bRev,
+          total_monthly_revenue: bRev,
+          total_units_sold: (prev.total_units_sold || 0) + 1,
+          revenue_uplift_dollars: uDol,
+          revenue_uplift_pct: bRev > 0 ? (uDol / bRev) * 100 : 0,
+        };
+      });
+      // Show immediate toast
+      setToastMessage(`Sale recorded — ${p.name} stock: ${updated.stock_level}`);
+      setTimeout(() => {
+        setToastMessage((cur) => (cur?.includes(p.name) ? null : cur));
+      }, 3500);
+    } catch (err: any) {
+      console.error("Record sale error:", err);
+      alert("Failed to record sale: " + (err.response?.data?.detail || err.message));
+    }
+  };
 
   const fetchData = async (selectedDays: number = days) => {
     setLoading(true);
@@ -424,7 +483,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-2 flex items-center gap-1.5 text-xs text-teal-400 font-semibold">
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                  <span>+{(kpis?.revenue_uplift_pct || 0).toFixed(1)}% Projected Uplift</span>
+                  <span>+{upliftPct.toFixed(1)}% Projected Uplift</span>
                 </div>
               </div>
 
@@ -508,6 +567,7 @@ export default function DashboardPage() {
                       stroke="#64748B"
                       fontSize={11}
                       tickLine={false}
+                      domain={['auto', 'auto']}
                       tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
                     />
                     <Tooltip
@@ -545,7 +605,7 @@ export default function DashboardPage() {
 
               <ChartCaption
                 text={`This simulation timeline compares baseline daily revenue yields against projected revenues under OLS recommended prices across your portfolio for the selected ${days}-day window.`}
-                metricHighlight={`Simulated Lift: +${(kpis?.revenue_uplift_pct || 0).toFixed(1)}% (+$${(kpis?.revenue_uplift_dollars || 0).toLocaleString()})`}
+                metricHighlight={`Simulated Lift: +${upliftPct.toFixed(1)}% (+$${upliftDollars.toLocaleString()})`}
                 className="mt-4"
               />
             </div>
@@ -624,7 +684,7 @@ export default function DashboardPage() {
                       <th className="py-3 px-2 text-right">Units</th>
                       <th className="py-3 px-2 text-center">Stock</th>
                       <th className="py-3 px-2 text-center">Demand</th>
-                      <th className="py-3 px-2 text-center">Model R²</th>
+                      <th className="py-3 px-2 text-center">Confidence</th>
                       <th className="py-3 px-3 text-center">Actions</th>
                     </tr>
                   </thead>
@@ -640,13 +700,6 @@ export default function DashboardPage() {
                           : p.price_gap_pct > 2
                           ? "text-teal-400 bg-teal-500/10 border-teal-500/30"
                           : "text-slate-300 bg-slate-800 border-slate-700";
-
-                      const stockBadge =
-                        p.stock_status === "Critical"
-                          ? "text-red-400 bg-red-500/10 border-red-500/30"
-                          : p.stock_status === "Low Stock"
-                          ? "text-amber-400 bg-amber-500/10 border-amber-500/30"
-                          : "text-slate-300 bg-slate-800/80 border-slate-700";
 
                       return (
                         <React.Fragment key={p.id}>
@@ -689,9 +742,7 @@ export default function DashboardPage() {
                             </td>
 
                             <td className="py-3 px-2 text-center">
-                              <span className={`text-[10px] px-2 py-0.5 rounded-full border ${stockBadge}`}>
-                                {p.stock_level} u
-                              </span>
+                              <StockCountCell stock={p.stock_level} status={p.stock_status} />
                             </td>
 
                             <td className="py-3 px-2 text-center">
@@ -711,17 +762,25 @@ export default function DashboardPage() {
                             <td className="py-3 px-2 text-center">
                               <span
                                 className={`font-mono text-[10px] px-2 py-0.5 rounded-full border ${
-                                  p.confidence_score < 0.35
+                                  p.confidence_score < 22.0
                                     ? "bg-red-500/20 text-red-300 border-red-500/40 font-bold"
                                     : "bg-slate-800 text-teal-300 border-slate-700"
                                 }`}
                               >
-                                {(p.confidence_score * 100).toFixed(0)}%
+                                {p.confidence_score.toFixed(1)}%
                               </span>
                             </td>
 
                             <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()}>
                               <div className="flex items-center justify-center gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => handleRecordSale(p)}
+                                  className="p-1 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-emerald-400 transition-colors"
+                                  title="Record Sale (Simulate Purchase)"
+                                >
+                                  <ShoppingBag className="w-3.5 h-3.5" />
+                                </button>
                                 {isAdmin && (
                                   <>
                                     <button
@@ -1208,6 +1267,14 @@ export default function DashboardPage() {
                 </div>
               </form>
             </div>
+          </div>
+        )}
+
+        {/* Sale Simulation Toast Notification */}
+        {toastMessage && (
+          <div className="fixed bottom-6 right-20 z-50 flex items-center gap-2.5 bg-slate-900/95 border border-emerald-500/50 text-emerald-300 px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md font-mono text-xs animate-in fade-in slide-in-from-bottom-2 duration-200">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span className="font-semibold">{toastMessage}</span>
           </div>
         )}
 
