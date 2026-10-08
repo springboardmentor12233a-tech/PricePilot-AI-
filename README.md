@@ -1,83 +1,57 @@
-# PricePilot AI — Dynamic Pricing Optimization & Revenue Intelligence System
+# PricePilot AI — Milestone 2 FINAL
+## Real datasets: Online Retail + Amazon
 
-## Architecture (mapped from project brief, Section 3)
+This version is built specifically around the two supplied datasets:
+- `data/raw/Online Retail.xlsx`
+- `data/raw/Amazon.csv`
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  ACCESS LAYER            frontend/  (Next.js + Tailwind)      │
-│  Web dashboard, reports & insights, alerts                    │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │  REST API (JSON)
-┌───────────────────────────────▼───────────────────────────────┐
-│  DECISION & ACTION LAYER   backend/app/services/pricing_engine │
-│  Optimal price recommendation, scenario simulation             │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │
-┌───────────────────────────────▼───────────────────────────────┐
-│  AI/ML CORE                backend/app/ml/                     │
-│  Price Prediction · Demand Forecasting                         │
-│  Competitor Analysis · Revenue Optimization                    │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │
-┌───────────────────────────────▼───────────────────────────────┐
-│  DATA PIPELINE              backend/app/services/ingestion/    │
-│  Ingestion → Cleaning → Transformation → Feature Engineering   │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │
-┌───────────────────────────────▼───────────────────────────────┐
-│  DATA FOUNDATION            PostgreSQL (via SQLAlchemy)        │
-│  data/raw/  data/processed/  backend/app/ml/saved_models/      │
-└─────────────────────────────────────────────────────────────┘
+### Milestone 2 implemented
+1. Price prediction model
+2. Optimal price recommendation
+3. Price-demand forecasting
+4. Demand forecasting
+5. 7d / 14d / 30d / 3m / 6m / 12m horizons
+6. Increasing / Stable / Decreasing trend
+7. Confidence score
+8. MAE / RMSE
+9. Separate EDA for both datasets
+10. FastAPI dashboard with KPI cards and charts
 
-  PLATFORM LAYER: docker-compose.yml (local only — no cloud, by design)
-```
+### Important data reality
+The two datasets have different schemas. The pipeline normalizes each into a common daily product schema, while retaining a `dataset` field so their origin is not lost.
 
-## Folder structure
+Online Retail provides transaction date, quantity, unit price, product and country.
+Amazon provides order date, quantity, unit price, discount, tax, shipping, category, brand, order status, geography and seller information.
 
-```
-pricepilot-ai/
-├── backend/               FastAPI application
-│   ├── app/
-│   │   ├── api/routes/    One file per feature (auth, products, pricing, forecasting...)
-│   │   ├── core/          config.py, database.py — shared infrastructure
-│   │   ├── models/        SQLAlchemy ORM models (DB tables)
-│   │   ├── schemas/       Pydantic schemas (request/response validation)
-│   │   ├── services/      Business logic, incl. ingestion/ and pricing_engine/
-│   │   ├── ml/            Model training scripts + saved_models/
-│   │   └── main.py        App entrypoint
-│   ├── alembic/           DB migrations (version-controlled schema changes)
-│   ├── requirements.txt
-│   └── .env.example
-├── frontend/               Next.js application
-│   └── app/                Pages (App Router)
-├── data/
-│   ├── raw/                 Original Kaggle/UCI files, untouched
-│   └── processed/           Cleaned data after ingestion pipeline runs
-├── docs/                     Architecture notes, milestone write-ups
-└── docker-compose.yml       Local orchestration (Postgres + backend + frontend)
+The standard Online Retail dataset does not contain a ground-truth "optimal price", so the recommended price is produced by a constrained local price-demand elasticity simulation rather than pretending a historical price is an optimal label.
+
+## Setup — Windows / Python 3.12
+
+From this project root:
+
+```powershell
+py -3.12 -m venv venv
+.\venv\Scripts\activate
+python -m pip install -r backend\requirements.txt
 ```
 
-## Module → Code mapping (from project brief Section 4)
+## Run the complete real-data pipeline
 
-| # | Module | Code location |
-|---|---|---|
-| 1 | User Management | `backend/app/api/routes/auth.py`, `models/models.py::User` |
-| 2 | Product & Pricing Data | `models/models.py::Product, PriceHistory`, `services/ingestion/` |
-| 3 | Price Prediction | `app/ml/price_prediction.py` |
-| 4 | Demand Forecasting | `app/ml/demand_forecasting.py`, `models/models.py::DemandForecast` |
-| 5 | Competitor Analysis | `models/models.py::CompetitorPrice`, `app/services/competitor_analysis.py` |
-| 6 | Revenue Optimization | `app/services/pricing_engine/` |
-| 7 | Pricing Analytics Dashboard | `frontend/app/dashboard/` |
+```powershell
+python -m backend.app.ml.prepare_data
+python -m backend.app.ml.EDA_Online_Retail
+python -m backend.app.ml.EDA_Amazon
+python -m backend.app.ml.train_all
+uvicorn backend.app.main:app --reload
+```
 
-## Datasets (see `/docs` for the full selection rationale)
+Then open:
+`http://127.0.0.1:8000/`
 
-1. **Retail Price Optimization** (Kaggle) — pricing + competitor data
-2. **Online Retail II** (UCI) — 2 years of real transactions
-3. **Rossmann Store Sales** (Kaggle) — 2.5 years daily sales, promos, holidays
+API docs:
+`http://127.0.0.1:8000/docs`
 
-## Local development (no cloud)
-
-Backend: `cd backend && uvicorn app.main:app --reload` → http://localhost:8000
-Frontend: `cd frontend && npm run dev` → http://localhost:3000
-Full stack via Docker: `docker compose up --build`
-# PricePilot-AI-
+### Output folders
+- Cleaned data: `data/processed/`
+- EDA charts: `data/eda_outputs/online_retail/` and `data/eda_outputs/amazon/`
+- Trained models: `models/`

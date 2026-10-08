@@ -1,49 +1,43 @@
-"""
-Entry point of the backend. This is the file uvicorn runs.
+import json
+from pathlib import Path
+import pandas as pd
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from backend.app.config import COMBINED_PROCESSED, MODEL_DIR, ROOT
+from backend.app.ml.demand_forecasting import forecast
+from backend.app.ml.price_recommendation import recommend
 
-Run it with:
-    uvicorn app.main:app --reload
-
-`--reload` watches for file changes and restarts automatically — use this
-in development only, never in a real deployment.
-"""
-
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-from app.core.config import settings
-
-app = FastAPI(
-    title=settings.APP_NAME,
-    description="AI-powered dynamic pricing optimization & revenue intelligence system",
-    version="0.1.0",
-)
-
-# CORS: without this, your Next.js frontend (running on a different port,
-# e.g. localhost:3000) will be BLOCKED by the browser from calling this API
-# (running on localhost:8000). This is a browser security rule, not a
-# FastAPI quirk — every full-stack project with separate frontend/backend
-# ports needs this.
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js dev server
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
+app=FastAPI(title="PricePilot AI — Milestone 2",version="2.0.0")
 
 @app.get("/health")
-def health_check():
-    """
-    Simple endpoint to confirm the API is alive. This is the FIRST thing
-    you should test after running the server, and later, the first thing
-    Docker healthchecks will hit.
-    """
-    return {"status": "ok", "app": settings.APP_NAME, "environment": settings.ENVIRONMENT}
+def health(): return {"status":"ok","milestone":2}
 
+@app.get("/api/products/{dataset}")
+def products(dataset:str):
+    if not COMBINED_PROCESSED.exists():
+        raise HTTPException(404,"Run prepare_data first.")
+    df=pd.read_csv(COMBINED_PROCESSED)
+    p=df[df.dataset==dataset].sort_values("date").groupby("product_id").tail(1)
+    return p[["product_id","product_name","category","price"]].to_dict("records")
 
-# NOTE: We are NOT importing feature routers (auth, pricing, forecasting...)
-# here yet — that comes in the next steps as we build each module.
-# Keeping main.py minimal right now is intentional: we verify the
-# foundation works before stacking features on top of it.
+@app.get("/api/metrics")
+def metrics():
+    out={}
+    for n in ["demand_metrics.json","price_metrics.json"]:
+        p=MODEL_DIR/n
+        if p.exists(): out[n.replace("_metrics.json","")]=json.loads(p.read_text())
+    return out
+
+@app.get("/api/forecast/{dataset}/{product_id}")
+def api_forecast(dataset:str,product_id:str,horizon:str="30d"):
+    try: return forecast(dataset,product_id,horizon)
+    except Exception as e: raise HTTPException(400,str(e))
+
+@app.get("/api/recommend/{dataset}/{product_id}")
+def api_recommend(dataset:str,product_id:str):
+    try: return recommend(dataset,product_id)
+    except Exception as e: raise HTTPException(400,str(e))
+
+@app.get("/")
+def dashboard():
+    return FileResponse(ROOT/"frontend"/"index.html")
