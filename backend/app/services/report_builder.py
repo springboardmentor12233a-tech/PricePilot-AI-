@@ -30,7 +30,13 @@ def _avg(values):
 
 
 def collect_report_data(db: Session, limit: int = 50) -> dict:
-    products = db.query(Product).order_by(Product.id).limit(limit).all()
+    # Prioritize products from retail_price_optimization or those with forecasts/pricing data
+    retail_products = db.query(Product).filter(Product.source_dataset == "retail_price_optimization").order_by(Product.id).limit(limit).all()
+    if len(retail_products) < limit:
+        other_products = db.query(Product).filter(Product.source_dataset != "retail_price_optimization").order_by(Product.id).limit(limit - len(retail_products)).all()
+        products = retail_products + other_products
+    else:
+        products = retail_products
     rows = []
 
     for p in products:

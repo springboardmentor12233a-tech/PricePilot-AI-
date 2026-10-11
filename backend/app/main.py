@@ -22,6 +22,7 @@ from app.api.routes import (
     insights,
     ai,            # NEW: chatbot  -> POST /api/v1/ai/ask
     report_export, # NEW: BI report -> GET  /api/v1/reports/download
+    products,      # REST catalog -> GET /products, GET /products/{product_id}
 )
 
 app = FastAPI(
@@ -65,3 +66,4 @@ app.include_router(dashboard.router)
 app.include_router(insights.router)
 app.include_router(ai.router)             # NEW
 app.include_router(report_export.router)  # NEW
+app.include_router(products.router)       # Products catalog endpoints
