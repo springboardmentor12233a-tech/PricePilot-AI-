@@ -43,7 +43,7 @@ Six datasets — covering retail pricing, e-commerce sales, historical sales, pr
 Price prediction and demand forecasting models will consume the cleaned datasets to generate recommended prices. Competitor analysis will benchmark these recommendations against market data (Amazon UK Products dataset). Revenue optimization logic will balance predicted demand against margin targets.
 
 ### Workflow Stage 7–9: Decision & Action Layer (Implemented in Milestone 1)
-The backend's Product API supports both manual price updates (via authenticated Pricing Manager/Executive roles) and automatic logging of every price change into the `pricing_history` table — capturing old price, new price, and timestamp for full auditability.
+The backend's Product API supports both manual price updates (restricted to the Admin role) and automatic logging of every price change into the `pricing_history` table — capturing old price, new price, and timestamp for full auditability.
 
 ### Workflow Stage 10: Monitoring (Partially Implemented)
 The dashboard currently displays live product and pricing data pulled directly from PostgreSQL. Full analytics visualizations (trend charts, forecast accuracy, revenue impact) are planned for later milestones.
@@ -54,12 +54,10 @@ Aligned with the platform's RBAC implementation, different user roles interact w
 
 | Role | Workflow Access |
 |---|---|
-| **Pricing Manager** | Full access — can create, update, and delete product pricing |
-| **Executive** | Full access — can create, update, and delete product pricing; reviews high-level analytics |
-| **Analyst** | Read-only access — views product catalog and pricing data for analysis |
-| **Sales** | Read-only access — views current pricing for customer-facing decisions |
+| **Admin** | Full access: product and price management, user management, system diagnostics, restock approvals and all analytics |
+| **Business Analyst** | Analytics access: KPIs, competitor analysis, profitability, forecasting, what-if simulation and reports. Cannot change products or users |
+| **User** | Operational access: product catalog, price recommendations, demand forecast, stock alerts and restock requests |
 
 ## Summary
 
 This workflow definition establishes the operational logic the platform will follow as machine learning capabilities (Milestone 2) and competitor/revenue intelligence (Milestone 3) are layered on top of the data and application foundation completed in Milestone 1.
-

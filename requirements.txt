@@ -4,3 +4,7 @@ matplotlib
 seaborn
 openpyxl
 jupyter
+scikit-learn
+xgboost
+prophet
+joblib

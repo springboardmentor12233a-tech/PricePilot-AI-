@@ -37,7 +37,7 @@ export default function ExecutiveReportPage() {
       router.push("/login");
       return;
     }
-    Promise.all([getKPIs(), getCompetitorAnalysis(), getProfitability()])
+    Promise.all([getKPIs(token), getCompetitorAnalysis(token), getProfitability(token)])
       .then(([kpiData, compData, profitData]) => {
         setKpis(kpiData);
         setComparison(compData.comparison);

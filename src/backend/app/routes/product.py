@@ -5,6 +5,7 @@ from typing import List
 from app.database import SessionLocal
 from app.models.product import Product
 from app.models.pricing_history import PricingHistory
+from app.models.restock_request import RestockRequest
 from app.schemas.product import ProductCreate, ProductResponse
 from app.auth.dependencies import get_current_user, require_role
 from app.models.user import User
@@ -22,7 +23,7 @@ def get_db():
 def create_product(
     product: ProductCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_role(["Pricing Manager", "Executive"]))
+    current_user: User = Depends(require_role(["Admin"]))
 ):
     new_product = Product(**product.dict())
     db.add(new_product)
@@ -46,7 +47,7 @@ def update_product(
     product_id: int,
     updated_product: ProductCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_role(["Pricing Manager", "Executive"]))
+    current_user: User = Depends(require_role(["Admin"]))
 ):
     product = db.query(Product).filter(Product.id == product_id).first()
     if not product:
@@ -74,11 +75,13 @@ def update_product(
 def delete_product(
     product_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_role(["Pricing Manager", "Executive"]))
+    current_user: User = Depends(require_role(["Admin"]))
 ):
     product = db.query(Product).filter(Product.id == product_id).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
+    db.query(PricingHistory).filter(PricingHistory.product_id == product_id).delete()
+    db.query(RestockRequest).filter(RestockRequest.product_id == product_id).delete()
     db.delete(product)
     db.commit()
     return {"message": "Product deleted successfully"}

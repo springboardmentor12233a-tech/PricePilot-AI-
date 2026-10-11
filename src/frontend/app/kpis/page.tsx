@@ -37,7 +37,7 @@ export default function KPIsPage() {
       router.push("/login");
       return;
     }
-    getKPIs().then(setData).finally(() => setLoading(false));
+    getKPIs(token).then(setData).finally(() => setLoading(false));
   }, []);
 
   async function generateInsight() {

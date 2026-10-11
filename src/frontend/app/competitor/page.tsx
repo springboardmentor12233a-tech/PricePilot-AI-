@@ -52,7 +52,7 @@ export default function CompetitorPage() {
       router.push("/login");
       return;
     }
-    Promise.all([getCompetitorAnalysis(), getProfitability()])
+    Promise.all([getCompetitorAnalysis(token), getProfitability(token)])
       .then(([compData, profitData]) => {
         setComparison(compData.comparison);
         setProfitability(profitData.profitability);

@@ -1,15 +1,30 @@
+# Python
 venv/
 .venv/
-data/raw/
-data/processed_data/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+# Secrets
 .env
-src/backend/.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Large or regenerable files
+data/raw/
+data/processed_data/
+/models/
+src/backend/app/ml_models/*.pkl
+*.pkl
+
+# Node
 node_modules/
 src/frontend/node_modules/
 .next/
 src/frontend/.next/
-models/
-src/backend/app/ml_models/*.pkl
+
+# OS
+Thumbs.db
+.DS_Store

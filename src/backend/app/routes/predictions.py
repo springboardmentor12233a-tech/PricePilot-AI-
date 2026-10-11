@@ -1,9 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 import joblib
 import pickle
 import pandas as pd
 import os
+from app.auth.dependencies import get_current_user, require_role, get_db
+from sqlalchemy.orm import Session
+from app.models.product import Product
+from app.models.user import User
 
 router = APIRouter(prefix="/predictions", tags=["Predictions"])
 
@@ -33,14 +37,37 @@ class PriceRecommendationRequest(BaseModel):
 
 @router.post("/recommend-price")
 def recommend_price(request: PriceRecommendationRequest):
+    estimated_fields = []
+
     try:
         category_enc = encoders['category'].transform([request.category])[0]
+    except ValueError:
+        category_enc = 0
+        estimated_fields.append("category")
+
+    try:
         brand_enc = encoders['brand'].transform([request.brand])[0]
+    except ValueError:
+        brand_enc = 0
+        estimated_fields.append("brand")
+
+    try:
         region_enc = encoders['region'].transform([request.region])[0]
+    except ValueError:
+        region_enc = 0
+        estimated_fields.append("region")
+
+    try:
         channel_enc = encoders['channel'].transform([request.channel])[0]
+    except ValueError:
+        channel_enc = 0
+        estimated_fields.append("channel")
+
+    try:
         season_enc = encoders['season'].transform([request.season])[0]
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Unknown category value: {str(e)}")
+    except ValueError:
+        season_enc = 0
+        estimated_fields.append("season")
 
     scenarios = []
     for discount in range(0, 55, 5):
@@ -73,7 +100,9 @@ def recommend_price(request: PriceRecommendationRequest):
 
     return {
         "scenarios": scenarios,
-        "recommended": best
+        "recommended": best,
+        "estimated": len(estimated_fields) > 0,
+        "estimated_fields": estimated_fields
     }
 
 
@@ -117,8 +146,7 @@ def demand_forecast(days: int = 30):
         "forecast": forecast_data
     }
 
-@router.get("/kpis")
-def get_kpis():
+def _get_kpis_data():
     import pandas as pd
 
     df_kpi = pd.read_csv(os.path.join(BASE_DIR, "..", "..", "..", "data", "processed_data", "retail_pricing_demand_clean.csv"))
@@ -174,6 +202,11 @@ def get_kpis():
         "region_performance": region_data
     }
 
+
+@router.get("/kpis")
+def get_kpis(current_user: User = Depends(require_role(["Admin", "Business Analyst"]))):
+    return _get_kpis_data()
+
 from groq import Groq
 
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -210,8 +243,7 @@ def get_ai_insights(request: InsightRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"AI insight generation failed: {str(e)}")
 
-@router.get("/competitor-analysis")
-def get_competitor_analysis():
+def _get_competitor_analysis_data():
     file_path = os.path.join(BASE_DIR, "..", "..", "..", "data", "processed_data", "competitor_analysis_results.csv")
     df_comp = pd.read_csv(file_path)
 
@@ -220,8 +252,12 @@ def get_competitor_analysis():
     }
 
 
-@router.get("/profitability")
-def get_profitability():
+@router.get("/competitor-analysis")
+def get_competitor_analysis(current_user: User = Depends(require_role(["Admin", "Business Analyst"]))):
+    return _get_competitor_analysis_data()
+
+
+def _get_profitability_data():
     file_path = os.path.join(BASE_DIR, "..", "..", "..", "data", "processed_data", "profitability_analysis.csv")
     df_profit = pd.read_csv(file_path)
 
@@ -229,11 +265,16 @@ def get_profitability():
         "profitability": df_profit.to_dict(orient="records")
     }
 
+
+@router.get("/profitability")
+def get_profitability(current_user: User = Depends(require_role(["Admin", "Business Analyst"]))):
+    return _get_profitability_data()
+
 @router.get("/alerts")
 def get_alerts():
-    kpi_data = get_kpis()
-    comp_data = get_competitor_analysis()
-    profit_data = get_profitability()
+    kpi_data = _get_kpis_data()
+    comp_data = _get_competitor_analysis_data()
+    profit_data = _get_profitability_data()
 
     alerts = []
 
@@ -280,9 +321,9 @@ class ChatRequest(BaseModel):
 @router.post("/chat")
 def chat_with_ai(request: ChatRequest):
     try:
-        kpi_data = get_kpis()
-        comp_data = get_competitor_analysis()
-        profit_data = get_profitability()
+        kpi_data = _get_kpis_data()
+        comp_data = _get_competitor_analysis_data()
+        profit_data = _get_profitability_data()
 
         data_context = f"""
 Current business data context:
@@ -331,3 +372,55 @@ Available dashboard pages for deeper exploration:
         return {"response": completion.choices[0].message.content}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")
+
+
+@router.get("/valid-values")
+def get_valid_values():
+    return {
+        "category": list(encoders['category'].classes_),
+        "brand": list(encoders['brand'].classes_),
+        "region": list(encoders['region'].classes_),
+        "channel": list(encoders['channel'].classes_),
+        "season": list(encoders['season'].classes_),
+    }
+
+
+LOW_STOCK_THRESHOLD = 100
+SURPLUS_THRESHOLD = 500
+
+
+@router.get("/stock-alerts")
+def get_stock_alerts(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    products = db.query(Product).all()
+    alerts = []
+
+    for p in products:
+        qty = p.inventory_level or 0
+        if qty <= 0:
+            status, severity = "out_of_stock", "critical"
+            message = f"{p.product_name} is out of stock."
+        elif qty < LOW_STOCK_THRESHOLD:
+            status, severity = "low_stock", "warning"
+            message = f"{p.product_name} has only {qty} units left (below {LOW_STOCK_THRESHOLD})."
+        elif qty > SURPLUS_THRESHOLD:
+            status, severity = "surplus", "info"
+            message = f"{p.product_name} has {qty} units in stock (above {SURPLUS_THRESHOLD}). Consider a promotion."
+        else:
+            continue
+
+        alerts.append({
+            "product_id": p.id,
+            "product_name": p.product_name,
+            "inventory_level": qty,
+            "status": status,
+            "severity": severity,
+            "message": message,
+        })
+
+    return {
+        "stock_alerts": alerts,
+        "thresholds": {"low_stock": LOW_STOCK_THRESHOLD, "surplus": SURPLUS_THRESHOLD},
+    }

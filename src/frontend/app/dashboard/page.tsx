@@ -26,7 +26,7 @@ interface Alert {
   message: string;
 }
 
-const CAN_MANAGE_ROLES = ["Pricing Manager", "Executive"];
+const CAN_MANAGE_ROLES = ["Admin"];
 
 export default function DashboardPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -111,7 +111,7 @@ export default function DashboardPage() {
           ) : (
             <div className="terminal-card px-3 py-2">
               <p className="text-xs muted-text-2">🔒 Read-only access</p>
-              <p className="text-xs muted-text">Contact a Pricing Manager to edit products</p>
+              <p className="text-xs muted-text">Contact an Admin to edit products</p>
             </div>
           )}
         </div>

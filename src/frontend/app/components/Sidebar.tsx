@@ -2,13 +2,18 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
-const navItems = [
-  { label: "Dashboard", path: "/dashboard", icon: "📦" },
-  { label: "Forecasting", path: "/forecasting", icon: "📈" },
-  { label: "KPIs", path: "/kpis", icon: "💰" },
-  { label: "Competitor", path: "/competitor", icon: "🎯" },
-  { label: "Executive", path: "/executive", icon: "📊" },
+const allNavItems = [
+  { label: "Dashboard", path: "/dashboard", icon: "📦", roles: ["Admin", "Business Analyst", "User"] },
+  { label: "Forecasting", path: "/forecasting", icon: "📈", roles: ["Admin", "Business Analyst", "User"] },
+  { label: "Stock & Alerts", path: "/inventory", icon: "🔔", roles: ["Admin", "Business Analyst", "User"] },
+  { label: "Analyst Tools", path: "/analyst", icon: "🔬", roles: ["Admin", "Business Analyst"] },
+  { label: "KPIs", path: "/kpis", icon: "💰", roles: ["Admin", "Business Analyst"] },
+  { label: "Competitor", path: "/competitor", icon: "🎯", roles: ["Admin", "Business Analyst"] },
+  { label: "Executive", path: "/executive", icon: "📊", roles: ["Admin", "Business Analyst"] },
+  { label: "Calendar", path: "/calendar", icon: "📅", roles: ["Admin", "Business Analyst", "User"] },
+  { label: "Admin Panel", path: "/admin", icon: "🛠️", roles: ["Admin"] },
 ];
 
 export default function Sidebar() {
@@ -26,8 +31,9 @@ export default function Sidebar() {
     }
   }, [pathname]);
 
-  // Don't show sidebar on login page
   if (pathname === "/login" || pathname === "/") return null;
+
+  const visibleItems = allNavItems.filter((item) => item.roles.includes(role));
 
   return (
     <aside className="w-56 min-h-screen status-strip flex flex-col py-6 px-3 sticky top-0">
@@ -39,7 +45,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-1">
-        {navItems.map((item) => {
+        {visibleItems.map((item) => {
           const isActive = pathname === item.path;
           return (
             <button
@@ -57,6 +63,8 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      <ThemeToggle className="w-full mb-3" />
 
       {role && (
         <div className="terminal-card px-3 py-2 mt-4">
