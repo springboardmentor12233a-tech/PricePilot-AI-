@@ -1,12 +1,12 @@
-# Local-only orchestration. NO cloud services (AWS/Azure) are used anywhere
-# in this file, per project scope decision — everything runs on localhost.
+# Local orchestration for PricePilot AI.
 #
 # Usage:
 #   docker compose up --build
 #
-# This is set up now as a skeleton; we will actually USE it in Milestone 4
-# (testing & containerization week) once the app itself is built and
-# working via `uvicorn` + `npm run dev` locally.
+# Services:
+#   db       → PostgreSQL 16
+#   backend  → FastAPI on :8000
+#   frontend → Next.js on :3000
 
 version: "3.9"
 
@@ -23,24 +23,38 @@ services:
       - "5432:5432"
     volumes:
       - pricepilot_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pricepilot_user -d pricepilot_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
     container_name: pricepilot_backend
     restart: unless-stopped
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file:
       - ./backend/.env
     ports:
       - "8000:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
 
   frontend:
     build: ./frontend
     container_name: pricepilot_frontend
     restart: unless-stopped
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:8000
     ports:
       - "3000:3000"
 

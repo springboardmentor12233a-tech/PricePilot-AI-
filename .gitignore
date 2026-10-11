@@ -22,3 +22,6 @@ data/processed/*
 Thumbs.db
 .vscode/
 *.log
+.venv/
+backend.zip
+gemini-code-*.md

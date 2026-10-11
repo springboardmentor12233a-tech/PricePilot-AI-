@@ -12,7 +12,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.api.routes import pricing, forecasting, competitor, revenue
+from app.api.routes import (
+    pricing,
+    forecasting,
+    competitor,
+    revenue,
+    dashboard,
+    auth,
+    insights,
+    ai,            # NEW: chatbot  -> POST /api/v1/ai/ask
+    report_export, # NEW: BI report -> GET  /api/v1/reports/download
+)
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -31,6 +41,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    # NEW: lets the browser read the filename sent with report downloads
+    expose_headers=["Content-Disposition"],
 )
 
 
@@ -44,11 +56,12 @@ def health_check():
     return {"status": "ok", "app": settings.APP_NAME, "environment": settings.ENVIRONMENT}
 
 
+app.include_router(auth.router)
 app.include_router(pricing.router)
 app.include_router(forecasting.router)
 app.include_router(competitor.router)
 app.include_router(revenue.router)
-
-
-# NOTE: more feature routers (auth, products, forecasting...) will be
-# added here the same way as we build each module.
+app.include_router(dashboard.router)
+app.include_router(insights.router)
+app.include_router(ai.router)             # NEW
+app.include_router(report_export.router)  # NEW

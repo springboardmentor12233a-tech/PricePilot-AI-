@@ -1,8 +1,12 @@
-from pydantic import BaseModel
-from typing import List
 from datetime import datetime
+from typing import List
+
+from pydantic import BaseModel, ConfigDict
+
 
 class DemandForecastItem(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     horizon: str
     predicted_units: float
     trend: str
@@ -10,10 +14,8 @@ class DemandForecastItem(BaseModel):
     model_used: str
     generated_at: datetime
 
-    class Config:
-        from_attributes = True
 
 class ProductForecastResponse(BaseModel):
     product_id: int
     product_name: str
-    forecasts: List[DemandForecastItem]
+    forecasts: List[DemandForecastItem]

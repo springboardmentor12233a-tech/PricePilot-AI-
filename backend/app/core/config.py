@@ -27,6 +27,9 @@ class Settings(BaseSettings):
     # --- App ---
     APP_NAME: str = "PricePilot AI"
     ENVIRONMENT: str = "development"
+    
+    # --- External APIs ---
+    GROQ_API_KEY: str | None = None  # Optional at startup; services raise 503 if missing at request time
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

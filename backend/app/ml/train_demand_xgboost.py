@@ -1,24 +1,4 @@
-"""
-Demand Forecasting -- XGBoost comparison model (PDF Section 6:
-"Recommended Models > Machine Learning Models: XGBoost Regressor").
 
-Prophet (train_demand_forecasting.py) is purpose-built for time series
-and handles seasonality/trend automatically. This script takes a
-DIFFERENT approach: manually engineer time-based features (day of week,
-month, recent sales) and let XGBoost -- the same general-purpose model
-we used for price prediction -- learn the pattern instead.
-
-TEACHING NOTE -- why we engineer LAG features:
-XGBoost doesn't understand "time" the way Prophet does -- it just sees
-rows of numbers. To give it a sense of recent momentum, we manually
-create "lag" features: what did this product sell 1 day ago? 7 days ago?
-What's the rolling 7-day average? These let XGBoost infer "sales have
-been climbing lately" from the numbers alone, without any built-in
-understanding of dates.
-
-Run with:
-    python -m app.ml.train_demand_xgboost
-"""
 
 import pandas as pd
 import numpy as np

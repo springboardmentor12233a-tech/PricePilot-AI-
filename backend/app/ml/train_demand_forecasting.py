@@ -148,7 +148,7 @@ def train_and_forecast():
             print("WARNING: fewer than 30 days of history -- forecast quality will be poor. "
                   "This is expected if using sample/partial data.")
 
-        model = Prophet(interval_width=0.85, seasonality_mode="multiplicative")
+        model = Prophet(interval_width=0.85, changepoint_prior_scale=0.5, seasonality_prior_scale=1.0, seasonality_mode="additive")
         # multiplicative mode: seasonal swings scale with the overall
         # sales level, rather than adding/subtracting a fixed amount.
         # This fits bursty retail data (many zero days + occasional big

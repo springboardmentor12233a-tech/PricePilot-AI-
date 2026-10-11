@@ -1,17 +1,4 @@
-"""
-Turns ONE incoming API request into a prediction, using the model
-trained by app/ml/train_price_prediction.py.
 
-TEACHING NOTE -- why this is trickier than "just call model.predict()":
-The model was trained on a specific set of columns in a specific order
-(saved as feature_cols alongside the model). A single incoming request
-must be turned into a row with EXACTLY those same columns, in the same
-order, with the same one-hot category columns -- even categories the
-request doesn't mention need to be present as 0. Get this wrong and
-XGBoost either errors out or silently gives garbage predictions (it has
-no way to know your columns are misaligned -- it just sees numbers in
-positions).
-"""
 
 from pathlib import Path
 import joblib
