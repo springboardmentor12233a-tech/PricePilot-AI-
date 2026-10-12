@@ -13,8 +13,8 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 
-from backend.database import get_db
-from backend.models import User, AuditLog, Product
+from backend.database import engine, get_db
+from backend.models import Base, User, AuditLog, Product
 from backend.schemas import (
     UserCreate,
     UserResponse,
