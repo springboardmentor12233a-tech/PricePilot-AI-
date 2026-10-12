@@ -815,7 +815,7 @@ Describe Docker or cloud deployment as complete only after the actual deployment
 
 ## License
 
-Apace License
+MIT License
 
 ---
 
