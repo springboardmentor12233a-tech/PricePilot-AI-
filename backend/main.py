@@ -1,18 +1,18 @@
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+from pydantic import BaseModel
+
 from backend.audit import create_audit_log
 from backend.auth import (
     hash_password,
     verify_password,
     create_access_token,
     get_current_user,
-    require_permission
+    require_permission,
 )
-
 from backend.permissions import Permission
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from fastapi.security import OAuth2PasswordRequestForm
-
 from backend.database import engine, get_db
 from backend.models import Base, User, AuditLog, Product
 from backend.schemas import (
@@ -20,10 +20,9 @@ from backend.schemas import (
     UserResponse,
     ProductCreate,
     ProductUpdate,
-    ProductResponse
+    ProductResponse,
 )
 from backend.prediction import predict_demand
-from pydantic import BaseModel
 class PredictionInput(BaseModel):
     Category: str
     Region: str
@@ -57,8 +56,9 @@ app = FastAPI(
     description="AI-powered dynamic pricing and revenue intelligence API",
     version="1.0.0"
 )
-Base.metadata.create_all(bind=engine)
+
 origins = [
+    "https://frontend-1-taupe-delta.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
@@ -71,6 +71,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+Base.metadata.create_all(bind=engine)
 @app.get("/")
 def root():
     return {
