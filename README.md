@@ -178,13 +178,32 @@ Features built beyond the original milestone plan:
 |---|---|---|
 | Validate prediction accuracy | ✅ Done | Leakage checks, product-level split, time-based holdout for Prophet, 3-fold cross-validation (see the notebooks) |
 | Validate recommendation quality | 🔄 Partial | Manually checked; results are flagged as estimates when a product is outside the training data. No formal back-test yet |
+| API testing (Postman) | ✅ Done | 83-request core suite with 219 assertions, 0 failures. Collection kept locally; summary below |
 | Optimize pricing algorithms | 🔄 Partial | Tuned Random Forest (R² 0.80) is saved but the API still serves the Gradient Boosting model (R² 0.48). Switching is a small change |
 | Dashboard responsiveness | 🔄 Partial | Skeleton loaders added. KPI and alert endpoints re-read the dataset on every request, so caching is planned |
-| Testing | 🔄 Manual | Every endpoint and role was tested by hand through the API docs and the UI. No automated test suite yet |
+| Unit tests for backend code | ❌ Not started | |
 | Containerize with Docker | ❌ Not started | |
 | Cloud deployment (AWS / Azure) | ❌ Not started | |
 | Final documentation | 🔄 In progress | README and `docs/` updated |
 | Final presentation and live demo | ❌ Pending | |
+
+### API Testing (Postman)
+
+The backend was tested end to end with a Postman collection (kept locally, not in this repository). It covers role-based access and the main workflows:
+
+| Folder | Requests | What it covers |
+|---|---|---|
+| 0 Setup - Login | 3 | Login as each role; the token carries the correct role |
+| 1 Auth and user management | 29 | Registration forces the User role, wrong passwords and SQL-injection input are rejected, deactivated accounts get 403, Admin-only user management, self-delete blocked |
+| 2 Products | 11 | Public reads, Admin-only writes, validation and not-found errors |
+| 3 Predictions and analytics | 16 | Recommendation and forecast output shape, unseen-brand estimate flag, invalid horizon, role-locked KPI, competitor and profitability endpoints |
+| 4 Stock alerts and restock workflow | 19 | Low-stock detection, request creation, per-user visibility, Admin approval and rejection, stock changes, double-approval blocked |
+| 5 Cleanup | 5 | Removes every record the tests created |
+| 6 AI endpoints (optional) | 2 | Groq chat and insight endpoints |
+
+**Result:** the core suite (83 requests, 219 assertions) passed with 0 failures.
+
+The tests create their own records and delete them at the end, so real data is untouched. Some endpoints are currently public (see Known Limitations), so their tests expect public access.
 
 ---
 
@@ -219,6 +238,7 @@ Features built beyond the original milestone plan:
 | LLM Integration | Groq API (`openai/gpt-oss-120b`) |
 | Backend | FastAPI, SQLAlchemy, PostgreSQL, JWT (python-jose), Passlib (bcrypt) |
 | Frontend | Next.js, React, Tailwind CSS, TypeScript, Recharts, jsPDF |
+| API Testing | Postman (collection and runner) |
 | Environment | VS Code, Jupyter Notebooks, Node.js |
 | Version Control | Git & GitHub |
 
@@ -266,14 +286,10 @@ Features built beyond the original milestone plan:
 
 ---
 
-## 🚧 Upcoming Work
+## ✅ API Testing & Deployment
 
-- Containerize the backend and frontend with Docker
-- Deploy to a cloud environment (AWS or Azure)
-- Serve the tuned Random Forest demand model and add caching to the KPI endpoints
-- Require login on the remaining open endpoints and give the chatbot role-aware context
-- Add an automated test suite
-- Final presentation and live demonstration
+- **API testing is done.** The full description is in the API Testing (Postman) section above.
+- **Deployment:** the application is deployed and running on localhost (backend on `http://127.0.0.1:8000`, frontend on `http://localhost:3000`).
 
 ---
 
