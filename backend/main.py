@@ -57,7 +57,7 @@ app = FastAPI(
     description="AI-powered dynamic pricing and revenue intelligence API",
     version="1.0.0"
 )
-
+Base.metadata.create_all(bind=engine)
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
