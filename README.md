@@ -812,14 +812,6 @@ Describe Docker or cloud deployment as complete only after the actual deployment
 | Deployment | Validate production build, migrations, and smoke tests |
 | Documentation | Keep endpoint reference aligned with generated OpenAPI |
 
-## Contributing
-
-1. Create a feature branch.
-2. Keep schemas, implementation, and documentation aligned.
-3. Add or update tests for changed behavior.
-4. Run backend tests and the frontend production build.
-5. Never commit `.env` files, tokens, database passwords, or provider keys.
-6. Update this README when API contracts or architecture change.
 
 ## License
 
