@@ -1,5 +1,143 @@
 # PricePilot AI
 
+### Dynamic Pricing Optimization and Revenue Intelligence System
+
+## 📌 Project Overview
+
+PricePilot AI is an AI-powered dynamic pricing and revenue intelligence system designed to help businesses make data-driven pricing decisions.
+
+The system analyzes sales data, product demand, inventory levels, and pricing information to support demand prediction, price recommendations, and business analysis.
+
+It provides API endpoints for product retrieval, authentication, demand prediction, pricing recommendations, and AI-generated insights.
+
+## 🎯 Objectives
+
+- Predict product demand using machine learning.
+- Recommend suitable product prices.
+- Analyze pricing and sales-related information.
+- Retrieve product information and business KPIs.
+- Generate AI-based insights and recommendations.
+- Combine multiple analyses through a single API endpoint.
+- Support data-driven business decisions.
+
+## 🛠️ Technologies Used
+
+- **Programming Language:** Python
+- **Backend Framework:** FastAPI
+- **ASGI Server:** Uvicorn
+- **Database:** MySQL
+- **Machine Learning:** Python-based prediction model
+- **API Testing:** FastAPI Swagger UI / Postman
+- **Version Control:** Git and GitHub
+
+## ⚙️ Key Features
+
+### 1. User Authentication
+Provides a login endpoint for validating user credentials.
+
+### 2. Product Retrieval
+Retrieves product information through the API.
+
+### 3. Demand Prediction
+Uses the configured machine learning model to predict product demand.
+
+### 4. Price Recommendation
+Provides recommended product prices based on the implemented pricing logic.
+
+### 5. Pricing Analysis
+Processes pricing requests and returns pricing-related results.
+
+### 6. Complete Analysis
+Combines applicable analysis results, such as demand forecasts, inventory information, pricing results, and AI insights.
+
+### 7. AI Insights
+Provides AI-generated insights when the required language model service is configured.
+
+### 8. Database Connectivity
+Checks the connection between the backend and the configured MySQL database.
+
+## 🏗️ System Architecture
+
+The application follows a backend API architecture.
+
+1. **Client Layer:** Sends requests through Swagger UI or another API client.
+2. **API Layer:** FastAPI receives and processes requests.
+3. **Authentication Layer:** Validates user credentials.
+4. **Machine Learning Layer:** Processes supported demand prediction requests.
+5. **Database Layer:** Connects to MySQL for supported data operations.
+6. **Analysis Layer:** Produces pricing results, forecasts, and AI insights where implemented.
+7. **Response Layer:** Returns results in JSON format.
+
+## 🔗 API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | Returns the API welcome message |
+| GET | `/api/health` | Checks backend health |
+| GET | `/api/database` | Checks database connectivity |
+| GET | `/api/products` | Retrieves product information |
+| POST | `/api/auth/login` | Authenticates users |
+| POST | `/api/predict` | Predicts product demand |
+| POST | `/api/recommend-price` | Recommends a product price |
+| POST | `/api/complete-analysis` | Returns combined analysis results |
+| POST | `/api/pricing` | Processes pricing requests |
+| POST | `/api/ai-insight` | Generates AI insights when configured |
+
+## 🧪 API Testing
+
+API testing is performed using FastAPI Swagger UI and/or Postman.
+
+### Test Cases
+
+| Test ID | Test Case | Expected Result |
+|---|---|---|
+| TC01 | API Root | Welcome message returned |
+| TC02 | API Health Check | HTTP 200 and healthy status |
+| TC03 | Database Connection | Database connection status returned |
+| TC04 | Product Retrieval | Product data returned |
+| TC05 | Valid Admin Login | Successful login with token and admin role |
+| TC06 | Invalid Login | Invalid credentials rejected |
+| TC07 | Demand Prediction | Predicted demand returned for a valid row |
+| TC08 | Invalid Prediction Row | Invalid row handled appropriately |
+| TC09 | Price Recommendation | Recommended price returned |
+| TC10 | Complete Analysis | Combined analysis response returned |
+| TC11 | Pricing Endpoint | Pricing result returned for valid input |
+| TC12 | AI Insight | AI insight returned if the service is configured |
+
+### Test Summary
+
+The test case report lists 12 test cases.
+
+Update the results below to reflect the tests you have actually executed.
+
+| Metric | Result |
+|---|---:|
+| Total Test Cases | 12 |
+| Passed | Update after verification |
+| Failed | Update after verification |
+| Not Executed | Update after verification |
+| Pass Rate | Recalculate after verification |
+
+**Pass Rate Formula:**
+
+Pass Rate = (Passed Test Cases / Total Executed Test Cases) × 100
+
+> Note: The test case descriptions and expected results are documented in the test report. Confirm the actual response of each endpoint before marking it as passed.
+
+## 🚀 Installation and Setup
+
+### Prerequisites
+
+- Python installed
+- MySQL Server installed and configured
+- Git installed
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-repository-url>
+cd PricePilot-AI
+
 ## Dynamic Pricing Optimization & Revenue Intelligence System
 
 PricePilot AI is an AI-powered dynamic pricing and revenue intelligence platform designed to help businesses make intelligent pricing decisions using market demand, competitor pricing, customer behavior, sales performance, inventory, and other business factors.
@@ -84,66 +222,6 @@ The main objectives of PricePilot AI are:
 
 ---
 
-## Key Features
-
-### 1. User Management
-
-- Business user registration
-- User authentication
-- Authorization
-- Role management
-- Pricing manager accounts
-
-### 2. Product & Pricing Management
-
-- Product catalog management
-- Historical pricing records
-- Sales data management
-- Data validation
-- Pricing information management
-
-### 3. Price Prediction
-
-The system will provide:
-
-- Optimal price prediction
-- Future price forecasting
-- Price trend analysis
-- Prediction reporting
-
-### 4. Demand Forecasting
-
-The system will support:
-
-- Demand prediction
-- Seasonal trend analysis
-- Product demand insights
-- Forecast visualization
-
-Forecasting will consider historical sales, pricing, inventory, seasonal trends, and market factors.
-
-### 5. Competitor Analysis
-
-- Competitor price monitoring
-- Market comparison
-- Competitive positioning
-- Pricing opportunity detection
-
-### 6. Revenue Optimization
-
-- Revenue simulation
-- Profitability analysis
-- Pricing strategy recommendations
-- Margin optimization
-
-### 7. Pricing Analytics Dashboard
-
-- Revenue analytics
-- Pricing performance reports
-- Product profitability dashboards
-- Business intelligence reports
-
----
 
 # System Architecture
 
