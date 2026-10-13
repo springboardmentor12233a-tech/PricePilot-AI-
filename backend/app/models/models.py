@@ -1,158 +1,252 @@
 """
-Database models for PricePilot AI.
+SQLAlchemy models for PricePilot AI.
 
-Mapping to the project brief (Section 4, Modules 1-7):
-- User               -> Module 1: User Management Module
-- Product            -> Module 2: Product & Pricing Data Module
-- PriceHistory       -> Module 2 + feeds Module 3: Price Prediction
-- Sale               -> Module 2 + feeds Module 4: Demand Forecasting
-- CompetitorPrice    -> Module 5: Competitor Analysis Module
-- DemandForecast     -> stores OUTPUT of Module 4's ML models
-                        (forecast period, predicted units, trend, confidence
-                        -- matches the exact output format in the PDF's
-                        "Example Forecast" section: Forecast Period,
-                        Predicted Demand, Demand Trend, Confidence Score)
-
-Mapping to our 3 datasets:
-- Product + PriceHistory  <- Retail Price Optimization dataset
-- Sale                    <- Online Retail II + Rossmann (unified into one table)
-- CompetitorPrice         <- Retail Price Optimization (comp_1/2/3 columns)
+Tables: users, roles, products, daily_operations, customer_activity,
+competitor_prices, price_predictions, demand_forecasts, competitor_analysis,
+pricing_recommendations, ai_alerts, ai_insights, reports, chat_sessions,
+chat_messages, audit_logs.
 """
-
+import enum
+import uuid
 from datetime import datetime
+
 from sqlalchemy import (
-    Column, Integer, String, Float, DateTime, ForeignKey, Enum, Text
+    Boolean, Column, Date, DateTime, Enum, Float, ForeignKey, Integer,
+    String, Text, JSON, UniqueConstraint, Index,
 )
 from sqlalchemy.orm import relationship
-import enum
 
-from app.core.database import Base
+from app.database.db import Base
 
 
-class UserRole(str, enum.Enum):
-    """
-    Matches PDF Module 1: 'Business user registration', 'Pricing manager
-    accounts', 'Role management'. We keep it simple with 3 roles for now --
-    easy to extend later.
-    """
-    ADMIN = "admin"
-    PRICING_MANAGER = "pricing_manager"
-    ANALYST = "analyst"
+def gen_uuid() -> str:
+    return str(uuid.uuid4())
+
+
+class RoleEnum(str, enum.Enum):
+    ADMIN = "ADMIN"
+    BUSINESS_MANAGER = "BUSINESS_MANAGER"
+    BUSINESS_ANALYST = "BUSINESS_ANALYST"
+    VIEWER = "VIEWER"
 
 
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String, primary_key=True, default=gen_uuid)
     email = Column(String, unique=True, index=True, nullable=False)
+    full_name = Column(String, nullable=False)
     hashed_password = Column(String, nullable=False)
-    full_name = Column(String, nullable=True)
-    role = Column(Enum(UserRole), default=UserRole.ANALYST, nullable=False)
+    role = Column(Enum(RoleEnum), nullable=False, default=RoleEnum.VIEWER)
+    is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
 class Product(Base):
     __tablename__ = "products"
 
-    id = Column(Integer, primary_key=True, index=True)
-    # external_id lets us keep the original ID from whichever source dataset
-    # (e.g. Retail Price Optimization's product_id, or Online Retail's
-    # StockCode) without forcing a fake unified ID scheme too early.
-    external_id = Column(String, index=True, nullable=True)
-    name = Column(String, nullable=False)
-    category = Column(String, index=True, nullable=True)
-    current_price = Column(Float, nullable=False)
-    weight_g = Column(Float, nullable=True)
-    source_dataset = Column(String, nullable=True)  # e.g. "retail_price_optimization"
-    created_at = Column(DateTime, default=datetime.utcnow)
-
-    price_history = relationship("PriceHistory", back_populates="product")
-    sales = relationship("Sale", back_populates="product")
-    competitor_prices = relationship("CompetitorPrice", back_populates="product")
-    forecasts = relationship("DemandForecast", back_populates="product")
+    product_id = Column(String, primary_key=True)
+    product_name = Column(String, nullable=False)
+    category = Column(String, index=True)
+    subcategory = Column(String)
+    brand = Column(String)
+    cost_price = Column(Float)
+    base_price = Column(Float)
+    currency = Column(String, default="USD")
+    launch_date = Column(Date)
+    weight_kg = Column(Float)
+    rating = Column(Float)
+    num_reviews = Column(Integer)
+    is_active = Column(Boolean, default=True)
 
 
-class PriceHistory(Base):
-    """
-    Time-series of a product's own price over time.
-    Directly feeds Module 3: Price Prediction Module.
-    """
-    __tablename__ = "price_history"
+class DailyOperation(Base):
+    __tablename__ = "daily_operations"
 
-    id = Column(Integer, primary_key=True, index=True)
-    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
-    price = Column(Float, nullable=False)
-    freight_price = Column(Float, nullable=True)
-    recorded_at = Column(DateTime, nullable=False, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(Date, index=True, nullable=False)
+    product_id = Column(String, ForeignKey("products.product_id"), index=True, nullable=False)
+    category = Column(String, index=True)
+    list_price = Column(Float)
+    discount_pct = Column(Float)
+    final_price = Column(Float)
+    units_sold = Column(Integer)
+    revenue = Column(Float)
+    channel = Column(String)
+    stock_available = Column(Integer)
+    restocked = Column(Boolean)
+    stockout_flag = Column(Boolean)
+    warehouse = Column(String)
+    competitor_avg_price = Column(Float)
+    competitor_min_price = Column(Float)
+    day_of_week = Column(String)
+    is_weekend = Column(Boolean)
+    is_holiday = Column(Boolean)
+    holiday_name = Column(String)
+    is_festival_season = Column(Boolean)
+    festival_name = Column(String)
+    is_promotional_event = Column(Boolean)
+    promotional_event_name = Column(String)
+    market_demand_index = Column(Float)
+    inflation_rate_pct = Column(Float)
+    consumer_confidence_index = Column(Float)
 
-    # Added after first model training run: lag_price (previous period's
-    # price) turned out to correlate 0.994 with current price -- pricing
-    # is "sticky" in the real world, so this is the single most predictive
-    # feature available. qty/customers/product_score are demand-side
-    # signals from the same source dataset, kept for completeness.
-    lag_price = Column(Float, nullable=True)
-    qty = Column(Integer, nullable=True)
-    customers = Column(Integer, nullable=True)
-    product_score = Column(Float, nullable=True)
-
-    product = relationship("Product", back_populates="price_history")
+    __table_args__ = (Index("ix_dailyops_product_date", "product_id", "date"),)
 
 
-class Sale(Base):
-    """
-    A single sales record (day-level or transaction-level, depending on
-    source dataset). Feeds Module 4: Demand Forecasting Module and
-    Module 6: Revenue Optimization Module.
-    """
-    __tablename__ = "sales"
+class CustomerActivity(Base):
+    __tablename__ = "customer_activity"
 
-    id = Column(Integer, primary_key=True, index=True)
-    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
-    quantity = Column(Integer, nullable=False)
-    revenue = Column(Float, nullable=False)
-    sale_date = Column(DateTime, nullable=False, index=True)
-    is_holiday = Column(Integer, default=0)   # 0/1 flag - seasonal feature
-    is_promo = Column(Integer, default=0)     # 0/1 flag - seasonal feature
-    store_id = Column(String, nullable=True)  # populated for Rossmann-sourced rows
-
-    product = relationship("Product", back_populates="sales")
+    event_id = Column(Integer, primary_key=True, autoincrement=True)
+    session_id = Column(String, index=True)
+    order_id = Column(String, index=True, nullable=True)
+    timestamp = Column(DateTime, index=True)
+    customer_id = Column(String, index=True)
+    customer_segment = Column(String)
+    product_id = Column(String, ForeignKey("products.product_id"), index=True)
+    category = Column(String)
+    event_type = Column(String, index=True)  # view | add_to_cart | purchase
+    device = Column(String)
+    channel = Column(String)
+    price_shown = Column(Float)
+    quantity = Column(Float, nullable=True)
+    total_amount = Column(Float, nullable=True)
+    payment_method = Column(String, nullable=True)
 
 
 class CompetitorPrice(Base):
-    """
-    Directly maps to the PDF's Module 5: Competitor Analysis Module
-    (competitor price monitoring, market comparison, pricing opportunity
-    detection). Sourced from comp_1/comp_2/comp_3 columns in the
-    Retail Price Optimization dataset.
-    """
     __tablename__ = "competitor_prices"
 
-    id = Column(Integer, primary_key=True, index=True)
-    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
-    competitor_name = Column(String, nullable=False)  # e.g. "comp_1"
-    price = Column(Float, nullable=False)
-    recorded_at = Column(DateTime, nullable=False, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(Date, index=True)
+    product_id = Column(String, ForeignKey("products.product_id"), index=True)
+    competitor_name = Column(String, index=True)
+    competitor_price = Column(Float)
+    in_stock = Column(Boolean)
 
-    product = relationship("Product", back_populates="competitor_prices")
+    __table_args__ = (Index("ix_competitor_product_date", "product_id", "date"),)
+
+
+class PricePrediction(Base):
+    __tablename__ = "price_predictions"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    product_id = Column(String, ForeignKey("products.product_id"), index=True)
+    requested_by = Column(String, ForeignKey("users.id"), nullable=True)
+    objective = Column(String)  # revenue | profit | demand | competitive
+    current_price = Column(Float)
+    recommended_price = Column(Float)
+    price_change_pct = Column(Float)
+    expected_demand = Column(Float)
+    expected_revenue = Column(Float)
+    expected_profit = Column(Float)
+    model_used = Column(String)
+    model_mae = Column(Float)
+    model_rmse = Column(Float)
+    model_r2 = Column(Float)
+    explanation = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 
 class DemandForecast(Base):
-    """
-    Stores ML model OUTPUT. Schema intentionally mirrors the PDF's own
-    "Example Forecast" output block exactly:
-        Forecast Period, Predicted Demand, Demand Trend, Confidence Score
-    so that Module 7's dashboard can query and display it with no
-    transformation needed.
-    """
     __tablename__ = "demand_forecasts"
 
-    id = Column(Integer, primary_key=True, index=True)
-    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
-    horizon = Column(String, nullable=False)       # "7d" | "14d" | "30d" | "3m" | "6m" | "12m"
-    predicted_units = Column(Float, nullable=False)
-    trend = Column(String, nullable=False)          # "Increasing" | "Stable" | "Decreasing"
-    confidence_score = Column(Float, nullable=False)  # 0-100
-    model_used = Column(String, nullable=True)       # "Prophet" | "XGBoost" | etc.
-    generated_at = Column(DateTime, default=datetime.utcnow)
+    id = Column(String, primary_key=True, default=gen_uuid)
+    product_id = Column(String, ForeignKey("products.product_id"), index=True)
+    horizon_days = Column(Integer)
+    model_used = Column(String)
+    forecast_json = Column(JSON)  # list of {date, predicted_demand, lower, upper}
+    trend = Column(String)  # Increasing | Stable | Decreasing
+    confidence_score = Column(Float)
+    confidence_label = Column(String)
+    confidence_reason = Column(Text)
+    mae = Column(Float, nullable=True)
+    rmse = Column(Float, nullable=True)
+    mape = Column(Float, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
-    product = relationship("Product", back_populates="forecasts")
+
+class PricingRecommendation(Base):
+    __tablename__ = "pricing_recommendations"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    product_id = Column(String, ForeignKey("products.product_id"), index=True)
+    title = Column(String)
+    category = Column(String)
+    priority = Column(String)  # LOW | MEDIUM | HIGH
+    reason = Column(Text)
+    supporting_metrics = Column(JSON)
+    recommendation = Column(Text)
+    expected_impact = Column(Text)
+    confidence = Column(Float)
+    source = Column(String)  # groq | gemini | deterministic
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AIAlert(Base):
+    __tablename__ = "ai_alerts"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    product_id = Column(String, ForeignKey("products.product_id"), nullable=True)
+    alert_type = Column(String)
+    severity = Column(String)  # INFO | WARNING | CRITICAL
+    title = Column(String)
+    message = Column(Text)
+    metrics = Column(JSON, nullable=True)
+    is_read = Column(Boolean, default=False)
+    is_archived = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AIInsight(Base):
+    __tablename__ = "ai_insights"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    scope = Column(String)  # global | product | category
+    scope_id = Column(String, nullable=True)
+    content = Column(Text)
+    source = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Report(Base):
+    __tablename__ = "reports"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    report_type = Column(String)
+    generated_by = Column(String, ForeignKey("users.id"), nullable=True)
+    filters = Column(JSON)
+    file_format = Column(String)
+    file_path = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ChatSession(Base):
+    __tablename__ = "chat_sessions"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    user_id = Column(String, ForeignKey("users.id"))
+    title = Column(String, default="New conversation")
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    session_id = Column(String, ForeignKey("chat_sessions.id"), index=True)
+    role = Column(String)  # user | assistant
+    content = Column(Text)
+    tool_calls = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    user_id = Column(String, ForeignKey("users.id"), nullable=True)
+    action = Column(String, index=True)
+    metadata_json = Column(JSON, nullable=True)
+    timestamp = Column(DateTime, default=datetime.utcnow, index=True)

@@ -1,24 +1,33 @@
-# --- Python / Backend ---
-venv/
+# Environment
+.env
+*.env
+!.env.example
+
+# Python
 __pycache__/
 *.pyc
-*.pyo
-.env
-backend/app/ml/saved_models/*.pkl
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+test_pricepilot.db
 
-# --- Node / Frontend ---
+# Node
 node_modules/
-.next/
-*.tsbuildinfo
+dist/
+.vite/
 
-# --- Data (large files, don't belong in git) ---
-data/raw/*
-!data/raw/.gitkeep
+# Data & models (generated locally -- raw source CSVs ARE tracked)
 data/processed/*
 !data/processed/.gitkeep
+models/*.joblib
+models/*.json
+reports/*.pdf
+reports/*.xlsx
+reports/*.csv
+!reports/.gitkeep
 
-# --- OS / Editor junk ---
+# OS / editor
 .DS_Store
-Thumbs.db
 .vscode/
-*.log
+.idea/

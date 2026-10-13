@@ -1,83 +1,293 @@
 # PricePilot AI — Dynamic Pricing Optimization & Revenue Intelligence System
 
-## Architecture (mapped from project brief, Section 3)
+A locally-runnable AI-powered platform for price prediction, demand forecasting, competitor
+analysis, revenue optimization, and business intelligence reporting — built on your real
+operational data (no synthetic/fake KPIs anywhere in the app).
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  ACCESS LAYER            frontend/  (Next.js + Tailwind)      │
-│  Web dashboard, reports & insights, alerts                    │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │  REST API (JSON)
-┌───────────────────────────────▼───────────────────────────────┐
-│  DECISION & ACTION LAYER   backend/app/services/pricing_engine │
-│  Optimal price recommendation, scenario simulation             │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │
-┌───────────────────────────────▼───────────────────────────────┐
-│  AI/ML CORE                backend/app/ml/                     │
-│  Price Prediction · Demand Forecasting                         │
-│  Competitor Analysis · Revenue Optimization                    │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │
-┌───────────────────────────────▼───────────────────────────────┐
-│  DATA PIPELINE              backend/app/services/ingestion/    │
-│  Ingestion → Cleaning → Transformation → Feature Engineering   │
-└───────────────────────────────┬───────────────────────────────┘
-                                 │
-┌───────────────────────────────▼───────────────────────────────┐
-│  DATA FOUNDATION            PostgreSQL (via SQLAlchemy)        │
-│  data/raw/  data/processed/  backend/app/ml/saved_models/      │
-└─────────────────────────────────────────────────────────────┘
+> **Local project only.** No AWS/Azure/Render/Railway/Heroku/Kubernetes/CI-CD deployment
+> configuration is included anywhere in this repo.
 
-  PLATFORM LAYER: docker-compose.yml (local only — no cloud, by design)
-```
+---
 
-## Folder structure
+## 1. What's included vs. what's intentionally lighter
+
+This is a large spec (85 sections). Everything below is **real and wired to your actual data** —
+nothing is a stub or hard-coded number:
+
+- Full data pipeline against your 4 CSVs (validation → cleaning → merge → feature engineering)
+- PostgreSQL schema (15 tables) via SQLAlchemy
+- JWT auth + 4-role RBAC enforced **server-side** on every route
+- Price prediction: XGBoost vs Random Forest, compared on a chronological hold-out split, best
+  model auto-selected and saved with real MAE/RMSE/R²
+- Price optimization engine (revenue/profit/demand/competitive objectives) using elasticity
+  estimated from your historical data
+- Demand forecasting: moving-average baseline vs XGBoost vs Prophet (if installed), chronological
+  validation, a **documented, non-random** confidence score formula
+- Competitor analysis, customer funnel analytics, revenue scenario simulation — all computed from
+  the database, not simulated
+- Groq → Gemini → deterministic-fallback AI layer; a chatbot that only answers from real backend
+  tool calls (never LLM-generated SQL, never invented numbers)
+- Rule-based AI alerts (measurable thresholds, not LLM output)
+- PDF / Excel / CSV report generation (ReportLab / openpyxl / pandas)
+- Full REST API (`/docs` for Swagger), pytest suite, audit logging, global error handling
+
+**Intentionally lighter first pass** (functional, not deeply polished — see "Where to go next"):
+- LSTM demand forecasting is not implemented (Prophet + XGBoost + baseline are compared instead;
+  LSTM was optional per spec — "do not blindly use LSTM").
+- SHAP explainability is not wired in; price/forecast explanations currently surface the
+  underlying feature values (competitor price, elasticity, demand index, etc.) rather than
+  SHAP contribution scores.
+- The chatbot's intent routing is a small auditable keyword classifier (by design — the spec
+  explicitly forbids LLM-generated SQL), not full LLM tool-calling.
+- Frontend visual polish is functional-enterprise rather than pixel-designed; all pages are
+  wired to live endpoints with no mock data.
+
+---
+
+## 2. A note on the API keys you shared
+
+You pasted live Groq and Gemini API keys directly in chat. They are **not** hard-coded anywhere
+in this codebase (they go in `.env`, which is gitignored) — but since they were exposed in plain
+text in this conversation, please rotate/regenerate both keys from the Groq console and Google AI
+Studio before using them here.
+
+---
+
+## 3. Project structure
 
 ```
 pricepilot-ai/
-├── backend/               FastAPI application
-│   ├── app/
-│   │   ├── api/routes/    One file per feature (auth, products, pricing, forecasting...)
-│   │   ├── core/          config.py, database.py — shared infrastructure
-│   │   ├── models/        SQLAlchemy ORM models (DB tables)
-│   │   ├── schemas/       Pydantic schemas (request/response validation)
-│   │   ├── services/      Business logic, incl. ingestion/ and pricing_engine/
-│   │   ├── ml/            Model training scripts + saved_models/
-│   │   └── main.py        App entrypoint
-│   ├── alembic/           DB migrations (version-controlled schema changes)
-│   ├── requirements.txt
-│   └── .env.example
-├── frontend/               Next.js application
-│   └── app/                Pages (App Router)
-├── data/
-│   ├── raw/                 Original Kaggle/UCI files, untouched
-│   └── processed/           Cleaned data after ingestion pipeline runs
-├── docs/                     Architecture notes, milestone write-ups
-└── docker-compose.yml       Local orchestration (Postgres + backend + frontend)
+├── backend/            FastAPI app, ML, AI services, tests, scripts
+├── frontend/            React + Vite + Tailwind app
+├── data/raw/             Your 4 source CSVs
+├── data/processed/       Generated by scripts/prepare_data.py
+├── models/                Generated by ML training scripts
+├── reports/                Generated PDF/Excel/CSV reports
+├── .env.example
+└── README.md
 ```
 
-## Module → Code mapping (from project brief Section 4)
+---
 
-| # | Module | Code location |
-|---|---|---|
-| 1 | User Management | `backend/app/api/routes/auth.py`, `models/models.py::User` |
-| 2 | Product & Pricing Data | `models/models.py::Product, PriceHistory`, `services/ingestion/` |
-| 3 | Price Prediction | `app/ml/price_prediction.py` |
-| 4 | Demand Forecasting | `app/ml/demand_forecasting.py`, `models/models.py::DemandForecast` |
-| 5 | Competitor Analysis | `models/models.py::CompetitorPrice`, `app/services/competitor_analysis.py` |
-| 6 | Revenue Optimization | `app/services/pricing_engine/` |
-| 7 | Pricing Analytics Dashboard | `frontend/app/dashboard/` |
+## 4. Prerequisites
 
-## Datasets (see `/docs` for the full selection rationale)
+- Python 3.11+
+- Node.js 18+
+- PostgreSQL 14+
 
-1. **Retail Price Optimization** (Kaggle) — pricing + competitor data
-2. **Online Retail II** (UCI) — 2 years of real transactions
-3. **Rossmann Store Sales** (Kaggle) — 2.5 years daily sales, promos, holidays
+---
 
-## Local development (no cloud)
+## 5. Environment variables
 
-Backend: `cd backend && uvicorn app.main:app --reload` → http://localhost:8000
-Frontend: `cd frontend && npm run dev` → http://localhost:3000
-Full stack via Docker: `docker compose up --build`
-# PricePilot-AI-
+```cmd
+copy .env.example .env
+copy frontend\.env.example frontend\.env
+```
+
+Edit `.env` and fill in:
+- `JWT_SECRET_KEY` — any long random string
+- `DATABASE_URL` — use the local PostgreSQL URL in `.env`
+- `GROQ_API_KEY` / `GEMINI_API_KEY` — optional; the app works without them (deterministic
+  fallback), rotate the keys you shared before using them here
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD` — used by `scripts/create_admin.py`
+
+---
+
+## 6. Local setup
+
+### PostgreSQL
+```cmd
+createdb -U postgres pricepilot
+```
+
+Or create a database named `pricepilot` using pgAdmin. Make sure PostgreSQL is running before
+starting the backend.
+
+### Backend
+Open Command Prompt in the project folder and run:
+```cmd
+cd /d "C:\Users\pavan\OneDrive\Documents\pricepilot-ai\backend"
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+
+python scripts\prepare_data.py
+python scripts\create_admin.py
+
+python -m app.ml.price_prediction.train_price_model
+python -m app.ml.demand_forecasting.train_demand_model
+
+uvicorn app.main:app --reload
+```
+
+The backend runs at http://localhost:8000 and Swagger is available at http://localhost:8000/docs.
+
+### Frontend
+Open a second Command Prompt and run:
+```cmd
+cd /d "C:\Users\pavan\OneDrive\Documents\pricepilot-ai\frontend"
+npm install
+npm run dev
+```
+
+Open http://localhost:5173 and log in with the admin credentials from your `.env`.
+
+For macOS/Linux, use `source venv/bin/activate` instead of `venv\Scripts\activate`.
+
+---
+
+## 7. Datasets
+
+**Demand model**: per-product, at request time, a moving-average baseline, XGBoost (recursive
+multi-step), and Prophet (if installed) are compared on an 85/15 chronological split; the lowest
+validation-MAE model is used for the actual forecast.
+
+**Confidence score** (0–100%, never random) is built from four documented signals: validation
+error relative to the series mean, prediction-interval width, amount of historical data
+available, and forecast horizon length — see
+`backend/app/ml/demand_forecasting/forecast_demand.py::_confidence_score`.
+
+Re-run training any time with:
+```bash
+python -m app.ml.price_prediction.train_price_model
+python -m app.ml.demand_forecasting.train_demand_model
+```
+or from the Model Performance page in the UI (Admin only).
+
+---
+
+## 10. Roles
+
+| Role | Access |
+|---|---|
+| **ADMIN** | Everything, including user management, model training, audit logs |
+| **BUSINESS_MANAGER** | Dashboards, pricing, forecasting, competitors, revenue optimization, AI, reports |
+| **BUSINESS_ANALYST** | Dashboards, EDA, price prediction, forecasting, competitor/customer analytics, reports, chatbot |
+| **VIEWER** | Read-only dashboards and reports |
+
+RBAC is enforced **server-side** on every route (`app/core/deps.py::require_roles`) — frontend
+route guarding is a UX convenience only, not the security boundary.
+
+---
+
+## 11. Testing
+
+```bash
+cd backend
+pytest
+```
+
+Covers: authentication, RBAC enforcement (including unauthorized-access rejection), KPI
+correctness, product endpoints, invalid-input handling, price optimization, demand forecasting
+(confidence score bounds, trend labels), and AI provider fallback behavior. Synthetic fixture
+data is used only inside `tests/` per the project's "no fake data" rule.
+
+---
+
+## 12. AI architecture
+
+```
+User question / action
+   → analytics_service.py (real DB queries — the only source of numbers)
+   → chat_router.py picks which backend tool(s) to call (keyword-based, auditable — no LLM SQL)
+   → ai_service.py: Groq (primary) → Gemini (fallback) → deterministic rule-based (last resort)
+   → response, clearly labelling historical actuals vs. model forecasts vs. AI recommendations
+```
+
+The app is fully functional with **zero** LLM providers configured — recommendations, alerts,
+and chat all fall back to deterministic, metric-driven logic.
+
+---
+
+## 13. Troubleshooting
+
+- **`feature_table.csv not found`** when predicting/forecasting → run
+  `python scripts/prepare_data.py` first.
+- **Postgres connection errors** → confirm `DATABASE_URL` in `.env` matches a running local
+  PostgreSQL instance.
+- **Groq/Gemini errors in logs** → expected if keys aren't set; the app automatically falls back.
+- **bcrypt/passlib version errors** → make sure `bcrypt==4.0.1` is installed exactly as pinned in
+  `requirements.txt` (newer bcrypt releases break passlib's self-check).
+
+---
+
+## 14. Where to go next
+
+If you want to deepen this beyond the first working pass:
+1. Add SHAP-based explanations to price predictions (`app/ml/price_prediction/`)
+2. Add LSTM as a fourth demand-forecasting candidate for very long-history products
+3. Move the chatbot's keyword router to real LLM tool-calling (Groq/Gemini function calling) while
+   keeping the same "LLM never touches the DB directly" guarantee
+4. Add more chart types (Recharts) to the EDA page (histograms/boxplots are summarized as JSON
+   today, not yet rendered as charts)
+5. Visual design pass on the frontend (current build prioritizes correctness/data-wiring over
+   pixel polish)
+
+
+(venv) C:\Users\pavan\OneDrive\Documents\pricepilot-ai\backend>pip install -r requirements.txt
+Collecting fastapi==0.115.0 (from -r requirements.txt (line 1))
+  Downloading fastapi-0.115.0-py3-none-any.whl.metadata (27 kB)
+Collecting uvicorn==0.30.6 (from uvicorn[standard]==0.30.6->-r requirements.txt (line 2))
+  Downloading uvicorn-0.30.6-py3-none-any.whl.metadata (6.6 kB)
+Collecting sqlalchemy==2.0.35 (from -r requirements.txt (line 3))
+  Downloading SQLAlchemy-2.0.35-py3-none-any.whl.metadata (9.6 kB)
+Collecting psycopg2-binary==2.9.9 (from -r requirements.txt (line 4))
+  Downloading psycopg2-binary-2.9.9.tar.gz (384 kB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... error
+  error: subprocess-exited-with-error
+
+  × Getting requirements to build wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [34 lines of output]
+      C:\Users\pavan\AppData\Local\Temp\pip-build-env-5kpokx_0\overlay\Lib\site-packages\setuptools\dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+      !!
+
+              ********************************************************************************
+              Please consider removing the following classifiers in favor of a SPDX license expression:
+
+              License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
+
+              See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+              ********************************************************************************
+
+      !!
+        self._finalize_license_expression()
+      running egg_info
+      writing psycopg2_binary.egg-info\PKG-INFO
+      writing dependency_links to psycopg2_binary.egg-info\dependency_links.txt
+      writing top-level names to psycopg2_binary.egg-info\top_level.txt
+
+      Error: pg_config executable not found.
+
+      pg_config is required to build psycopg2 from source.  Please add the directory
+      containing pg_config to the $PATH or specify the full executable path with the
+      option:
+
+          python setup.py build_ext --pg-config /path/to/pg_config build ...
+
+      or with the pg_config option in 'setup.cfg'.
+
+      If you prefer to avoid building psycopg2 from source, please install the PyPI
+      'psycopg2-binary' package instead.
+
+      For further information please check the 'doc/src/install.rst' file (also at
+      <https://www.psycopg.org/docs/install.html>).
+
+      [end of output]
+
+  note: This error originates from a subprocess, and is likely not a problem with pip
+
+
+
+cd /d "C:\Users\pavan\OneDrive\Documents\pricepilot-ai\backend"
+venv\Scripts\activate
+python -m pip install -r requirements.txt
+python scripts\prepare_data.py
+python scripts\create_admin.py
+uvicorn app.main:app --reload
+
+
+cd /d "C:\Users\pavan\OneDrive\Documents\pricepilot-ai\frontend"
+npm install
+npm run dev

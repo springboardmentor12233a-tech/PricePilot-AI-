@@ -1,35 +1,59 @@
 """
-Central place where the app reads its configuration from environment
-variables (which come from the .env file in local dev).
-
-WHY this exists:
-Instead of scattering `os.getenv("DATABASE_URL")` calls across the codebase,
-we load everything once into a typed `Settings` object. This gives us:
-  1. Autocomplete + type checking (settings.DATABASE_URL, not a raw string key)
-  2. A single source of truth for config
-  3. Pydantic validates the values on startup — if SECRET_KEY is missing,
-     the app fails immediately with a clear error instead of failing later
-     at a random point when a token is signed.
+Central application configuration, loaded from environment variables (.env).
+No secrets are hard-coded here -- everything sensitive comes from the
+environment so it never ends up committed to source control.
 """
+from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):
-    # --- Database ---
-    DATABASE_URL: str
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
-    # --- Auth ---
-    SECRET_KEY: str
-    ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=PROJECT_ROOT / ".env",
+        extra="ignore",
+    )
 
     # --- App ---
     APP_NAME: str = "PricePilot AI"
-    ENVIRONMENT: str = "development"
+    ENV: str = "development"
+    DEBUG: bool = True
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    # --- Database ---
+    DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/pricepilot"
+
+    # --- Auth ---
+    JWT_SECRET_KEY: str = "CHANGE_ME"
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+
+    # --- CORS ---
+    FRONTEND_URL: str = "http://localhost:5173"
+
+    # --- AI providers (never sent to the frontend) ---
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+    GEMINI_API_KEY: str = ""
+    GEMINI_MODEL: str = "gemini-3.8-flash"
+
+    # --- Admin bootstrap ---
+    ADMIN_EMAIL: str = "admin@pricepilot.local"
+    ADMIN_PASSWORD: str = "ChangeMe123!"
+
+    # --- Paths ---
+    DATA_RAW_DIR: str = "../data/raw"
+    DATA_PROCESSED_DIR: str = "../data/processed"
+    MODELS_DIR: str = "../models"
+    REPORTS_DIR: str = "../reports"
 
 
-# Created once, imported everywhere else via `from app.core.config import settings`
-settings = Settings()
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
+
+
+settings = get_settings()
