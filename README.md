@@ -32,19 +32,17 @@ The platform provides an end-to-end workflow for analyzing business performance,
 - Protected role-specific modules.
 
 ### Business Dashboard
-- Total Revenue
-- Total Sales
-- Total Products
-- Unique Orders
+- Total revenue.
+- Total sales.
+- Total products.
+- Unique orders.
 
 ### Product Analytics
-- Product price
-- Units sold
-- Revenue
-- Transactions
-- Average selling price
-- Sales trends
-- Category and product performance
+- Product price and units sold.
+- Revenue and transaction details.
+- Average selling price.
+- Monthly sales trends.
+- Product and category performance.
 
 ### Price Prediction & Optimization
 - XGBoost-based demand prediction.
@@ -53,22 +51,22 @@ The platform provides an end-to-end workflow for analyzing business performance,
 - Recommended price.
 - Price change percentage.
 - Predicted demand.
-- Price elasticity.
+- Price elasticity analysis.
 
 ### Demand Forecasting
-- Product and category selection.
-- Weekly demand forecasting.
-- Forecast visualization.
+- Product-level demand forecasting.
+- Weekly demand forecasts.
+- Forecast visualizations.
 - Weekly demand breakdown.
 - Forecast confidence information.
 
 ### Competitor Analysis
 - Current product price.
 - Average competitor price.
-- Lowest and highest competitor price.
-- Market position.
-- Price difference and percentage difference.
-- Competitor comparison.
+- Lowest and highest competitor prices.
+- Market position analysis.
+- Price differences and percentage differences.
+- Competitor price comparison.
 
 ### AI Recommendations
 - Automated business recommendations.
@@ -78,7 +76,7 @@ The platform provides an end-to-end workflow for analyzing business performance,
 - High, Medium, and Low priority recommendations.
 
 ### Business Intelligence Reports
-- Business KPIs.
+- Business KPI summaries.
 - Top products by quantity.
 - Top products by revenue.
 - Business insights.
@@ -99,7 +97,7 @@ The platform provides an end-to-end workflow for analyzing business performance,
 - FastAPI
 - Uvicorn
 - REST APIs
-- JWT
+- JWT authentication
 
 ### Frontend
 - React.js
@@ -107,30 +105,30 @@ The platform provides an end-to-end workflow for analyzing business performance,
 - Axios
 - Recharts
 
-### Reports
+### Report Generation
 - jsPDF
 
-### Tools
+### Development Tools
 - Jupyter Notebook
-- VS Code
+- Visual Studio Code
 - Git
 - GitHub
 - FastAPI Swagger UI
 
 ---
 
-## Machine Learning
+## Machine Learning Approach
 
-The project evaluates:
+The project explores regression models for demand prediction and pricing analysis, including:
 
 - Linear Regression
 - Random Forest Regressor
 - Gradient Boosting Regressor
 - XGBoost Regressor
 
-XGBoost is used for the final price-aware demand prediction workflow.
+XGBoost is used in the price-aware demand prediction workflow.
 
-The model predicts demand for different prices, which is then used to calculate expected revenue and identify a suitable price recommendation.
+The model predicts demand for different candidate prices. The predicted demand is used to calculate expected revenue and identify a suitable price recommendation.
 
 ---
 
@@ -144,25 +142,29 @@ Key features include:
 
 - Date
 - Product ID
-- Sales
+- Base Sales
 - Price
 - Discount
 - Competitor Price
-- Marketing information
-- Seasonal information
+- Marketing Campaign
+- Marketing Effect
+- Seasonal Trend
+- Seasonal Effect
 - Stock Availability
 - Public Holiday
 - Demand
 
 ### UCI Online Retail Dataset
 
-Used for:
+The Online Retail dataset is used for business analytics, product performance analysis, and revenue intelligence.
 
-- Business analytics
-- Product performance
-- KPI analysis
-- Sales analysis
-- Revenue intelligence
+Applications include:
+
+- Product performance analysis.
+- Revenue calculations.
+- Sales analysis.
+- Business KPI generation.
+- Product ranking by quantity and revenue.
 
 ---
 
@@ -197,43 +199,43 @@ Used for:
                 |
                 v
           Dashboard / PDF
-````
+```
 
 ---
 
 ## End-to-End Workflow
 
 ```text
-Login / Registration
-        |
-        v
+Registration / Login
+         |
+         v
 JWT Authentication
-        |
-        v
+         |
+         v
 Role-Based Access
-        |
-        v
+         |
+         v
 Business Dashboard
-        |
-        v
+         |
+         v
 Product Analytics
-        |
-   +----+----+----------------+
-   |         |                |
-   v         v                v
-Price     Demand          Competitor
-Prediction Forecasting     Analysis
-   |         |                |
-   +---------+----------------+
-             |
-             v
-    Business Recommendations
-             |
-             v
-    Business Intelligence
-             |
-             v
-       PDF Report
+         |
+   +-----+-----+----------------+
+   |           |                |
+   v           v                v
+Price       Demand          Competitor
+Prediction  Forecasting     Analysis
+   |           |                |
+   +-----------+----------------+
+               |
+               v
+     Business Recommendations
+               |
+               v
+     Business Intelligence
+               |
+               v
+          PDF Reports
 ```
 
 ---
@@ -287,66 +289,95 @@ Price-Pilot-AI/
 
 ---
 
-## Milestone 3
+## API Testing and Validation
 
-### Competitor Analysis & Revenue Optimization
+FastAPI Swagger UI was used to test the backend endpoints and verify their responses.
 
-Milestone 3 includes:
+### API Tests Performed
 
-* Role-based authentication and authorization.
-* Product KPIs and analytics.
-* Price prediction and revenue optimization.
-* Demand forecasting.
-* Competitor analysis.
-* Market intelligence.
-* Automated pricing recommendations.
-* Business intelligence.
-* Downloadable PDF reports.
+| Feature | Test Result |
+|---|---|
+| User Registration | Passed |
+| Login and JWT Token Generation | Passed |
+| Authenticated User Details | Passed |
+| Business Analyst Access | Passed |
+| Admin Access Restriction | Passed |
+| User Endpoint Access | Passed |
+| Product Analytics | Passed |
+| Price Prediction | Passed |
+| Demand Forecasting | Passed |
+| Competitor Analysis | Passed |
+| KPI Summary | Passed |
 
-### Requirement Mapping
+### Functional Testing
 
-| Requirement           | Implementation                   |
-| --------------------- | -------------------------------- |
-| Role-Based Management | Admin, Business Analyst, User    |
-| Authentication        | JWT                              |
-| Authorization         | Role-Based Access                |
-| Product KPIs          | Revenue, Sales, Products, Orders |
-| Price Prediction      | XGBoost                          |
-| Demand Forecasting    | Weekly Forecasting               |
-| Competitor Analysis   | Price Comparison                 |
-| Market Intelligence   | Market Position Analysis         |
-| Revenue Optimization  | Expected Revenue Analysis        |
-| Recommendations       | Automated Recommendations        |
-| Business Intelligence | KPI & Product Analysis           |
-| Reports               | Downloadable PDF                 |
+The frontend was tested for form validation, authentication, navigation, and module accessibility.
+
+- **Registration:** Empty-field validation and invalid email validation were verified.
+- **Password Validation:** Short passwords and passwords missing required character types were rejected.
+- **Login:** Invalid credentials were rejected with an appropriate error message.
+- **Successful Login:** Valid credentials opened the appropriate dashboard.
+- **Role-Based Access:** Authorized access and restricted access were tested.
+- **Navigation:** Application pages redirected to their respective modules.
+- **AI Recommendations:** Recommendations and business insights displayed correctly.
+- **BI Reports:** Business metrics, charts, and report information displayed correctly.
+
+The tested functionality worked as expected during manual testing.
+
+Machine learning performance metrics, such as MAE and RMSE, have not been evaluated as part of these tests.
 
 ---
 
 ## Running the Project
 
-### Backend
+### Prerequisites
+
+- Python installed.
+- Node.js and npm installed.
+- Git installed.
+
+### Backend Setup
+
+Open a terminal and execute:
 
 ```bash
 cd backend
 python -m venv venv
+```
+
+Activate the virtual environment on Windows:
+
+```bash
 venv\Scripts\activate
+```
+
+Install the dependencies:
+
+```bash
 pip install -r requirements.txt
+```
+
+Start the FastAPI server:
+
+```bash
 uvicorn main:app --reload
 ```
 
-Backend:
+Backend URL:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-Swagger documentation:
+Swagger API documentation:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-### Frontend
+### Frontend Setup
+
+Open another terminal:
 
 ```bash
 cd frontend
@@ -354,21 +385,28 @@ npm install
 npm run dev
 ```
 
+Open the local frontend URL displayed in the terminal.
+
+---
+
 ## Future Scope
 
-* AI Assistant / Chatbot.
-* External LLM integration.
-* Natural-language business queries.
-* Real-time competitor monitoring.
-* Advanced demand forecasting.
-* Advanced dynamic pricing.
-* Automated alerts and notifications.
-* Advanced market intelligence.
+- AI assistant and chatbot integration.
+- External Large Language Model (LLM) integration.
+- Natural-language business queries.
+- Real-time competitor price monitoring.
+- Advanced demand forecasting.
+- Improved dynamic pricing algorithms.
+- Automated alerts and notifications.
+- Advanced market intelligence.
+- Comprehensive model evaluation and performance monitoring.
 
 ---
 
 ## Conclusion
 
-PricePilot AI combines machine learning, pricing optimization, demand forecasting, competitor analysis, product analytics, authentication, automated recommendations, and business intelligence into a unified platform.
+PricePilot AI combines machine learning, price optimization, demand forecasting, competitor analysis, product analytics, authentication, automated recommendations, and business intelligence into a unified platform.
 
-It provides an end-to-end foundation for data-driven pricing and revenue optimization.
+The application provides business users with tools to analyze product performance, understand market pricing, forecast demand, and make data-driven pricing decisions. API and functional testing verified the main application workflows and access controls.
+
+PricePilot AI provides a foundation for data-driven pricing and revenue intelligence, with further opportunities to improve model evaluation and predictive performance.
