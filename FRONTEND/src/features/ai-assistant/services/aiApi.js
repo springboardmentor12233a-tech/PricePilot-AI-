@@ -41,22 +41,16 @@ export const aiAssistantApi = {
     };
 
     try {
-      const response = await apiClient.post(API_ENDPOINTS.AI.GEMINI, payload);
+      const response = await apiClient.post(API_ENDPOINTS.AI.GEMINI, payload, { timeout: 95000 });
       const data = response?.data;
 
       // Extract natural language assistant text using defensive parser
       const extractedText = extractAssistantText(data);
 
       if (!extractedText || !extractedText.trim()) {
-        const fallbackMessage = "Sorry, I didn't receive a response. Please try again.";
-        return {
-          id: data?.id,
-          model: data?.model,
-          output: fallbackMessage,
-          content: fallbackMessage,
-          metadata: data?.metadata ?? null,
-          status: 'success',
-        };
+        const emptyResponseError = new Error("The AI provider returned an empty response.");
+        emptyResponseError.status = 502;
+        throw emptyResponseError;
       }
 
       const cleanText = extractedText.trim();

@@ -20,6 +20,7 @@ export default function CompetitorProductMatch({
   const [formData, setFormData] = useState({
     product_id: initialProductId || '',
     competitor_id: initialCompetitorId || '',
+    competitor_product_name: '',
     competitor_sku: '',
     product_url: '',
   });
@@ -30,6 +31,7 @@ export default function CompetitorProductMatch({
     setFormData({
       product_id: initialProductId || (products[0]?.id ? String(products[0].id) : ''),
       competitor_id: initialCompetitorId || (competitors[0]?.id ? String(competitors[0].id) : ''),
+      competitor_product_name: '',
       competitor_sku: '',
       product_url: '',
     });
@@ -56,8 +58,9 @@ export default function CompetitorProductMatch({
     const payload = {
       product_id: formData.product_id,
       competitor_id: formData.competitor_id,
-      ...(formData.competitor_sku.trim() ? { competitor_sku: formData.competitor_sku.trim() } : {}),
-      ...(formData.product_url.trim() ? { product_url: formData.product_url.trim() } : {}),
+      name: formData.competitor_product_name.trim(),
+      ...(formData.competitor_sku.trim() ? { sku: formData.competitor_sku.trim() } : {}),
+      ...(formData.product_url.trim() ? { url: formData.product_url.trim() } : {}),
     };
 
     try {
@@ -125,6 +128,16 @@ export default function CompetitorProductMatch({
             <p className="mt-1 text-xs text-[#DC2626]">{errors.competitor_id}</p>
           )}
         </div>
+
+        <Input
+          label="Competitor Product Name"
+          name="competitor_product_name"
+          placeholder="Enter the name shown on the competitor listing"
+          value={formData.competitor_product_name}
+          onChange={handleChange}
+          error={errors.competitor_product_name}
+          required
+        />
 
         {/* Competitor SKU */}
         <Input

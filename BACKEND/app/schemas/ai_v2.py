@@ -2,6 +2,8 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.core.config import settings
+
 
 # ============================================================
 # Gemini
@@ -9,7 +11,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class GeminiRequest(BaseModel):
     model: str = Field(
-        default="gemini-2.5-flash",
+        default_factory=lambda: settings.GEMINI_MODEL,
         min_length=1,
     )
 
@@ -56,7 +58,7 @@ class GeminiResponse(BaseModel):
 
 class GrokRequest(BaseModel):
     model: str = Field(
-        default="grok-4.6",
+        default_factory=lambda: settings.XAI_MODEL,
         min_length=1,
     )
 

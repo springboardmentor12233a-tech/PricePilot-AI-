@@ -35,7 +35,7 @@ export default function ForecastHeader({
           <Layers className="w-3.5 h-3.5 text-[#2563EB]" />
           <span>XGBoost Regressor</span>
           <span className="text-[#CBD5E1]">•</span>
-          <span className="font-mono text-[11px] font-medium text-[#0F172A]">Test R²: 0.8527</span>
+          <span className="font-mono text-[11px] font-medium text-[#0F172A]">Test R²: 0.7861</span>
         </div>
 
         {selectedProduct && onRefresh && (

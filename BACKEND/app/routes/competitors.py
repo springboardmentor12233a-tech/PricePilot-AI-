@@ -76,6 +76,19 @@ def match_product(
     if not prod:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Internal product not found")
     verify_user_organization(db, current_user, prod.organization_id)
+    competitor = (
+        db.query(Competitor)
+        .filter(
+            Competitor.id == comp_prod_in.competitor_id,
+            Competitor.organization_id == prod.organization_id,
+        )
+        .first()
+    )
+    if not competitor:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Competitor not found",
+        )
     return match_competitor_product(db, comp_prod_in)
 
 

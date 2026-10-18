@@ -7,47 +7,18 @@
  * Builds the payload for POST /api/v1/pricing/predict
  * Includes ONLY supported backend fields.
  */
-export function buildPredictionPayload(product, competitorData = null, inventoryData = null, overrides = {}) {
-  if (!product) return {};
+export function buildPredictionPayload(product, { targetMarginPercent = 20 } = {}) {
+  if (!product?.id) return {};
 
-  const currentPrice = overrides.scenarioPrice !== undefined && overrides.scenarioPrice !== ''
-    ? Number(overrides.scenarioPrice)
-    : Number(product.base_price);
+  const margin = Number(targetMarginPercent);
+  if (!Number.isFinite(margin) || margin < 0) {
+    throw new Error('Target margin must be a finite, non-negative number.');
+  }
 
-  const competitorPrice = overrides.competitorPrice !== undefined && overrides.competitorPrice !== ''
-    ? Number(overrides.competitorPrice)
-    : (competitorData?.latestPrice || competitorData?.marketAverage || null);
-
-  const payload = {
+  return {
     product_id: product.id,
-    current_price: !isNaN(currentPrice) && currentPrice >= 0 ? currentPrice : Number(product.base_price || 0),
+    target_margin_percent: margin,
   };
-
-  // Add competitor price only if valid number
-  if (competitorPrice !== null && competitorPrice !== undefined && !isNaN(Number(competitorPrice))) {
-    payload.competitor_price = Number(competitorPrice);
-  }
-
-  // Add discount if specified or non-zero
-  if (overrides.discount !== undefined && overrides.discount !== '' && !isNaN(Number(overrides.discount))) {
-    payload.discount = Number(overrides.discount);
-  }
-
-  // Promotion flag
-  if (overrides.promotion !== undefined) {
-    payload.promotion = Boolean(overrides.promotion);
-  }
-
-  // Inventory count if available
-  const inventoryCount = overrides.inventory !== undefined && overrides.inventory !== ''
-    ? Number(overrides.inventory)
-    : (inventoryData?.current_stock !== undefined ? Number(inventoryData.current_stock) : null);
-
-  if (inventoryCount !== null && !isNaN(inventoryCount)) {
-    payload.inventory = inventoryCount;
-  }
-
-  return payload;
 }
 
 /**
@@ -63,16 +34,24 @@ export function normalizePredictionResult(data) {
     : (data.demand !== undefined ? Number(data.demand) : null);
 
   // Predicted price: predicted_price, recommended_price, or optimal_price
-  const predictedPrice = data.predicted_price !== undefined
+  const predictedPrice = data.recommended_price !== undefined
+    ? Number(data.recommended_price)
+    : (data.predicted_price !== undefined
     ? Number(data.predicted_price)
-    : (data.recommended_price !== undefined
-      ? Number(data.recommended_price)
       : (data.optimal_price !== undefined ? Number(data.optimal_price) : null));
+
+  const currentPrice = data.current_price !== undefined ? Number(data.current_price) : null;
+  const competitorAvgPrice = data.competitor_avg_price !== undefined && data.competitor_avg_price !== null
+    ? Number(data.competitor_avg_price)
+    : null;
+  const priceChangePercentage = data.price_change_percentage !== undefined
+    ? Number(data.price_change_percentage)
+    : null;
 
   // Confidence: ONLY if explicitly returned by backend
   // Could be 0.0-1.0 or 0-100
   let confidence = null;
-  if (data.confidence !== undefined && data.confidence !== null && !isNaN(Number(data.confidence))) {
+  if (data.confidence !== undefined && data.confidence !== null && Number.isFinite(Number(data.confidence))) {
     const rawConf = Number(data.confidence);
     confidence = rawConf <= 1 && rawConf > 0 ? Math.round(rawConf * 100) : Math.round(rawConf);
   }
@@ -94,19 +73,23 @@ export function normalizePredictionResult(data) {
 
   // Elasticity / reason
   const elasticity = data.elasticity !== undefined || data.price_elasticity !== undefined
-    ? Number(data.elasticity || data.price_elasticity)
+    ? Number(data.elasticity ?? data.price_elasticity)
     : null;
 
-  const reason = data.reason || data.explanation || data.rationale || null;
+  const reason = data.recommendation_reason || data.reason || data.explanation || data.rationale || null;
 
   return {
     raw: data,
-    predictedDemand: predictedDemand !== null && !isNaN(predictedDemand) ? predictedDemand : null,
-    predictedPrice: predictedPrice !== null && !isNaN(predictedPrice) ? predictedPrice : null,
+    currentPrice: currentPrice !== null && Number.isFinite(currentPrice) && currentPrice > 0 ? currentPrice : null,
+    predictedDemand: predictedDemand !== null && Number.isFinite(predictedDemand) ? predictedDemand : null,
+    predictedPrice: predictedPrice !== null && Number.isFinite(predictedPrice) && predictedPrice > 0 ? predictedPrice : null,
+    competitorAvgPrice: competitorAvgPrice !== null && Number.isFinite(competitorAvgPrice) && competitorAvgPrice > 0 ? competitorAvgPrice : null,
+    demandFactor: typeof data.demand_factor === 'string' ? data.demand_factor : null,
+    priceChangePercentage: priceChangePercentage !== null && Number.isFinite(priceChangePercentage) ? priceChangePercentage : null,
     confidence,
     trend,
     scenarios,
-    elasticity: elasticity !== null && !isNaN(elasticity) ? elasticity : null,
+    elasticity: elasticity !== null && Number.isFinite(elasticity) ? elasticity : null,
     reason,
   };
 }
@@ -120,7 +103,7 @@ export function normalizeRecommendation(data) {
   // Can be a single recommendation or nested under recommendation
   const rec = data.recommendation || data;
 
-  const id = rec.id || rec.recommendation_id || (rec.product_id ? `rec-${rec.product_id}` : null);
+  const id = rec.id || rec.recommendation_id || null;
   const productId = rec.product_id;
 
   const recommendedPrice = rec.recommended_price !== undefined
@@ -150,26 +133,27 @@ export function normalizeRecommendation(data) {
     : (rec.expected_margin !== undefined ? Number(rec.expected_margin) : null);
 
   let confidence = null;
-  if (rec.confidence !== undefined && rec.confidence !== null && !isNaN(Number(rec.confidence))) {
+  if (rec.confidence !== undefined && rec.confidence !== null && Number.isFinite(Number(rec.confidence))) {
     const raw = Number(rec.confidence);
     confidence = raw <= 1 && raw > 0 ? Math.round(raw * 100) : Math.round(raw);
   }
 
   // Exact backend status
-  const status = (rec.status || 'PENDING').toUpperCase();
+  const rawStatus = (rec.status || 'PENDING').toUpperCase();
+  const status = rawStatus === 'ACCEPTED' ? 'APPLIED' : rawStatus;
 
-  const reason = rec.reason || rec.rationale || rec.explanation || null;
+  const reason = rec.recommendation_reason || rec.reason || rec.rationale || rec.explanation || null;
   const createdAt = rec.created_at || rec.timestamp || null;
 
   return {
     id,
     productId,
-    recommendedPrice: recommendedPrice !== null && !isNaN(recommendedPrice) ? recommendedPrice : null,
-    currentPrice: currentPrice !== null && !isNaN(currentPrice) ? currentPrice : null,
-    expectedDemand: expectedDemand !== null && !isNaN(expectedDemand) ? expectedDemand : null,
-    expectedRevenue: expectedRevenue !== null && !isNaN(expectedRevenue) ? expectedRevenue : null,
-    expectedProfit: expectedProfit !== null && !isNaN(expectedProfit) ? expectedProfit : null,
-    margin: margin !== null && !isNaN(margin) ? margin : null,
+    recommendedPrice: recommendedPrice !== null && Number.isFinite(recommendedPrice) && recommendedPrice > 0 ? recommendedPrice : null,
+    currentPrice: currentPrice !== null && Number.isFinite(currentPrice) && currentPrice > 0 ? currentPrice : null,
+    expectedDemand: expectedDemand !== null && Number.isFinite(expectedDemand) ? expectedDemand : null,
+    expectedRevenue: expectedRevenue !== null && Number.isFinite(expectedRevenue) ? expectedRevenue : null,
+    expectedProfit: expectedProfit !== null && Number.isFinite(expectedProfit) ? expectedProfit : null,
+    margin: margin !== null && Number.isFinite(margin) ? margin : null,
     confidence,
     status,
     reason,

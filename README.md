@@ -362,98 +362,19 @@ The ML component is intended to estimate demand from product, pricing, inventory
 
 **Demand prediction is not the same as optimal-price prediction.** Do not describe the model as directly finding the optimal price unless its training target and implemented optimization algorithm actually do that.
 
-### Recorded model configuration
+### Verified demand model
 
-| Property | Recorded value |
-|---|---|
-| Algorithm | XGBoost regression |
-| Estimator | `XGBRegressor` |
-| Number of estimators | 500 |
-| Learning rate | 0.05 |
-| Maximum depth | 6 |
-| Row subsampling | 0.8 |
-| Feature subsampling | 0.8 |
-| Objective | `reg:squarederror` |
-| Random state | 42 |
-| Parallel jobs | -1 |
-| Raw input feature count | 26 |
-| Recorded transformed shape | `(1, 64)` for one sample |
-| Artifact path | `backend/saved_models/pricepilot_xgboost_model.pkl` |
+The canonical fitted artifact is ML_MODEL/model_training/saved_models/pricepilot_xgboost_model.pkl. The backend serves a versioned copy at BACKEND/saved_models/pricepilot_xgboost_model_v2.pkl. It is a fitted XGBoost regressor with a fitted preprocessing pipeline and 25 raw inputs; Units Ordered is excluded because the target is Demand. The preprocessor transforms one row to 63 columns.
 
-These values reflect the recorded training setup and artifact location. They do not independently prove the current artifact is fitted or valid.
+The evaluation uses the chronological final 15% of unique dates from the cleaned sales data (11,400 rows):
 
-### Raw input features
+| Metric | Verified holdout value |
+|---|---:|
+| MAE | 14.7932 |
+| RMSE | 20.7713 |
+| R-squared | 0.7861 |
 
-| # | Feature | Role |
-|---:|---|---|
-| 1 | `Store ID` | Store identifier |
-| 2 | `Product ID` | Product identifier |
-| 3 | `Category` | Product category |
-| 4 | `Region` | Business/geographic region |
-| 5 | `Inventory Level` | Inventory signal |
-| 6 | `Units Ordered` | Order/demand-related input |
-| 7 | `Price` | Product price |
-| 8 | `Discount` | Discount input |
-| 9 | `Weather Condition` | Weather category |
-| 10 | `Promotion` | Promotion indicator/value |
-| 11 | `Competitor Pricing` | Competitor price benchmark |
-| 12 | `Seasonality` | Seasonal signal |
-| 13 | `Epidemic` | Dataset indicator |
-| 14 | `Year` | Calendar year |
-| 15 | `Month` | Month number |
-| 16 | `Day` | Day of month |
-| 17 | `Price Difference` | Difference between own and competitor price under the training definition |
-| 18 | `Relative Price Difference` | Normalized price difference |
-| 19 | `Price Position` | Relative competitive position |
-| 20 | `Day of Week` | Weekday index |
-| 21 | `Quarter` | Calendar quarter |
-| 22 | `Week of Year` | Week number |
-| 23 | `Month Sin` | Cyclical month encoding |
-| 24 | `Month Cos` | Cyclical month encoding |
-| 25 | `DayOfWeek Sin` | Cyclical weekday encoding |
-| 26 | `DayOfWeek Cos` | Cyclical weekday encoding |
-
-Feature definitions, category handling, date encoding, missing-value policy, and feature ordering must match the training pipeline exactly. Do not infer the exact formula from a feature name alone.
-
-### Inference pipeline
-
-```mermaid
-flowchart TD
-    A[Incoming JSON] --> B[Validate feature names and types]
-    B --> C[Build feature row in canonical order]
-    C --> D[Load fitted preprocessor]
-    D --> E[Transform categorical and numeric values]
-    E --> F[Load compatible fitted XGBoost model]
-    F --> G[Predict target]
-    G --> H{Output finite and valid?}
-    H -- No --> I[Return controlled inference error]
-    H -- Yes --> J[Return prediction and model metadata]
-```
-
-### Previously recorded evaluation metrics
-
-| Metric | Previously recorded value | Meaning |
-|---|---:|---|
-| MAE | 12.43384 | Mean absolute error in target units |
-| RMSE | 17.23659 | Root mean squared error |
-| R² | 0.8527401 | Explained-variance score on the evaluated split |
-| MAPE | 18.9417% | Mean absolute percentage error, sensitive to zero/near-zero targets |
-
-These are historical evaluation values from a previous notebook run. They must not be claimed as verified performance of the deployed artifact until the exact saved model is loaded and re-evaluated on held-out data.
-
-### Model artifact validation warning
-
-A previous diagnostic reported that the saved artifact contained an `XGBRegressor` object whose Booster was not fitted/loaded, while the preprocessor appeared fitted. If this remains true, the artifact is not ready for inference and should be rebuilt and saved correctly from the training pipeline.
-
-Before release:
-
-1. Load the artifact using the same Python environment as the API.
-2. Confirm the estimator is fitted and can predict on a known valid input.
-3. Verify that the preprocessor and estimator come from the same training run.
-4. Compare direct inference with the API response for identical inputs.
-5. Check outputs for NaN, infinity, and unexpected ranges.
-6. Recompute evaluation metrics on held-out data.
-7. Store model version, feature schema version, and training metadata with the artifact.
+These metrics describe demand prediction on this holdout split. They are not a per-prediction confidence value or a direct optimal-price prediction.
 
 ## API Reference
 
@@ -566,7 +487,7 @@ Illustrative AI request body (the actual schema may differ by endpoint; use Swag
 
 ```json
 {
-  "model": "gemini-2.5-flash-lite",
+  "model": "gemini-3.8-flash",
   "prompt": "A product costs 500 and sells for 750. Calculate gross profit and gross margin, show calculations, and suggest two pricing strategies without inventing external market data.",
   "temperature": 0.4,
   "max_output_tokens": 256,

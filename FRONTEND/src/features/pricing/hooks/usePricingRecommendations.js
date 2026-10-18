@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { pricingApi } from '../services/pricingApi';
 import { normalizeRecommendation } from '../utils/pricingHelpers';
 import { extractErrorMessage } from '../../../utils/errorHandler';
@@ -11,8 +11,12 @@ export function usePricingRecommendations() {
   const [recommendations, setRecommendations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const requestLockRef = useRef(false);
+  const requestSequenceRef = useRef(0);
 
   const reset = useCallback(() => {
+    requestSequenceRef.current += 1;
+    requestLockRef.current = false;
     setRecommendation(null);
     setRecommendations([]);
     setError(null);
@@ -20,6 +24,9 @@ export function usePricingRecommendations() {
   }, []);
 
   const generateRecommendation = useCallback(async (payload) => {
+    if (requestLockRef.current) return null;
+    requestLockRef.current = true;
+    const requestSequence = ++requestSequenceRef.current;
     setIsLoading(true);
     setError(null);
 
@@ -41,15 +48,25 @@ export function usePricingRecommendations() {
         }
       }
 
-      setRecommendation(primary);
-      setRecommendations(list);
+      if (!primary?.id || !Number.isFinite(primary.recommendedPrice) || primary.recommendedPrice <= 0) {
+        throw new Error('Pricing endpoint did not return a valid recommendation.');
+      }
+
+      if (requestSequenceRef.current === requestSequence) {
+        setRecommendation(primary);
+        setRecommendations(list);
+      }
       return primary;
     } catch (err) {
+      if (requestSequenceRef.current !== requestSequence) return null;
       const msg = extractErrorMessage(err, 'Unable to generate the pricing recommendation.');
-      setError(msg);
+      if (requestSequenceRef.current === requestSequence) setError(msg);
       throw err;
     } finally {
-      setIsLoading(false);
+      if (requestSequenceRef.current === requestSequence) {
+        requestLockRef.current = false;
+        setIsLoading(false);
+      }
     }
   }, []);
 

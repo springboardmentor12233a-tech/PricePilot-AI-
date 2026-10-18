@@ -7,8 +7,10 @@ import { extractErrorMessage } from '../../../utils/errorHandler';
  */
 export function useInventory(productId) {
   const [inventory, setInventory] = useState(null);
+  const [inventoryProductId, setInventoryProductId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [errorProductId, setErrorProductId] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const activeIdRef = useRef(productId);
@@ -17,25 +19,32 @@ export function useInventory(productId) {
   const fetchInventory = useCallback(async () => {
     if (!productId) {
       setInventory(null);
+      setInventoryProductId(null);
       setIsLoading(false);
       setError(null);
+      setErrorProductId(null);
       return null;
     }
 
     setIsLoading(true);
     setError(null);
+    setErrorProductId(null);
 
     try {
       const data = await inventoryApi.getProductInventory(productId);
       if (activeIdRef.current === productId) {
         setInventory(data);
+        setInventoryProductId(productId);
         return data;
       }
       return null;
     } catch (err) {
       if (activeIdRef.current === productId) {
         const msg = extractErrorMessage(err, 'Unable to load inventory.');
+        setInventory(null);
+        setInventoryProductId(null);
         setError(msg);
+        setErrorProductId(productId);
       }
       return null;
     } finally {
@@ -55,6 +64,7 @@ export function useInventory(productId) {
     try {
       const updated = await inventoryApi.updateProductInventory(productId, payload);
       setInventory(updated);
+      setInventoryProductId(productId);
       return updated;
     } catch (err) {
       const msg = extractErrorMessage(err, 'Unable to update inventory.');
@@ -65,9 +75,11 @@ export function useInventory(productId) {
   }, [productId]);
 
   return {
-    inventory,
-    isLoading,
-    error,
+    inventory: String(inventoryProductId) === String(productId) ? inventory : null,
+    isLoading: isLoading || (Boolean(productId)
+      && String(inventoryProductId) !== String(productId)
+      && String(errorProductId) !== String(productId)),
+    error: String(errorProductId) === String(productId) ? error : null,
     isUpdating,
     refresh: fetchInventory,
     updateInventory,

@@ -80,65 +80,57 @@ def _safe_error_body(response: httpx.Response) -> str:
 # ============================================================
 
 def _load_personal_model():
-    """
-    Load the local ML model once and cache it.
-    """
+    """Load and validate the configured joblib artifact once."""
     global _model_instance
 
     if _model_instance is not None:
         return _model_instance
 
     model_path = _get_setting("PERSONAL_MODEL_PATH")
-
     if not model_path:
-        raise FileNotFoundError(
-            "PERSONAL_MODEL_PATH is not configured"
-        )
+        raise FileNotFoundError("PERSONAL_MODEL_PATH is not configured")
 
-    # Resolve relative paths relative to working dir or backend root
     if not os.path.isabs(model_path):
-        base_candidates = [
+        candidates = [
             model_path,
             os.path.join(os.getcwd(), model_path),
             os.path.join(os.path.dirname(__file__), "..", "..", model_path),
-            os.path.join(os.path.dirname(__file__), "..", "..", "saved_models", os.path.basename(model_path)),
+            os.path.join(
+                os.path.dirname(__file__), "..", "..", "saved_models",
+                os.path.basename(model_path),
+            ),
         ]
-        for candidate in base_candidates:
+        for candidate in candidates:
             if os.path.isfile(candidate):
                 model_path = os.path.abspath(candidate)
                 break
 
     if not os.path.isfile(model_path):
-        raise FileNotFoundError(
-            f"Personal model file not found at {model_path}"
-        )
+        raise FileNotFoundError("Configured personal model artifact was not found")
 
-    # Try joblib/scikit-learn first (standard for pricepilot_xgboost_model.pkl).
     try:
         import joblib
+        from sklearn.utils.validation import check_is_fitted
 
-        _model_instance = joblib.load(model_path)
-        return _model_instance
-    except Exception:
-        pass
+        loaded = joblib.load(model_path)
+        if isinstance(loaded, dict) and "model" in loaded:
+            model = loaded["model"]
+            preprocessor = loaded.get("preprocessor")
+            features = loaded.get("features")
+            if not hasattr(model, "predict") or not isinstance(features, (list, tuple)) or not features:
+                raise ValueError("Invalid model artifact schema")
+            check_is_fitted(model)
+            if preprocessor is not None:
+                check_is_fitted(preprocessor)
+        else:
+            if not hasattr(loaded, "predict"):
+                raise ValueError("Artifact has no predictor")
+            check_is_fitted(loaded)
 
-    # Try PyTorch as fallback.
-    try:
-        import torch
-
-        _model_instance = torch.load(
-            model_path,
-            map_location="cpu",
-        )
-
-        if hasattr(_model_instance, "eval"):
-            _model_instance.eval()
-
-        return _model_instance
+        _model_instance = loaded
+        return loaded
     except Exception as exc:
-        raise RuntimeError(
-            f"Unable to load personal ML model: {exc}"
-        ) from exc
+        raise RuntimeError("Configured personal model artifact is invalid") from exc
 
 
 # ============================================================
@@ -159,7 +151,7 @@ async def call_gemini(
         https://generativelanguage.googleapis.com/v1beta
 
     Example model:
-        gemini-3.5-flash
+        gemini-3.8-flash
     """
 
     api_key = _get_setting("GEMINI_API_KEY")
@@ -318,7 +310,7 @@ async def call_grok(
         https://api.x.ai/v1/responses
 
     Current model:
-        grok-4.6
+        grok-4.7
 
     IMPORTANT:
         This is xAI Grok, not Groq.
@@ -450,108 +442,64 @@ async def call_grok(
 # Personal ML prediction
 # ============================================================
 
-def predict_personal_model(
-    features: Dict[str, Any]
-) -> Dict[str, Any]:
-    """
-    Run inference using the locally stored personal ML model.
-    Handles joblib packages containing preprocessor + XGBoost or direct models.
-    """
-
-    if not isinstance(features, dict):
-        raise ValueError(
-            "features must be a dictionary"
-        )
-
-    if not features:
-        raise ValueError(
-            "features cannot be empty"
-        )
+def predict_personal_model(features: Dict[str, Any]) -> Dict[str, Any]:
+    """Run inference with the validated, fitted local model artifact."""
+    if not isinstance(features, dict) or not features:
+        raise ValueError("features must be a non-empty dictionary")
 
     loaded = _load_personal_model()
-
     try:
-        import pandas as pd
         import numpy as np
+        import pandas as pd
 
-        if isinstance(loaded, dict) and "model" in loaded:
-            raw_model = loaded["model"]
+        if isinstance(loaded, dict):
+            model = loaded["model"]
             preprocessor = loaded.get("preprocessor")
-            expected_features = loaded.get("features", [])
-
-            feat_map = {str(k).strip().lower(): v for k, v in features.items()}
-
-            row_data = {}
-            for col in expected_features:
-                col_key = col.strip().lower()
-                if col_key in feat_map:
-                    row_data[col] = feat_map[col_key]
-                elif col in features:
-                    row_data[col] = features[col]
-                else:
-                    if col in ['Price', 'Discount', 'Promotion', 'Competitor Pricing', 'Inventory Level', 'Units Ordered', 'Epidemic', 'Price Difference', 'Relative Price Difference']:
-                        row_data[col] = 0.0
-                    elif col in ['Year', 'Month', 'Day', 'Day of Week', 'Quarter', 'Week of Year']:
-                        now = datetime.now()
-                        if col == 'Year':
-                            row_data[col] = now.year
-                        elif col == 'Month':
-                            row_data[col] = now.month
-                        elif col == 'Day':
-                            row_data[col] = now.day
-                        elif col == 'Day of Week':
-                            row_data[col] = now.weekday()
-                        elif col == 'Quarter':
-                            row_data[col] = (now.month - 1) // 3 + 1
-                        elif col == 'Week of Year':
-                            row_data[col] = now.isocalendar()[1]
-                    elif col in ['Month Sin', 'Month Cos', 'DayOfWeek Sin', 'DayOfWeek Cos']:
-                        row_data[col] = 0.0
-                    else:
-                        row_data[col] = "General"
-
-            df = pd.DataFrame([row_data])
-            if preprocessor:
-                X = preprocessor.transform(df)
-            else:
-                X = df
-
-            try:
-                prediction = raw_model.predict(X)
-                pred_val = float(prediction[0])
-            except Exception:
-                # If model weights were not serialized in artifact, compute robust regression baseline
-                price = float(feat_map.get("price", 100))
-                units = float(feat_map.get("units ordered", feat_map.get("inventory level", 50)))
-                pred_val = max(1.0, round(units * 1.05, 2))
-
-            return {
-                "prediction": max(0.0, round(pred_val, 2)),
-                "model_version": loaded.get("version", "1.0"),
+            expected_features = list(loaded["features"])
+            feature_values = {
+                str(key).strip().lower(): value for key, value in features.items()
             }
+            now = datetime.now()
+            numeric_defaults = {
+                "price", "discount", "promotion", "competitor pricing",
+                "inventory level", "units ordered", "epidemic",
+                "price difference", "relative price difference", "month sin",
+                "month cos", "dayofweek sin", "dayofweek cos",
+            }
+            calendar_defaults = {
+                "year": now.year,
+                "month": now.month,
+                "day": now.day,
+                "day of week": now.weekday(),
+                "quarter": (now.month - 1) // 3 + 1,
+                "week of year": now.isocalendar()[1],
+            }
+            row = {}
+            for column in expected_features:
+                key = column.strip().lower()
+                if key in feature_values:
+                    row[column] = feature_values[key]
+                elif key in calendar_defaults:
+                    row[column] = calendar_defaults[key]
+                elif key in numeric_defaults:
+                    row[column] = 0.0
+                else:
+                    row[column] = "General"
 
-        df = pd.DataFrame([features])
-        prediction = loaded.predict(df)
-
-        if prediction is None or len(prediction) == 0:
-            raise RuntimeError(
-                "Personal model returned no prediction"
+            frame = pd.DataFrame([row], columns=expected_features)
+            model_input = (
+                preprocessor.transform(frame) if preprocessor is not None else frame
             )
+            version = str(loaded.get("version", "unknown"))
+        else:
+            model = loaded
+            model_input = pd.DataFrame([features])
+            version = "unknown"
 
-        result: Dict[str, Any] = {
-            "prediction": float(prediction[0]),
-            "model_version": "1.0",
-        }
+        prediction = np.asarray(model.predict(model_input), dtype=float).reshape(-1)
+        if prediction.size != 1 or not np.isfinite(prediction[0]):
+            raise ValueError("Model returned no finite scalar prediction")
 
-        if hasattr(loaded, "predict_proba"):
-            probabilities = loaded.predict_proba(df)
-            if probabilities is not None and len(probabilities) > 0:
-                result["probabilities"] = probabilities[0].tolist()
-
-        return result
-
+        return {"prediction": float(prediction[0]), "model_version": version}
     except Exception as exc:
-        raise RuntimeError(
-            "Failed to run prediction with personal model: "
-            f"{exc}"
-        ) from exc
+        raise RuntimeError("Personal model inference failed") from exc

@@ -118,7 +118,7 @@ def get_current_active_user(
     return current_user
 
 
-def verify_user_organization(db: Session, user, org_id) -> None:
+def verify_user_organization(db: Session, user, org_id):
     """Verify that the user has an active membership in the specified organization."""
     import uuid
     from app.models.organization_member import OrganizationMember
@@ -145,4 +145,4 @@ def verify_user_organization(db: Session, user, org_id) -> None:
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not authorized to access this organization's data",
         )
-
+    return membership

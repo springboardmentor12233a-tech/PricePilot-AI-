@@ -4,7 +4,7 @@ import { Cpu, Server, CheckCircle2, Info, AlertTriangle } from 'lucide-react';
 /**
  * ModelInfoCard Component
  * Displays technical facts about the server-side XGBoost demand prediction model.
- * Clarifies that model evaluation metrics (Test R²: 0.8527) are not per-prediction confidence scores.
+ * Clarifies that model evaluation metrics (Test R²: 0.7861) are not per-prediction confidence scores.
  */
 export default function ModelInfoCard({ className = '' }) {
   return (
@@ -52,7 +52,7 @@ export default function ModelInfoCard({ className = '' }) {
             Offline Model Evaluation
           </span>
           <span className="text-xs font-semibold text-[#0F172A] block font-mono">
-            Test R²: 0.8527
+            Test R²: 0.7861
           </span>
           <span className="text-[11px] text-[#D97706] mt-0.5 block font-medium">
             Evaluation metric — not prediction confidence

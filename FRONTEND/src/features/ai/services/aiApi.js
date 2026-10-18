@@ -3,12 +3,12 @@ import { API_ENDPOINTS } from '../../../utils/constants';
 
 export const aiApi = {
   geminiAnalysis: async (payload) => {
-    const response = await apiClient.post(API_ENDPOINTS.AI.GEMINI, payload);
+    const response = await apiClient.post(API_ENDPOINTS.AI.GEMINI, payload, { timeout: 95000 });
     return response.data;
   },
 
   grokAnalysis: async (payload) => {
-    const response = await apiClient.post(API_ENDPOINTS.AI.GROK, payload);
+    const response = await apiClient.post(API_ENDPOINTS.AI.GROK, payload, { timeout: 185000 });
     return response.data;
   },
 

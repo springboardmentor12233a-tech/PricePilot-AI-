@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Package, Search, ChevronDown, Check, AlertCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../../products/hooks/useProducts';
 import formatCurrency from '../../../utils/formatCurrency';
 import Skeleton from '../../../components/Skeleton';
@@ -9,7 +10,11 @@ export default function ProductSelector({
   selectedProductId,
   onSelectProduct,
   disabled = false,
+  organizationLoading = false,
+  organizationError = null,
+  onRetryOrganization,
 }) {
+  const navigate = useNavigate();
   const { products, isLoading, error, refresh } = useProducts(organizationId);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,6 +35,45 @@ export default function ProductSelector({
     });
   }, [products, searchQuery]);
 
+  if (organizationLoading) {
+    return (
+      <div role="status" className="bg-white border border-[#E2E8F0] rounded-2xl p-4 shadow-xs">
+        <div className="flex items-center gap-3">
+          <Skeleton variant="circular" width="40px" height="40px" />
+          <div className="flex-1 space-y-2">
+            <Skeleton width="40%" height="16px" />
+            <Skeleton width="60%" height="12px" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (organizationError) {
+    return (
+      <div role="alert" className="bg-[#FEF2F2] border border-[#FECACA] rounded-2xl p-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-[#DC2626] shrink-0" />
+          <span className="text-sm text-[#991B1B]">{organizationError}</span>
+        </div>
+        <button type="button" onClick={onRetryOrganization} className="text-xs font-semibold text-[#DC2626] hover:underline">
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (!organizationId) {
+    return (
+      <div className="bg-white border border-[#E2E8F0] rounded-2xl p-4 shadow-xs text-center">
+        <p className="text-sm text-[#64748B]">Select or create an organization to load its products.</p>
+        <button type="button" onClick={() => navigate('/organization')} className="mt-2 text-xs font-semibold text-[#2563EB] hover:underline">
+          Open organization settings
+        </button>
+      </div>
+    );
+  }
+
   if (isLoading && !products?.length) {
     return (
       <div className="bg-white border border-[#E2E8F0] rounded-2xl p-4 shadow-xs">
@@ -46,7 +90,7 @@ export default function ProductSelector({
 
   if (error) {
     return (
-      <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-2xl p-4 flex items-center justify-between">
+      <div role="alert" className="bg-[#FEF2F2] border border-[#FECACA] rounded-2xl p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-[#DC2626] shrink-0" />
           <span className="text-sm text-[#991B1B]">{error}</span>
@@ -67,8 +111,11 @@ export default function ProductSelector({
       <div className="bg-white border border-[#E2E8F0] rounded-2xl p-4 shadow-xs text-center">
         <p className="text-sm text-[#64748B]">No products found in this organization.</p>
         <p className="text-xs text-[#94A3B8] mt-1">
-          Add products in the Catalog before running pricing predictions.
+          Add products to this organization’s catalog before running a pricing analysis.
         </p>
+        <button type="button" onClick={() => navigate('/products')} className="mt-3 text-xs font-semibold text-[#2563EB] hover:underline">
+          Open product catalog
+        </button>
       </div>
     );
   }

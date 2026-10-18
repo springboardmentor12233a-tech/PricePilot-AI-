@@ -9,7 +9,7 @@ export { renderMarkdown } from './markdownRenderer.jsx';
  * Handles the backend format:
  * {
  *   "id": "e408ec4c-804a-44e0-b487-ef9d517cc14e",
- *   "model": "gemini-3.5-flash",
+ *   "model": "gemini-3.8-flash",
  *   "output": "The capital of India is **New Delhi**.",
  *   "metadata": null
  * }

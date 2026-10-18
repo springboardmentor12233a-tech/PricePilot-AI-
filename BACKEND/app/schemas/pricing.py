@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from decimal import Decimal
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from app.models.enums import RecommendationStatus
 
 
@@ -21,15 +21,17 @@ class PriceHistoryResponse(BaseModel):
 class PricingPredictionInput(BaseModel):
     product_id: uuid.UUID
     variant_id: uuid.UUID | None = None
-    target_margin_percent: float | None = 20.0
+    target_margin_percent: float | None = Field(
+        default=20.0, ge=0, le=1000, allow_inf_nan=False
+    )
 
 
 class PricingPredictionOutput(BaseModel):
     product_id: uuid.UUID
     variant_id: uuid.UUID | None = None
-    current_price: Decimal
-    recommended_price: Decimal
-    competitor_avg_price: Decimal | None = None
+    current_price: Decimal = Field(gt=0, max_digits=12, decimal_places=2, allow_inf_nan=False)
+    recommended_price: Decimal = Field(gt=0, max_digits=12, decimal_places=2, allow_inf_nan=False)
+    competitor_avg_price: Decimal | None = Field(default=None, gt=0, max_digits=12, decimal_places=2, allow_inf_nan=False)
     demand_factor: str | None = "stable"
     recommendation_reason: str
     price_change_percentage: float
@@ -38,9 +40,9 @@ class PricingPredictionOutput(BaseModel):
 class PricingRecommendationCreate(BaseModel):
     product_id: uuid.UUID
     variant_id: uuid.UUID | None = None
-    current_price: Decimal
-    recommended_price: Decimal
-    competitor_avg_price: Decimal | None = None
+    current_price: Decimal = Field(gt=0, max_digits=12, decimal_places=2, allow_inf_nan=False)
+    recommended_price: Decimal = Field(gt=0, max_digits=12, decimal_places=2, allow_inf_nan=False)
+    competitor_avg_price: Decimal | None = Field(default=None, gt=0, max_digits=12, decimal_places=2, allow_inf_nan=False)
     demand_factor: str | None = None
     recommendation_reason: str | None = None
 
@@ -51,9 +53,9 @@ class PricingRecommendationResponse(BaseModel):
     id: uuid.UUID
     product_id: uuid.UUID
     variant_id: uuid.UUID | None = None
-    current_price: Decimal
-    recommended_price: Decimal
-    competitor_avg_price: Decimal | None = None
+    current_price: Decimal = Field(gt=0)
+    recommended_price: Decimal = Field(gt=0)
+    competitor_avg_price: Decimal | None = Field(default=None, gt=0)
     demand_factor: str | None = None
     recommendation_reason: str | None = None
     status: RecommendationStatus

@@ -21,7 +21,7 @@ export default function PriceScenarioTable({
           Candidate Pricing Scenarios
         </h3>
         <p className="text-[11px] text-[#94A3B8]">
-          Comparative elasticity scenarios evaluated by the backend model
+          Candidate scenarios returned by the pricing endpoint
         </p>
       </div>
 

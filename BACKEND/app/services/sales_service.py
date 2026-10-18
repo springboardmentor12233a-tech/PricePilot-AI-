@@ -16,22 +16,22 @@ def record_sale(db: Session, sale_in: SalesRecordCreate) -> SalesRecord:
     product = get_product(db, sale_in.product_id)
 
     # Determine unit price if not specified
-    unit_price = sale_in.unit_price or product.base_price
+    unit_price = sale_in.unit_price if sale_in.unit_price is not None else product.base_price
     total_amount = Decimal(str(sale_in.quantity)) * unit_price
 
-    # Deduct stock from inventory
-    try:
-        inventory = get_inventory(db, sale_in.product_id, sale_in.variant_id)
-        if inventory.available_quantity < sale_in.quantity:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Insufficient inventory stock. Available: {inventory.available_quantity}, requested: {sale_in.quantity}",
-            )
-        inventory.quantity_on_hand -= sale_in.quantity
-    except HTTPException as e:
-        raise e
-    except Exception:
-        pass
+    # Inventory errors abort the sale rather than leaving stock unchanged.
+    inventory = get_inventory(db, sale_in.product_id, sale_in.variant_id)
+    if inventory.available_quantity < sale_in.quantity:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=(
+                "Insufficient inventory stock. Available: {}, requested: {}".format(
+                    inventory.available_quantity,
+                    sale_in.quantity,
+                )
+            ),
+        )
+    inventory.quantity_on_hand -= sale_in.quantity
 
     record = SalesRecord(
         organization_id=sale_in.organization_id,

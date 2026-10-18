@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.core.security import get_current_active_user, verify_user_organization
 from app.database.database import get_db
 from app.models.product import Product
+from app.models.product_variant import ProductVariant
 from app.schemas.sales import SalesAnalyticsResponse, SalesRecordCreate, SalesRecordResponse
 from app.services.sales_service import get_sales_analytics, record_sale
 
@@ -21,7 +22,21 @@ def add_sale_record(
     prod = db.query(Product).filter(Product.id == sale_in.product_id).first()
     if not prod:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+    if sale_in.organization_id != prod.organization_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Sale organization must match the product organization.",
+        )
     verify_user_organization(db, current_user, prod.organization_id)
+    if sale_in.variant_id:
+        variant = db.query(ProductVariant).filter(
+            ProductVariant.id == sale_in.variant_id
+        ).first()
+        if not variant or variant.product_id != prod.id:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Product variant not found",
+            )
     return record_sale(db, sale_in)
 
 

@@ -137,7 +137,7 @@ async def personal_predict_v2(
         return PersonalPredictionResponse(
             prediction=float(prediction),
             confidence=confidence,
-            model_version="v1.0.0",
+            model_version=str(result.get("model_version", "unknown")),
             timestamp=datetime.now(timezone.utc).isoformat(),
         )
 
@@ -148,13 +148,6 @@ async def personal_predict_v2(
         ) from exc
 
     except RuntimeError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(exc),
-        ) from exc
-
+        raise HTTPException(status_code=503,detail="Personal demand model is unavailable or invalid.") from exc
     except Exception as exc:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Unexpected personal model error",
-        ) from exc
+        raise HTTPException(status_code=503,detail="Personal demand model is unavailable.") from exc

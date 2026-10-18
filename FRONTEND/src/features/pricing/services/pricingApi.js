@@ -15,8 +15,8 @@ export const pricingApi = {
    * Run pricing demand prediction
    * POST /api/v1/pricing/predict
    */
-  predictPrice: async (payload) => {
-    const response = await apiClient.post(API_ENDPOINTS.PRICING.PREDICT, payload);
+  predictPrice: async (payload, config = {}) => {
+    const response = await apiClient.post(API_ENDPOINTS.PRICING.PREDICT, payload, config);
     return response.data;
   },
 

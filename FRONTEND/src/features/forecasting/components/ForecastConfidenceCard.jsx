@@ -56,7 +56,7 @@ export default function ForecastConfidenceCard({ confidence, className = '' }) {
               Confidence score is not provided by the current prediction endpoint.
             </div>
             <p className="text-xs text-[#94A3B8] mt-1 leading-relaxed">
-              Model evaluation metric (Test R²: 0.8527) is not a per-prediction confidence score.
+              Model evaluation metric (Test R²: 0.7861) is not a per-prediction confidence score.
             </p>
           </div>
         )}

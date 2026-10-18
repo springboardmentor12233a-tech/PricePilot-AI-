@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Play, RotateCcw, Sparkles, Percent, Tag, ShieldAlert } from 'lucide-react';
+import { Play, RotateCcw, ShieldAlert } from 'lucide-react';
 import Button from '../../../components/Button';
-import Input from '../../../components/Input';
+import formatCurrency from '../../../utils/formatCurrency';
 import { buildPredictionPayload } from '../utils/pricingHelpers';
 
 export default function PricingPredictionForm({
@@ -13,47 +13,23 @@ export default function PricingPredictionForm({
   isLoading = false,
   className = '',
 }) {
-  const [scenarioPrice, setScenarioPrice] = useState('');
-  const [competitorPrice, setCompetitorPrice] = useState('');
-  const [discount, setDiscount] = useState('0');
-  const [promotion, setPromotion] = useState(false);
-  const [inventoryOverride, setInventoryOverride] = useState('');
+  const [targetMarginPercent, setTargetMarginPercent] = useState('20');
   const [validationError, setValidationError] = useState('');
+  const costPrice = product?.cost_price === null || product?.cost_price === undefined
+    ? null
+    : Number(product.cost_price);
+  const hasValidCost = costPrice !== null && Number.isFinite(costPrice) && costPrice > 0;
 
   // Synchronize initial values when product changes
   useEffect(() => {
     if (product) {
-      setScenarioPrice(
-        product.base_price !== undefined && product.base_price !== null
-          ? String(product.base_price)
-          : ''
-      );
-      setDiscount('0');
-      setPromotion(false);
-      setInventoryOverride(
-        inventory?.current_stock !== undefined && inventory?.current_stock !== null
-          ? String(inventory.current_stock)
-          : ''
-      );
+      setTargetMarginPercent('20');
       setValidationError('');
     } else {
-      setScenarioPrice('');
-      setDiscount('0');
-      setPromotion(false);
-      setInventoryOverride('');
+      setTargetMarginPercent('20');
+      setValidationError('');
     }
-  }, [product?.id, product?.base_price, inventory?.current_stock]);
-
-  // Synchronize competitor benchmark if available
-  useEffect(() => {
-    if (competitorData?.latestPrice) {
-      setCompetitorPrice(String(competitorData.latestPrice));
-    } else if (competitorData?.marketAverage) {
-      setCompetitorPrice(String(Math.round(competitorData.marketAverage)));
-    } else {
-      setCompetitorPrice('');
-    }
-  }, [competitorData?.latestPrice, competitorData?.marketAverage]);
+  }, [product?.id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,34 +39,25 @@ export default function PricingPredictionForm({
       setValidationError('Please select a product first.');
       return;
     }
-
-    const priceNum = Number(scenarioPrice);
-    if (!scenarioPrice || isNaN(priceNum) || priceNum <= 0) {
-      setValidationError('Please enter a valid positive scenario price.');
+    if (!hasValidCost) {
+      setValidationError('A valid unit cost is required by the backend pricing rules.');
       return;
     }
 
-    const payload = buildPredictionPayload(product, competitorData, inventory, {
-      scenarioPrice,
-      competitorPrice: competitorPrice ? Number(competitorPrice) : undefined,
-      discount: discount ? Number(discount) : 0,
-      promotion,
-      inventory: inventoryOverride !== '' ? Number(inventoryOverride) : undefined,
-    });
+    const margin = Number(targetMarginPercent);
+    if (!targetMarginPercent || !Number.isFinite(margin) || margin < 0) {
+      setValidationError('Please enter a finite, non-negative target margin.');
+      return;
+    }
+
+    const payload = buildPredictionPayload(product, { targetMarginPercent: margin });
 
     onSubmit(payload);
   };
 
   const handleResetForm = () => {
     if (product) {
-      setScenarioPrice(String(product.base_price || ''));
-      setDiscount('0');
-      setPromotion(false);
-      setInventoryOverride(
-        inventory?.current_stock !== undefined && inventory?.current_stock !== null
-          ? String(inventory.current_stock)
-          : ''
-      );
+      setTargetMarginPercent('20');
     }
     setValidationError('');
     if (onReset) onReset();
@@ -105,9 +72,9 @@ export default function PricingPredictionForm({
     >
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-sm font-semibold text-[#0F172A]">Pricing Simulation Parameters</h2>
+          <h2 className="text-sm font-semibold text-[#0F172A]">Pricing Analysis Parameters</h2>
           <p className="text-xs text-[#64748B] mt-0.5">
-            Test price points and promotional scenarios against the demand model.
+            Set a target margin for the existing cost, competitor, and inventory pricing rules.
           </p>
         </div>
         <button
@@ -132,134 +99,98 @@ export default function PricingPredictionForm({
         {/* Scenario Price */}
         <div>
           <label className="block text-xs font-semibold text-[#334155] mb-1">
-            Scenario Price (₹ INR)
+            Target Margin (%)
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#64748B] font-medium">
-              ₹
-            </span>
             <input
               type="number"
-              step="0.01"
+              step="0.1"
               min="0"
               disabled={isLoading || !product}
-              value={scenarioPrice}
-              onChange={(e) => setScenarioPrice(e.target.value)}
-              placeholder="e.g. 1499"
-              className="w-full bg-white border border-[#CBD5E1] rounded-xl pl-8 pr-3 py-2 text-sm text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] disabled:bg-slate-50 disabled:cursor-not-allowed"
+              value={targetMarginPercent}
+              onChange={(e) => setTargetMarginPercent(e.target.value)}
+              className="w-full bg-white border border-[#CBD5E1] rounded-xl px-3 py-2 text-sm text-[#0F172A] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] disabled:bg-slate-50 disabled:cursor-not-allowed"
             />
           </div>
           <span className="text-[11px] text-[#64748B] mt-1 block">
-            Current catalog base price: {product?.base_price ? `₹${Number(product.base_price).toLocaleString('en-IN')}` : '—'}
+            Current catalog price: {product?.base_price !== null && product?.base_price !== undefined ? formatCurrency(product.base_price, currency) : 'Unavailable'}
           </span>
         </div>
 
         {/* Competitor Price Benchmark */}
         <div>
           <label className="block text-xs font-semibold text-[#334155] mb-1">
-            Competitor Benchmark (₹ INR)
+            Observed Competitor Benchmark
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#64748B] font-medium">
-              ₹
-            </span>
-            <input
-              type="number"
-              step="0.01"
-              min="0"
-              disabled={isLoading || !product}
-              value={competitorPrice}
-              onChange={(e) => setCompetitorPrice(e.target.value)}
-              placeholder="e.g. 1399"
-              className="w-full bg-white border border-[#CBD5E1] rounded-xl pl-8 pr-3 py-2 text-sm text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] disabled:bg-slate-50 disabled:cursor-not-allowed"
-            />
+            <div className="w-full bg-slate-50 border border-[#CBD5E1] rounded-xl px-3 py-2 text-sm text-[#0F172A]">
+              {competitorData?.marketAverage || competitorData?.latestPrice
+                ? formatCurrency(competitorData.marketAverage || competitorData.latestPrice, currency)
+                : 'Unavailable'}
+            </div>
           </div>
           <span className="text-[11px] text-[#64748B] mt-1 block">
-            Observed competitor average or reference point
+            Recorded observations only; no value is substituted when unavailable.
           </span>
         </div>
 
         {/* Discount */}
         <div>
           <label className="block text-xs font-semibold text-[#334155] mb-1">
-            Discount (%)
+            Cost Price
           </label>
           <div className="relative">
-            <input
-              type="number"
-              step="1"
-              min="0"
-              max="100"
-              disabled={isLoading || !product}
-              value={discount}
-              onChange={(e) => setDiscount(e.target.value)}
-              placeholder="0"
-              className="w-full bg-white border border-[#CBD5E1] rounded-xl pl-3 pr-8 py-2 text-sm text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] disabled:bg-slate-50 disabled:cursor-not-allowed"
-            />
-            <Percent className="w-3.5 h-3.5 text-[#64748B] absolute right-3 top-1/2 -translate-y-1/2" />
+            <div className="w-full bg-slate-50 border border-[#CBD5E1] rounded-xl px-3 py-2 text-sm text-[#0F172A]">
+              {product?.cost_price !== null && product?.cost_price !== undefined
+                ? formatCurrency(product.cost_price, currency)
+                : 'Unavailable'}
+            </div>
           </div>
           <span className="text-[11px] text-[#64748B] mt-1 block">
-            Applicable promotional markdown
+            A valid cost is required to calculate a price recommendation.
           </span>
         </div>
 
         {/* Inventory Stock Override */}
         <div>
           <label className="block text-xs font-semibold text-[#334155] mb-1">
-            Inventory Units (Scenario Override)
+            Available Inventory
           </label>
-          <input
-            type="number"
-            step="1"
-            min="0"
-            disabled={isLoading || !product}
-            value={inventoryOverride}
-            onChange={(e) => setInventoryOverride(e.target.value)}
-            placeholder={inventory?.current_stock ? String(inventory.current_stock) : 'e.g. 150'}
-            className="w-full bg-white border border-[#CBD5E1] rounded-xl px-3 py-2 text-sm text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] disabled:bg-slate-50 disabled:cursor-not-allowed"
-          />
+          <div className="w-full bg-slate-50 border border-[#CBD5E1] rounded-xl px-3 py-2 text-sm text-[#0F172A]">
+            {inventory?.available_quantity ?? inventory?.current_stock ?? 'Unavailable'}
+          </div>
           <span className="text-[11px] text-[#64748B] mt-1 block">
-            Current stock: {inventory?.current_stock !== undefined ? `${inventory.current_stock} units` : 'Not recorded'}
+            Available units from the organization inventory record.
           </span>
         </div>
 
         {/* Promotion Toggle */}
         <div className="flex flex-col justify-center sm:col-span-2">
           <label className="block text-xs font-semibold text-[#334155] mb-2">
-            Campaign Status
+            Calculation Method
           </label>
-          <label className="inline-flex items-center gap-3 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={promotion}
-              disabled={isLoading || !product}
-              onChange={(e) => setPromotion(e.target.checked)}
-              className="sr-only peer"
-            />
-            <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2563EB] relative"></div>
-            <span className="text-xs text-[#334155] font-medium">
-              Active Marketing Promotion
-            </span>
-          </label>
+          <span className="text-xs text-[#334155] font-medium">
+            Deterministic backend rules; no ML demand forecast is returned.
+          </span>
           <span className="text-[11px] text-[#64748B] mt-1 block">
-            Simulates demand elasticity with promotional advertising
+            Uses stored cost, compatible competitor prices, and inventory when available.
           </span>
         </div>
       </div>
 
       <div className="mt-6 pt-4 border-t border-[#F1F5F9] flex items-center justify-between">
         <div className="text-[11px] text-[#64748B]">
-          Decision-support forecast computed by backend XGBoost service.
+          Analysis uses the selected product’s saved database values.
         </div>
         <Button
           type="submit"
           variant="primary"
           size="md"
           loading={isLoading}
-          disabled={!product}
+          disabled={!product || !hasValidCost || isLoading}
           leftIcon={Play}
         >
-          {isLoading ? 'Analyzing pricing signals…' : 'Run Pricing Prediction'}
+          {isLoading ? 'Analyzing pricing signals…' : 'Run Pricing Analysis'}
         </Button>
       </div>
     </form>

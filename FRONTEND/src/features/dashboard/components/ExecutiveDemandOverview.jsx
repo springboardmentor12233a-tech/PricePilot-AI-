@@ -41,7 +41,7 @@ export default function ExecutiveDemandOverview({
               </div>
             </div>
             <div className="text-right">
-              <span className="text-sm font-bold font-mono text-[#0F172A]">Test R²: 0.8527</span>
+              <span className="text-sm font-bold font-mono text-[#0F172A]">Test R²: 0.7861</span>
               <span className="block text-[10px] text-[#64748B]">Validated test set</span>
             </div>
           </div>

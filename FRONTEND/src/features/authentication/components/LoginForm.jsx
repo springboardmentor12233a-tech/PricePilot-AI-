@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import PasswordField from './PasswordField';
-import { Mail, AlertCircle, Building2, Check, Lock, ShieldCheck } from 'lucide-react';
+import { Mail, AlertCircle, Building2 } from 'lucide-react';
 import { useToast } from '../../../hooks/useToast';
 
 export default function LoginForm() {
@@ -23,6 +23,11 @@ export default function LoginForm() {
   const [detectedDomain, setDetectedDomain] = useState('');
 
   const fromRoute = location.state?.from?.pathname || '/dashboard';
+  const canAutofillTest = Boolean(
+    import.meta.env.DEV &&
+    import.meta.env.VITE_TEST_USER_EMAIL &&
+    import.meta.env.VITE_TEST_USER_PASSWORD
+  );
 
   // Load saved email if remembered
   useEffect(() => {
@@ -105,8 +110,8 @@ export default function LoginForm() {
   };
 
   const handleAutoFillTest = () => {
-    const testEmail = import.meta.env.VITE_TEST_USER_EMAIL || 'test@pricepilot.ai';
-    const testPass = import.meta.env.VITE_TEST_USER_PASSWORD || 'TestPass123!';
+    const testEmail = import.meta.env.VITE_TEST_USER_EMAIL;
+    const testPass = import.meta.env.VITE_TEST_USER_PASSWORD;
     setFormData({
       email: testEmail,
       password: testPass,
@@ -214,19 +219,17 @@ export default function LoginForm() {
           {isLoading ? 'Authenticating...' : 'Sign In to PricePilot AI'}
         </Button>
 
-        {/* Test Credentials Quick Filler */}
-        <div className="flex items-center justify-between px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#64748B]">
-          <span className="truncate">
-            Test Account: <code className="text-[#0F172A] font-mono text-[11px]">test@pricepilot.ai</code>
-          </span>
-          <button
-            type="button"
-            onClick={handleAutoFillTest}
-            className="text-[11px] font-semibold text-[#2563EB] hover:text-[#1D4ED8] shrink-0 ml-2 cursor-pointer"
-          >
-            Auto-fill
-          </button>
-        </div>
+        {canAutofillTest && (
+          <div className="flex items-center justify-between px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#64748B]">
+            <span className="truncate">
+              Development test account: <code className="text-[#0F172A] font-mono text-[11px]">{import.meta.env.VITE_TEST_USER_EMAIL}</code>
+            </span>
+            <button type="button" onClick={handleAutoFillTest}
+              className="text-[11px] font-semibold text-[#2563EB] hover:text-[#1D4ED8] shrink-0 ml-2 cursor-pointer">
+              Auto-fill
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Registration Link */}

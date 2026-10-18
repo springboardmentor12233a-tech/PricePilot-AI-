@@ -1,10 +1,8 @@
 import React from 'react';
-import { Info, AlertCircle, CheckCircle, TrendingUp } from 'lucide-react';
+import { Info } from 'lucide-react';
 import formatCurrency from '../../../utils/formatCurrency';
 import {
   calculatePriceDifferencePercent,
-  calculateRevenue,
-  calculateGrossProfit,
   calculateMargin,
 } from '../utils/pricingCalculations';
 
@@ -66,7 +64,7 @@ export default function PricingInsight({
   if (prediction && prediction.predictedDemand !== null) {
     insights.push({
       type: 'info',
-      text: `Model forecasts demand at ${Math.round(prediction.predictedDemand).toLocaleString()} units for the evaluated scenario price.`,
+        text: `Backend reports predicted demand at ${Math.round(prediction.predictedDemand).toLocaleString()} units for the evaluated price.`,
     });
   }
 
@@ -76,7 +74,7 @@ export default function PricingInsight({
     if (recDiff !== null) {
       insights.push({
         type: 'success',
-        text: `AI recommendation proposes a ${recDiff > 0 ? '+' : ''}${recDiff.toFixed(1)}% adjustment to ${formatCurrency(recommendation.recommendedPrice, currency)}.`,
+        text: `The backend recommendation proposes a ${recDiff > 0 ? '+' : ''}${recDiff.toFixed(1)}% adjustment to ${formatCurrency(recommendation.recommendedPrice, currency)}.`,
       });
     }
   }

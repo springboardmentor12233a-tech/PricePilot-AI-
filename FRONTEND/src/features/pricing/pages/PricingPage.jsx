@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { useOrganization } from '../../organizations/hooks/useOrganization';
@@ -18,7 +18,6 @@ import PricingOverview from '../components/PricingOverview';
 import PricingContext from '../components/PricingContext';
 import PricingPredictionForm from '../components/PricingPredictionForm';
 import PricingPredictionResult from '../components/PricingPredictionResult';
-import PriceScenarioTable from '../components/PriceScenarioTable';
 import RecommendationCard from '../components/RecommendationCard';
 import RecommendationDetails from '../components/RecommendationDetails';
 import ApplyRecommendationDialog from '../components/ApplyRecommendationDialog';
@@ -29,15 +28,24 @@ import PricingEmptyState from '../components/PricingEmptyState';
 import PricingSkeleton from '../components/PricingSkeleton';
 
 import { useToast } from '../../../hooks/useToast';
-import { Sparkles, RefreshCw, Cpu, Layers } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export default function PricingPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { selectedOrganizationId } = useOrganization();
+  const {
+    selectedOrganization,
+    isLoading: isOrganizationLoading,
+    error: organizationError,
+    refreshOrganizations,
+  } = useOrganization();
   const toast = useToast();
 
   const urlProductId = searchParams.get('productId');
   const [selectedProductId, setSelectedProductId] = useState(urlProductId || null);
+  const [selectionOrganizationId, setSelectionOrganizationId] = useState(null);
+  const previousOrganizationIdRef = useRef(null);
+  const analysisLockRef = useRef(false);
+  const [lastPredictionPayload, setLastPredictionPayload] = useState(null);
 
   // Modals state
   const [reviewModalRec, setReviewModalRec] = useState(null);
@@ -50,11 +58,11 @@ export default function PricingPage() {
     }
   }, [urlProductId]);
 
-  // When organization changes, clear product selection to maintain tenant isolation
-  useEffect(() => {
-    setSelectedProductId(null);
-    setSearchParams({});
-  }, [selectedOrganizationId, setSearchParams]);
+  // Do not fetch against an unverified ID loaded from storage while organizations are loading.
+  const activeProductId = selectedOrganization
+    && String(selectionOrganizationId) === String(selectedOrganization.id)
+    ? selectedProductId
+    : null;
 
   // Load Product Details
   const {
@@ -62,19 +70,23 @@ export default function PricingPage() {
     isLoading: isProductLoading,
     error: productError,
     refresh: refreshProduct,
-  } = useProduct(selectedProductId);
+  } = useProduct(activeProductId);
 
   // Load Inventory for selected product
   const {
     inventory,
     isLoading: isInventoryLoading,
-  } = useInventory(selectedProductId);
+    error: inventoryError,
+    refresh: refreshInventory,
+  } = useInventory(activeProductId);
 
   // Load Competitor Prices for selected product
   const {
     prices: competitorPrices,
     isLoading: isCompetitorPricesLoading,
-  } = useCompetitorPrices(selectedProductId);
+    error: competitorPricesError,
+    refresh: refreshCompetitorPrices,
+  } = useCompetitorPrices(activeProductId);
 
   // Pricing Decision Support Hooks
   const {
@@ -83,11 +95,10 @@ export default function PricingPage() {
     error: predictionError,
     predict,
     reset: resetPrediction,
-  } = usePricingPrediction(selectedProductId);
+  } = usePricingPrediction(activeProductId);
 
   const {
     recommendation,
-    recommendations,
     isLoading: isGeneratingRec,
     error: recommendationError,
     generateRecommendation,
@@ -98,71 +109,112 @@ export default function PricingPage() {
   const {
     history,
     isLoading: isHistoryLoading,
+    error: historyError,
     refresh: refreshHistory,
-  } = usePricingHistory(selectedProductId);
+  } = usePricingHistory(activeProductId);
 
   const {
     applyRecommendation: executeApply,
     isMutating: isApplying,
   } = usePricingMutations();
 
+  // Clear product-specific state only after a real organization switch. This preserves valid
+  // productId deep links during the provider's initial asynchronous organization load.
+  useEffect(() => {
+    if (!selectedOrganization?.id) return;
+    const nextOrganizationId = String(selectedOrganization.id);
+    if (previousOrganizationIdRef.current === null) {
+      previousOrganizationIdRef.current = nextOrganizationId;
+      setSelectionOrganizationId(nextOrganizationId);
+      return;
+    }
+    if (previousOrganizationIdRef.current === nextOrganizationId) return;
+
+    previousOrganizationIdRef.current = nextOrganizationId;
+    setSelectionOrganizationId(nextOrganizationId);
+    setSelectedProductId(null);
+    setSearchParams({}, { replace: true });
+    setLastPredictionPayload(null);
+    setReviewModalRec(null);
+    setApplyDialogRec(null);
+    resetPrediction();
+    resetRecommendations();
+  }, [selectedOrganization?.id, setSearchParams, resetPrediction, resetRecommendations]);
+
   // Aggregate competitor benchmark
   const competitorData = useMemo(() => {
     if (!competitorPrices || competitorPrices.length === 0) return null;
-    const latestObs = getLatestObservation(competitorPrices);
-    const avg = calculateMarketAverage(competitorPrices);
+    const currency = (product?.currency || 'INR').toUpperCase();
+    const compatiblePrices = competitorPrices.filter((item) => (
+      item?.availability !== false
+      && Number.isFinite(Number(item?.price))
+      && Number(item.price) > 0
+      && (!item.currency || String(item.currency).toUpperCase() === currency)
+    ));
+    if (compatiblePrices.length === 0) return null;
+    const latestObs = getLatestObservation(compatiblePrices);
+    const avg = calculateMarketAverage(compatiblePrices);
     return {
       latestPrice: latestObs ? Number(latestObs.price) : null,
       marketAverage: avg,
-      observations: competitorPrices,
-      count: competitorPrices.length,
+      observations: compatiblePrices,
+      count: compatiblePrices.length,
     };
-  }, [competitorPrices]);
+  }, [competitorPrices, product?.currency]);
 
   // Handle product selection from selector
   const handleSelectProduct = useCallback((prod) => {
     if (!prod) {
       setSelectedProductId(null);
-      setSearchParams({});
+      setSearchParams({}, { replace: true });
+      setLastPredictionPayload(null);
+      setReviewModalRec(null);
+      setApplyDialogRec(null);
       resetPrediction();
       resetRecommendations();
       return;
     }
-    setSelectedProductId(prod.id);
-    setSearchParams({ productId: prod.id });
+    setSelectedProductId(String(prod.id));
+    setSearchParams({ productId: String(prod.id) });
+    setLastPredictionPayload(null);
+    setReviewModalRec(null);
+    setApplyDialogRec(null);
     resetPrediction();
     resetRecommendations();
   }, [setSearchParams, resetPrediction, resetRecommendations]);
 
   // Run prediction
   const handleRunPrediction = async (payload) => {
+    if (!payload?.product_id || String(payload.product_id) !== String(selectedProductId) || analysisLockRef.current) return;
+    analysisLockRef.current = true;
+    setLastPredictionPayload(payload);
     try {
-      await predict(payload);
-      toast.success('Pricing demand prediction generated.');
+      const result = await predict(payload);
+      if (result) toast.success('Pricing analysis completed.');
     } catch (err) {
-      toast.error(err?.message || 'Failed to generate demand prediction.');
+      toast.error(err?.message || 'Failed to analyze this product’s pricing.');
+    } finally {
+      analysisLockRef.current = false;
     }
   };
 
   // Generate Recommendation
   const handleGenerateRecommendation = async () => {
-    if (!product) return;
+    if (!product || String(product.id) !== String(selectedProductId) || !prediction?.predictedPrice || isGeneratingRec) return;
     try {
       const payload = {
         product_id: product.id,
-        current_price: Number(prediction?.predictedPrice || product.base_price || 0),
+        current_price: prediction.currentPrice ?? Number(product.base_price),
+        recommended_price: prediction.predictedPrice,
+        recommendation_reason: prediction.reason || null,
       };
-      if (competitorData?.latestPrice || competitorData?.marketAverage) {
-        payload.competitor_price = Number(competitorData.latestPrice || competitorData.marketAverage);
-      }
-      if (prediction?.predictedDemand) {
-        payload.predicted_demand = Number(prediction.predictedDemand);
-      }
+      if (prediction.competitorAvgPrice !== null) payload.competitor_avg_price = prediction.competitorAvgPrice;
+      if (prediction.demandFactor) payload.demand_factor = prediction.demandFactor;
 
-      await generateRecommendation(payload);
-      toast.success('AI Pricing Recommendation generated.');
+      const saved = await generateRecommendation(payload);
+      if (saved) toast.success('Pricing recommendation saved for review.');
     } catch (err) {
-      toast.error(err?.message || 'Failed to generate recommendation.');
+      toast.error(err?.message || 'Failed to save the pricing recommendation.');
     }
   };
 
@@ -186,25 +238,37 @@ export default function PricingPage() {
     }
   };
 
-  const isContextLoading = isProductLoading || isInventoryLoading || isCompetitorPricesLoading;
+  const isContextLoading = isOrganizationLoading || isProductLoading || isInventoryLoading || isCompetitorPricesLoading;
+  const currentProduct = product && String(product.id) === String(selectedProductId) ? product : null;
+  const pricingInventory = inventory ? {
+    ...inventory,
+    current_stock: inventory.available_quantity ?? inventory.quantity_on_hand ?? null,
+    min_stock_level: inventory.reorder_level ?? null,
+    reorder_point: inventory.reorder_level ?? null,
+  } : null;
 
   return (
     <div className="space-y-6">
       {/* Top Page Header */}
       <PricingHeader
-        selectedProduct={product}
+        selectedProduct={currentProduct}
         isLoading={isContextLoading || isPredicting}
         onRefresh={() => {
           refreshProduct();
           refreshHistory();
-          toast.info('Refreshed product signals and pricing history.');
+          refreshInventory();
+          refreshCompetitorPrices();
+          toast.info('Refreshed product, inventory, competitor, and pricing history data.');
         }}
       />
 
       {/* Product Selection Bar */}
       <div className="bg-white border border-[#E2E8F0] rounded-2xl p-4 shadow-xs">
         <ProductPricingSelector
-          organizationId={selectedOrganizationId}
+          organizationId={selectedOrganization?.id || null}
+          organizationLoading={isOrganizationLoading}
+          organizationError={organizationError}
+          onRetryOrganization={refreshOrganizations}
           selectedProductId={selectedProductId}
           onSelectProduct={handleSelectProduct}
         />
@@ -215,25 +279,50 @@ export default function PricingPage() {
         <PricingEmptyState
           type="no_product"
           title="Select a Product to Begin Pricing Analysis"
-          description="Choose a product from your organization catalog above to inspect competitive benchmarks, forecast demand elasticity, and review AI pricing recommendations."
+          description="Choose a product from the active organization catalog to compare recorded competitor prices and run the backend pricing rules."
         />
-      ) : isContextLoading && !product ? (
+      ) : !selectedOrganization && !isOrganizationLoading ? (
+        <PricingEmptyState
+          type="no_product"
+          title="Select an Organization to Continue"
+          description="Pricing Intelligence only loads products from the verified active organization."
+        />
+      ) : productError && !isProductLoading ? (
+        <div role="alert" className="bg-[#FEF2F2] border border-[#FECACA] rounded-2xl p-5 flex items-center justify-between">
+          <div>
+            <h3 className="text-sm font-semibold text-[#991B1B]">Unable to load this product</h3>
+            <p className="mt-1 text-xs text-[#7F1D1D]">{productError}</p>
+          </div>
+          <Button variant="outline" size="sm" onClick={refreshProduct}>Retry</Button>
+        </div>
+      ) : isContextLoading || !currentProduct ? (
         /* Initial Product Loading Skeleton */
         <PricingSkeleton variant="full" />
       ) : (
         /* Active Workspace for Selected Product */
         <div className="space-y-6">
+          {inventoryError && (
+            <div role="status" className="bg-[#FFFBEB] border border-[#FDE68A] rounded-xl p-3 text-xs text-[#92400E]">
+              Inventory data is unavailable: {inventoryError}. The backend will omit its inventory adjustment.
+            </div>
+          )}
+          {competitorPricesError && (
+            <div role="status" className="bg-[#FFFBEB] border border-[#FDE68A] rounded-xl p-3 text-xs text-[#92400E]">
+              Competitor observations could not be loaded: {competitorPricesError}. No benchmark is included in this analysis.
+            </div>
+          )}
+
           {/* Real-time KPI Overview Strip (5 pillars) */}
           <PricingOverview
-            product={product}
-            inventory={inventory}
+            product={currentProduct}
+            inventory={pricingInventory}
             competitorData={competitorData}
           />
 
           {/* Context Baseline Card */}
           <PricingContext
-            product={product}
-            inventory={inventory}
+            product={currentProduct}
+            inventory={pricingInventory}
             competitorData={competitorData}
           />
 
@@ -242,45 +331,61 @@ export default function PricingPage() {
             {/* Left 2 Columns: Prediction Form & Model Output */}
             <div className="lg:col-span-2 space-y-6">
               <PricingPredictionForm
-                product={product}
+                product={currentProduct}
                 competitorData={competitorData}
-                inventory={inventory}
+                inventory={pricingInventory}
                 onSubmit={handleRunPrediction}
                 onReset={resetPrediction}
                 isLoading={isPredicting}
               />
 
+              {predictionError && (
+                <div role="alert" className="bg-[#FEF2F2] border border-[#FECACA] rounded-xl p-4 flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold text-[#991B1B]">Pricing analysis failed</p>
+                    <p className="mt-1 text-xs text-[#7F1D1D]">{predictionError}</p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={!lastPredictionPayload || isPredicting}
+                    onClick={() => handleRunPrediction(lastPredictionPayload)}
+                  >
+                    Retry
+                  </Button>
+                </div>
+              )}
+
               {prediction && (
                 <>
                   <PricingPredictionResult
                     prediction={prediction}
-                    product={product}
+                    product={currentProduct}
                     onGenerateRecommendation={handleGenerateRecommendation}
                     isGeneratingRecommendation={isGeneratingRec}
                   />
 
-                  {prediction.scenarios && prediction.scenarios.length > 0 && (
-                    <PriceScenarioTable
-                      scenarios={prediction.scenarios}
-                      product={product}
-                      currency={product?.currency}
-                    />
-                  )}
                 </>
               )}
 
               {/* Pricing Trajectory Chart */}
               <PricingHistoryChart
                 history={history}
-                currency={product?.currency || 'INR'}
+                currency={currentProduct?.currency || 'INR'}
               />
 
               {/* Pricing History Table */}
               <PricingHistoryTable
                 history={history}
-                currency={product?.currency || 'INR'}
+                currency={currentProduct?.currency || 'INR'}
                 isLoading={isHistoryLoading}
               />
+              {historyError && (
+                <div role="status" className="bg-[#FFFBEB] border border-[#FDE68A] rounded-xl p-3 flex items-center justify-between gap-3 text-xs text-[#92400E]">
+                  <span>Pricing history could not be loaded: {historyError}</span>
+                  <Button variant="outline" size="sm" onClick={refreshHistory}>Retry</Button>
+                </div>
+              )}
             </div>
 
             {/* Right Column: AI Recommendations & Decision Notes */}
@@ -288,7 +393,7 @@ export default function PricingPage() {
               {recommendation ? (
                 <RecommendationCard
                   recommendation={recommendation}
-                  product={product}
+                  product={currentProduct}
                   onReview={(rec) => setReviewModalRec(rec)}
                 />
               ) : (
@@ -300,24 +405,30 @@ export default function PricingPage() {
                     No Active Recommendation
                   </h4>
                   <p className="text-xs text-[#64748B] leading-relaxed mb-4">
-                    Run the pricing simulation on the left to evaluate demand curves, then generate an optimal pricing recommendation.
+                    Run the analysis first, then save its backend recommendation for review.
                   </p>
                   <Button
                     variant="primary"
                     size="sm"
                     loading={isGeneratingRec}
+                    disabled={!prediction || isGeneratingRec}
                     onClick={handleGenerateRecommendation}
                     leftIcon={Sparkles}
                     className="w-full justify-center"
                   >
-                    {isGeneratingRec ? 'Computing...' : 'Generate Recommendation'}
+                    {isGeneratingRec ? 'Saving...' : prediction ? 'Generate Recommendation' : 'Run Analysis First'}
                   </Button>
+                </div>
+              )}
+              {recommendationError && (
+                <div role="alert" className="bg-[#FEF2F2] border border-[#FECACA] rounded-xl p-3 text-xs text-[#991B1B]">
+                  Recommendation could not be saved: {recommendationError}
                 </div>
               )}
 
               {/* Decision Support Insights */}
               <PricingInsight
-                product={product}
+                product={currentProduct}
                 competitorData={competitorData}
                 prediction={prediction}
                 recommendation={recommendation}
@@ -332,7 +443,7 @@ export default function PricingPage() {
         isOpen={Boolean(reviewModalRec)}
         onClose={() => setReviewModalRec(null)}
         recommendation={reviewModalRec}
-        product={product}
+        product={currentProduct}
         onProceedToApply={(rec) => setApplyDialogRec(rec)}
       />
 
@@ -342,7 +453,7 @@ export default function PricingPage() {
         onClose={() => setApplyDialogRec(null)}
         onConfirm={handleConfirmApply}
         recommendation={applyDialogRec}
-        product={product}
+        product={currentProduct}
         isApplying={isApplying}
       />
     </div>

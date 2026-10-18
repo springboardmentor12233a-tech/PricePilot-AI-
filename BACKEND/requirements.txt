@@ -24,7 +24,10 @@ passlib[bcrypt]
 # ML / Data Science
 numpy
 pandas
-scikit-learn
+scikit-learn==1.9.1
+joblib==1.5.3
+xgboost==3.4.1
+alembic
 
 # Testing
 pytest

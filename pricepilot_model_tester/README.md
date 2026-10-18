@@ -1,33 +1,18 @@
 # PricePilot XGBoost Model Tester
 
-## Files
+The Streamlit tester loads the canonical fitted artifact from:
 
-- `app.py` — Streamlit testing UI
-- `pricepilot_xgboost_model.pkl` — your saved model artifact
-- `requirements.txt` — dependencies
+ML_MODEL/model_training/saved_models/pricepilot_xgboost_model.pkl
+
+Keep the tester and ML_MODEL directories in the same repository layout. The model predicts Demand from 25 product, pricing, inventory, competitor, promotion, and calendar inputs. Units Ordered is not a model input.
 
 ## Run
 
-1. Put all three files in the same folder.
-2. Open a terminal in that folder.
-3. Install dependencies:
+From the repository root, install the tester requirements and launch the app:
 
-```bash
-pip install -r requirements.txt
-```
+    pip install -r pricepilot_model_tester/requirements.txt
+    streamlit run pricepilot_model_tester/app.py
 
-4. Start the UI:
+The application applies the saved preprocessing pipeline before inference.
 
-```bash
-streamlit run app.py
-```
-
-5. Open the URL shown by Streamlit, normally:
-
-`http://localhost:8501`
-
-## Important model note
-
-The saved model expects 26 features and its preprocessing pipeline is applied before prediction.
-
-The saved feature list includes `Units Ordered`. If `Units Ordered` is the target variable that the model was supposed to predict, this is target leakage. In that case, retrain the model without `Units Ordered` as an input feature.
+The verified chronological holdout metrics are MAE 14.7932, RMSE 20.7713, and R-squared 0.7861 on 11,400 rows. They describe this evaluation split, not individual prediction confidence.

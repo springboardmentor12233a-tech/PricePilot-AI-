@@ -62,8 +62,8 @@ def apply_pricing_recommendation(
     if not rec:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Recommendation not found")
     prod = db.query(Product).filter(Product.id == rec.product_id).first()
-    if prod:
-        verify_user_organization(db, current_user, prod.organization_id)
+    if not prod: raise HTTPException(status_code=404,detail="Product not found")
+    verify_user_organization(db,current_user,prod.organization_id)
     return apply_recommendation(db, recommendation_id, user_id=current_user.id)
 
 

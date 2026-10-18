@@ -1,15 +1,15 @@
 import uuid
 from datetime import datetime
 from decimal import Decimal
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class SalesRecordCreate(BaseModel):
     organization_id: uuid.UUID
     product_id: uuid.UUID
     variant_id: uuid.UUID | None = None
-    quantity: int = 1
-    unit_price: Decimal | None = None
+    quantity: int = Field(default=1,gt=0)
+    unit_price: Decimal | None = Field(default=None,gt=0)
 
 
 class SalesRecordResponse(BaseModel):

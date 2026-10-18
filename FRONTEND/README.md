@@ -260,7 +260,6 @@ Price Position
 
 ```text
 Inventory Level
-Units Ordered
 Price
 Discount
 Promotion
@@ -349,23 +348,17 @@ XGBRegressor(
 )
 ```
 
-## Final Evaluation
+## Verified Holdout Evaluation
 
-| Dataset    |   MAE |  RMSE |         R² |   MAPE |
-| ---------- | ----: | ----: | ---------: | -----: |
-| Training   | 11.61 | 16.15 |     0.8809 | 16.19% |
-| Validation | 14.01 | 19.96 |     0.8285 | 17.45% |
-| Test       | 12.43 | 17.24 | **0.8527** | 18.94% |
+The saved, fitted XGBoost artifact was evaluated on the chronological final 15% of unique dates in the cleaned dataset (11,400 rows). It uses 25 raw inputs and excludes Units Ordered.
 
-The final model achieved:
+| Metric | Verified holdout value |
+|---|---:|
+| MAE | 14.7932 |
+| RMSE | 20.7713 |
+| R-squared | 0.7861 |
 
-> **R² = 0.8527 on the held-out test dataset.**
-
-This indicates that the model explains approximately **85.27% of the variance in the test-set demand values** under the project's evaluation setup.
-
-**R² is a model evaluation metric, not a live prediction-confidence score.**
-
----
+R-squared is an offline model metric, not a live prediction-confidence score.
 
 # 10. LSTM Benchmark
 
@@ -773,7 +766,7 @@ For example, the backend may return:
 ```json
 {
   "id": "...",
-  "model": "gemini-3.5-flash",
+  "model": "gemini-3.8-flash",
   "output": "The capital of India is **New Delhi**.",
   "metadata": null
 }
@@ -920,7 +913,7 @@ Recommended structure:
 ```text
 backend/
 └── saved_models/
-    └── pricepilot_xgboost_model.pkl
+    └── pricepilot_xgboost_model_v2.pkl
 ```
 
 or the project's configured ML artifact location.
@@ -948,8 +941,7 @@ features = {
     "Category": "Clothing",
     "Region": "North",
     "Inventory Level": 120,
-    "Units Ordered": 100,
-    "Price": 4999,
+        "Price": 4999,
     "Discount": 10,
     "Weather Condition": "Sunny",
     "Promotion": 1,
@@ -1304,7 +1296,7 @@ The project integrates:
 * Business analytics
 * Generative AI
 
-The current XGBoost model achieved an **R² of 0.8527 on the held-out test dataset**, while the surrounding application provides the infrastructure required to turn model predictions into practical pricing and revenue-analysis workflows.
+The current XGBoost model achieved an **R² of 0.7861 on the held-out test dataset**, while the surrounding application provides the infrastructure required to turn model predictions into practical pricing and revenue-analysis workflows.
 
 The architecture is designed to support future improvements in forecasting, pricing optimization, MLOps, monitoring, and cloud deployment.
 

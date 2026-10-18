@@ -30,7 +30,7 @@ export default function RecommendationCard({
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-[#0F172A]">AI Pricing Recommendation</h3>
+            <h3 className="text-sm font-semibold text-[#0F172A]">Pricing Recommendation</h3>
             <span className="text-[11px] text-[#64748B]">
               Ref: {recommendation.id || 'Active'}
             </span>

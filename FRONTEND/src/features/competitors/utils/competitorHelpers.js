@@ -67,6 +67,9 @@ export function validateMatchPayload(payload) {
   if (!payload.competitor_id) {
     errors.competitor_id = 'Please select a competitor.';
   }
+  if (!payload.competitor_product_name || !payload.competitor_product_name.trim()) {
+    errors.competitor_product_name = 'Competitor product name is required.';
+  }
 
   return {
     isValid: Object.keys(errors).length === 0,

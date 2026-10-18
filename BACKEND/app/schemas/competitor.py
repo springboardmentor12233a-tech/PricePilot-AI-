@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from decimal import Decimal
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from app.models.enums import CompetitorStatus
 
 
@@ -34,10 +34,10 @@ class CompetitorResponse(CompetitorBase):
 class CompetitorProductCreate(BaseModel):
     competitor_id: uuid.UUID
     product_id: uuid.UUID
-    name: str
-    url: str | None = None
-    sku: str | None = None
-    match_confidence: Decimal | None = None
+    name: str = Field(min_length=1,max_length=255)
+    url: str | None = Field(default=None,max_length=500)
+    sku: str | None = Field(default=None,max_length=100)
+    match_confidence: Decimal | None = Field(default=None,ge=0,le=1)
 
 
 class CompetitorProductResponse(BaseModel):
@@ -46,16 +46,16 @@ class CompetitorProductResponse(BaseModel):
     id: uuid.UUID
     competitor_id: uuid.UUID
     product_id: uuid.UUID
-    name: str
-    url: str | None = None
-    sku: str | None = None
-    match_confidence: Decimal | None = None
+    name: str = Field(min_length=1,max_length=255)
+    url: str | None = Field(default=None,max_length=500)
+    sku: str | None = Field(default=None,max_length=100)
+    match_confidence: Decimal | None = Field(default=None,ge=0,le=1)
     created_at: datetime
 
 
 class CompetitorPriceCreate(BaseModel):
     competitor_product_id: uuid.UUID
-    price: Decimal
+    price: Decimal = Field(gt=0)
     currency: str = "INR"
     availability: bool = True
 
