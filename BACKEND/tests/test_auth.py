@@ -1,26 +1,19 @@
 def test_health_check(client):
-    """Test public health check endpoint."""
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
 
 
 def test_home_endpoint(client):
-    """Test public home endpoint."""
     response = client.get("/")
     assert response.status_code == 200
     assert response.json()["status"] == "success"
 
 
 def test_user_registration(client):
-    """Test user registration."""
     response = client.post(
         "/api/v1/auth/register",
-        json={
-            "email": "user1@example.com",
-            "password": "Password123!",
-            "full_name": "John Doe",
-        },
+        json={"email": "user1@example.com", "password": "Password123!", "full_name": "John Doe"},
     )
     assert response.status_code == 201
     data = response.json()
@@ -31,21 +24,18 @@ def test_user_registration(client):
 
 
 def test_duplicate_user_registration(client):
-    """Test registering a user with an already existing email."""
-    user_payload = {
+    payload = {
         "email": "duplicate@example.com",
         "password": "Password123!",
         "full_name": "Original User",
     }
-    client.post("/api/v1/auth/register", json=user_payload)
-    
-    response = client.post("/api/v1/auth/register", json=user_payload)
+    client.post("/api/v1/auth/register", json=payload)
+    response = client.post("/api/v1/auth/register", json=payload)
     assert response.status_code == 400
     assert "already exists" in response.json()["detail"]
 
 
-def test_user_login(client):
-    """Test user login and token generation."""
+def test_user_login_requires_otp_before_tokens(client, otp_mailbox):
     client.post(
         "/api/v1/auth/register",
         json={
@@ -54,23 +44,33 @@ def test_user_login(client):
             "full_name": "Login User",
         },
     )
-
     response = client.post(
         "/api/v1/auth/login",
+        json={"email": "loginuser@example.com", "password": "SecretPassword123"},
+    )
+    assert response.status_code == 202
+    challenge = response.json()
+    assert "access_token" not in challenge
+    assert "refresh_token" not in challenge
+    assert client.get("/api/v1/auth/me").status_code == 401
+
+    verified = client.post(
+        "/api/v1/auth/verify-otp",
         json={
-            "email": "loginuser@example.com",
-            "password": "SecretPassword123",
+            "challenge_id": challenge["challenge_id"],
+            "otp": otp_mailbox["loginuser@example.com"],
         },
     )
-    assert response.status_code == 200
-    data = response.json()
-    assert "access_token" in data
-    assert "refresh_token" in data
+    assert verified.status_code == 200
+    data = verified.json()
+    assert data["access_token"]
+    assert "refresh_token" not in data
+    assert data["user"]["email"] == "loginuser@example.com"
+    assert "httponly" in verified.headers.get("set-cookie", "").lower()
     assert data["token_type"] == "bearer"
 
 
-def test_login_invalid_password(client):
-    """Test login with wrong password."""
+def test_login_invalid_password_is_generic_and_never_authenticates(client, otp_mailbox):
     client.post(
         "/api/v1/auth/register",
         json={
@@ -79,19 +79,21 @@ def test_login_invalid_password(client):
             "full_name": "Test User",
         },
     )
-
-    response = client.post(
+    wrong = client.post(
         "/api/v1/auth/login",
-        json={
-            "email": "wrongpass@example.com",
-            "password": "WrongPassword123",
-        },
+        json={"email": "wrongpass@example.com", "password": "WrongPassword123"},
     )
-    assert response.status_code == 401
+    unknown = client.post(
+        "/api/v1/auth/login",
+        json={"email": "missing@example.com", "password": "WrongPassword123"},
+    )
+    assert wrong.status_code == unknown.status_code == 202
+    assert wrong.json()["message"] == unknown.json()["message"]
+    assert "access_token" not in wrong.json()
+    assert client.get("/api/v1/auth/me").status_code == 401
 
 
 def test_get_current_user_profile(client, auth_headers):
-    """Test protected /auth/me route with valid token."""
     response = client.get("/api/v1/auth/me", headers=auth_headers)
     assert response.status_code == 200
     data = response.json()

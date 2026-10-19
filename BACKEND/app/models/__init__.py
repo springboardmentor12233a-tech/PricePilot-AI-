@@ -18,32 +18,16 @@ from app.models.pricing import PricingRecommendation
 from app.models.product import Product
 from app.models.product_variant import ProductVariant
 from app.models.refresh_token import RefreshToken
+from app.models.auth_security import OtpChallenge, SecurityEvent, UserSession
 from app.models.role import Role
 from app.models.sales_record import SalesRecord
 from app.models.user import User
 from app.models.user_role import user_roles
 
 __all__ = [
-    "User",
-    "Role",
-    "user_roles",
-    "Organization",
-    "OrganizationMember",
-    "RefreshToken",
-    "Category",
-    "Product",
-    "ProductVariant",
-    "Inventory",
-    "Competitor",
-    "CompetitorProduct",
-    "CompetitorPrice",
-    "PriceHistory",
-    "PricingRecommendation",
-    "SalesRecord",
-    "OrganizationMemberRole",
-    "UserRoleName",
-    "ProductStatus",
-    "CompetitorStatus",
-    "DemandTrend",
-    "RecommendationStatus",
+    "User", "Role", "user_roles", "Organization", "OrganizationMember", "RefreshToken",
+    "OtpChallenge", "UserSession", "SecurityEvent", "Category", "Product", "ProductVariant",
+    "Inventory", "Competitor", "CompetitorProduct", "CompetitorPrice", "PriceHistory",
+    "PricingRecommendation", "SalesRecord", "OrganizationMemberRole", "UserRoleName",
+    "ProductStatus", "CompetitorStatus", "DemandTrend", "RecommendationStatus",
 ]

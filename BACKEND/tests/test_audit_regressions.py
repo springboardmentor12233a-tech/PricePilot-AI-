@@ -33,7 +33,7 @@ def test_sales_organization_and_quantity_validation(client,auth_headers):
         "organization_id":org1,"product_id":product["id"],"quantity":-1})
     assert invalid.status_code==422
 
-def test_members_cannot_add_members_or_assign_admin(client,auth_headers):
+def test_members_cannot_add_members_or_assign_admin(client,auth_headers,otp_mailbox):
     org=_org(client,auth_headers,"Role Org")
     member_id=_user(client,"role-member@example.com")
     other_id=_user(client,"role-other@example.com")
@@ -42,7 +42,10 @@ def test_members_cannot_add_members_or_assign_admin(client,auth_headers):
     assert added.status_code==201
     login=client.post("/api/v1/auth/login",json={"email":"role-member@example.com",
         "password":"Password123!"})
-    member_headers={"Authorization":"Bearer "+login.json()["access_token"]}
+    verified=client.post("/api/v1/auth/verify-otp",json={
+        "challenge_id":login.json()["challenge_id"],
+        "otp":otp_mailbox["role-member@example.com"]})
+    member_headers={"Authorization":"Bearer "+verified.json()["access_token"]}
     forbidden=client.post("/api/v1/organizations/{}/members".format(org),headers=member_headers,
         json={"user_id":other_id,"role":"admin"})
     assert forbidden.status_code==403

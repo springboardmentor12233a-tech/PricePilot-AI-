@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Input from '../../../components/Input';
@@ -10,7 +10,7 @@ import { useToast } from '../../../hooks/useToast';
 export default function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isLoading } = useAuth();
+  const { login, verifyOtp, resendOtp, isLoading } = useAuth();
   const toast = useToast();
 
   const [formData, setFormData] = useState({
@@ -21,6 +21,13 @@ export default function LoginForm() {
   const [formErrors, setFormErrors] = useState({});
   const [apiError, setApiError] = useState('');
   const [detectedDomain, setDetectedDomain] = useState('');
+  const [challengeId, setChallengeId] = useState('');
+  const [otpValue, setOtpValue] = useState('');
+  const [resendCountdown, setResendCountdown] = useState(0);
+  const [isResending, setIsResending] = useState(false);
+  const resendInFlight = useRef(false);
+  const loginInFlight = useRef(false);
+  const verifyInFlight = useRef(false);
 
   const fromRoute = location.state?.from?.pathname || '/dashboard';
   const canAutofillTest = Boolean(
@@ -28,6 +35,12 @@ export default function LoginForm() {
     import.meta.env.VITE_TEST_USER_EMAIL &&
     import.meta.env.VITE_TEST_USER_PASSWORD
   );
+
+  useEffect(() => {
+    if (!challengeId || resendCountdown <= 0) return undefined;
+    const timer = window.setTimeout(() => setResendCountdown((value) => Math.max(0, value - 1)), 1000);
+    return () => window.clearTimeout(timer);
+  }, [challengeId, resendCountdown]);
 
   // Load saved email if remembered
   useEffect(() => {
@@ -85,9 +98,10 @@ export default function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loginInFlight.current || isLoading) return;
     setApiError('');
-
     if (!validate()) return;
+    loginInFlight.current = true;
 
     try {
       if (rememberMe) {
@@ -96,19 +110,21 @@ export default function LoginForm() {
         localStorage.removeItem('pricepilot_remember_email');
       }
 
-      await login({
+      const challenge = await login({
         email: formData.email.trim(),
         password: formData.password,
       });
-      toast.success('Successfully signed in.');
-      navigate(fromRoute, { replace: true });
+      setChallengeId(challenge.challenge_id);
+      setOtpValue('');
+      setResendCountdown(challenge.resend_after_seconds || 60);
     } catch (err) {
       const errorMsg =
-        err.message || 'Invalid credentials or organization access restricted. Please check your credentials.';
+        err.message || 'Unable to start sign-in. Please check your details and try again.';
       setApiError(errorMsg);
+    } finally {
+      loginInFlight.current = false;
     }
   };
-
   const handleAutoFillTest = () => {
     const testEmail = import.meta.env.VITE_TEST_USER_EMAIL;
     const testPass = import.meta.env.VITE_TEST_USER_PASSWORD;
@@ -122,6 +138,88 @@ export default function LoginForm() {
     toast.info('Test credentials loaded.');
   };
 
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    if (verifyInFlight.current || isLoading) return;
+    setApiError('');
+    if (!/^[0-9]{6}$/.test(otpValue)) {
+      setApiError('Enter the six-digit verification code.');
+      return;
+    }
+    verifyInFlight.current = true;
+    try {
+      await verifyOtp({ challenge_id: challengeId, otp: otpValue });
+      toast.success('Successfully signed in.');
+      navigate(fromRoute, { replace: true });
+    } catch (err) {
+      setApiError(err.message || 'The verification code is invalid or expired. Sign in again to retry.');
+    } finally {
+      verifyInFlight.current = false;
+    }
+  };
+  const handleResendOtp = async () => {
+    if (resendCountdown > 0 || isLoading || resendInFlight.current) return;
+    resendInFlight.current = true;
+    setIsResending(true);
+    setApiError('');
+    try {
+      const challenge = await resendOtp(challengeId);
+      setChallengeId(challenge.challenge_id);
+      setResendCountdown(challenge.resend_after_seconds || 60);
+      setOtpValue('');
+    } catch (err) {
+      setApiError(err.message || 'Unable to resend the verification code. Try again shortly.');
+    } finally {
+      resendInFlight.current = false;
+      setIsResending(false);
+    }
+  };
+  const handleBackToPassword = () => {
+    setChallengeId('');
+    setOtpValue('');
+    setApiError('');
+    setResendCountdown(0);
+  };
+
+  if (challengeId) {
+    return (
+      <form onSubmit={handleVerifyOtp} className="space-y-4.5 w-full" noValidate>
+        <button type="button" onClick={handleBackToPassword} disabled={isLoading || isResending}
+          className="text-xs font-medium text-[#2563EB] hover:text-[#1D4ED8] disabled:opacity-50">
+          Back to sign in
+        </button>
+        <div>
+          <h2 className="text-base font-semibold text-[#0F172A]">Verify your email</h2>
+          <p className="mt-1 text-sm text-[#64748B]">
+            If the credentials are valid, a six-digit code was sent to the registered email address.
+          </p>
+        </div>
+        {apiError && <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{apiError}</p>}
+        <label htmlFor="login-otp" className="block text-sm font-medium text-[#0F172A]">Verification code</label>
+        <input
+          id="login-otp"
+          name="otp"
+          type="text"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          pattern="[0-9]{6}"
+          maxLength={6}
+          value={otpValue}
+          onChange={(event) => setOtpValue(event.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+          disabled={isLoading}
+          required
+          className="w-full rounded-xl border border-[#CBD5E1] px-4 py-3 text-center text-lg tracking-[0.4em] text-[#0F172A] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/20 disabled:bg-slate-50"
+        />
+        <Button type="submit" variant="primary" size="lg" className="w-full" loading={isLoading} disabled={isLoading || otpValue.length !== 6}>
+          Verify and sign in
+        </Button>
+        <button type="button" onClick={handleResendOtp} disabled={isLoading || isResending || resendCountdown > 0}
+          className="w-full py-2 text-sm font-medium text-[#2563EB] disabled:text-slate-400">
+          {isResending ? 'Sending code…' : resendCountdown > 0 ? 'Resend code in ' + resendCountdown + 's' : 'Resend verification code'}
+        </button>
+      </form>
+    );
+  }
   return (
     <form onSubmit={handleSubmit} className="space-y-4.5 w-full" noValidate>
       {/* API Level Error Notification */}

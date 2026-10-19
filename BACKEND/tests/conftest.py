@@ -6,13 +6,13 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-# Import all models to ensure they are registered with Base.metadata
 import app.models  # noqa: F401
+from app.core.config import settings
 from app.database.base import Base
 from app.database.database import get_db
 from app.main import app
+from app.services import auth_security_service
 
-# SQLite type overrides for PostgreSQL-specific types during tests
 @compiles(UUID, "sqlite")
 def compile_uuid_sqlite(type_, compiler, **kw):
     return "TEXT"
@@ -33,7 +33,6 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture(scope="function", autouse=True)
 def setup_database():
-    """Create all tables before each test and drop them after."""
     Base.metadata.create_all(bind=engine)
     yield
     Base.metadata.drop_all(bind=engine)
@@ -41,7 +40,6 @@ def setup_database():
 
 @pytest.fixture(scope="function")
 def db_session(setup_database):
-    """Provide a database session connected to the shared in-memory DB."""
     session = TestingSessionLocal()
     try:
         yield session
@@ -49,14 +47,29 @@ def db_session(setup_database):
         session.close()
 
 
+@pytest.fixture
+def otp_mailbox(monkeypatch):
+    messages = {}
+    monkeypatch.setattr(settings, "OTP_EMAIL_PROVIDER", "smtp")
+    monkeypatch.setattr(settings, "OTP_EMAIL_FROM", "no-reply@example.test")
+    monkeypatch.setattr(settings, "OTP_SMTP_HOST", "smtp.example.test")
+    monkeypatch.setattr(settings, "SESSION_COOKIE_SECURE", False)
+
+    def capture(email, otp):
+        messages[email] = otp
+
+    monkeypatch.setattr(auth_security_service, "_send_login_otp", capture)
+    return messages
+
+
 @pytest.fixture(scope="function")
-def client(db_session):
-    """FastAPI TestClient fixture with overridden DB dependency."""
+def client(setup_database, otp_mailbox):
     def override_get_db():
+        session = TestingSessionLocal()
         try:
-            yield db_session
+            yield session
         finally:
-            pass
+            session.close()
 
     app.dependency_overrides[get_db] = override_get_db
     with TestClient(app) as test_client:
@@ -64,10 +77,9 @@ def client(db_session):
     app.dependency_overrides.clear()
 
 
-@pytest.fixture(scope="function")
-def auth_headers(client, db_session):
-    """Register a test user and return Authorization headers with valid JWT token."""
-    response = client.post(
+@pytest.fixture
+def auth_headers(client, otp_mailbox):
+    client.post(
         "/api/v1/auth/register",
         json={
             "email": "test@example.com",
@@ -75,15 +87,13 @@ def auth_headers(client, db_session):
             "full_name": "Test User",
         },
     )
-    assert response.status_code == 201
-
-    login_resp = client.post(
+    login = client.post(
         "/api/v1/auth/login",
-        json={
-            "email": "test@example.com",
-            "password": "Password123!",
-        },
+        json={"email": "test@example.com", "password": "Password123!"},
     )
-    assert login_resp.status_code == 200
-    token = login_resp.json()["access_token"]
-    return {"Authorization": f"Bearer {token}"}
+    challenge_id = login.json()["challenge_id"]
+    verified = client.post(
+        "/api/v1/auth/verify-otp",
+        json={"challenge_id": challenge_id, "otp": otp_mailbox["test@example.com"]},
+    )
+    return {"Authorization": "Bearer " + verified.json()["access_token"]}

@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, ConfigDict
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class UserBase(BaseModel):
@@ -36,8 +37,9 @@ class UserResponse(BaseModel):
 
 class Token(BaseModel):
     access_token: str
-    refresh_token: str
     token_type: str = "bearer"
+    csrf_token: str | None = None
+    user: UserResponse | None = None
 
 
 class LoginRequest(BaseModel):
@@ -45,5 +47,35 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class OtpChallengeResponse(BaseModel):
+    challenge_id: uuid.UUID
+    message: str = "If the credentials are valid, a verification code was sent."
+    expires_in: int
+    resend_after_seconds: int
+
+
+class OtpVerifyRequest(BaseModel):
+    challenge_id: uuid.UUID
+    otp: str = Field(pattern=r"^[0-9]{6}$")
+
+
+class OtpResendRequest(BaseModel):
+    challenge_id: uuid.UUID
+
+
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+
+
+class SessionResponse(BaseModel):
+    id: uuid.UUID
+    login_at: datetime
+    last_activity_at: datetime
+    expires_at: datetime
+    revoked_at: datetime | None = None
+    client_ip: str | None = None
+    user_agent: str | None = None
+    country: str | None = None
+    region: str | None = None
+    city: str | None = None
+    is_current: bool = False

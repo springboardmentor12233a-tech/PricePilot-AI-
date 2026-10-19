@@ -27,6 +27,7 @@ from app.models.user_role import user_roles
 from app.models.user import User
 from app.models.organization_member import OrganizationMember
 from app.models.refresh_token import RefreshToken
+from app.models.auth_security import OtpChallenge, SecurityEvent, UserSession
 
 
 # -------------------------

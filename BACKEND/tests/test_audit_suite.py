@@ -6,7 +6,7 @@ from fastapi import status
 class TestMultiTenantIsolation:
     """Verify strict tenant data isolation between Organization A and Organization B."""
 
-    def test_cross_organization_access_forbidden(self, client, auth_headers):
+    def test_cross_organization_access_forbidden(self, client, auth_headers, otp_mailbox):
         # 1. Register User B and Org B
         reg_b = client.post(
             "/api/v1/auth/register",
@@ -23,8 +23,13 @@ class TestMultiTenantIsolation:
             "/api/v1/auth/login",
             json={"email": reg_b.json()["email"], "password": "Password123!"},
         )
-        assert login_b.status_code == status.HTTP_200_OK
-        token_b = login_b.json()["access_token"]
+        assert login_b.status_code == status.HTTP_202_ACCEPTED
+        verified_b = client.post("/api/v1/auth/verify-otp", json={
+            "challenge_id": login_b.json()["challenge_id"],
+            "otp": otp_mailbox[reg_b.json()["email"]],
+        })
+        assert verified_b.status_code == status.HTTP_200_OK
+        token_b = verified_b.json()["access_token"]
         headers_b = {"Authorization": f"Bearer {token_b}"}
 
         # Create Org B

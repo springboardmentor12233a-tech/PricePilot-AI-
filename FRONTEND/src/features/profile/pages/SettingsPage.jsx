@@ -1,4 +1,5 @@
 import React from 'react';
+import SessionManagement from '../../authentication/components/SessionManagement';
 import PageHeader from '../../../components/PageHeader';
 import Card from '../../../components/Card';
 import Button from '../../../components/Button';
@@ -110,6 +111,8 @@ export default function SettingsPage() {
           </Card>
         </div>
       </div>
+      <SessionManagement />
+
     </div>
   );
 }

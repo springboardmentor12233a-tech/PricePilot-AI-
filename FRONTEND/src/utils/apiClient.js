@@ -1,81 +1,98 @@
-/**
- * PricePilot AI — API Client Foundation
- * Centralized Axios instance with request and response interceptors.
- * Directly communicates with existing FastAPI backend at VITE_API_BASE_URL.
- */
-
 import axios from 'axios';
-import { getAccessToken, clearAuthStorage } from './storage';
+import { getAccessToken, setAccessToken, clearAuthStorage } from './storage';
 import { extractErrorMessage } from './errorHandler';
 
 const rawBaseUrl = import.meta.env.VITE_API_BASE_URL;
-// Ensure no trailing slash on the base URL. If in browser preview and pointing to local port 8000, fallback to same-origin.
 const getEffectiveBaseUrl = () => {
   if (!rawBaseUrl) return '';
   if (
     typeof window !== 'undefined' &&
     (rawBaseUrl.includes('127.0.0.1:8000') || rawBaseUrl.includes('localhost:8000')) &&
     window.location.port !== '8000'
-  ) {
-    return '';
-  }
+  ) return '';
   return rawBaseUrl.replace(/\/+$/, '');
 };
-
 const baseURL = getEffectiveBaseUrl();
 
 export const apiClient = axios.create({
   baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
+  withCredentials: true,
+  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
   timeout: 15000,
 });
 
-/**
- * Request interceptor:
- * Automatically attaches Authorization header ONLY when a valid token exists.
- * Never sends "Bearer undefined" or "Bearer null".
- */
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = getAccessToken();
-    if (token && typeof token === 'string' && token.trim() !== '') {
-      config.headers.Authorization = `Bearer ${token.trim()}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+const readCookie = (name) => {
+  if (typeof document === 'undefined') return '';
+  const prefix = name + '=';
+  const entry = document.cookie.split('; ').find((item) => item.startsWith(prefix));
+  return entry ? decodeURIComponent(entry.slice(prefix.length)) : '';
+};
 
-/**
- * Response interceptor:
- * Handles 401, 403, 404, 422, 500 and network errors cleanly.
- * Dispatches a custom event on 401 ONLY for protected requests (not for /auth/login itself).
- */
+let refreshPromise = null;
+export const refreshAccessToken = async () => {
+  if (!refreshPromise) {
+    const csrf = readCookie('pricepilot_csrf');
+    refreshPromise = axios.post(
+      baseURL + '/api/v1/auth/refresh',
+      {},
+      {
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
+        timeout: 15000,
+      }
+    ).then((response) => {
+      setAccessToken(response.data.access_token);
+      return response.data;
+    }).finally(() => {
+      refreshPromise = null;
+    });
+  }
+  return refreshPromise;
+};
+
+apiClient.interceptors.request.use((config) => {
+  const token = getAccessToken();
+  if (token && typeof token === 'string' && token.trim()) {
+    config.headers.Authorization = 'Bearer ' + token.trim();
+  }
+  return config;
+});
+
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
-    const requestUrl = error?.config?.url || '';
-    const isAuthLoginRequest = requestUrl.includes('/auth/login') || requestUrl.includes('/auth/register');
+  async (error) => {
+    const config = error?.config;
+    const requestUrl = config?.url || '';
+    const isAuthFlow = [
+      '/auth/login', '/auth/register', '/auth/token', '/auth/verify-otp',
+      '/auth/resend-otp', '/auth/refresh',
+    ].some((path) => requestUrl.includes(path));
 
-    // 401 Unauthorized handling for protected requests
-    if (error?.response?.status === 401 && !isAuthLoginRequest) {
+    if (error?.response?.status === 401 && !isAuthFlow && config && !config._retry) {
+      config._retry = true;
+      try {
+        const tokens = await refreshAccessToken();
+        config.headers = config.headers || {};
+        config.headers.Authorization = 'Bearer ' + tokens.access_token;
+        return apiClient(config);
+      } catch {
+        clearAuthStorage();
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('pricepilot:unauthorized'));
+        }
+      }
+    } else if (error?.response?.status === 401 && !isAuthFlow) {
       clearAuthStorage();
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('pricepilot:unauthorized'));
       }
     }
 
-    const cleanMessage = extractErrorMessage(error);
-    const formattedError = {
+    return Promise.reject({
       status: error?.response?.status || null,
-      message: cleanMessage,
+      message: extractErrorMessage(error),
       originalError: error,
-    };
-
-    return Promise.reject(formattedError);
+    });
   }
 );
 
