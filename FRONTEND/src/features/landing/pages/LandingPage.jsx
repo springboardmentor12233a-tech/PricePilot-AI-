@@ -1262,6 +1262,40 @@ export default function LandingPage() {
           <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
             <div>
               © 2026 PricePilot AI. All rights reserved. Enterprise Dynamic Pricing Platform.
+              Crafted with ❤️ by <a href="https://www.linkedin.com/in/aditya-raj-pandey-7663192b7/?isSelfProfile=true" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Aditya Raj Pandey</a>.
+              
+<strong>
+  <a
+    href="https://github.com/Aditya-2215"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="GitHub"
+  >
+    <img
+      src="https://www.svgrepo.com/show/394174/github.svg"
+      alt="GitHub"
+      className="ml-2 inline-block h-5 w-5 invert transition-opacity hover:opacity-70"
+    />
+  </a>
+</strong>
+
+
+<strong>
+  <a
+    href="https://aditya-raj-pandey-portfolio.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Portfolio"
+  >
+    <img
+      src="https://www.svgrepo.com/show/447463/portfolio.svg"
+      alt="Portfolio"
+      className="ml-2 inline-block h-5 w-5 invert transition-opacity hover:opacity-70"
+    />
+  </a>
+</strong>
+
+
             </div>
             <div className="flex items-center gap-6">
               <Link to="/login" className="hover:text-white transition-colors">Sign In</Link>
