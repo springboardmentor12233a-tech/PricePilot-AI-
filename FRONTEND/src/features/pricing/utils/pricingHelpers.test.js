@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  buildRecommendationPayload,
   buildPredictionPayload,
   normalizePredictionResult,
   normalizeRecommendation,
@@ -16,6 +17,36 @@ test('pricing request uses the backend schema and actual product ID', () => {
     product_id: 'product-uuid',
     target_margin_percent: 25,
   });
+});
+
+test('recommendation request maps backend prediction fields without inventing values', () => {
+  const payload = buildRecommendationPayload({
+    product_id: 'product-uuid',
+    current_price: '80.00',
+    recommended_price: '86.40',
+    competitor_avg_price: '84.00',
+    demand_factor: 'stable',
+    recommendation_reason: 'Cost-plus margin strategy',
+  });
+
+  assert.deepEqual(payload, {
+    product_id: 'product-uuid',
+    current_price: '80.00',
+    recommended_price: '86.40',
+    competitor_avg_price: '84.00',
+    demand_factor: 'stable',
+    recommendation_reason: 'Cost-plus margin strategy',
+  });
+});
+
+test('recommendation request requires an actual positive model price', () => {
+  assert.throws(
+    () => buildRecommendationPayload({
+      product_id: 'product-uuid',
+      current_price: '80.00',
+    }),
+    /valid recommended price/,
+  );
 });
 
 test('pricing response maps actual rule output without inventing demand or confidence', () => {

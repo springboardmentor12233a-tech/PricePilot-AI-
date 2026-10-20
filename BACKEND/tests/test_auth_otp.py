@@ -1,12 +1,15 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
+from types import SimpleNamespace
 from uuid import UUID, uuid4
 
+import pytest
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql.dml import Update
 from starlette.requests import Request
 
 from app.core.config import settings
@@ -15,6 +18,7 @@ from app.database.base import Base
 from app.database.database import get_db
 from app.main import app
 from app.models.auth_security import OtpChallenge, UserSession
+from app.models.refresh_token import RefreshToken
 from app.models.user import User
 from app.services import auth_security_service
 
@@ -98,6 +102,13 @@ def test_email_delivery_failure_fails_closed(client, otp_mailbox, monkeypatch, d
 
     monkeypatch.setattr(auth_security_service, "_send_login_otp", fail_delivery)
     challenge = start_login(client, otp_mailbox)
+    assert challenge["message"] == "If the credentials are valid, a verification code was sent."
+    assert "access_token" not in challenge
+    challenge_row = db_session.query(OtpChallenge).filter_by(
+        id=UUID(challenge["challenge_id"])
+    ).one()
+    assert challenge_row.invalidated_at is not None
+    assert challenge_row.sent_at is None
     response = verify(client, challenge, "123456")
     assert response.status_code == 400
     assert db_session.query(UserSession).count() == 0
@@ -241,7 +252,7 @@ def test_concurrent_otp_verification_consumes_at_most_once(tmp_path):
             app.dependency_overrides[get_db] = previous_override
         race_engine.dispose()
 
-def test_refresh_rotates_token_and_reuse_revokes_session(client, otp_mailbox):
+def test_refresh_rotates_token_and_reuse_revokes_session(client, otp_mailbox, db_session):
     create_user(client)
     challenge = start_login(client, otp_mailbox)
     verified = verify(client, challenge, otp_mailbox["otp@example.com"])
@@ -256,7 +267,18 @@ def test_refresh_rotates_token_and_reuse_revokes_session(client, otp_mailbox):
     assert rotated.status_code == 200
     assert "refresh_token" not in rotated.json()
     rotated_access = rotated.json()["access_token"]
-    assert client.cookies.get("pricepilot_refresh") != original_refresh
+    replacement_refresh = client.cookies.get("pricepilot_refresh")
+    assert replacement_refresh != original_refresh
+    original_row = db_session.query(RefreshToken).filter_by(
+        token_hash=auth_security_service.hash_token(original_refresh)
+    ).one()
+    replacement_row = db_session.query(RefreshToken).filter_by(
+        token_hash=auth_security_service.hash_token(replacement_refresh)
+    ).one()
+    assert original_row.replaced_by_id == replacement_row.id
+    assert original_row.revoked_at is not None
+    assert replacement_row.revoked_at is None
+    assert db_session.query(RefreshToken).count() == 2
 
     replay = client.post(
         "/api/v1/auth/refresh",
@@ -320,3 +342,195 @@ def test_failed_resend_is_rate_limited_and_keeps_last_delivered_code(client, otp
     assert calls["count"] == 1
     assert second_resend.json()["challenge_id"] == challenge["challenge_id"]
     assert verify(client, challenge, delivered_code).status_code == 200
+
+
+def test_expired_signed_refresh_token_cannot_rotate(client, otp_mailbox, db_session):
+    create_user(client)
+    challenge = start_login(client, otp_mailbox)
+    verify(client, challenge, otp_mailbox["otp@example.com"])
+    live_refresh = client.cookies.get("pricepilot_refresh")
+    payload = auth_security_service.decode_token(live_refresh)
+    expired_refresh = auth_security_service.create_refresh_token(
+        payload["sub"],
+        expires_delta=timedelta(seconds=-1),
+        session_id=payload["sid"],
+    )
+    now = auth_security_service.now_utc()
+    db_session.add(
+        RefreshToken(
+            user_id=UUID(payload["sub"]),
+            session_id=UUID(payload["sid"]),
+            token_hash=auth_security_service.hash_token(expired_refresh),
+            expires_at=now + timedelta(days=7),
+        )
+    )
+    db_session.commit()
+
+    csrf = auth_security_service.csrf_for_refresh(expired_refresh)
+    response = client.post(
+        "/api/v1/auth/refresh",
+        cookies={"pricepilot_refresh": expired_refresh, "pricepilot_csrf": csrf},
+        headers={"X-CSRF-Token": csrf},
+    )
+    assert response.status_code == 401
+    assert db_session.query(RefreshToken).count() == 2
+
+
+def test_revoked_session_cannot_rotate_refresh_token(client, otp_mailbox, db_session):
+    create_user(client)
+    challenge = start_login(client, otp_mailbox)
+    verify(client, challenge, otp_mailbox["otp@example.com"])
+    refresh = client.cookies.get("pricepilot_refresh")
+    payload = auth_security_service.decode_token(refresh)
+    session = db_session.get(UserSession, UUID(payload["sid"]))
+    session.revoked_at = auth_security_service.now_utc()
+    db_session.commit()
+
+    csrf = auth_security_service.csrf_for_refresh(refresh)
+    response = client.post(
+        "/api/v1/auth/refresh",
+        cookies={"pricepilot_refresh": refresh, "pricepilot_csrf": csrf},
+        headers={"X-CSRF-Token": csrf},
+    )
+    assert response.status_code == 401
+    assert db_session.query(RefreshToken).count() == 1
+
+
+def test_invalid_refresh_token_cannot_create_replacement(client, db_session):
+    invalid_refresh = "not-a-valid-refresh-token"
+    csrf = auth_security_service.csrf_for_refresh(invalid_refresh)
+    response = client.post(
+        "/api/v1/auth/refresh",
+        cookies={"pricepilot_refresh": invalid_refresh, "pricepilot_csrf": csrf},
+        headers={"X-CSRF-Token": csrf},
+    )
+    assert response.status_code == 401
+    assert db_session.query(RefreshToken).count() == 0
+
+
+def test_refresh_commit_failure_rolls_back_replacement_and_old_token_claim(
+    client, otp_mailbox, db_session, monkeypatch
+):
+    create_user(client)
+    challenge = start_login(client, otp_mailbox)
+    verify(client, challenge, otp_mailbox["otp@example.com"])
+    refresh = client.cookies.get("pricepilot_refresh")
+    old_hash = auth_security_service.hash_token(refresh)
+
+    def fail_commit():
+        raise RuntimeError("injected commit failure")
+
+    monkeypatch.setattr(db_session, "commit", fail_commit)
+    with pytest.raises(RuntimeError, match="injected commit failure"):
+        auth_security_service.rotate_refresh_token(db_session, refresh)
+
+    old_row = db_session.query(RefreshToken).filter_by(token_hash=old_hash).one()
+    assert old_row.replaced_by_id is None
+    assert old_row.revoked_at is None
+    assert db_session.query(RefreshToken).count() == 1
+
+
+def test_refresh_compare_and_swap_loss_rolls_back_then_revokes_session(
+    client, otp_mailbox, db_session, monkeypatch
+):
+    create_user(client)
+    challenge = start_login(client, otp_mailbox)
+    verify(client, challenge, otp_mailbox["otp@example.com"])
+    refresh = client.cookies.get("pricepilot_refresh")
+    old_hash = auth_security_service.hash_token(refresh)
+    real_execute = db_session.execute
+    forced = {"done": False}
+
+    def lose_claim(statement, *args, **kwargs):
+        if isinstance(statement, Update) and not forced["done"]:
+            forced["done"] = True
+            return SimpleNamespace(rowcount=0)
+        return real_execute(statement, *args, **kwargs)
+
+    monkeypatch.setattr(db_session, "execute", lose_claim)
+    with pytest.raises(HTTPException) as error:
+        auth_security_service.rotate_refresh_token(db_session, refresh)
+
+    assert error.value.status_code == 401
+    old_row = db_session.query(RefreshToken).filter_by(token_hash=old_hash).one()
+    payload = auth_security_service.decode_token(refresh)
+    session = db_session.get(UserSession, UUID(payload["sid"]))
+    assert session.revoked_at is not None
+    assert old_row.revoked_at is not None
+    assert old_row.replaced_by_id is None
+    assert db_session.query(RefreshToken).count() == 1
+
+
+def test_concurrent_refresh_attempts_issue_at_most_one_replacement(tmp_path):
+    race_engine = create_engine(
+        "sqlite:///" + str(tmp_path / "refresh-race.db"),
+        connect_args={"check_same_thread": False, "timeout": 10},
+    )
+    Base.metadata.create_all(bind=race_engine)
+    RaceSession = sessionmaker(autocommit=False, autoflush=False, bind=race_engine)
+    user_id = uuid4()
+    session_id = uuid4()
+    now = auth_security_service.now_utc()
+    raw_refresh = auth_security_service.create_refresh_token(
+        str(user_id), session_id=str(session_id)
+    )
+
+    with RaceSession() as db:
+        db.add(
+            User(
+                id=user_id,
+                email="refresh-race@example.com",
+                full_name="Refresh Race User",
+                hashed_password=get_password_hash("Password123!"),
+                is_active=True,
+                is_verified=False,
+            )
+        )
+        db.add(
+            UserSession(
+                id=session_id,
+                user_id=user_id,
+                login_at=now,
+                last_activity_at=now,
+                expires_at=now + timedelta(days=30),
+            )
+        )
+        db.add(
+            RefreshToken(
+                user_id=user_id,
+                session_id=session_id,
+                token_hash=auth_security_service.hash_token(raw_refresh),
+                expires_at=now + timedelta(days=7),
+            )
+        )
+        db.commit()
+
+    from threading import Barrier
+
+    barrier = Barrier(2)
+
+    def rotate():
+        with RaceSession() as db:
+            barrier.wait(timeout=5)
+            try:
+                auth_security_service.rotate_refresh_token(db, raw_refresh)
+                return "accepted"
+            except HTTPException:
+                return "rejected"
+            except OperationalError:
+                return "database_busy"
+
+    try:
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            outcomes = list(pool.map(lambda _: rotate(), range(2)))
+        assert outcomes.count("accepted") == 1
+        assert all(value in {"accepted", "rejected", "database_busy"} for value in outcomes)
+        with RaceSession() as db:
+            tokens = db.query(RefreshToken).filter_by(session_id=session_id).all()
+            old_hash = auth_security_service.hash_token(raw_refresh)
+            replacements = [token for token in tokens if token.token_hash != old_hash]
+            unrevoked = [token for token in tokens if token.revoked_at is None]
+            assert len(replacements) <= 1
+            assert len(unrevoked) <= 1
+    finally:
+        race_engine.dispose()

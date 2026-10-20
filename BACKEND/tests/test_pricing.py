@@ -225,3 +225,43 @@ def test_pricing_prediction_handles_missing_inventory_without_fabricating_stock(
     assert response.status_code == 200
     assert response.json()["demand_factor"] is None
     assert response.json()["competitor_avg_price"] is None
+
+
+def test_recommendation_validation_reports_missing_recommended_price_from_old_frontend_shape(
+    client, auth_headers
+):
+    org_id = client.post(
+        "/api/v1/organizations/",
+        json={"name": "Recommendation Contract Org"},
+        headers=auth_headers,
+    ).json()["id"]
+    product = client.post(
+        "/api/v1/products/",
+        json={
+            "name": "Recommendation Contract Product",
+            "sku": "REC-CONTRACT-001",
+            "organization_id": org_id,
+            "cost_price": "40.00",
+            "base_price": "80.00",
+        },
+        headers=auth_headers,
+    ).json()
+
+    response = client.post(
+        "/api/v1/pricing/recommendations",
+        json={
+            "product_id": product["id"],
+            "current_price": 80,
+            "competitor_price": 78,
+            "predicted_demand": 12,
+        },
+        headers=auth_headers,
+    )
+
+    assert response.status_code == 422
+    missing_field = next(
+        error
+        for error in response.json()["detail"]
+        if error["loc"] == ["body", "recommended_price"]
+    )
+    assert missing_field["type"] == "missing"

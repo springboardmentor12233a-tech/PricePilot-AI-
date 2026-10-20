@@ -143,7 +143,12 @@ def _cleanup_old_auth_data(db: Session, now: datetime) -> None:
 
 
 def _send_login_otp(email: str, otp: str) -> None:
-    if settings.OTP_EMAIL_PROVIDER != "smtp" or not settings.OTP_EMAIL_FROM or not settings.OTP_SMTP_HOST:
+    """Send a sign-in OTP through the configured SMTP server."""
+    if (
+        settings.OTP_EMAIL_PROVIDER != "smtp"
+        or not settings.OTP_EMAIL_FROM
+        or not settings.OTP_SMTP_HOST
+    ):
         raise RuntimeError("OTP email delivery is not configured")
 
     message = EmailMessage()
@@ -155,18 +160,58 @@ def _send_login_otp(email: str, otp: str) -> None:
         f"It expires in {settings.OTP_EXPIRY_SECONDS // 60 or 1} minutes. "
         "If you did not try to sign in, you can ignore this message."
     )
-    try:
-        with smtplib.SMTP(settings.OTP_SMTP_HOST, settings.OTP_SMTP_PORT, timeout=10) as server:
-            if settings.OTP_SMTP_USE_TLS:
-                server.starttls(context=ssl.create_default_context())
-            if settings.OTP_SMTP_USERNAME:
-                server.login(settings.OTP_SMTP_USERNAME, settings.OTP_SMTP_PASSWORD)
-            server.send_message(message)
-    except Exception as exc:
-        # Never include the message, recipient credentials, or verification code in logs.
-        logger.warning("OTP delivery failed; error_type=%s", type(exc).__name__)
-        raise RuntimeError("OTP delivery failed") from None
 
+    stage = "connect"
+    try:
+        with smtplib.SMTP(
+            settings.OTP_SMTP_HOST,
+            settings.OTP_SMTP_PORT,
+            timeout=30,
+        ) as server:
+            stage = "ehlo"
+            server.ehlo()
+
+            if settings.OTP_SMTP_USE_TLS:
+                stage = "starttls"
+                server.starttls(context=ssl.create_default_context())
+                stage = "ehlo_after_starttls"
+                server.ehlo()
+
+            if settings.OTP_SMTP_USERNAME:
+                stage = "authenticate"
+                server.login(
+                    settings.OTP_SMTP_USERNAME,
+                    settings.OTP_SMTP_PASSWORD,
+                )
+
+            stage = "send_message"
+            server.send_message(message)
+            stage = "close"
+    except Exception as exc:
+        # Omit exception text: SMTP replies may echo sensitive server-side data.
+        error_code = getattr(exc, "smtp_code", None)
+        if not isinstance(error_code, int):
+            error_code = getattr(exc, "errno", None)
+        if not isinstance(error_code, int):
+            error_code = None
+        safe_host = "".join(
+            char for char in settings.OTP_SMTP_HOST
+            if char.isalnum() or char in ".-"
+        )[:253]
+        logger.warning(
+            "OTP email delivery failed; error_type=%s smtp_stage=%s "
+            "smtp_host=%s smtp_port=%s starttls=%s auth_configured=%s "
+            "password_has_edge_whitespace=%s error_code=%s",
+            type(exc).__name__,
+            stage,
+            safe_host,
+            settings.OTP_SMTP_PORT,
+            settings.OTP_SMTP_USE_TLS,
+            bool(settings.OTP_SMTP_USERNAME and settings.OTP_SMTP_PASSWORD),
+            settings.OTP_SMTP_PASSWORD != settings.OTP_SMTP_PASSWORD.strip(),
+            error_code,
+        )
+        raise RuntimeError("OTP delivery failed") from None
 
 def _new_challenge(
     user: User | None,
@@ -477,79 +522,189 @@ def verify_login_otp(db: Session, challenge_id: uuid.UUID, otp: str, request: Re
 
 
 def rotate_refresh_token(db: Session, raw_refresh: str) -> dict:
+    """Rotate a refresh token without violating the replacement-token FK."""
     payload = decode_token(raw_refresh)
-    if payload.get("type") != "refresh" or not payload.get("sub") or not payload.get("sid"):
-        raise HTTPException(status_code=401, detail="Session expired. Sign in again.")
+    if (
+        payload.get("type") != "refresh"
+        or not payload.get("sub")
+        or not payload.get("sid")
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Session expired. Sign in again.",
+        )
+
     try:
         user_id = uuid.UUID(payload["sub"])
         session_id = uuid.UUID(payload["sid"])
     except (TypeError, ValueError):
-        raise HTTPException(status_code=401, detail="Session expired. Sign in again.")
+        raise HTTPException(
+            status_code=401,
+            detail="Session expired. Sign in again.",
+        )
 
     now = now_utc()
-    old = (
-        db.query(RefreshToken)
-        .filter(RefreshToken.token_hash == hash_token(raw_refresh))
-        .with_for_update()
-        .first()
-    )
-    session = db.query(UserSession).filter(
-        UserSession.id == session_id, UserSession.user_id == user_id
-    ).with_for_update().first()
-    if old is None or session is None or old.session_id != session_id or old.user_id != user_id:
-        raise HTTPException(status_code=401, detail="Session expired. Sign in again.")
 
-    if old.replaced_by_id is not None or old.revoked_at is not None:
-        session.revoked_at = now
-        db.query(RefreshToken).filter(
-            RefreshToken.session_id == session.id, RefreshToken.revoked_at.is_(None)
-        ).update({RefreshToken.revoked_at: now}, synchronize_session=False)
-        _record_event(db, "refresh_token_reuse", user_id=user_id, session_id=session.id,
-                      client_ip=None, risk_reasons=["refresh_token_reuse"])
+    try:
+        old = (
+            db.query(RefreshToken)
+            .filter(RefreshToken.token_hash == hash_token(raw_refresh))
+            .with_for_update()
+            .first()
+        )
+        session = (
+            db.query(UserSession)
+            .filter(
+                UserSession.id == session_id,
+                UserSession.user_id == user_id,
+            )
+            .with_for_update()
+            .first()
+        )
+
+        if (
+            old is None
+            or session is None
+            or old.session_id != session_id
+            or old.user_id != user_id
+        ):
+            db.rollback()
+            raise HTTPException(
+                status_code=401,
+                detail="Session expired. Sign in again.",
+            )
+
+        # Reuse of an already rotated/revoked token revokes the session.
+        if old.replaced_by_id is not None or old.revoked_at is not None:
+            session.revoked_at = now
+            db.query(RefreshToken).filter(
+                RefreshToken.session_id == session.id,
+                RefreshToken.revoked_at.is_(None),
+            ).update(
+                {RefreshToken.revoked_at: now},
+                synchronize_session=False,
+            )
+            _record_event(
+                db,
+                "refresh_token_reuse",
+                user_id=user_id,
+                session_id=session.id,
+                client_ip=None,
+                risk_reasons=["refresh_token_reuse"],
+            )
+            db.commit()
+            raise HTTPException(
+                status_code=401,
+                detail="Session expired. Sign in again.",
+            )
+
+        if (
+            _as_utc(old.expires_at) <= now
+            or session.revoked_at is not None
+            or _as_utc(session.expires_at) <= now
+        ):
+            db.rollback()
+            raise HTTPException(
+                status_code=401,
+                detail="Session expired. Sign in again.",
+            )
+
+        replacement = create_refresh_token(
+            str(user_id),
+            session_id=str(session_id),
+        )
+        replacement_id = uuid.uuid4()
+
+        # Insert the replacement row before assigning its ID to old.replaced_by_id.
+        db.add(
+            RefreshToken(
+                id=replacement_id,
+                user_id=user_id,
+                session_id=session.id,
+                token_hash=hash_token(replacement),
+                expires_at=now + timedelta(days=7),
+            )
+        )
+        # Sends the INSERT to the DB inside the current transaction; does not commit.
+        db.flush()
+
+        from sqlalchemy import update
+
+        claimed = db.execute(
+            update(RefreshToken)
+            .where(
+                RefreshToken.id == old.id,
+                RefreshToken.revoked_at.is_(None),
+                RefreshToken.replaced_by_id.is_(None),
+            )
+            .values(
+                revoked_at=now,
+                replaced_by_id=replacement_id,
+            )
+        )
+
+        if claimed.rowcount != 1:
+            # Discard the insert before handling a compare-and-swap loss. Another
+            # request changed this token after it was read, so apply the same
+            # conservative replay response used by the already-rotated path.
+            db.rollback()
+            raced_session = (
+                db.query(UserSession)
+                .filter(
+                    UserSession.id == session_id,
+                    UserSession.user_id == user_id,
+                )
+                .with_for_update()
+                .first()
+            )
+            if raced_session is not None:
+                raced_session.revoked_at = raced_session.revoked_at or now
+                db.query(RefreshToken).filter(
+                    RefreshToken.session_id == raced_session.id,
+                    RefreshToken.revoked_at.is_(None),
+                ).update(
+                    {RefreshToken.revoked_at: now},
+                    synchronize_session=False,
+                )
+                _record_event(
+                    db,
+                    "refresh_token_reuse",
+                    user_id=user_id,
+                    session_id=raced_session.id,
+                    client_ip=None,
+                    risk_reasons=["refresh_token_reuse"],
+                )
+                db.commit()
+            raise HTTPException(
+                status_code=401,
+                detail="Session expired. Sign in again.",
+            )
+
+        session.last_activity_at = now
+        _record_event(
+            db,
+            "refresh_token_rotated",
+            user_id=user_id,
+            session_id=session.id,
+        )
         db.commit()
-        raise HTTPException(status_code=401, detail="Session expired. Sign in again.")
 
-    if (
-        _as_utc(old.expires_at) <= now
-        or session.revoked_at is not None
-        or _as_utc(session.expires_at) <= now
-    ):
-        raise HTTPException(status_code=401, detail="Session expired. Sign in again.")
+        user = db.query(User).filter(User.id == user_id).first()
+        return {
+            "access_token": create_access_token(
+                str(user_id),
+                session_id=str(session_id),
+            ),
+            "refresh_token": replacement,
+            "csrf_token": csrf_for_refresh(replacement),
+            "user": user,
+        }
 
-    replacement = create_refresh_token(str(user_id), session_id=str(session_id))
-    replacement_id = uuid.uuid4()
-    from sqlalchemy import update
-
-    claimed = db.execute(
-        update(RefreshToken)
-        .where(RefreshToken.id == old.id, RefreshToken.revoked_at.is_(None), RefreshToken.replaced_by_id.is_(None))
-        .values(revoked_at=now, replaced_by_id=replacement_id)
-    )
-    if claimed.rowcount != 1:
-        session.revoked_at = now
-        _record_event(db, "refresh_token_reuse", user_id=user_id, session_id=session.id,
-                      risk_reasons=["refresh_token_reuse"])
-        db.commit()
-        raise HTTPException(status_code=401, detail="Session expired. Sign in again.")
-
-    db.add(RefreshToken(
-        id=replacement_id,
-        user_id=user_id,
-        session_id=session.id,
-        token_hash=hash_token(replacement),
-        expires_at=now + timedelta(days=7),
-    ))
-    session.last_activity_at = now
-    _record_event(db, "refresh_token_rotated", user_id=user_id, session_id=session.id)
-    db.commit()
-    user = db.query(User).filter(User.id == user_id).first()
-    return {
-        "access_token": create_access_token(str(user_id), session_id=str(session_id)),
-        "refresh_token": replacement,
-        "csrf_token": csrf_for_refresh(replacement),
-        "user": user,
-    }
-
+    except HTTPException:
+        raise
+    except Exception:
+        db.rollback()
+        raise
 
 def revoke_current_session(db: Session, user_id: uuid.UUID, session_id: uuid.UUID) -> None:
     now = now_utc()

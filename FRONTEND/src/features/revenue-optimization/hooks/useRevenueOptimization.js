@@ -3,7 +3,11 @@ import { useProduct } from '../../products/hooks/useProduct';
 import { useInventory } from '../../inventory/hooks/useInventory';
 import { useCompetitorPrices } from '../../competitors/hooks/useCompetitorPrices';
 import { revenueApi } from '../services/revenueApi';
-import { normalizePredictionResult, normalizeRecommendation } from '../../pricing/utils/pricingHelpers';
+import {
+  buildRecommendationPayload,
+  normalizePredictionResult,
+  normalizeRecommendation,
+} from '../../pricing/utils/pricingHelpers';
 import {
   calculateExpectedRevenue,
   calculateGrossProfit,
@@ -346,19 +350,11 @@ export function useRevenueOptimization(productId, organizationId) {
     setApplySuccess(false);
 
     try {
-      const payload = {
+      const prediction = await revenueApi.predictPriceScenario({
         product_id: product.id,
-        current_price: Number(product.base_price || 0),
-      };
-
-      if (competitorData?.latestPrice || competitorData?.marketAverage) {
-        payload.competitor_price = Number(competitorData.latestPrice || competitorData.marketAverage);
-      }
-
-      if (currentBaseline?.predictedDemand) {
-        payload.predicted_demand = Number(currentBaseline.predictedDemand);
-      }
-
+      });
+      const payload = buildRecommendationPayload(prediction);
+      setBaselinePrediction(normalizePredictionResult(prediction));
       const res = await revenueApi.generateRecommendation(payload);
       let primary = null;
       if (Array.isArray(res)) {
@@ -380,7 +376,7 @@ export function useRevenueOptimization(productId, organizationId) {
     } finally {
       setIsGeneratingRec(false);
     }
-  }, [product, competitorData, currentBaseline]);
+  }, [product]);
 
   // Apply recommendation via POST /api/v1/pricing/recommendations/{recommendation_id}/apply
   const applyRecommendation = useCallback(async (recId) => {

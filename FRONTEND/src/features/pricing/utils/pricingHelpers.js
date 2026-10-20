@@ -95,6 +95,47 @@ export function normalizePredictionResult(data) {
 }
 
 /**
+ * Maps a real prediction response to the backend recommendation-create schema.
+ */
+export function buildRecommendationPayload(prediction) {
+  if (!prediction || typeof prediction !== 'object' || !prediction.product_id) {
+    throw new Error('A product prediction is required to create a recommendation.');
+  }
+
+  const currentPrice = Number(prediction.current_price);
+  const recommendedPrice = Number(prediction.recommended_price);
+  if (!Number.isFinite(currentPrice) || currentPrice <= 0) {
+    throw new Error('The prediction did not include a valid current price.');
+  }
+  if (!Number.isFinite(recommendedPrice) || recommendedPrice <= 0) {
+    throw new Error('The prediction did not include a valid recommended price.');
+  }
+
+  const payload = {
+    product_id: prediction.product_id,
+    current_price: prediction.current_price,
+    recommended_price: prediction.recommended_price,
+  };
+
+  if (prediction.variant_id) payload.variant_id = prediction.variant_id;
+  if (prediction.competitor_avg_price !== undefined && prediction.competitor_avg_price !== null) {
+    const competitorPrice = Number(prediction.competitor_avg_price);
+    if (!Number.isFinite(competitorPrice) || competitorPrice <= 0) {
+      throw new Error('The prediction included an invalid competitor average price.');
+    }
+    payload.competitor_avg_price = prediction.competitor_avg_price;
+  }
+  if (typeof prediction.demand_factor === 'string') {
+    payload.demand_factor = prediction.demand_factor;
+  }
+  if (typeof prediction.recommendation_reason === 'string') {
+    payload.recommendation_reason = prediction.recommendation_reason;
+  }
+
+  return payload;
+}
+
+/**
  * Normalizes backend response from POST /api/v1/pricing/recommendations
  */
 export function normalizeRecommendation(data) {
